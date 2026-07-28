@@ -1,22 +1,12 @@
-# Console Neo 视觉迁移规范
+# 视觉一致性验证规范
 
-本项目不是模仿 Console Neo，也不是根据截图重新设计。`easecation-console-neo` 是视觉事实来源，目标是迁移其设计语言，同时移除业务耦合。
+EaseCation Design 的视觉事实由 Design Tokens、组件实现、Storybook 和自动截图回归共同维护。公共组件不能直接套用第三方设计系统的默认样式。
 
-## 可追踪来源
+## 确定性验证
 
-- `migration/manifest.json` 记录每类组件的源文件。
-- `migration/console-neo.tokens.json` 保存源 Token 快照和 SHA-256。
-- `pnpm visual:migration:check` 校验浅色、暗色和黑金主题值是否发生偏移。
-- `src/tokens/consoleNeo.ts` 向 TypeScript 消费者提供同一份机器可读事实。
+- `migration/manifest.json` 保存开发期源文件哈希与实现映射。
+- Token 快照用于检测主题值意外偏移。
+- `pnpm visual:migration:check` 校验视觉基线和组件来源哈希。
+- `pnpm visual:compare` 对桌面和移动视口执行同场景截图比较。
 
-公共组件可以扩展领域中立 API，但默认尺寸、颜色、圆角、阴影、字体、状态和动效不得脱离源组件。无法直接迁移的部分必须在迁移清单中说明原因，而不能用其他设计系统默认值替代。
-
-## 本地截图验证流程
-
-1. 安装临时 Console Neo 参考路由：`pnpm visual:fixtures:install`。
-2. 启动 Console Neo (`8002`) 和 Storybook (`6006`)。
-3. 执行全部场景：`pnpm visual:compare`。
-4. 只验证指定场景：`VISUAL_SCENES=app-shell,toast pnpm visual:compare`（PowerShell 使用 `$env:VISUAL_SCENES=...`）。
-5. 验证完成后执行 `pnpm visual:fixtures:cleanup`，保证 Console Neo 工作区恢复干净。
-
-参考路由源文件保存在 `migration/console-neo-reference-routes/`，仅用于开发期视觉验证，不进入 npm 运行时产物。
+内部参考路由和截图 fixture 仅用于开发期验证，不进入 npm 运行时产物，也不构成公共组件命名的一部分。Storybook、README 和组件文档必须使用正式组件名与领域中立示例。

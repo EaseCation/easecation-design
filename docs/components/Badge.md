@@ -1,5 +1,5 @@
 # Badge
 
-高度 20px、圆角、字号、字重和 primary、secondary、destructive、outline、ghost 状态迁移自 Console Neo `badge.tsx`。
+提供 primary、secondary、destructive、outline 和 ghost 等语义样式，用于展示状态、分类和轻量提示。
 
-视觉来源记录在 `migration/manifest.json`，不得使用其他设计系统默认样式替换。
+高度、圆角、字号和字重由 Design Tokens 统一控制。

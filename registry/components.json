@@ -9,7 +9,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["reduced-motion", "system-color-scheme"],
       "tokens": ["--ec-color-primary", "--ec-density-scale"],
-      "stories": ["Foundation/Console Neo language"],
+      "stories": ["Foundation/Tokens and Theme"],
       "deprecated": false
     },
     {
@@ -20,7 +20,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["focus-visible", "disabled", "aria-busy", "keyboard"],
       "tokens": ["--ec-color-primary", "--ec-control-md", "--ec-motion-fast"],
-      "stories": ["Foundation/Console Neo language/Buttons"],
+      "stories": ["Foundation/Tokens and Theme/Buttons"],
       "deprecated": false
     },
     {
@@ -31,7 +31,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["aria-invalid", "focus-visible", "label-compatible"],
       "tokens": ["--ec-color-border", "--ec-color-focus", "--ec-control-md"],
-      "stories": ["Foundation/Console Neo language/Generic Dashboard"],
+      "stories": ["Foundation/Tokens and Theme/Generic Dashboard"],
       "deprecated": false
     },
     {
@@ -42,7 +42,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["roving-tabindex", "arrow-keys", "tabpanel-semantics"],
       "tokens": ["--ec-color-primary", "--ec-color-border"],
-      "stories": ["Foundation/Console Neo language/Generic Dashboard"],
+      "stories": ["Foundation/Tokens and Theme/Generic Dashboard"],
       "deprecated": false
     },
     {
@@ -182,7 +182,7 @@
       "category": "display",
       "accessibility": ["semantic-composition", "pointer-events"],
       "tokens": ["--card", "--card-foreground", "--radius-xl", "--border"],
-      "stories": ["Migration/Console Neo display/Exact Primitives"],
+      "stories": ["Components/Data Display/Exact Primitives"],
       "importPath": "@easecation/design",
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
@@ -193,7 +193,7 @@
       "category": "display",
       "accessibility": ["text-status", "non-color-label"],
       "tokens": ["--primary", "--secondary", "--destructive"],
-      "stories": ["Migration/Console Neo display/Exact Primitives"],
+      "stories": ["Components/Data Display/Exact Primitives"],
       "importPath": "@easecation/design",
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
@@ -204,7 +204,7 @@
       "category": "display",
       "accessibility": ["aria-hidden", "reduced-motion"],
       "tokens": ["--muted", "--radius-lg"],
-      "stories": ["Migration/Console Neo display/Exact Primitives"],
+      "stories": ["Components/Data Display/Exact Primitives"],
       "importPath": "@easecation/design",
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
@@ -215,7 +215,7 @@
       "category": "display",
       "accessibility": ["image-alt", "fallback-content"],
       "tokens": ["--muted", "--muted-foreground", "--border"],
-      "stories": ["Migration/Console Neo display/Exact Primitives"],
+      "stories": ["Components/Data Display/Exact Primitives"],
       "importPath": "@easecation/design",
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
@@ -230,7 +230,7 @@
       "category": "navigation",
       "accessibility": ["radix-roving-focus", "keyboard-navigation", "menu-roles"],
       "tokens": ["--popover", "--accent", "--shadow-lg"],
-      "stories": ["Migration/Console Neo primitives/Menu"]
+      "stories": ["Components/Primitives/Menu"]
     },
     {
       "importPath": "@easecation/design",
@@ -241,7 +241,7 @@
       "category": "layout",
       "accessibility": ["native-scroll-viewport", "focus-visible", "touch-scroll"],
       "tokens": ["--border", "--ring"],
-      "stories": ["Migration/Console Neo primitives/Scroll And Separator"]
+      "stories": ["Components/Primitives/Scroll And Separator"]
     },
     {
       "importPath": "@easecation/design",
@@ -252,7 +252,7 @@
       "category": "foundation",
       "accessibility": ["decorative-or-semantic", "orientation"],
       "tokens": ["--border"],
-      "stories": ["Migration/Console Neo primitives/Scroll And Separator"]
+      "stories": ["Components/Primitives/Scroll And Separator"]
     },
     {
       "importPath": "@easecation/design",
@@ -263,7 +263,7 @@
       "category": "input",
       "accessibility": ["native-label-association", "disabled-state"],
       "tokens": ["--foreground"],
-      "stories": ["Migration/Console Neo primitives/Scroll And Separator"]
+      "stories": ["Components/Primitives/Scroll And Separator"]
     },
     {
       "name": "EmptyState",
@@ -273,7 +273,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["semantic-heading", "custom-action"],
       "tokens": ["--card", "--muted"],
-      "stories": ["Migration/Console Neo states and patterns/States"],
+      "stories": ["Patterns/Feedback and Metrics/States"],
       "deprecated": false
     },
     {
@@ -284,7 +284,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["semantic-heading", "retry-action"],
       "tokens": ["--destructive", "--card"],
-      "stories": ["Migration/Console Neo states and patterns/States"],
+      "stories": ["Patterns/Feedback and Metrics/States"],
       "deprecated": false
     },
     {
@@ -295,7 +295,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["alert-role", "retry-action"],
       "tokens": ["--destructive", "--card"],
-      "stories": ["Migration/Console Neo states and patterns/States"],
+      "stories": ["Patterns/Feedback and Metrics/States"],
       "deprecated": false
     },
     {
@@ -306,7 +306,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["section-landmark", "semantic-heading"],
       "tokens": ["--card", "--border"],
-      "stories": ["Migration/Console Neo states and patterns/States"],
+      "stories": ["Patterns/Feedback and Metrics/States"],
       "deprecated": false
     },
     {
@@ -317,7 +317,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["non-color-trend-label", "semantic-article"],
       "tokens": ["--card", "--success", "--danger"],
-      "stories": ["Migration/Console Neo states and patterns/Metrics"],
+      "stories": ["Patterns/Feedback and Metrics/Metrics"],
       "deprecated": false
     },
     {
@@ -328,7 +328,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["native-date-input", "label-association"],
       "tokens": ["--input", "--background"],
-      "stories": ["Migration/Console Neo filters/Toolbar"],
+      "stories": ["Patterns/Filter Toolbar/Toolbar"],
       "deprecated": false
     },
     {
@@ -339,7 +339,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["label-association", "keyboard-popover"],
       "tokens": ["--input", "--popover"],
-      "stories": ["Migration/Console Neo filters/Toolbar"],
+      "stories": ["Patterns/Filter Toolbar/Toolbar"],
       "deprecated": false
     },
     {
@@ -350,7 +350,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["enter-search", "responsive-reflow"],
       "tokens": ["--card", "--border"],
-      "stories": ["Migration/Console Neo filters/Toolbar"],
+      "stories": ["Patterns/Filter Toolbar/Toolbar"],
       "deprecated": false
     },
     {
@@ -361,7 +361,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["label-association", "responsive-layout"],
       "tokens": ["--muted-foreground"],
-      "stories": ["Migration/Console Neo filters/Toolbar"],
+      "stories": ["Patterns/Filter Toolbar/Toolbar"],
       "deprecated": false
     },
     {
@@ -372,7 +372,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["combobox-role", "keyboard-navigation"],
       "tokens": ["--input", "--popover"],
-      "stories": ["Migration/Console Neo filters/Toolbar"],
+      "stories": ["Patterns/Filter Toolbar/Toolbar"],
       "deprecated": false
     },
     {
@@ -383,7 +383,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["menu-checkbox-role", "touch-pointer"],
       "tokens": ["--input", "--popover"],
-      "stories": ["Migration/Console Neo filters/Toolbar"],
+      "stories": ["Patterns/Filter Toolbar/Toolbar"],
       "deprecated": false
     },
     {
@@ -394,7 +394,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["landmark-layout", "mobile-navigation-dialog", "safe-area"],
       "tokens": ["--panel", "--surface", "--motion-base"],
-      "stories": ["Migration/Console Neo app shell/Dashboard"],
+      "stories": ["Patterns/App Shell/Dashboard"],
       "deprecated": false
     },
     {
@@ -405,7 +405,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["semantic-section", "semantic-heading"],
       "tokens": ["--primary", "--foreground"],
-      "stories": ["Migration/Console Neo app shell/Dashboard"],
+      "stories": ["Patterns/App Shell/Dashboard"],
       "deprecated": false
     },
     {
@@ -416,7 +416,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["responsive-reflow"],
       "tokens": ["--card", "--border"],
-      "stories": ["Migration/Console Neo app shell/Dashboard"],
+      "stories": ["Patterns/App Shell/Dashboard"],
       "deprecated": false
     },
     {
@@ -427,7 +427,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["aside-landmark", "responsive-grid"],
       "tokens": ["--ec-space-4"],
-      "stories": ["Migration/Console Neo app shell/Dashboard"],
+      "stories": ["Patterns/App Shell/Dashboard"],
       "deprecated": false
     },
     {
@@ -438,7 +438,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["aside-landmark", "sticky-footer"],
       "tokens": ["--panel", "--shadow-lg"],
-      "stories": ["Migration/Console Neo app shell/Dashboard"],
+      "stories": ["Patterns/App Shell/Dashboard"],
       "deprecated": false
     },
     {
@@ -449,7 +449,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["native-table", "mobile-card-fallback", "loading-empty-error-states"],
       "tokens": ["--card", "--border"],
-      "stories": ["Migration/Console Neo data patterns/Table"],
+      "stories": ["Patterns/Data Workflows/Table"],
       "deprecated": false
     },
     {
@@ -460,7 +460,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["dialog-focus-trap", "escape-close", "responsive-sheet"],
       "tokens": ["--popover", "--shadow-xl"],
-      "stories": ["Migration/Console Neo data patterns/Overlay"],
+      "stories": ["Patterns/Data Workflows/Overlay"],
       "deprecated": false
     },
     {
@@ -471,7 +471,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["dialog-title-description", "responsive-sheet"],
       "tokens": ["--popover", "--shadow-xl"],
-      "stories": ["Migration/Console Neo data patterns/Overlay"],
+      "stories": ["Patterns/Data Workflows/Overlay"],
       "deprecated": false
     },
     {

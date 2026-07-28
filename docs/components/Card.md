@@ -1,5 +1,5 @@
 # Card
 
-默认结构、圆角、Ring、间距、标题字号、Footer 表面和按压透视效果均迁移自 Console Neo `card.tsx`。
+通过 CardHeader、CardTitle、CardDescription、CardContent、CardAction 和 CardFooter 组合内容层级，并支持可按压表面。
 
-视觉来源记录在 `migration/manifest.json`，不得使用其他设计系统默认样式替换。
+圆角、边框、阴影、间距和交互状态由 Design Tokens 统一控制。

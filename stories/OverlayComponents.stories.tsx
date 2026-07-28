@@ -1,4 +1,4 @@
-﻿import { type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   Button,
@@ -67,7 +67,7 @@ function ToastScene() {
 }
 
 const meta = {
-  title: 'Migration/Overlay Reference Harness',
+  title: 'Components/Floating Overlays',
   component: Modal,
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof Modal>;

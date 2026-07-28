@@ -1,7 +1,7 @@
-﻿import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ActionBar, AppShell, DetailWorkbench, FormWorkbench, PageScaffold } from '../src';
-it('renders the Console Neo shell and opens mobile navigation', async () => {
+it('renders the application shell and opens mobile navigation', async () => {
   const user = userEvent.setup();
   render(
     <AppShell

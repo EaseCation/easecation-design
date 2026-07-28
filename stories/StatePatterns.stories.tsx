@@ -1,4 +1,4 @@
-﻿import { ActivityIcon, PlusIcon } from 'lucide-react';
+import { ActivityIcon, PlusIcon } from 'lucide-react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   Button,
@@ -10,7 +10,7 @@ import {
   ThemeProvider,
 } from '../src';
 const meta = {
-  title: 'Migration/Console Neo states and patterns',
+  title: 'Patterns/Feedback and Metrics',
   component: StatCard,
   decorators: [
     (Story) => (

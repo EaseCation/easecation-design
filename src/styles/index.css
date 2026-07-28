@@ -32,7 +32,7 @@
   outline-offset: 2px;
 }
 
-/* Opt-in global utilities migrated from Console Neo. */
+/* Opt-in global utilities. */
 .ec-root {
   min-height: 100svh;
   overflow-x: hidden;

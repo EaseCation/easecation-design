@@ -1,4 +1,4 @@
-﻿import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import {
   Button,
@@ -46,7 +46,7 @@ function Demo() {
   );
 }
 const meta = {
-  title: 'Migration/Console Neo filters',
+  title: 'Patterns/Filter Toolbar',
   component: FilterBar,
   decorators: [
     (Story) => (

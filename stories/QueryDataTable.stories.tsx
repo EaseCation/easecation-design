@@ -1,4 +1,4 @@
-﻿import { createColumnHelper } from '@tanstack/react-table';
+import { createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button, QueryDataTable, ResponsiveDialog, ThemeProvider } from '../src';
@@ -57,7 +57,7 @@ function Demo() {
   );
 }
 const meta = {
-  title: 'Migration/Data Pattern Reference Harness',
+  title: 'Patterns/Query Data Table',
   component: QueryDataTable,
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof QueryDataTable>;

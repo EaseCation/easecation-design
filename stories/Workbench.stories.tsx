@@ -1,4 +1,4 @@
-﻿import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   Button,
   DetailWorkbench,
@@ -25,7 +25,7 @@ function Frame({ children, maxWidth = '64rem' }: { children: React.ReactNode; ma
   );
 }
 const meta = {
-  title: 'Migration/Workbench Reference Harness',
+  title: 'Patterns/Workbench',
   component: DetailWorkbench,
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof DetailWorkbench>;

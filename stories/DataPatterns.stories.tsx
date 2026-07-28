@@ -1,4 +1,4 @@
-﻿import { createColumnHelper } from '@tanstack/react-table';
+import { createColumnHelper } from '@tanstack/react-table';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { Button, QueryDataTable, ResponsiveDialog, ThemeProvider } from '../src';
@@ -45,7 +45,7 @@ function Demo() {
   );
 }
 const meta = {
-  title: 'Migration/Console Neo data patterns',
+  title: 'Patterns/Data Workflows',
   component: QueryDataTable,
   decorators: [
     (Story) => (

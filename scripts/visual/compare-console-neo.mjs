@@ -11,7 +11,7 @@ const scenes = [
     sourceUrl: process.env.CONSOLE_NEO_REFERENCE_URL ?? 'http://127.0.0.1:8002/__design-reference',
     targetUrl:
       process.env.DESIGN_REFERENCE_URL ??
-      'http://127.0.0.1:6006/iframe.html?id=migration-reference-harness--components&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=examples-component-gallery--components&viewMode=story',
   },
   {
     name: 'patterns',
@@ -20,88 +20,88 @@ const scenes = [
       'http://127.0.0.1:8002/__design-pattern-reference',
     targetUrl:
       process.env.DESIGN_PATTERN_REFERENCE_URL ??
-      'http://127.0.0.1:6006/iframe.html?id=migration-pattern-reference-harness--patterns&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=patterns-responsive-composition--patterns&viewMode=story',
   },
   {
     name: 'overlay-menu',
     sourceUrl: 'http://127.0.0.1:8002/__design-overlay-reference?scene=menu',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-overlay-reference-harness--menu&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=components-floating-overlays--menu&viewMode=story',
   },
   {
     name: 'overlay-dialog',
     sourceUrl: 'http://127.0.0.1:8002/__design-overlay-reference?scene=dialog',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-overlay-reference-harness--dialog&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=components-floating-overlays--dialog&viewMode=story',
   },
   {
     name: 'overlay-sheet',
     sourceUrl: 'http://127.0.0.1:8002/__design-overlay-reference?scene=sheet',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-overlay-reference-harness--sheet&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=components-floating-overlays--sheet&viewMode=story',
   },
   {
     name: 'overlay-popover',
     sourceUrl: 'http://127.0.0.1:8002/__design-overlay-reference?scene=popover',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-overlay-reference-harness--popover-surface&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=components-floating-overlays--popover-surface&viewMode=story',
   },
   {
     name: 'overlay-tooltip',
     sourceUrl: 'http://127.0.0.1:8002/__design-overlay-reference?scene=tooltip',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-overlay-reference-harness--tooltip-surface&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=components-floating-overlays--tooltip-surface&viewMode=story',
   },
   {
     name: 'scroll-area',
     sourceUrl: 'http://127.0.0.1:8002/__design-overlay-reference?scene=scroll',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-overlay-reference-harness--scroll-surface&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=components-floating-overlays--scroll-surface&viewMode=story',
   },
   {
     name: 'toast',
     clickText: 'Show toast',
     sourceUrl: 'http://127.0.0.1:8002/__design-overlay-reference?scene=toast',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-overlay-reference-harness--toast-surface&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=components-floating-overlays--toast-surface&viewMode=story',
   },
   {
     name: 'app-shell',
     sourceUrl: 'http://127.0.0.1:8002/__design-shell-reference',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-console-neo-app-shell--dashboard&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=patterns-app-shell--dashboard&viewMode=story',
   },
   {
     name: 'detail-workbench',
     sourceUrl: 'http://127.0.0.1:8002/__design-workbench-reference?scene=detail',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-workbench-reference-harness--detail&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=patterns-workbench--detail&viewMode=story',
   },
   {
     name: 'form-workbench',
     sourceUrl: 'http://127.0.0.1:8002/__design-workbench-reference?scene=form',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-workbench-reference-harness--form&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=patterns-workbench--form&viewMode=story',
   },
   {
     name: 'inline-query-error',
     sourceUrl: 'http://127.0.0.1:8002/__design-workbench-reference?scene=error',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-workbench-reference-harness--error&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=patterns-workbench--error&viewMode=story',
   },
   {
     name: 'datetime-picker',
     clickText: '2026-07-28 09:30',
     sourceUrl: 'http://127.0.0.1:8002/__design-filter-reference?scene=datetime',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-filter-reference-harness--date-time&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=components-filter-controls--date-time&viewMode=story',
   },
   {
     name: 'filter-picker',
     clickText: 'Active',
     sourceUrl: 'http://127.0.0.1:8002/__design-filter-reference?scene=picker',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-filter-reference-harness--picker&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=components-filter-controls--picker&viewMode=story',
   },
   {
     name: 'filter-select',
@@ -109,20 +109,20 @@ const scenes = [
     clickSelector: '[role=combobox]',
     sourceUrl: 'http://127.0.0.1:8002/__design-filter-reference?scene=select',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-filter-reference-harness--select&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=components-filter-controls--select&viewMode=story',
   },
   {
     name: 'query-data-table',
     sourceUrl: 'http://127.0.0.1:8002/__design-data-reference',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-data-pattern-reference-harness--table&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=patterns-query-data-table--table&viewMode=story',
   },
   {
     name: 'responsive-dialog',
     clickText: 'Open responsive overlay',
     sourceUrl: 'http://127.0.0.1:8002/__design-data-reference',
     targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=migration-data-pattern-reference-harness--overlay&viewMode=story',
+      'http://127.0.0.1:6006/iframe.html?id=patterns-query-data-table--overlay&viewMode=story',
   },
 ];
 const requestedScenes = new Set((process.env.VISUAL_SCENES ?? '').split(',').filter(Boolean));

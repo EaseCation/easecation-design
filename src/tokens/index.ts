@@ -22,4 +22,4 @@ export const defaultTokens = {
 export type ThemeMode = 'light' | 'dark' | 'system';
 export type Density = 'compact' | 'comfortable';
 export type ThemeOverrides = Partial<Record<`--ec-${string}`, string | number>>;
-export * from './consoleNeo';
+export * from './easecation';

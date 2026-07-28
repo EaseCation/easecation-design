@@ -972,7 +972,7 @@
     display: none;
   }
 }
-/* Console Neo component migration overrides. Source: packages/ui/src/components/button.tsx and input.tsx. */
+/* Button and input interaction refinements. */
 .ec-button {
   position: relative;
   flex: none;
@@ -1141,7 +1141,7 @@
 .ec-input-shell--error:focus-within {
   box-shadow: 0 0 0 3px oklch(0.6 0.24 25 / 0.12);
 }
-/* Console Neo display migration. Sources: card.tsx, badge.tsx, skeleton.tsx, avatar.tsx. */
+/* Data display component surfaces and states. */
 .ec-card {
   position: relative;
   display: flex;
@@ -1418,7 +1418,7 @@
   height: 2.5rem;
 }
 
-/* Screenshot-diff corrections from the Console Neo reference harness. */
+/* Visual regression geometry corrections. */
 .ec-card__title {
   grid-column: 1;
   grid-row: 1;
@@ -1599,16 +1599,16 @@
   color: var(--muted-foreground);
   stroke-width: 2;
 }
-.ec-migration-reference {
+.ec-component-gallery {
   padding: 2rem !important;
 }
 @media (max-width: 639px) {
-  .ec-migration-reference {
+  .ec-component-gallery {
     padding: 1rem !important;
   }
 }
 
-/* Exact inherited geometry from Console Neo's Tailwind typography and composition. */
+/* Typography and composition geometry. */
 .ec-card__description {
   line-height: 1.5;
 }
@@ -1656,7 +1656,7 @@
   background: color-mix(in oklch, var(--destructive) 10%, transparent);
 }
 
-/* Dialog and Sheet geometry migrated from Console Neo's Radix wrappers. */
+/* Dialog and sheet overlay geometry. */
 .ec-dialog-overlay {
   position: fixed;
   inset: 0;
@@ -1940,7 +1940,7 @@
   }
 }
 
-/* Console Neo dropdown, scroll area, separator and label primitives. */
+/* Dropdown, scroll area, separator and label primitives. */
 .ec-dropdown-content {
   font-family: var(--ec-font-sans);
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
@@ -2129,7 +2129,7 @@
   opacity: 0.45;
 }
 
-/* Console Neo reusable state and dashboard pattern components. */
+/* Reusable state and dashboard pattern components. */
 .ec-empty-state {
   display: flex;
   min-height: 14rem;
@@ -2352,7 +2352,7 @@
   }
 }
 
-/* Console Neo date and filter toolbar patterns. */
+/* Date and filter toolbar patterns. */
 .ec-calendar {
   display: grid;
   gap: 0.25rem;
@@ -2504,7 +2504,7 @@
   }
 }
 
-/* Console Neo application shell and page workbench geometry. */
+/* Application shell and page workbench geometry. */
 .ec-app-shell {
   display: flex;
   min-height: 100svh;
@@ -2721,7 +2721,7 @@
   }
 }
 
-/* Console Neo query table and responsive overlay compositions. */
+/* Query table and responsive overlay compositions. */
 .ec-query-table {
   width: 100%;
   min-width: 0;
@@ -2958,7 +2958,7 @@
   font-size: 0.75rem;
   line-height: 1rem;
 }
-.ec-migration-reference {
+.ec-component-gallery {
   min-height: 100svh;
   background: var(--background);
   color: var(--foreground);
@@ -2975,12 +2975,12 @@
   }
 }
 @media (max-width: 639px) {
-  .ec-migration-reference {
+  .ec-component-gallery {
     padding: 1rem;
   }
 }
 
-/* Console Neo Radix floating surfaces. */
+/* Radix floating surfaces. */
 .ec-tooltip-content {
   z-index: var(--ec-z-tooltip);
   display: inline-flex;
@@ -3027,7 +3027,7 @@
   line-height: 1.5;
 }
 
-/* Sonner surface values migrated from Console Neo. */
+/* Sonner surface values. */
 .ec-toaster,
 .ec-toaster [data-sonner-toast] {
   font-family: var(--ec-font-sans);

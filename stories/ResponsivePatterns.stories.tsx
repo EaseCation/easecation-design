@@ -1,4 +1,4 @@
-﻿import { ActivityIcon, PlusIcon } from 'lucide-react';
+import { ActivityIcon, PlusIcon } from 'lucide-react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   ActionBar,
@@ -16,10 +16,10 @@ import {
 function PatternReference() {
   return (
     <ThemeProvider>
-      <main className="ec-migration-reference">
+      <main className="ec-component-gallery">
         <div className="ec-pattern-reference-page">
           <header>
-            <p className="ec-reference-eyebrow">Console Neo Pattern Reference</p>
+            <p className="ec-reference-eyebrow">EaseCation Design Patterns</p>
             <h1 className="ec-reference-title">复合组件迁移基线</h1>
             <p className="ec-reference-description">状态、筛选、指标卡与页面操作区域。</p>
           </header>
@@ -72,7 +72,7 @@ function PatternReference() {
   );
 }
 const meta = {
-  title: 'Migration/Pattern Reference Harness',
+  title: 'Patterns/Responsive Composition',
   component: SectionCard,
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof SectionCard>;

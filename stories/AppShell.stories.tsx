@@ -1,4 +1,4 @@
-﻿import { BarChart3Icon, HomeIcon, SettingsIcon } from 'lucide-react';
+import { BarChart3Icon, HomeIcon, SettingsIcon } from 'lucide-react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   ActionBar,
@@ -26,7 +26,7 @@ const Sidebar = () => (
   </div>
 );
 const meta = {
-  title: 'Migration/Console Neo app shell',
+  title: 'Patterns/App Shell',
   component: AppShell,
   parameters: { layout: 'fullscreen' },
   decorators: [

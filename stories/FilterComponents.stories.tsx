@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DateTimePicker, FilterPicker, FilterSelect, ThemeProvider } from '../src';
 const options = [
@@ -38,7 +38,7 @@ function SelectDemo() {
   return <FilterSelect value={value} onValueChange={setValue} options={options} />;
 }
 const meta = {
-  title: 'Migration/Filter Reference Harness',
+  title: 'Components/Filter Controls',
   component: DateTimePicker,
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof DateTimePicker>;

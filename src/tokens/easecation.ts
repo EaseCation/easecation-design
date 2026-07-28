@@ -1,5 +1,5 @@
 // Generated from the Console Neo visual token snapshot.
-export const consoleNeoTokens = {
+export const easecationTokens = {
   "light": {
     "--background": "oklch(0.985 0.005 255)",
     "--foreground": "oklch(0.18 0.025 264)",
@@ -133,4 +133,4 @@ export const consoleNeoTokens = {
   }
 } as const;
 
-export type ConsoleNeoColorToken = keyof typeof consoleNeoTokens.light;
+export type EaseCationColorToken = keyof typeof easecationTokens.light;

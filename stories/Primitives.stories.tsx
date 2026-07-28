@@ -1,4 +1,4 @@
-﻿import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   Button,
   DropdownMenu,
@@ -15,7 +15,7 @@ import {
   ThemeProvider,
 } from '../src';
 const meta = {
-  title: 'Migration/Console Neo primitives',
+  title: 'Components/Primitives',
   component: DropdownMenu,
   decorators: [
     (Story) => (

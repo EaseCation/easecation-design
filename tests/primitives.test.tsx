@@ -1,4 +1,4 @@
-﻿import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   Button,
@@ -12,7 +12,7 @@ import {
   Separator,
 } from '../src';
 
-it('opens the migrated dropdown menu and supports keyboard selection', async () => {
+it('opens the dropdown menu and supports keyboard selection', async () => {
   const user = userEvent.setup();
   const selected = vi.fn();
   render(

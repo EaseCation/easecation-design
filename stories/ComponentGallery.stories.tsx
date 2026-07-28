@@ -44,7 +44,7 @@ const grid: React.CSSProperties = {
 function Reference() {
   return (
     <ThemeProvider>
-      <main className="ec-migration-reference" style={shell}>
+      <main className="ec-component-gallery" style={shell}>
         <div style={page}>
           <header>
             <p
@@ -58,7 +58,7 @@ function Reference() {
                 textTransform: 'uppercase',
               }}
             >
-              Console Neo Reference
+              EaseCation Design
             </p>
             <h1
               style={{
@@ -205,7 +205,7 @@ function Reference() {
   );
 }
 const meta = {
-  title: 'Migration/Reference Harness',
+  title: 'Examples/Component Gallery',
   component: Card,
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof Card>;
