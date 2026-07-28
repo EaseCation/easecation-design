@@ -1,0 +1,6 @@
+node_modules
+pnpm-lock.yaml
+dist
+storybook-static
+coverage
+EaseCation-Design-设计文档.md

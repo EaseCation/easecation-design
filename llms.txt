@@ -1,0 +1,32 @@
+# EaseCation Design AI index
+
+Public package: `@easecation/design`
+Runtime has no Tailwind, Router, Capacitor or business API dependency.
+
+## Components
+- ThemeProvider [beta/foundation]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Button [beta/foundation]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Input [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Tabs [beta/navigation]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Modal [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Drawer [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- ToastProvider [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- SafeArea [beta/platform]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Select [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Checkbox [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Switch [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Form [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Table [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Tooltip [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Popover [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Pagination [beta/navigation]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Card [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Badge [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Skeleton [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Avatar [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+
+## Rules
+- Reuse registered components before creating new UI.
+- Keep APIs domain-neutral and SSR-safe.
+- Do not import EaseCation private APIs, URLs, logos or restricted assets.
+- Run `pnpm ai:validate` before review.

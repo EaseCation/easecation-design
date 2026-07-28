@@ -1,0 +1,9 @@
+import { createContext, forwardRef, useContext, type HTMLAttributes, type ImgHTMLAttributes } from 'react';
+type AvatarSize='sm'|'md'|'lg';const AvatarContext=createContext<AvatarSize>('md');
+export interface AvatarProps extends HTMLAttributes<HTMLSpanElement>{size?:AvatarSize;}
+export const Avatar=forwardRef<HTMLSpanElement,AvatarProps>(function Avatar({size='md',className,...props},ref){return <AvatarContext.Provider value={size}><span ref={ref} data-size={size} className={['ec-avatar',className].filter(Boolean).join(' ')} {...props}/></AvatarContext.Provider>});
+export const AvatarImage=forwardRef<HTMLImageElement,ImgHTMLAttributes<HTMLImageElement>>(function AvatarImage({className,alt='',...props},ref){return <img ref={ref} alt={alt} className={['ec-avatar__image',className].filter(Boolean).join(' ')} {...props}/>});
+export const AvatarFallback=forwardRef<HTMLSpanElement,HTMLAttributes<HTMLSpanElement>>(function AvatarFallback({className,...props},ref){return <span ref={ref} className={['ec-avatar__fallback',className].filter(Boolean).join(' ')} {...props}/>});
+export const AvatarBadge=forwardRef<HTMLSpanElement,HTMLAttributes<HTMLSpanElement>>(function AvatarBadge({className,...props},ref){return <span ref={ref} className={['ec-avatar__badge',className].filter(Boolean).join(' ')} {...props}/>});
+export const AvatarGroup=forwardRef<HTMLDivElement,HTMLAttributes<HTMLDivElement>>(function AvatarGroup({className,...props},ref){return <div ref={ref} className={['ec-avatar-group',className].filter(Boolean).join(' ')} {...props}/>});
+export const AvatarGroupCount=forwardRef<HTMLDivElement,HTMLAttributes<HTMLDivElement>>(function AvatarGroupCount({className,...props},ref){const size=useContext(AvatarContext);return <div ref={ref} data-size={size} className={['ec-avatar-group__count',className].filter(Boolean).join(' ')} {...props}/>});

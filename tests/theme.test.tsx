@@ -1,0 +1,3 @@
+import { render, screen } from '@testing-library/react';
+import { ThemeProvider } from '../src';
+it('applies theme, density and token overrides',()=>{render(<ThemeProvider mode="dark" density="compact" tokens={{'--ec-color-primary':'red'}}><span>content</span></ThemeProvider>);const root=screen.getByText('content').parentElement!;expect(root).toHaveAttribute('data-ec-theme','dark');expect(root).toHaveAttribute('data-ec-density','compact');expect(root).toHaveStyle({'--ec-color-primary':'red'});});

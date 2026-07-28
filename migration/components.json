@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 1,
+  "statuses": [
+    {
+      "area": "tokens",
+      "source": "packages/tokens/src/theme.css",
+      "target": "src/styles/tokens.css",
+      "status": "migrated",
+      "notes": "light, dark, black-gold and aliases"
+    },
+    {
+      "area": "global-style",
+      "source": "packages/ui/src/styles/globals.css",
+      "target": "src/styles/index.css",
+      "status": "migrated",
+      "notes": "fonts, antialiasing, reduced motion, surfaces, page utilities, motion utilities, route/sidebar transitions, safe areas and native Sonner adjustments migrated"
+    },
+    {
+      "area": "Avatar",
+      "source": "packages/ui/src/components/avatar.tsx",
+      "target": "src/components/Avatar/Avatar.tsx",
+      "status": "migrated",
+      "notes": "sizes, fallback, badge and group migrated"
+    },
+    {
+      "area": "Badge",
+      "source": "packages/ui/src/components/badge.tsx",
+      "target": "src/components/Badge/Badge.tsx",
+      "status": "migrated",
+      "notes": "visual variants migrated"
+    },
+    {
+      "area": "Button",
+      "source": "packages/ui/src/components/button.tsx",
+      "target": "src/components/Button/Button.tsx",
+      "status": "migrated",
+      "notes": "sizes, variants and pressable perspective migrated"
+    },
+    {
+      "area": "Calendar",
+      "source": "packages/ui/src/components/calendar.tsx",
+      "target": "src/components/Calendar/Calendar.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile same-scene geometry validated in pattern reference; API, keyboard behavior, tests and Story migrated"
+    },
+    {
+      "area": "Card",
+      "source": "packages/ui/src/components/card.tsx",
+      "target": "src/components/Card/Card.tsx",
+      "status": "migrated",
+      "notes": "composition and pressable effect migrated"
+    },
+    {
+      "area": "Checkbox",
+      "source": "packages/ui/src/components/checkbox.tsx",
+      "target": "src/components/Checkbox/Checkbox.tsx",
+      "status": "migrated",
+      "notes": "same-scene desktop/mobile geometry and behavior tests validated"
+    },
+    {
+      "area": "Dialog",
+      "source": "packages/ui/src/components/dialog.tsx",
+      "target": "src/components/Modal/Modal.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile open-state screenshot, focus behavior, Escape/outside-close and Overlay Stack validated"
+    },
+    {
+      "area": "DropdownMenu",
+      "source": "packages/ui/src/components/dropdown-menu.tsx",
+      "target": "src/components/DropdownMenu/DropdownMenu.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile open-state screenshot plus keyboard and selection behavior validated"
+    },
+    {
+      "area": "Input",
+      "source": "packages/ui/src/components/input.tsx",
+      "target": "src/components/Input/Input.tsx",
+      "status": "migrated",
+      "notes": "visual states migrated with extended clearable API"
+    },
+    {
+      "area": "Label",
+      "source": "packages/ui/src/components/label.tsx",
+      "target": "src/components/Label/Label.tsx",
+      "status": "migrated",
+      "notes": "Radix label semantics and Console Neo typography migrated"
+    },
+    {
+      "area": "ActionBar",
+      "source": "packages/ui/src/components/layout/action-bar.tsx",
+      "target": "src/components/Layout/Workbench.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile same-scene geometry and responsive layout validated"
+    },
+    {
+      "area": "AppShell",
+      "source": "packages/ui/src/components/layout/app-shell.tsx",
+      "target": "src/components/Layout/Workbench.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile shell, sticky header, responsive sidebar trigger, content frame and bottom bar same-scene screenshots validated"
+    },
+    {
+      "area": "DetailWorkbench",
+      "source": "packages/ui/src/components/layout/detail-workbench.tsx",
+      "target": "src/components/Layout/Workbench.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile two-column and stacked same-scene screenshots validated"
+    },
+    {
+      "area": "FormWorkbench",
+      "source": "packages/ui/src/components/layout/form-workbench.tsx",
+      "target": "src/components/Layout/Workbench.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile aside, sticky footer and form surface same-scene screenshots validated"
+    },
+    {
+      "area": "PageScaffold",
+      "source": "packages/ui/src/components/layout/page-scaffold.tsx",
+      "target": "src/components/Layout/Workbench.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile title, actions, page gutters and stack geometry validated inside AppShell same-scene screenshots"
+    },
+    {
+      "area": "AccessGate",
+      "source": "packages/ui/src/components/navigation/permission-gate.tsx",
+      "target": "src/components/AccessGate/AccessGate.tsx",
+      "status": "migrated",
+      "notes": "source behavior migrated exactly under domain-neutral AccessGate; PermissionGate retained as deprecated compatibility alias"
+    },
+    {
+      "area": "DatetimePicker",
+      "source": "packages/ui/src/components/patterns/datetime-picker.tsx",
+      "target": "src/components/Filters/Filters.tsx",
+      "status": "migrated",
+      "notes": "click-driven desktop/mobile popover screenshots, value composition and input tests validated"
+    },
+    {
+      "area": "FilterBar",
+      "source": "packages/ui/src/components/patterns/filter-bar.tsx",
+      "target": "src/components/Filters/Filters.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile same-scene geometry, actions and responsive stacking validated"
+    },
+    {
+      "area": "FilterField",
+      "source": "packages/ui/src/components/patterns/filter-field.tsx",
+      "target": "src/components/Filters/Filters.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile same-scene label/control geometry validated"
+    },
+    {
+      "area": "FilterPicker",
+      "source": "packages/ui/src/components/patterns/filter-picker.tsx",
+      "target": "src/components/Filters/Filters.tsx",
+      "status": "migrated",
+      "notes": "multiple-selection dropdown geometry and click-driven desktop/mobile screenshots validated"
+    },
+    {
+      "area": "FilterSelect",
+      "source": "packages/ui/src/components/patterns/filter-select.tsx",
+      "target": "src/components/Filters/Filters.tsx",
+      "status": "migrated",
+      "notes": "Radix select open-state desktop/mobile screenshots and controlled value behavior validated"
+    },
+    {
+      "area": "QueryDataTable",
+      "source": "packages/ui/src/components/patterns/query-data-table.tsx",
+      "target": "src/components/Patterns/DataPatterns.tsx",
+      "status": "migrated",
+      "notes": "desktop table and mobile card layouts validated in same-scene screenshots with TanStack row model"
+    },
+    {
+      "area": "ResponsiveDialog",
+      "source": "packages/ui/src/components/patterns/responsive-dialog.tsx",
+      "target": "src/components/Patterns/DataPatterns.tsx",
+      "status": "migrated",
+      "notes": "click-driven desktop dialog and mobile bottom-sheet screenshots, footer and close semantics validated"
+    },
+    {
+      "area": "ResponsiveOverlay",
+      "source": "packages/ui/src/components/patterns/responsive-overlay.tsx",
+      "target": "src/components/Patterns/DataPatterns.tsx",
+      "status": "migrated",
+      "notes": "underlying responsive portal, header/body/footer, breakpoint and focus behavior validated through ResponsiveDialog"
+    },
+    {
+      "area": "SectionCard",
+      "source": "packages/ui/src/components/patterns/section-card.tsx",
+      "target": "src/components/Patterns/Patterns.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile same-scene header/body geometry validated"
+    },
+    {
+      "area": "StatCard",
+      "source": "packages/ui/src/components/patterns/stat-card.tsx",
+      "target": "src/components/Patterns/Patterns.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile same-scene typography, spacing, trend and icon geometry validated"
+    },
+    {
+      "area": "ToolbarControls",
+      "source": "packages/ui/src/components/patterns/toolbar-controls.ts",
+      "target": "src/components/Filters/Filters.tsx",
+      "status": "migrated",
+      "notes": "shared field heights/menu widths and Enter-search behavior validated through filter scenes and unit tests"
+    },
+    {
+      "area": "Popover",
+      "source": "packages/ui/src/components/popover.tsx",
+      "target": "src/components/Popover/Popover.tsx",
+      "status": "migrated",
+      "notes": "Radix composition and convenience API migrated; desktop/mobile open-state same-scene screenshots validated"
+    },
+    {
+      "area": "ScrollArea",
+      "source": "packages/ui/src/components/scroll-area.tsx",
+      "target": "src/components/ScrollArea/ScrollArea.tsx",
+      "status": "migrated",
+      "notes": "Radix viewport and scrollbar geometry validated in desktop/mobile same-scene screenshots"
+    },
+    {
+      "area": "Select",
+      "source": "packages/ui/src/components/select.tsx",
+      "target": "src/components/Select/Select.tsx",
+      "status": "migrated",
+      "notes": "same-scene desktop/mobile geometry and behavior tests validated"
+    },
+    {
+      "area": "Separator",
+      "source": "packages/ui/src/components/separator.tsx",
+      "target": "src/components/Separator/Separator.tsx",
+      "status": "migrated",
+      "notes": "orientation, decorative semantics and exact border opacity migrated"
+    },
+    {
+      "area": "Sheet",
+      "source": "packages/ui/src/components/sheet.tsx",
+      "target": "src/components/Drawer/Drawer.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile right-sheet open-state screenshot, focus behavior and Overlay Stack validated"
+    },
+    {
+      "area": "Skeleton",
+      "source": "packages/ui/src/components/skeleton.tsx",
+      "target": "src/components/Skeleton/Skeleton.tsx",
+      "status": "migrated",
+      "notes": "pulse and surface migrated"
+    },
+    {
+      "area": "Sonner",
+      "source": "packages/ui/src/components/sonner.tsx",
+      "target": "src/components/Toast/Toast.tsx",
+      "status": "migrated",
+      "notes": "Sonner 2.0.7 wrapper, rich-color application usage, icons, provider adapter, cleanup test and click-driven screenshots validated"
+    },
+    {
+      "area": "EmptyState",
+      "source": "packages/ui/src/components/state/empty-state.tsx",
+      "target": "src/components/State/State.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile same-scene geometry and action rendering validated"
+    },
+    {
+      "area": "ErrorState",
+      "source": "packages/ui/src/components/state/error-state.tsx",
+      "target": "src/components/State/State.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile same-scene geometry and retry behavior validated"
+    },
+    {
+      "area": "InlineQueryError",
+      "source": "packages/ui/src/components/state/inline-query-error.tsx",
+      "target": "src/components/State/State.tsx",
+      "status": "migrated",
+      "notes": "desktop/mobile alert geometry, retry action and accessible role same-scene screenshots validated"
+    },
+    {
+      "area": "Table",
+      "source": "packages/ui/src/components/table.tsx",
+      "target": "src/components/Table/Table.tsx",
+      "status": "migrated",
+      "notes": "same-scene desktop/mobile geometry and behavior tests validated"
+    },
+    {
+      "area": "Tabs",
+      "source": "packages/ui/src/components/tabs.tsx",
+      "target": "src/components/Tabs/Tabs.tsx",
+      "status": "migrated",
+      "notes": "same-scene desktop/mobile geometry and behavior tests validated"
+    },
+    {
+      "area": "Textarea",
+      "source": "packages/ui/src/components/textarea.tsx",
+      "target": "src/components/Input/Input.tsx",
+      "status": "migrated",
+      "notes": "exact min-height, padding, border, focus and disabled states migrated"
+    },
+    {
+      "area": "Tooltip",
+      "source": "packages/ui/src/components/tooltip.tsx",
+      "target": "src/components/Tooltip/Tooltip.tsx",
+      "status": "migrated",
+      "notes": "Radix provider/root/trigger/content API and convenience API migrated; desktop/mobile open-state screenshots validated"
+    }
+  ]
+}

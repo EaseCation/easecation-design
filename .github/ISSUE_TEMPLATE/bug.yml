@@ -1,0 +1,12 @@
+name: Bug report
+description: 报告可复现的组件问题
+body:
+  - type: textarea
+    attributes: { label: 复现步骤 }
+    validations: { required: true }
+  - type: textarea
+    attributes: { label: 预期与实际行为 }
+    validations: { required: true }
+  - type: input
+    attributes: { label: 版本与运行环境 }
+    validations: { required: true }

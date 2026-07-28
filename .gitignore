@@ -1,0 +1,9 @@
+node_modules/
+dist/
+storybook-static/
+coverage/
+*.tgz
+.DS_Store
+.env*
+!.env.example
+output/
