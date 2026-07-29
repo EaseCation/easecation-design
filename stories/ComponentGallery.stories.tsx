@@ -22,6 +22,8 @@ import {
   Textarea,
   ThemeProvider,
 } from '../src';
+import { useStoryTranslations } from '../.storybook/story-locale';
+
 const shell: React.CSSProperties = {
   minHeight: '100svh',
   background: 'var(--background)',
@@ -41,7 +43,85 @@ const grid: React.CSSProperties = {
   gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,24rem),1fr))',
   gap: '1.5rem',
 };
+const translations = {
+  en: {
+    title: 'Component gallery',
+    description: 'A fixed-content reference for reviewing component states and composition.',
+    basicActions: 'Basic actions',
+    basicDescription: 'Buttons, badges, and avatars in the public design language.',
+    active: 'Active',
+    primary: 'Primary action',
+    secondary: 'Secondary action',
+    outline: 'Outline button',
+    ghost: 'Ghost button',
+    danger: 'Danger action',
+    details: 'View details',
+    dataEntry: 'Data entry',
+    dataEntryDescription: 'Input, selection, and checked states.',
+    workspaceName: 'Workspace name',
+    workspaceValue: 'East operations center',
+    notes: 'Additional notes',
+    region: 'Select region',
+    east: 'East region',
+    west: 'West region',
+    weekly: 'Receive weekly summary',
+    contentSwitching: 'Content switching',
+    contentDescription: 'Tabs and skeleton states.',
+    overview: 'Overview',
+    activity: 'Activity',
+    noActivity: 'No activity yet',
+    dataTable: 'Data table',
+    tableDescription: 'Fixed data for reviewing spacing and hierarchy.',
+    workspace: 'Workspace',
+    status: 'Status',
+    members: 'Members',
+    maintenance: 'Maintenance',
+    rows: [
+      { id: '1', name: 'North workspace', status: 'Active', members: 24 },
+      { id: '2', name: 'Content operations', status: 'Maintenance', members: 12 },
+    ],
+  },
+  'zh-CN': {
+    title: '组件展示',
+    description: '使用固定内容检查组件状态与组合效果。',
+    basicActions: '基础操作',
+    basicDescription: '公共设计语言中的按钮、徽标和头像。',
+    active: '运行中',
+    primary: '主要操作',
+    secondary: '次要操作',
+    outline: '边框按钮',
+    ghost: '幽灵按钮',
+    danger: '危险操作',
+    details: '查看详情',
+    dataEntry: '数据录入',
+    dataEntryDescription: '输入、选择和复选状态。',
+    workspaceName: '工作区名称',
+    workspaceValue: '华东运营中心',
+    notes: '补充说明',
+    region: '选择区域',
+    east: '华东',
+    west: '华西',
+    weekly: '接收每周摘要',
+    contentSwitching: '内容切换',
+    contentDescription: '标签页与骨架屏状态。',
+    overview: '概览',
+    activity: '活动',
+    noActivity: '暂无活动记录',
+    dataTable: '数据表格',
+    tableDescription: '使用固定数据检查间距和层级。',
+    workspace: '工作区',
+    status: '状态',
+    members: '成员',
+    maintenance: '维护',
+    rows: [
+      { id: '1', name: '北区工作区', status: '运行中', members: 24 },
+      { id: '2', name: '内容运营', status: '维护', members: 12 },
+    ],
+  },
+} as const;
+
 function Reference() {
+  const copy = useStoryTranslations(translations);
   return (
     <ThemeProvider>
       <main className="ec-component-gallery" style={shell}>
@@ -69,7 +149,7 @@ function Reference() {
                 letterSpacing: '-.02em',
               }}
             >
-              设计系统迁移基线
+              {copy.title}
             </h1>
             <p
               style={{
@@ -79,25 +159,25 @@ function Reference() {
                 color: 'var(--muted-foreground)',
               }}
             >
-              固定内容用于组件包同场景截图对比。
+              {copy.description}
             </p>
           </header>
           <Card>
             <CardHeader>
-              <CardTitle>基础操作</CardTitle>
-              <CardDescription>按钮、徽标和头像的真实 Console Neo 样式。</CardDescription>
+              <CardTitle>{copy.basicActions}</CardTitle>
+              <CardDescription>{copy.basicDescription}</CardDescription>
               <CardAction>
-                <Badge>运行中</Badge>
+                <Badge>{copy.active}</Badge>
               </CardAction>
             </CardHeader>
             <CardContent
               style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '.5rem' }}
             >
-              <Button>主要操作</Button>
-              <Button variant="secondary">次要操作</Button>
-              <Button variant="outline">边框按钮</Button>
-              <Button variant="ghost">幽灵按钮</Button>
-              <Button variant="danger">危险操作</Button>
+              <Button>{copy.primary}</Button>
+              <Button variant="secondary">{copy.secondary}</Button>
+              <Button variant="outline">{copy.outline}</Button>
+              <Button variant="ghost">{copy.ghost}</Button>
+              <Button variant="danger">{copy.danger}</Button>
               <AvatarGroup>
                 <Avatar>
                   <AvatarFallback>EC</AvatarFallback>
@@ -109,40 +189,40 @@ function Reference() {
               </AvatarGroup>
             </CardContent>
             <CardFooter>
-              <Button size="sm">查看详情</Button>
+              <Button size="sm">{copy.details}</Button>
             </CardFooter>
           </Card>
           <div style={grid}>
             <Card>
               <CardHeader>
-                <CardTitle>数据录入</CardTitle>
-                <CardDescription>输入、选择和复选状态。</CardDescription>
+                <CardTitle>{copy.dataEntry}</CardTitle>
+                <CardDescription>{copy.dataEntryDescription}</CardDescription>
               </CardHeader>
               <CardContent style={{ display: 'grid', gap: '.75rem' }}>
-                <Input aria-label="工作区名称" defaultValue="华东运营中心" />
-                <Textarea aria-label="补充说明" placeholder="补充说明" />
+                <Input aria-label={copy.workspaceName} defaultValue={copy.workspaceValue} />
+                <Textarea aria-label={copy.notes} placeholder={copy.notes} />
                 <Select
-                  label="选择区域"
+                  label={copy.region}
                   defaultValue="east"
                   options={[
-                    { value: 'east', label: '华东' },
-                    { value: 'west', label: '华西' },
+                    { value: 'east', label: copy.east },
+                    { value: 'west', label: copy.west },
                   ]}
                 />
-                <Checkbox defaultChecked label="接收每周摘要" />
+                <Checkbox defaultChecked label={copy.weekly} />
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>内容切换</CardTitle>
-                <CardDescription>Tabs 与 Skeleton 状态。</CardDescription>
+                <CardTitle>{copy.contentSwitching}</CardTitle>
+                <CardDescription>{copy.contentDescription}</CardDescription>
               </CardHeader>
               <CardContent>
                 <Tabs
                   items={[
                     {
                       value: 'overview',
-                      label: '概览',
+                      label: copy.overview,
                       content: (
                         <div style={{ display: 'grid', gap: '.75rem', paddingTop: '.75rem' }}>
                           <Skeleton style={{ height: '1rem', width: '66%' }} />
@@ -152,7 +232,7 @@ function Reference() {
                     },
                     {
                       value: 'activity',
-                      label: '活动',
+                      label: copy.activity,
                       content: (
                         <div
                           style={{
@@ -161,7 +241,7 @@ function Reference() {
                             color: 'var(--muted-foreground)',
                           }}
                         >
-                          暂无活动记录
+                          {copy.noActivity}
                         </div>
                       ),
                     },
@@ -172,29 +252,26 @@ function Reference() {
           </div>
           <Card>
             <CardHeader>
-              <CardTitle>数据表格</CardTitle>
-              <CardDescription>固定数据用于间距和层级对比。</CardDescription>
+              <CardTitle>{copy.dataTable}</CardTitle>
+              <CardDescription>{copy.tableDescription}</CardDescription>
             </CardHeader>
             <CardContent>
               <Table
                 columns={[
-                  { key: 'name', title: '工作区', dataIndex: 'name' },
+                  { key: 'name', title: copy.workspace, dataIndex: 'name' },
                   {
                     key: 'status',
                     dataIndex: 'status',
-                    title: '状态',
+                    title: copy.status,
                     render: (value) => (
-                      <Badge variant={value === '运行中' ? 'secondary' : 'outline'}>
+                      <Badge variant={value === copy.active ? 'secondary' : 'outline'}>
                         {String(value)}
                       </Badge>
                     ),
                   },
-                  { key: 'members', title: '成员', dataIndex: 'members', align: 'right' },
+                  { key: 'members', title: copy.members, dataIndex: 'members', align: 'right' },
                 ]}
-                data={[
-                  { id: '1', name: '北区工作区', status: '运行中', members: 24 },
-                  { id: '2', name: '内容运营', status: '维护', members: 12 },
-                ]}
+                data={[...copy.rows]}
                 rowKey="id"
               />
             </CardContent>

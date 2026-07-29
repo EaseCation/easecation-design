@@ -1,0 +1,140 @@
+/* Story-only composition styles; public components remain domain-neutral. */
+.ec-story-app-sidebar {
+  display: flex;
+  min-height: 100%;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--ec-space-6);
+  padding: var(--ec-space-4);
+  color: var(--foreground);
+}
+
+.ec-story-app-sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--ec-space-3);
+  min-height: 2.75rem;
+  padding: 0 var(--ec-space-2);
+}
+
+.ec-story-app-sidebar__brand > span:last-child,
+.ec-story-app-sidebar__status > span:last-child {
+  display: grid;
+  min-width: 0;
+  gap: 0.125rem;
+}
+
+.ec-story-app-sidebar__brand strong,
+.ec-story-app-sidebar__status strong {
+  overflow: hidden;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ec-story-app-sidebar__brand small,
+.ec-story-app-sidebar__status small {
+  overflow: hidden;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ec-story-app-sidebar__mark {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+  place-items: center;
+  border-radius: var(--radius-lg);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.875rem;
+  font-weight: 750;
+  box-shadow: 0 0.5rem 1.5rem color-mix(in oklch, var(--primary) 20%, transparent);
+}
+
+.ec-story-app-sidebar__nav {
+  display: grid;
+  gap: var(--ec-space-1);
+}
+
+.ec-story-app-sidebar__nav > p {
+  margin: 0 0 var(--ec-space-2);
+  padding: 0 var(--ec-space-3);
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ec-story-app-sidebar__link {
+  display: flex;
+  min-height: 2.5rem;
+  align-items: center;
+  gap: var(--ec-space-3);
+  padding: 0 var(--ec-space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 550;
+  text-decoration: none;
+  transition:
+    color var(--motion-fast) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard),
+    background var(--motion-fast) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard);
+}
+
+.ec-story-app-sidebar__link svg {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+}
+
+.ec-story-app-sidebar__link:hover {
+  background: color-mix(in oklch, var(--accent) 70%, transparent);
+  color: var(--accent-foreground);
+  transform: translateX(0.125rem);
+}
+
+.ec-story-app-sidebar__link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.ec-story-app-sidebar__link.is-active {
+  border-color: color-mix(in oklch, var(--primary) 18%, transparent);
+  background: color-mix(in oklch, var(--primary) 11%, transparent);
+  color: var(--foreground);
+  box-shadow: inset 0.1875rem 0 var(--primary);
+}
+
+.ec-story-app-sidebar__link.is-active svg {
+  color: var(--primary);
+}
+
+.ec-story-app-sidebar__status {
+  display: flex;
+  align-items: center;
+  gap: var(--ec-space-3);
+  margin-top: auto;
+  padding: var(--ec-space-3);
+  border: 1px solid color-mix(in oklch, var(--border) 55%, transparent);
+  border-radius: var(--radius-xl);
+  background: color-mix(in oklch, var(--background) 58%, transparent);
+}
+
+.ec-story-app-sidebar__status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: none;
+  border-radius: 999px;
+  background: var(--success);
+  box-shadow: 0 0 0 0.25rem color-mix(in oklch, var(--success) 14%, transparent);
+}

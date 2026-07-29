@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DateTimePicker, FilterPicker, FilterSelect, ThemeProvider } from '../src';
-const options = [
-  { value: 'active', label: 'Active' },
-  { value: 'paused', label: 'Paused' },
-  { value: 'archived', label: 'Archived' },
-];
+import { useStoryTranslations } from '../.storybook/story-locale';
+
+const translations = {
+  en: { active: 'Active', paused: 'Paused', archived: 'Archived' },
+  'zh-CN': { active: '启用', paused: '暂停', archived: '已归档' },
+} as const;
+
 function Frame({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
@@ -31,10 +33,22 @@ function DateTimeDemo() {
 }
 function PickerDemo() {
   const [value, setValue] = useState(['active']);
+  const copy = useStoryTranslations(translations);
+  const options = [
+    { value: 'active', label: copy.active },
+    { value: 'paused', label: copy.paused },
+    { value: 'archived', label: copy.archived },
+  ];
   return <FilterPicker mode="multiple" value={value} onValueChange={setValue} options={options} />;
 }
 function SelectDemo() {
   const [value, setValue] = useState('active');
+  const copy = useStoryTranslations(translations);
+  const options = [
+    { value: 'active', label: copy.active },
+    { value: 'paused', label: copy.paused },
+    { value: 'archived', label: copy.archived },
+  ];
   return <FilterSelect value={value} onValueChange={setValue} options={options} />;
 }
 const meta = {
