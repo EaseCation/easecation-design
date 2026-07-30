@@ -1,4 +1,4 @@
-import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type HTMLAttributes, type ReactNode } from 'react';
 export const Layout = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function Layout(
   { className, ...props },
   ref,
@@ -109,3 +109,80 @@ export function ResponsiveGrid({
     />
   );
 }
+
+export interface NavbarItem extends AnchorHTMLAttributes<HTMLAnchorElement> {
+  label: ReactNode;
+  active?: boolean;
+}
+
+export interface NavbarProps extends HTMLAttributes<HTMLElement> {
+  brand: ReactNode;
+  brandHref?: string;
+  items?: NavbarItem[];
+  actions?: ReactNode;
+  fixed?: boolean;
+  maxWidth?: string;
+  menuButton?: ReactNode;
+  menuButtonProps?: ButtonHTMLAttributes<HTMLButtonElement>;
+}
+
+export const Navbar = forwardRef<HTMLElement, NavbarProps>(function Navbar(
+  {
+    brand,
+    brandHref = '#',
+    items = [],
+    actions,
+    fixed = false,
+    maxWidth = '76rem',
+    menuButton,
+    menuButtonProps,
+    className,
+    style,
+    ...props
+  },
+  ref,
+) {
+  const { className: menuButtonClassName, type: menuButtonType, ...restMenuButtonProps } =
+    menuButtonProps ?? {};
+
+  return (
+    <header
+      ref={ref}
+      className={['ec-navbar', fixed && 'ec-navbar--fixed', className].filter(Boolean).join(' ')}
+      style={{ ...style, '--ec-navbar-max-width': maxWidth } as HTMLAttributes<HTMLElement>['style']}
+      {...props}
+    >
+      <div className="ec-navbar__inner">
+        <a className="ec-navbar__brand" href={brandHref}>
+          {brand}
+        </a>
+        {items.length ? (
+          <nav className="ec-navbar__nav" aria-label="Main navigation">
+            {items.map(({ label, active, className: itemClassName, ...item }) => (
+              <a
+                key={`${item.href ?? ''}-${String(label)}`}
+                className={['ec-navbar__link', active && 'is-active', itemClassName]
+                  .filter(Boolean)
+                  .join(' ')}
+                aria-current={active ? 'page' : undefined}
+                {...item}
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
+        ) : null}
+        {actions ? <div className="ec-navbar__actions">{actions}</div> : null}
+        {menuButton ? (
+          <button
+            className={['ec-navbar__menu-button', menuButtonClassName].filter(Boolean).join(' ')}
+            type={menuButtonType ?? 'button'}
+            {...restMenuButtonProps}
+          >
+            {menuButton}
+          </button>
+        ) : null}
+      </div>
+    </header>
+  );
+});
