@@ -7,10 +7,10 @@ it('renders state components and retry actions', () => {
   );
   expect(screen.getByText('No records')).toBeInTheDocument();
   rerender(<ErrorState title="Request failed" onRetry={retry} />);
-  fireEvent.click(screen.getByRole('button', { name: '重试' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Retry' }));
   expect(retry).toHaveBeenCalledOnce();
   rerender(<InlineQueryError description="Network unavailable" />);
-  expect(screen.getByRole('alert')).toHaveTextContent('加载失败');
+  expect(screen.getByRole('alert')).toHaveTextContent('Unable to load');
 });
 it('renders neutral card patterns', () => {
   render(

@@ -18,6 +18,7 @@ const translations = {
     workspaceHelp: 'Used to identify the workspace within the team.',
     workspacePlaceholder: 'For example: East operations center',
     dataRegion: 'Data region',
+    dataRegionPlaceholder: 'Select region',
     east: 'East region',
     west: 'West region',
     legacy: 'Legacy region',
@@ -33,6 +34,7 @@ const translations = {
     workspaceHelp: '用于团队内部识别。',
     workspacePlaceholder: '例如：华东运营中心',
     dataRegion: '数据区域',
+    dataRegionPlaceholder: '选择区域',
     east: '华东',
     west: '华西',
     legacy: '旧区域',
@@ -57,6 +59,7 @@ function CompleteFormExample() {
           <Select
             {...props}
             label={copy.dataRegion}
+            placeholder={copy.dataRegionPlaceholder}
             options={[
               { value: 'east', label: copy.east, description: copy.lowLatency },
               { value: 'west', label: copy.west },

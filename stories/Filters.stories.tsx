@@ -22,6 +22,13 @@ const translations = {
     active: 'Active',
     paused: 'Paused',
     updatedAt: 'Updated at',
+    statusPlaceholder: 'Select status',
+    all: 'All',
+    dateLabel: 'Date',
+    timeLabel: 'Time',
+    startDate: 'Start date',
+    endDate: 'End date',
+    selectedSeparator: ', ',
   },
   'zh-CN': {
     reset: '重置',
@@ -32,6 +39,13 @@ const translations = {
     active: '启用',
     paused: '暂停',
     updatedAt: '更新时间',
+    statusPlaceholder: '选择状态',
+    all: '全部',
+    dateLabel: '日期',
+    timeLabel: '时间',
+    startDate: '开始日期',
+    endDate: '结束日期',
+    selectedSeparator: '、',
   },
 } as const;
 
@@ -57,6 +71,9 @@ function Demo() {
             mode="multiple"
             value={status}
             onValueChange={setStatus}
+            placeholder={copy.statusPlaceholder}
+            clearLabel={copy.all}
+            selectedSeparator={copy.selectedSeparator}
             options={[
               { value: 'active', label: copy.active },
               { value: 'paused', label: copy.paused },
@@ -64,10 +81,19 @@ function Demo() {
           />
         </FilterField>
         <FilterField label={copy.updatedAt}>
-          <DateTimePicker value={date} onChange={setDate} />
+          <DateTimePicker
+            value={date}
+            onChange={setDate}
+            dateLabel={copy.dateLabel}
+            timeLabel={copy.timeLabel}
+          />
         </FilterField>
       </FilterBar>
-      <Calendar mode="range" selected={{ from: new Date(2026, 6, 1), to: new Date(2026, 6, 28) }} />
+      <Calendar
+        mode="range"
+        selected={{ from: new Date(2026, 6, 1), to: new Date(2026, 6, 28) }}
+        labels={{ rangeStart: copy.startDate, rangeEnd: copy.endDate }}
+      />
     </div>
   );
 }

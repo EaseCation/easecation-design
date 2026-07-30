@@ -10,7 +10,7 @@ it('renders query data table data and empty states', () => {
   );
   expect(screen.getByText('North')).toBeInTheDocument();
   rerender(<QueryDataTable data={[]} columns={columns} />);
-  expect(screen.getByText('暂无数据')).toBeInTheDocument();
+  expect(screen.getByText('No data')).toBeInTheDocument();
 });
 it('renders responsive dialog with accessible close behavior', async () => {
   const user = userEvent.setup();
@@ -28,7 +28,7 @@ it('renders responsive dialog with accessible close behavior', async () => {
     </ResponsiveDialog>,
   );
   expect(screen.getByRole('dialog')).toHaveTextContent('Body');
-  await user.click(screen.getByRole('button', { name: '关闭' }));
+  await user.click(screen.getByRole('button', { name: 'Close' }));
   expect(open).toBe(false);
   rerender(
     <ResponsiveDialog

@@ -5,8 +5,11 @@ export interface CalendarProps extends Omit<ComponentProps<'div'>, 'onSelect'> {
   mode?: 'single' | 'range';
   selected?: Date | DateRange;
   onSelect?: (value: CalendarSelectValue) => void;
-  defaultMonth?: Date;
-  numberOfMonths?: number;
+  labels?: {
+    single?: string;
+    rangeStart?: string;
+    rangeEnd?: string;
+  };
 }
 const toValue = (date?: Date) =>
   date
@@ -19,7 +22,7 @@ const fromValue = (value: string) => {
   return Number.isNaN(date.getTime()) ? undefined : date;
 };
 export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calendar(
-  { mode = 'single', selected, onSelect, className, ...props },
+  { mode = 'single', selected, onSelect, labels, className, ...props },
   ref,
 ) {
   if (mode === 'range') {
@@ -31,7 +34,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
         {...props}
       >
         <label>
-          <span>开始日期</span>
+          <span>{labels?.rangeStart ?? 'Start date'}</span>
           <input
             type="date"
             value={toValue(range.from)}
@@ -39,7 +42,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
           />
         </label>
         <label>
-          <span>结束日期</span>
+          <span>{labels?.rangeEnd ?? 'End date'}</span>
           <input
             type="date"
             value={toValue(range.to)}
@@ -53,7 +56,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
   return (
     <div ref={ref} className={['ec-calendar', className].filter(Boolean).join(' ')} {...props}>
       <label>
-        <span>日期</span>
+        <span>{labels?.single ?? 'Date'}</span>
         <input
           type="date"
           value={toValue(date)}

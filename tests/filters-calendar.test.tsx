@@ -4,9 +4,16 @@ import { Calendar, DateTimePicker, FilterBar, FilterField, FilterPicker, Input }
 it('emits single and range calendar values', () => {
   const select = vi.fn();
   const { rerender } = render(<Calendar selected={new Date(2026, 6, 28)} onSelect={select} />);
-  fireEvent.change(screen.getByLabelText('日期'), { target: { value: '2026-07-29' } });
+  fireEvent.change(screen.getByLabelText('Date'), { target: { value: '2026-07-29' } });
   expect(select).toHaveBeenCalled();
-  rerender(<Calendar mode="range" selected={{}} onSelect={select} />);
+  rerender(
+    <Calendar
+      mode="range"
+      selected={{}}
+      onSelect={select}
+      labels={{ rangeStart: '开始日期', rangeEnd: '结束日期' }}
+    />,
+  );
   expect(screen.getByLabelText('开始日期')).toBeInTheDocument();
   expect(screen.getByLabelText('结束日期')).toBeInTheDocument();
 });
@@ -31,7 +38,7 @@ it('submits filter search and handles multiple picker', async () => {
   );
   await user.type(screen.getByLabelText('Keyword'), 'report{Enter}');
   expect(search).toHaveBeenCalledOnce();
-  await user.click(screen.getByRole('button', { name: '请选择' }));
+  await user.click(screen.getByRole('button', { name: 'Select options' }));
   await user.click(screen.getByRole('menuitemcheckbox', { name: 'Active' }));
   expect(change).toHaveBeenCalledWith(['active']);
 });
@@ -40,6 +47,6 @@ it('combines date and time values', async () => {
   const change = vi.fn();
   render(<DateTimePicker value="2026-07-28T09:30" onChange={change} />);
   await user.click(screen.getByRole('button', { name: /2026-07-28/ }));
-  fireEvent.change(screen.getByLabelText('时间'), { target: { value: '10:15' } });
+  fireEvent.change(screen.getByLabelText('Time'), { target: { value: '10:15' } });
   expect(change).toHaveBeenCalledWith('2026-07-28T10:15');
 });

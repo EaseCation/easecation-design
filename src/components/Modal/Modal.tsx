@@ -14,6 +14,7 @@ export interface ModalProps {
   closeOnBackdrop?: boolean;
   fullScreenOnMobile?: boolean;
   showCloseButton?: boolean;
+  closeLabel?: string;
   instant?: boolean;
   className?: string;
 }
@@ -37,6 +38,7 @@ export function Modal({
   closeOnBackdrop = true,
   fullScreenOnMobile = false,
   showCloseButton = true,
+  closeLabel = 'Close',
   instant = false,
   className,
 }: ModalProps) {
@@ -89,7 +91,7 @@ export function Modal({
           {footer ? <footer className="ec-modal__footer">{footer}</footer> : null}
           {showCloseButton ? (
             <DialogPrimitive.Close asChild>
-              <IconButton className="ec-overlay-close" size="sm" label="关闭" icon={<XIcon />} />
+              <IconButton className="ec-overlay-close" size="sm" label={closeLabel} icon={<XIcon />} />
             </DialogPrimitive.Close>
           ) : null}
         </DialogPrimitive.Content>

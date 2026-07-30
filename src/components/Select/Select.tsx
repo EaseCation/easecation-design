@@ -38,7 +38,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
     value,
     defaultValue = '',
     onValueChange,
-    placeholder = '请选择',
+    placeholder = 'Select an option',
     label,
     size = 'md',
     status = 'default',

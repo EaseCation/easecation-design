@@ -35,7 +35,7 @@ export interface ErrorStateProps extends ComponentProps<'div'> {
 export function ErrorState({
   title,
   description,
-  actionLabel = '重试',
+  actionLabel = 'Retry',
   onRetry,
   className,
   ...props
@@ -68,9 +68,9 @@ export interface InlineQueryErrorProps extends ComponentProps<'div'> {
   embedded?: boolean;
 }
 export function InlineQueryError({
-  title = '加载失败',
+  title = 'Unable to load',
   description,
-  actionLabel = '重试',
+  actionLabel = 'Retry',
   onRetry,
   embedded = false,
   className,

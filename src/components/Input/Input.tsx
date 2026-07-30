@@ -16,6 +16,7 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   prefix?: ReactNode;
   suffix?: ReactNode;
   clearable?: boolean;
+  clearLabel?: string;
   onClear?: () => void;
 }
 
@@ -26,6 +27,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     prefix,
     suffix,
     clearable = false,
+    clearLabel = 'Clear input',
     onClear,
     className,
     value,
@@ -74,7 +76,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         {...props}
       />
       {clearable && String(currentValue).length > 0 && !disabled ? (
-        <button type="button" className="ec-input-clear" aria-label="清除输入" onClick={clear}>
+        <button type="button" className="ec-input-clear" aria-label={clearLabel} onClick={clear}>
           ×
         </button>
       ) : suffix ? (

@@ -12,6 +12,11 @@ const translations = {
     workspace: 'Workspace',
     status: 'Status',
     members: 'Members',
+    pagination: 'Pagination',
+    previousPage: 'Previous page',
+    nextPage: 'Next page',
+    totalLabel: '86 items',
+    pageLabel: 'Page',
     rows: [
       { id: 'a', name: 'North workspace', status: 'Active', members: 24 },
       { id: 'b', name: 'Content operations', status: 'Maintenance', members: 12 },
@@ -27,6 +32,11 @@ const translations = {
     workspace: '工作区',
     status: '状态',
     members: '成员',
+    pagination: '分页',
+    previousPage: '上一页',
+    nextPage: '下一页',
+    totalLabel: '共 86 项',
+    pageLabel: '第',
     rows: [
       { id: 'a', name: '北区工作区', status: '运行中', members: 24 },
       { id: 'b', name: '内容运营', status: '维护', members: 12 },
@@ -60,7 +70,19 @@ function WorkspaceTableExample() {
         data={[...copy.rows]}
         rowKey="id"
       />
-      <Pagination page={2} total={86} pageSize={10} onPageChange={() => {}} />
+      <Pagination
+        page={2}
+        total={86}
+        pageSize={10}
+        onPageChange={() => {}}
+        ariaLabel={copy.pagination}
+        previousLabel={copy.previousPage}
+        nextLabel={copy.nextPage}
+        totalLabel={() => copy.totalLabel}
+        pageLabel={(page) =>
+          copy.pageLabel === 'Page' ? `${copy.pageLabel} ${page}` : `${copy.pageLabel} ${page} 页`
+        }
+      />
     </div>
   );
 }

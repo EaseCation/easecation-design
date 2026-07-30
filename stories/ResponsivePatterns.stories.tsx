@@ -98,7 +98,7 @@ function PatternReference() {
               <Input defaultValue={copy.report} />
             </FilterField>
             <FilterField label={copy.date}>
-              <Calendar selected={new Date(2026, 6, 28)} />
+              <Calendar selected={new Date(2026, 6, 28)} labels={{ single: copy.date }} />
             </FilterField>
           </FilterBar>
           <ActionBar>

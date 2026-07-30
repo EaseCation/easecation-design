@@ -15,6 +15,7 @@ export interface DrawerProps {
   size?: string;
   closeOnBackdrop?: boolean;
   showCloseButton?: boolean;
+  closeLabel?: string;
   instant?: boolean;
   className?: string;
 }
@@ -30,6 +31,7 @@ export function Drawer({
   size,
   closeOnBackdrop = true,
   showCloseButton = true,
+  closeLabel = 'Close',
   instant = false,
   className,
 }: DrawerProps) {
@@ -74,7 +76,7 @@ export function Drawer({
           {footer ? <footer className="ec-drawer__footer">{footer}</footer> : null}
           {showCloseButton ? (
             <DialogPrimitive.Close asChild>
-              <IconButton className="ec-overlay-close" size="sm" label="关闭" icon={<XIcon />} />
+              <IconButton className="ec-overlay-close" size="sm" label={closeLabel} icon={<XIcon />} />
             </DialogPrimitive.Close>
           ) : null}
         </DialogPrimitive.Content>

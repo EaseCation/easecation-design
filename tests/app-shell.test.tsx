@@ -18,7 +18,7 @@ it('renders the application shell and opens mobile navigation', async () => {
     </AppShell>,
   );
   expect(screen.getByText('Dashboard')).toBeInTheDocument();
-  await user.click(screen.getByRole('button', { name: '打开导航' }));
+  await user.click(screen.getByRole('button', { name: 'Open navigation' }));
   expect(screen.getByRole('dialog')).toHaveTextContent('Reports');
   await user.click(screen.getByRole('link', { name: 'Reports' }));
 });

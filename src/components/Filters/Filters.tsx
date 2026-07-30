@@ -82,7 +82,7 @@ export function FilterSelect({
   value,
   onValueChange,
   options,
-  placeholder = '请选择',
+  placeholder = 'Select an option',
   className,
   disabled,
   'aria-label': ariaLabel,
@@ -112,6 +112,8 @@ export type FilterPickerOption = FilterSelectOption;
 type PickerBase = {
   options: FilterPickerOption[];
   placeholder?: string;
+  clearLabel?: string;
+  selectedSeparator?: string;
   className?: string;
   triggerClassName?: string;
   disabled?: boolean;
@@ -123,7 +125,9 @@ export type FilterPickerProps =
 export function FilterPicker(props: FilterPickerProps) {
   if (props.mode !== 'multiple') return <FilterSelect {...props} />;
   const labels = props.options.filter((o) => props.value.includes(o.value)).map((o) => o.label);
-  const text = labels.length ? labels.join('、') : (props.placeholder ?? '请选择');
+  const text = labels.length
+    ? labels.join(props.selectedSeparator ?? ', ')
+    : (props.placeholder ?? 'Select options');
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild disabled={props.disabled}>
@@ -143,7 +147,7 @@ export function FilterPicker(props: FilterPickerProps) {
             props.onValueChange([]);
           }}
         >
-          全部
+          {props.clearLabel ?? 'All'}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         {props.options.map((o) => (
@@ -171,13 +175,17 @@ const parse = (value: string) => {
 export function DateTimePicker({
   value,
   onChange,
-  placeholder = '选择日期时间',
+  placeholder = 'Select date and time',
+  dateLabel = 'Date',
+  timeLabel = 'Time',
   className,
   'aria-label': ariaLabel,
 }: {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  dateLabel?: string;
+  timeLabel?: string;
   className?: string;
   'aria-label'?: string;
 }) {
@@ -188,7 +196,7 @@ export function DateTimePicker({
   const content = useMemo(
     () => (
       <div className="ec-datetime-fields">
-        <Label htmlFor={dateId}>日期</Label>
+        <Label htmlFor={dateId}>{dateLabel}</Label>
         <Input
           id={dateId}
           type="date"
@@ -197,7 +205,7 @@ export function DateTimePicker({
             onChange(e.target.value ? `${e.target.value}T${part.time || '00:00'}` : '')
           }
         />
-        <Label htmlFor={timeId}>时间</Label>
+        <Label htmlFor={timeId}>{timeLabel}</Label>
         <Input
           id={timeId}
           type="time"
@@ -206,7 +214,7 @@ export function DateTimePicker({
         />
       </div>
     ),
-    [dateId, onChange, part.date, part.time, timeId],
+    [dateId, dateLabel, onChange, part.date, part.time, timeId, timeLabel],
   );
   return (
     <Popover

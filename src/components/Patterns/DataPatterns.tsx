@@ -30,6 +30,7 @@ export interface QueryDataTableProps<T> {
   emptyDescription?: string;
   errorTitle?: string;
   errorDescription?: string;
+  retryLabel?: string;
   onRetry?: () => void;
 }
 export function QueryDataTable<T>({
@@ -45,10 +46,11 @@ export function QueryDataTable<T>({
   panelClassName,
   tableClassName,
   tableRowClassName,
-  emptyTitle = '暂无数据',
-  emptyDescription = '调整筛选条件后再试一次。',
+  emptyTitle = 'No data',
+  emptyDescription = 'Adjust the filters and try again.',
   errorTitle,
   errorDescription,
+  retryLabel,
   onRetry,
 }: QueryDataTableProps<T>) {
   const mobile = useMediaQuery('(max-width: 767px)');
@@ -75,6 +77,7 @@ export function QueryDataTable<T>({
       <InlineQueryError
         title={errorTitle}
         description={errorDescription}
+        actionLabel={retryLabel}
         onRetry={onRetry}
         embedded={embedded}
         className={embeddedShellClassName}
@@ -176,6 +179,7 @@ export interface ResponsiveOverlayContentProps extends ComponentProps<typeof Pri
   mobileSide?: 'top' | 'right' | 'bottom' | 'left';
   desktopSize?: ResponsiveOverlayDesktopSize;
   showCloseButton?: boolean;
+  closeLabel?: string;
   instant?: boolean;
   forceMount?: true;
 }
@@ -186,6 +190,7 @@ export function ResponsiveOverlayContent({
   mobileSide = 'bottom',
   desktopSize = 'lg',
   showCloseButton = true,
+  closeLabel = 'Close',
   instant = false,
   forceMount,
   ...props
@@ -212,7 +217,7 @@ export function ResponsiveOverlayContent({
         {children}
         {showCloseButton ? (
           <Primitive.Close asChild>
-            <IconButton className="ec-overlay-close" size="sm" label="关闭" icon={<XIcon />} />
+            <IconButton className="ec-overlay-close" size="sm" label={closeLabel} icon={<XIcon />} />
           </Primitive.Close>
         ) : null}
       </Primitive.Content>
@@ -265,6 +270,7 @@ export interface ResponsiveDialogProps {
   desktopContentClassName?: string;
   mobileContentClassName?: string;
   bodyClassName?: string;
+  closeLabel?: string;
   instant?: boolean;
   forceMount?: true;
 }
@@ -278,6 +284,7 @@ export function ResponsiveDialog({
   desktopContentClassName,
   mobileContentClassName,
   bodyClassName,
+  closeLabel,
   instant,
   forceMount,
 }: ResponsiveDialogProps) {
@@ -286,6 +293,7 @@ export function ResponsiveDialog({
       <ResponsiveOverlayContent
         className={desktopContentClassName}
         mobileClassName={mobileContentClassName}
+        closeLabel={closeLabel}
         instant={instant}
         forceMount={forceMount}
       >

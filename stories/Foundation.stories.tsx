@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
+  AccessGate,
   Button,
   Container,
   Flex,
@@ -7,6 +8,7 @@ import {
   Input,
   PageHeader,
   ResponsiveGrid,
+  SafeArea,
   Surface,
   Tabs,
   ThemeProvider,
@@ -32,6 +34,10 @@ const translations = {
     help: 'The name can be changed at any time.',
     placeholder: 'For example: East operations center',
     noActivity: 'No activity yet',
+    platformTitle: 'Platform boundaries',
+    safeArea: 'Safe-area padding',
+    accessAllowed: 'Allowed content',
+    accessFallback: 'Fallback content',
   },
   'zh-CN': {
     primary: '主要操作',
@@ -51,6 +57,10 @@ const translations = {
     help: '名称可以随时修改。',
     placeholder: '例如：华东运营中心',
     noActivity: '暂无活动记录',
+    platformTitle: '平台边界',
+    safeArea: '安全区域内边距',
+    accessAllowed: '允许访问的内容',
+    accessFallback: '兜底内容',
   },
 } as const;
 
@@ -115,6 +125,25 @@ function DashboardExample() {
     </>
   );
 }
+function PlatformBoundariesExample() {
+  const copy = useStoryTranslations(translations);
+  return (
+    <Surface style={{ padding: '1.25rem' }}>
+      <h2 style={{ marginTop: 0 }}>{copy.platformTitle}</h2>
+      <SafeArea
+        edges={['top', 'bottom']}
+        style={{ border: '1px solid var(--ec-color-border)', borderRadius: 'var(--ec-radius-lg)' }}
+      >
+        {copy.safeArea}
+      </SafeArea>
+      <div style={{ marginTop: '1rem' }}>
+        <AccessGate allowed fallback={copy.accessFallback}>
+          {copy.accessAllowed}
+        </AccessGate>
+      </div>
+    </Surface>
+  );
+}
 
 const meta = {
   title: 'Foundation/Tokens and Theme',
@@ -133,3 +162,4 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 export const Buttons: Story = { render: () => <ButtonsExample /> };
 export const GenericDashboard: Story = { render: () => <DashboardExample /> };
+export const PlatformBoundaries: Story = { render: () => <PlatformBoundariesExample /> };

@@ -86,7 +86,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": [],
       "tokens": ["--ec-safe-top", "--ec-safe-right", "--ec-safe-bottom", "--ec-safe-left"],
-      "stories": [],
+      "stories": ["Foundation/Tokens and Theme/Platform Boundaries"],
       "deprecated": false
     },
     {
@@ -482,7 +482,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["fallback-content", "domain-neutral-authorization-boundary"],
       "tokens": [],
-      "stories": [],
+      "stories": ["Foundation/Tokens and Theme/Platform Boundaries"],
       "deprecated": false
     }
   ]

@@ -14,6 +14,7 @@ export interface AppShellProps {
   onCollapse?: (collapsed: boolean) => void;
   sidebarWidth?: number;
   collapsedSidebarWidth?: number;
+  mobileNavigationLabel?: string;
 }
 export function AppShell({
   brand,
@@ -26,6 +27,7 @@ export function AppShell({
   collapsed = false,
   sidebarWidth = 252,
   collapsedSidebarWidth = 68,
+  mobileNavigationLabel = 'Open navigation',
 }: AppShellProps) {
   const [open, setOpen] = useState(false);
   const [phase, setPhase] = useState<'in' | 'out' | null>(null);
@@ -60,7 +62,7 @@ export function AppShell({
         >
           <div className="ec-app-shell__mobile-head">
             <IconButton
-              label="打开导航"
+              label={mobileNavigationLabel}
               icon={<MenuIcon />}
               variant="outline"
               onClick={() => change(true)}
