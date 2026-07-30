@@ -5,7 +5,11 @@ import dts from 'vite-plugin-dts';
 export default defineConfig({
   plugins: [react(), dts({ include: ['src'], rollupTypes: true })],
   build: {
-    lib: { entry: 'src/index.ts', formats: ['es'], fileName: 'index' },
+    lib: {
+      entry: { index: 'src/index.ts', compat: 'src/compat.ts' },
+      formats: ['es'],
+      fileName: (_format, entryName) => `${entryName}.js`,
+    },
     cssCodeSplit: false,
     rollupOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime'],

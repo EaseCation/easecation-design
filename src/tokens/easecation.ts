@@ -1,4 +1,4 @@
-// Generated from the Console Neo visual token snapshot.
+// Generated from the EaseCation visual token snapshot.
 export const easecationTokens = {
   "light": {
     "--background": "oklch(0.985 0.005 255)",

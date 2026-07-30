@@ -1,0 +1,198 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@workspace/tokens/theme.css";
+@import "@easecation/design/style.css";
+
+@custom-variant dark (&:is(.dark *));
+@source "../../../apps/**/*.{ts,tsx}";
+@source "../../../components/**/*.{ts,tsx}";
+@source "../**/*.{ts,tsx}";
+
+@theme inline {
+  --font-sans: "Outfit", sans-serif;
+  --font-mono: "Geist Variable", monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/40;
+  }
+
+  html {
+    @apply bg-background text-foreground;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    min-height: 100svh;
+    overflow-x: hidden;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 1ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .surface-panel {
+    @apply bg-panel text-panel-foreground;
+  }
+
+  .surface-elevated {
+    @apply bg-card text-card-foreground shadow-[var(--shadow-sm)];
+  }
+
+  .surface-glass {
+    @apply bg-panel/70 text-panel-foreground backdrop-blur-2xl;
+  }
+
+  .surface-muted {
+    @apply bg-surface text-surface-foreground;
+  }
+
+  .page-gutter {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  .page-stack {
+    @apply flex flex-col gap-5 sm:gap-6;
+  }
+
+  .touch-target {
+    min-height: 2.75rem;
+  }
+
+  .motion-fast {
+    transition-duration: var(--motion-fast);
+    transition-timing-function: var(--ease-standard);
+  }
+
+  .motion-base {
+    transition-duration: var(--motion-base);
+    transition-timing-function: var(--ease-standard);
+  }
+
+  .motion-emphasized {
+    transition-duration: var(--motion-base);
+    transition-timing-function: var(--ease-emphasized);
+  }
+
+  .motion-safe-transform {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  @keyframes sidebar-hyper-tail-in {
+    0% {
+      transform: translateX(-42vw) scaleX(1.02);
+      opacity: 0.97;
+    }
+    100% {
+      transform: translateX(0) scaleX(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes sidebar-hyper-tail-out {
+    0% {
+      transform: translateX(0) scaleX(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-42vw) scaleX(1.012);
+      opacity: 0.96;
+    }
+  }
+
+  .animate-sidebar-hyper-tail-in {
+    animation: sidebar-hyper-tail-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    transform-origin: left center;
+    will-change: transform;
+  }
+
+  .animate-sidebar-hyper-tail-out {
+    animation: sidebar-hyper-tail-out 380ms cubic-bezier(0.3, 0, 0.25, 1) both;
+    transform-origin: left center;
+    will-change: transform;
+  }
+
+  .sidebar-tail-phase-in .sidebar-motion-row {
+    animation: sidebar-hyper-tail-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--row-index, 0) * 10ms);
+    transform-origin: left center;
+    will-change: transform;
+  }
+
+  .sidebar-tail-phase-out .sidebar-motion-row {
+    animation: sidebar-hyper-tail-out 380ms cubic-bezier(0.3, 0, 0.25, 1) both;
+    animation-delay: calc(
+      max(var(--max-row-index, 26) - var(--row-index, 0), 0) * 8ms
+    );
+    transform-origin: left center;
+    will-change: transform;
+  }
+
+  @keyframes route-transition-enter {
+    0% {
+      transform: translateY(12px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .route-transition-enter {
+    animation: route-transition-enter 400ms var(--ease-emphasized) both;
+    will-change: transform, opacity;
+  }
+
+  html.capacitor-native [data-native-safe-top],
+  html.capacitor-native [data-native-safe-sidebar-top] {
+    padding-top: max(
+      env(safe-area-inset-top, 0px),
+      env(titlebar-area-height, 0px),
+      var(--native-safe-area-top, 0px)
+    );
+  }
+
+  html.capacitor-native.capacitor-android-15 [data-native-safe-top],
+  html.capacitor-native.capacitor-android-15 [data-native-safe-sidebar-top] {
+    padding-top: var(--native-safe-area-top, env(safe-area-inset-top, 0px));
+  }
+
+  html.capacitor-native [data-native-safe-bottom] {
+    padding-bottom: max(
+      env(safe-area-inset-bottom, 0px),
+      var(--native-safe-area-bottom, 0px)
+    );
+  }
+
+  /* Capacitor 原生端 toast 样式修正：移动端 sonner 默认 font-size/padding 偏小 */
+  html.capacitor-native [data-sonner-toast][data-styled='true'] {
+    font-size: 14px;
+    padding: 14px 16px;
+    line-height: 1.5;
+  }
+
+  html.capacitor-native [data-sonner-toast][data-styled='true'] [data-icon] {
+    height: 18px;
+    width: 18px;
+  }
+
+  html.capacitor-native [data-sonner-toast][data-styled='true'] [data-icon] svg {
+    width: 18px;
+    height: 18px;
+  }
+}
