@@ -25,3 +25,23 @@ jobs:
       - run: pnpm build
       - run: pnpm build:storybook
       - run: pnpm pack:check
+      - name: Write deploy metadata
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          mkdir -p tmp/ci
+          printf '{"deploy":true,"artifact":"design-storybook-static"}\n' > tmp/ci/deploy-metadata.json
+      - name: Upload deploy metadata
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v6
+        with:
+          name: design-deploy-metadata
+          path: tmp/ci/deploy-metadata.json
+          retention-days: 7
+      - name: Upload Storybook static artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v6
+        with:
+          name: design-storybook-static
+          path: storybook-static
+          retention-days: 7
