@@ -263,7 +263,7 @@ function Reference() {
                     key: 'status',
                     dataIndex: 'status',
                     title: copy.status,
-                    render: (value) => (
+                    render: (value: unknown) => (
                       <Badge variant={value === copy.active ? 'secondary' : 'outline'}>
                         {String(value)}
                       </Badge>

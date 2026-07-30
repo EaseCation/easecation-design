@@ -53,7 +53,7 @@
 - 迁移 `easecation-console-neo` 的完整业务功能。
 - 携带业务 API、权限、登录、路由或业务状态管理。
 - 重新设计一套与 `easecation-console-neo` 不同的视觉风格。
-- 直接复制 Ant Design、Material Design 等第三方组件库源码。
+- 直接复制 ?????、Material Design 等第三方组件库源码。
 - 在组件库中强制依赖 Capacitor 原生插件。
 - 将 EaseCation Logo、商标或其他受限品牌资产默认视为开源代码许可证的一部分。
 - 为特定行业硬编码服务器、玩家、商城、订单、文章等业务模型。
@@ -63,7 +63,7 @@
 
 ### 4.1 以 console-neo 为视觉事实来源
 
-`easecation-console-neo` 是本组件库的唯一视觉事实来源。Ant Design 仅用于参考成熟组件库的分类、API 一致性、类型设计、无障碍能力和文档组织方式。
+`easecation-console-neo` 是本组件库的唯一视觉事实来源。????? 仅用于参考成熟组件库的分类、API 一致性、类型设计、无障碍能力和文档组织方式。
 
 开发前应先分析参考项目中的：
 
@@ -685,7 +685,7 @@ npm pack
 ```text
 你是一名资深前端开发工程师、React 组件库架构师、设计系统工程师和跨端应用开发工程师。
 
-现在需要开发一套类似 Ant Design 的企业级 React UI 组件库。该项目不是重新设计一套 UI，而是将现有 easecation-console-neo 项目的 UI 设计、布局、交互和品牌视觉系统化、组件化，并拆分到独立仓库中。组件库源自 EaseCation，但必须能够开源发布，不局限于 EaseCation 平台，并可用于后台、内容、社区、电商、工具、物联网等不同领域。
+现在需要开发一套类似 ????? 的企业级 React UI 组件库。该项目不是重新设计一套 UI，而是将现有 easecation-console-neo 项目的 UI 设计、布局、交互和品牌视觉系统化、组件化，并拆分到独立仓库中。组件库源自 EaseCation，但必须能够开源发布，不局限于 EaseCation 平台，并可用于后台、内容、社区、电商、工具、物联网等不同领域。
 
 请直接检查本地项目、创建和修改文件、实现组件、编写测试和文档，并完成构建验证。不要只提供方案、伪代码或少量示例。
 
@@ -722,7 +722,7 @@ GitHub 仓库使用 `easecation-design` 作为仓库名，README 标题和项目
 
 `E:\EaseCation\WebProject\easecation-console-neo` 是唯一视觉事实来源。
 
-不要默认使用 Ant Design、Material Design、Bootstrap、Tailwind UI 或其他设计系统的默认视觉。Ant Design 仅用于参考组件分类、API 一致性、类型设计、无障碍和工程组织。
+不要默认使用 ?????、Material Design、Bootstrap、Tailwind UI 或其他设计系统的默认视觉。????? 仅用于参考组件分类、API 一致性、类型设计、无障碍和工程组织。
 
 不得直接复制第三方组件库源码和受版权保护的内容。
 

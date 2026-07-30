@@ -50,7 +50,7 @@ const translations = {
 function CompleteFormExample() {
   const copy = useStoryTranslations(translations);
   return (
-    <Form onSubmit={(event) => event.preventDefault()}>
+    <Form onSubmit={(event: React.FormEvent<HTMLFormElement>) => event.preventDefault()}>
       <Field label={copy.workspaceName} required help={copy.workspaceHelp}>
         {(props) => <Input {...props} placeholder={copy.workspacePlaceholder} />}
       </Field>

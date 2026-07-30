@@ -79,7 +79,7 @@ function WorkspaceTableExample() {
         previousLabel={copy.previousPage}
         nextLabel={copy.nextPage}
         totalLabel={() => copy.totalLabel}
-        pageLabel={(page) =>
+        pageLabel={(page: number) =>
           copy.pageLabel === 'Page' ? `${copy.pageLabel} ${page}` : `${copy.pageLabel} ${page} 页`
         }
       />
@@ -103,6 +103,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const WorkspaceTable: Story = {
-  args: { columns: [], data: [], rowKey: (record) => String((record as { id: string }).id) },
+  args: { columns: [], data: [], rowKey: (record: unknown) => String((record as { id: string }).id) },
   render: () => <WorkspaceTableExample />,
 };
