@@ -7,6 +7,10 @@
 | Lucide React | 0.577.0 | ISC | 通用图标组件 |
 | TanStack React Table | 8.21.3 | MIT | QueryDataTable 的领域中立表格模型 |
 | Sonner | 2.0.7 | MIT | Toast 行为和动画基础 |
+| Class Variance Authority | 0.7.1 | Apache-2.0 | 组件变体 class 组合，不包含业务逻辑 |
+| clsx | 2.1.1 | MIT | className 条件组合工具 |
+| tailwind-merge | 3.6.0 | MIT | Tailwind class 冲突合并工具 |
+| next-themes | 0.4.6 | MIT | 主题状态读取与宿主主题兼容 |
 | Geist Variable | 5.2.8 | OFL-1.1 | 等宽与辅助字体资源 |
 | Outfit Variable | 5.2.8 | OFL-1.1 | 默认界面字体资源 |
 | Vite / Vitest / Storybook / ESLint / TypeScript | 开发依赖 | 各项目许可证 | 构建、测试、文档和静态检查，不进入运行时产物 |

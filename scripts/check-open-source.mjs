@@ -33,10 +33,14 @@ const pkg = JSON.parse(await fs.readFile(path.join(root, 'package.json'), 'utf8'
 const allowedDependencies = new Set([
   '@fontsource-variable/geist',
   '@tanstack/react-table',
+  'class-variance-authority',
+  'clsx',
   '@fontsource-variable/outfit',
   'lucide-react',
+  'next-themes',
   'radix-ui',
   'sonner',
+  'tailwind-merge',
 ]);
 const unreviewed = Object.keys(pkg.dependencies ?? {}).filter(
   (name) => !allowedDependencies.has(name),
