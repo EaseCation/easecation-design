@@ -1,16 +1,19 @@
-name: Manual npm release
+name: Internal npm release
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       release:
         description: SemVer release type
         required: true
-        type: choice
-        options: [patch, minor, major, prerelease]
+        type: string
+    secrets:
+      NPM_TOKEN:
+        required: true
 permissions:
   contents: read
 jobs:
   publish:
+    if: github.repository_owner == 'EaseCation'
     runs-on: ubuntu-latest
     environment: npm
     steps:
@@ -31,6 +34,16 @@ jobs:
       - run: pnpm build
       - run: pnpm build:storybook
       - run: pnpm pack:check
+      - name: Validate release type
+        shell: bash
+        run: |
+          case "${{ inputs.release }}" in
+            patch|minor|major|prerelease) ;;
+            *)
+              echo "::error::release must be one of: patch, minor, major, prerelease"
+              exit 1
+              ;;
+          esac
       - name: Select version
         shell: bash
         run: |
@@ -42,4 +55,3 @@ jobs:
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-# Compatibility workflow created because no user-supplied publishing script was provided.
