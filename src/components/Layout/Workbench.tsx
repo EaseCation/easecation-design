@@ -162,12 +162,12 @@ export function FormWorkbench({
   ...props
 }: FormWorkbenchProps) {
   return (
-    <div className={['ec-workbench', className].filter(Boolean).join(' ')} {...props}>
-      <div>
+    <div className={['ec-form-workbench', className].filter(Boolean).join(' ')} {...props}>
+      <div className="ec-form-workbench__main">
         {children}
         {footer ? <div className="ec-form-workbench__footer">{footer}</div> : null}
       </div>
-      {aside ? <aside>{aside}</aside> : null}
+      {aside ? <aside className="ec-form-workbench__aside">{aside}</aside> : null}
     </div>
   );
 }

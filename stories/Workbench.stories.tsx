@@ -95,14 +95,16 @@ function FormExample() {
           </SectionCard>
         }
         footer={
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '.5rem' }}>
-            <Button variant="outline">{copy.cancel}</Button>
-            <Button>{copy.save}</Button>
+          <div className="ec-form-actions">
+            <Button variant="outline" pressable={false}>
+              {copy.cancel}
+            </Button>
+            <Button pressable={false}>{copy.save}</Button>
           </div>
         }
       >
         <SectionCard title={copy.general}>
-          <div style={{ display: 'grid', gap: '.75rem' }}>
+          <div style={{ display: 'grid', gap: '0.75rem' }}>
             <Input defaultValue={copy.report} />
             <Input defaultValue={copy.operations} />
           </div>

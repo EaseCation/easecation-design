@@ -129,7 +129,7 @@ function Button({
     >
       {!asChild && pressable ? (
         <>
-          <span className="relative z-10 flex items-center">
+          <span className="relative z-10 flex w-full min-w-0 items-center justify-[inherit] gap-[inherit]">
             {children}
           </span>
           <span

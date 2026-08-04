@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { ActivityIcon, GaugeIcon, UsersIcon } from 'lucide-react';
 import {
   AccessGate,
   Button,
@@ -7,8 +8,9 @@ import {
   FormItem,
   Input,
   PageHeader,
-  ResponsiveGrid,
   SafeArea,
+  SectionCard,
+  StatCard,
   Surface,
   Tabs,
   ThemeProvider,
@@ -27,7 +29,21 @@ const translations = {
     title: 'Operations overview',
     description: 'A domain-neutral example for content, retail, IoT, or enterprise tools.',
     createReport: 'Create report',
-    metrics: ['Active workspaces', 'Automation tasks', 'Service availability'],
+    metrics: [
+      { label: 'Active workspaces', value: '128', delta: '8.7%', trend: 'up' as const },
+      { label: 'Automation tasks', value: '4,862', delta: '12.4%', trend: 'up' as const },
+      {
+        label: 'Service availability',
+        value: '99.97%',
+        delta: 'No change',
+        trend: 'steady' as const,
+      },
+    ] satisfies Array<{
+      label: string;
+      value: string;
+      delta: string;
+      trend: 'up' | 'down' | 'steady';
+    }>,
     overview: 'Overview',
     activity: 'Activity log',
     workspaceName: 'Workspace name',
@@ -50,7 +66,16 @@ const translations = {
     title: '运营概览',
     description: '领域中立示例：用于内容、零售、物联网或企业工具。',
     createReport: '创建报告',
-    metrics: ['活跃工作区', '自动化任务', '服务可用率'],
+    metrics: [
+      { label: '活跃工作区', value: '128', delta: '8.7%', trend: 'up' as const },
+      { label: '自动化任务', value: '4,862', delta: '12.4%', trend: 'up' as const },
+      { label: '服务可用率', value: '99.97%', delta: '无变化', trend: 'steady' as const },
+    ] satisfies Array<{
+      label: string;
+      value: string;
+      delta: string;
+      trend: 'up' | 'down' | 'steady';
+    }>,
     overview: '概览',
     activity: '活动记录',
     workspaceName: '工作区名称',
@@ -68,45 +93,51 @@ function ButtonsExample() {
   const copy = useStoryTranslations(translations);
   return (
     <Flex wrap>
-      <Button>{copy.primary}</Button>
-      <Button variant="secondary">{copy.secondary}</Button>
-      <Button variant="outline">{copy.outline}</Button>
-      <Button variant="ghost">{copy.ghost}</Button>
-      <Button variant="danger">{copy.danger}</Button>
-      <Button loading>{copy.loading}</Button>
+      <Button pressable={false}>{copy.primary}</Button>
+      <Button variant="secondary" pressable={false}>
+        {copy.secondary}
+      </Button>
+      <Button variant="outline" pressable={false}>
+        {copy.outline}
+      </Button>
+      <Button variant="ghost" pressable={false}>
+        {copy.ghost}
+      </Button>
+      <Button variant="danger" pressable={false}>
+        {copy.danger}
+      </Button>
+      <Button loading pressable={false}>
+        {copy.loading}
+      </Button>
     </Flex>
   );
 }
 function DashboardExample() {
   const copy = useStoryTranslations(translations);
+  const icons = [<UsersIcon key="users" />, <GaugeIcon key="gauge" />, <ActivityIcon key="activity" />];
   return (
-    <>
+    <div className="ec-foundation-dashboard">
       <PageHeader
         eyebrow={copy.eyebrow}
         title={copy.title}
         description={copy.description}
-        actions={<Button>{copy.createReport}</Button>}
+        actions={
+          <Button pressable={false}>{copy.createReport}</Button>
+        }
       />
-      <ResponsiveGrid>
-        {copy.metrics.map((label, index) => (
-          <Surface key={label} style={{ padding: '1.25rem' }}>
-            <div
-              style={{
-                fontSize: '.72rem',
-                fontWeight: 700,
-                color: 'var(--ec-color-text-muted)',
-                textTransform: 'uppercase',
-              }}
-            >
-              {label}
-            </div>
-            <strong style={{ display: 'block', fontSize: '1.8rem', marginTop: '.75rem' }}>
-              {['128', '4,862', '99.97%'][index]}
-            </strong>
-          </Surface>
+      <div className="ec-dashboard-metrics">
+        {copy.metrics.map((metric, index) => (
+          <StatCard
+            key={metric.label}
+            label={metric.label}
+            value={metric.value}
+            delta={metric.delta}
+            trend={metric.trend as 'up' | 'down' | 'steady'}
+            icon={icons[index]}
+          />
         ))}
-      </ResponsiveGrid>
-      <Surface style={{ padding: '1.25rem', marginTop: '1rem' }}>
+      </div>
+      <SectionCard title={copy.overview}>
         <Tabs
           items={[
             {
@@ -121,8 +152,8 @@ function DashboardExample() {
             { value: 'activity', label: copy.activity, content: copy.noActivity },
           ]}
         />
-      </Surface>
-    </>
+      </SectionCard>
+    </div>
   );
 }
 function PlatformBoundariesExample() {

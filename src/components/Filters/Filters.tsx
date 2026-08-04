@@ -133,11 +133,14 @@ export function FilterPicker(props: FilterPickerProps) {
       <DropdownMenuTrigger asChild disabled={props.disabled}>
         <Button
           variant="outline"
-          className={['ec-filter-picker', props.className].filter(Boolean).join(' ')}
+          pressable={false}
+          className={['ec-filter-picker', props.className, props.triggerClassName]
+            .filter(Boolean)
+            .join(' ')}
           aria-label={props['aria-label']}
-          trailingIcon={<ChevronDownIcon />}
+          trailingIcon={<ChevronDownIcon aria-hidden="true" />}
         >
-          {text}
+          <span className="ec-filter-picker__label">{text}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="ec-filter-picker__menu">
@@ -161,7 +164,9 @@ export function FilterPicker(props: FilterPickerProps) {
             }
             onSelect={(e) => e.preventDefault()}
           >
-            {o.label}
+            <span className="ec-filter-picker__option" title={o.label}>
+              {o.label}
+            </span>
           </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>
@@ -221,7 +226,8 @@ export function DateTimePicker({
       trigger={
         <Button
           variant="outline"
-          size="lg"
+          size="md"
+          pressable={false}
           className={['ec-datetime-trigger', className].filter(Boolean).join(' ')}
           aria-label={ariaLabel}
           leadingIcon={<CalendarIcon />}

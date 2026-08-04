@@ -29,6 +29,7 @@ const translations = {
     startDate: 'Start date',
     endDate: 'End date',
     selectedSeparator: ', ',
+    range: 'Date range',
   },
   'zh-CN': {
     reset: '重置',
@@ -46,55 +47,68 @@ const translations = {
     startDate: '开始日期',
     endDate: '结束日期',
     selectedSeparator: '、',
+    range: '日期范围',
   },
 } as const;
 
 function Demo() {
   const [date, setDate] = useState('2026-07-28T09:30');
   const [status, setStatus] = useState<string[]>(['active']);
+  const [range, setRange] = useState({
+    from: new Date(2026, 6, 1),
+    to: new Date(2026, 6, 28),
+  });
   const copy = useStoryTranslations(translations);
   return (
-    <div style={{ display: 'grid', gap: '1.5rem' }}>
-      <FilterBar
-        actions={
-          <>
-            <Button variant="outline">{copy.reset}</Button>
-            <Button>{copy.search}</Button>
-          </>
-        }
-      >
-        <FilterField label={copy.keyword}>
-          <Input placeholder={copy.keywordPlaceholder} />
-        </FilterField>
-        <FilterField label={copy.status}>
-          <FilterPicker
-            mode="multiple"
-            value={status}
-            onValueChange={setStatus}
-            placeholder={copy.statusPlaceholder}
-            clearLabel={copy.all}
-            selectedSeparator={copy.selectedSeparator}
-            options={[
-              { value: 'active', label: copy.active },
-              { value: 'paused', label: copy.paused },
-            ]}
-          />
-        </FilterField>
-        <FilterField label={copy.updatedAt}>
-          <DateTimePicker
-            value={date}
-            onChange={setDate}
-            dateLabel={copy.dateLabel}
-            timeLabel={copy.timeLabel}
-          />
-        </FilterField>
-      </FilterBar>
-      <Calendar
-        mode="range"
-        selected={{ from: new Date(2026, 6, 1), to: new Date(2026, 6, 28) }}
-        labels={{ rangeStart: copy.startDate, rangeEnd: copy.endDate }}
-      />
-    </div>
+    <FilterBar
+      actions={
+        <>
+          <Button variant="outline" pressable={false}>
+            {copy.reset}
+          </Button>
+          <Button pressable={false}>{copy.search}</Button>
+        </>
+      }
+    >
+      <FilterField label={copy.keyword}>
+        <Input placeholder={copy.keywordPlaceholder} />
+      </FilterField>
+      <FilterField label={copy.status}>
+        <FilterPicker
+          mode="multiple"
+          value={status}
+          onValueChange={setStatus}
+          placeholder={copy.statusPlaceholder}
+          clearLabel={copy.all}
+          selectedSeparator={copy.selectedSeparator}
+          options={[
+            { value: 'active', label: copy.active },
+            { value: 'paused', label: copy.paused },
+          ]}
+        />
+      </FilterField>
+      <FilterField label={copy.updatedAt}>
+        <DateTimePicker
+          value={date}
+          onChange={setDate}
+          dateLabel={copy.dateLabel}
+          timeLabel={copy.timeLabel}
+        />
+      </FilterField>
+      <FilterField label={copy.range} className="ec-filter-field--wide">
+        <Calendar
+          mode="range"
+          showLabel={false}
+          selected={range}
+          onSelect={(value) => {
+            if (value && !(value instanceof Date)) {
+              setRange({ from: value.from ?? range.from, to: value.to ?? range.to });
+            }
+          }}
+          labels={{ rangeStart: copy.startDate, rangeEnd: copy.endDate }}
+        />
+      </FilterField>
+    </FilterBar>
   );
 }
 const meta = {
@@ -103,7 +117,7 @@ const meta = {
   decorators: [
     (Story) => (
       <ThemeProvider>
-        <div style={{ padding: '2rem' }}>
+        <div style={{ padding: '2rem', maxWidth: '72rem' }}>
           <Story />
         </div>
       </ThemeProvider>

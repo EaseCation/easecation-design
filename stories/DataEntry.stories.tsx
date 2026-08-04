@@ -70,7 +70,9 @@ function CompleteFormExample() {
       </Field>
       <Checkbox label={copy.weeklySummary} description={copy.weeklySummaryDescription} />
       <Switch label={copy.autoSync} description={copy.autoSyncDescription} />
-      <Button type="submit">{copy.save}</Button>
+      <div className="ec-form-actions">
+        <Button type="submit">{copy.save}</Button>
+      </div>
     </Form>
   );
 }

@@ -16,20 +16,14 @@ export function FormWorkbench({
 }: FormWorkbenchProps) {
   return (
     <div
-      className={cn("grid gap-4 xl:grid-cols-[minmax(0,1fr)_320px]", className)}
+      className={cn("ec-form-workbench", className)}
       {...props}
     >
-      <div className="grid gap-4">
+      <div className="ec-form-workbench__main">
         {children}
-        {footer ? (
-          <div className="sticky bottom-3 z-10 rounded-xl border border-border/40 bg-panel/90 p-3 shadow-[var(--shadow-lg)] backdrop-blur-xl">
-            {footer}
-          </div>
-        ) : null}
+        {footer ? <div className="ec-form-workbench__footer">{footer}</div> : null}
       </div>
-      {aside ? (
-        <aside className="grid content-start gap-4">{aside}</aside>
-      ) : null}
+      {aside ? <aside className="ec-form-workbench__aside">{aside}</aside> : null}
     </div>
   )
 }

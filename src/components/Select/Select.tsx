@@ -7,7 +7,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
-import { ChevronDownIcon } from 'lucide-react';
+import { CheckIcon, ChevronDownIcon } from 'lucide-react';
 import { useControllableState } from '../../hooks/useControllableState';
 import type { ComponentSize } from '../Button';
 
@@ -118,30 +118,49 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
         onClick={() => setOpen((current) => !current)}
         onKeyDown={keyDown}
       >
-        <span className={selectedOption ? undefined : 'ec-select__placeholder'}>
+        <span
+          className={[
+            'ec-select__label',
+            selectedOption ? undefined : 'ec-select__placeholder',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+        >
           {selectedOption?.label ?? placeholder}
         </span>
         <ChevronDownIcon className="ec-select__chevron" aria-hidden="true" />
       </button>
       {open ? (
         <div id={listId} role="listbox" className="ec-select__menu" aria-label={label}>
-          {options.map((option, index) => (
-            <button
-              key={option.value}
-              type="button"
-              role="option"
-              aria-selected={selected === option.value}
-              disabled={option.disabled}
-              className={['ec-select__option', index === activeIndex && 'is-active']
-                .filter(Boolean)
-                .join(' ')}
-              onPointerMove={() => setActiveIndex(index)}
-              onClick={() => choose(index)}
-            >
-              <span>{option.label}</span>
-              {option.description ? <small>{option.description}</small> : null}
-            </button>
-          ))}
+          {options.map((option, index) => {
+            const isSelected = selected === option.value;
+            return (
+              <button
+                key={option.value}
+                type="button"
+                role="option"
+                aria-selected={isSelected}
+                disabled={option.disabled}
+                className={[
+                  'ec-select__option',
+                  index === activeIndex && 'is-active',
+                  isSelected && 'is-selected',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+                onPointerMove={() => setActiveIndex(index)}
+                onClick={() => choose(index)}
+              >
+                <span className="ec-select__option-label">
+                  <span>{option.label}</span>
+                  {option.description ? <small>{option.description}</small> : null}
+                </span>
+                <span className="ec-select__option-indicator" aria-hidden="true">
+                  {isSelected ? <CheckIcon /> : null}
+                </span>
+              </button>
+            );
+          })}
         </div>
       ) : null}
     </div>

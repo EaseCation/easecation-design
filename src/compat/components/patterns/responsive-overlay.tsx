@@ -158,7 +158,7 @@ export function ResponsiveOverlayHeader({
   if (isMobile) {
     return (
       <SheetHeader
-        className={cn("shrink-0 space-y-1 border-b px-4 py-4", className)}
+        className={cn("shrink-0 space-y-1 border-b bg-muted/20 px-4 py-4", className)}
         {...props}
       />
     )
@@ -167,7 +167,7 @@ export function ResponsiveOverlayHeader({
   return (
     <DialogHeader
       className={cn(
-        "shrink-0 space-y-1 border-b px-4 py-4 pr-12 text-left",
+        "shrink-0 space-y-1 border-b bg-muted/20 px-4 py-4 pr-12 text-left",
         className
       )}
       {...props}
@@ -222,7 +222,7 @@ export function ResponsiveOverlayFooter({
   return (
     <DialogFooter
       className={cn(
-        "mx-0 mb-0 w-full shrink-0 rounded-none border-t bg-muted/30 px-4 py-4 sm:flex-row sm:justify-end",
+        "mx-0 mb-0 w-full shrink-0 rounded-none border-t bg-transparent px-4 py-4 sm:flex-row sm:justify-end",
         className
       )}
       {...props}

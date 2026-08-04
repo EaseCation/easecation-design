@@ -57,7 +57,6 @@ export {
   AuditOutlined,
   AutoComplete,
   Avatar,
-  Badge,
   BarChartOutlined,
   BellFilled,
   BellOutlined,
@@ -66,7 +65,6 @@ export {
   BookOutlined,
   Breadcrumb,
   BulbOutlined,
-  Button,
   CalendarOutlined,
   Card,
   CarryOutOutlined,
@@ -169,7 +167,6 @@ export {
   NotificationOutlined,
   NumberOutlined,
   OrderedListOutlined,
-  Pagination,
   PaperClipOutlined,
   PartitionOutlined,
   PauseCircleOutlined,
@@ -222,7 +219,6 @@ export {
   SunOutlined,
   SwapOutlined,
   Switch,
-  Table,
   TableOutlined,
   Tabs,
   Tag,
@@ -279,4 +275,12 @@ export type {
   UploadProps,
   ColumnsType,
   ColumnType
+} from './components/Essentials/Essentials';
+
+/** Ant Design–compatible shims (Essentials versions shadowed by public components above). */
+export {
+  Table as AntTable,
+  Pagination as AntPagination,
+  Button as AntButton,
+  Badge as AntBadge,
 } from './components/Essentials/Essentials';

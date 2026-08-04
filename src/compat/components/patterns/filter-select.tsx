@@ -93,9 +93,8 @@ export function FilterSelect({
         className={cn(
           TOOLBAR_FIELD_HEIGHT_CLASS,
           TOOLBAR_FILTER_TRIGGER_WIDTH_CLASS,
-          "bg-background px-2.5 touch-manipulation",
+          "bg-background px-2.5 font-normal shadow-none touch-manipulation",
           "data-[size=default]:!h-9 data-[size=sm]:!h-9",
-          "[&_[data-slot=select-value]]:truncate",
           triggerClassName,
           className
         )}

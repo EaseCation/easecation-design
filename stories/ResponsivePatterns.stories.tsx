@@ -70,15 +70,15 @@ function PatternReference() {
     <ThemeProvider>
       <main className="ec-component-gallery">
         <div className="ec-pattern-reference-page">
-          <header>
+          <header className="ec-pattern-reference-header">
             <p className="ec-reference-eyebrow">EaseCation Design Patterns</p>
             <h1 className="ec-reference-title">{copy.title}</h1>
             <p className="ec-reference-description">{copy.description}</p>
           </header>
-          <div className="ec-pattern-reference-metrics">
+          <div className="ec-dashboard-metrics">
             <StatCard
               label={copy.revenue}
-              value="? 286,420"
+              value="¥ 286,420"
               delta="18.2%"
               trend="up"
               icon={<ActivityIcon />}
@@ -89,8 +89,10 @@ function PatternReference() {
           <FilterBar
             actions={
               <>
-                <Button variant="outline">{copy.reset}</Button>
-                <Button>{copy.search}</Button>
+                <Button variant="outline" pressable={false}>
+                  {copy.reset}
+                </Button>
+                <Button pressable={false}>{copy.search}</Button>
               </>
             }
           >
@@ -98,7 +100,7 @@ function PatternReference() {
               <Input defaultValue={copy.report} />
             </FilterField>
             <FilterField label={copy.date}>
-              <Calendar selected={new Date(2026, 6, 28)} labels={{ single: copy.date }} />
+              <Calendar selected={new Date(2026, 6, 28)} showLabel={false} />
             </FilterField>
           </FilterBar>
           <ActionBar>
@@ -106,14 +108,18 @@ function PatternReference() {
               <p className="ec-reference-action-title">{copy.selected}</p>
               <p className="ec-reference-action-description">{copy.bulkAvailable}</p>
             </div>
-            <Button size="sm">{copy.bulkAction}</Button>
+            <Button pressable={false}>{copy.bulkAction}</Button>
           </ActionBar>
           <SectionCard title={copy.library} description={copy.stateDescription}>
             <div className="ec-pattern-reference-states">
               <EmptyState
                 title={copy.empty}
                 description={copy.emptyDescription}
-                action={<Button leadingIcon={<PlusIcon />}>{copy.create}</Button>}
+                action={
+                  <Button pressable={false} leadingIcon={<PlusIcon />}>
+                    {copy.create}
+                  </Button>
+                }
               />
               <ErrorState
                 title={copy.error}

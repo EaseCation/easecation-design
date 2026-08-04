@@ -24,9 +24,9 @@ export function FilterBar({
   return (
     <div
       className={cn(
-        "flex flex-col gap-3 md:flex-row md:flex-wrap md:items-end md:justify-between",
+        "flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-3.5",
         variant === "card"
-          ? "rounded-xl border border-border/40 bg-card p-3"
+          ? "rounded-xl border border-border/45 bg-card p-4 shadow-none"
           : "min-w-0",
         className
       )}
@@ -35,14 +35,14 @@ export function FilterBar({
     >
       <div
         className={cn(
-          "grid flex-1 gap-3 md:grid-cols-2 xl:grid-cols-4 items-start",
+          "flex min-w-0 flex-1 flex-wrap items-end gap-x-4 gap-y-3",
           FILTER_BAR_FIELD_CONTROLS_CLASS
         )}
       >
         {children}
       </div>
       {actions ? (
-        <div className="flex flex-wrap items-center gap-2 [&_button]:h-8 [&_button]:max-h-8 [&_button]:min-h-8 [&_button]:py-0">
+        <div className="ml-auto flex shrink-0 flex-nowrap items-center justify-end gap-2 [&_button]:h-9 [&_button]:max-h-9 [&_button]:min-h-9 [&_button]:min-w-[5.5rem] [&_button]:w-auto [&_button]:max-w-none [&_button]:justify-center [&_button]:px-3.5 [&_button]:py-0 [&_button]:shadow-none">
           {actions}
         </div>
       ) : null}

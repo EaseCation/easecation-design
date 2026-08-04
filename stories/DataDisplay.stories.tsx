@@ -1,5 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button, Pagination, Popover, Table, ThemeProvider, Tooltip } from '../src';
+import {
+  Badge,
+  Button,
+  Pagination,
+  Popover,
+  Table,
+  ThemeProvider,
+  Tooltip,
+} from '../src';
 import { useStoryTranslations } from '../.storybook/story-locale';
 
 const translations = {
@@ -45,44 +53,74 @@ const translations = {
   },
 } as const;
 
+function statusVariant(status: string): 'primary' | 'outline' | 'secondary' {
+  if (status === 'Active' || status === '运行中') return 'primary';
+  if (status === 'Maintenance' || status === '维护') return 'outline';
+  return 'secondary';
+}
+
 function WorkspaceTableExample() {
   const copy = useStoryTranslations(translations);
   return (
-    <div style={{ display: 'grid', gap: '1rem' }}>
-      <div style={{ display: 'flex', gap: '.5rem' }}>
-        <Popover
-          trigger={<Button variant="outline">{copy.filter}</Button>}
-          title={copy.filterOptions}
-        >
-          {copy.filterContent}
-        </Popover>
-        <Tooltip content={copy.refreshHint}>
-          <Button variant="ghost">{copy.refresh}</Button>
-        </Tooltip>
+    <div className="ec-data-panel">
+      <div className="ec-data-panel__toolbar">
+        <div className="ec-data-panel__toolbar-actions">
+          <Popover
+            trigger={
+              <Button variant="outline" pressable={false}>
+                {copy.filter}
+              </Button>
+            }
+            title={copy.filterOptions}
+          >
+            {copy.filterContent}
+          </Popover>
+          <Tooltip content={copy.refreshHint}>
+            <Button variant="outline" pressable={false}>
+              {copy.refresh}
+            </Button>
+          </Tooltip>
+        </div>
       </div>
       <Table
-        mobile="cards"
+        mobile="scroll"
         columns={[
-          { key: 'name', title: copy.workspace, dataIndex: 'name' },
-          { key: 'status', title: copy.status, dataIndex: 'status' },
-          { key: 'members', title: copy.members, dataIndex: 'members', align: 'right' },
+          { key: 'name', title: copy.workspace, dataIndex: 'name', width: '44%' },
+          {
+            key: 'status',
+            title: copy.status,
+            dataIndex: 'status',
+            width: '28%',
+            render: (value: unknown) => (
+              <Badge variant={statusVariant(String(value))}>{String(value)}</Badge>
+            ),
+          },
+          {
+            key: 'members',
+            title: copy.members,
+            dataIndex: 'members',
+            align: 'right',
+            width: '28%',
+          },
         ]}
         data={[...copy.rows]}
         rowKey="id"
       />
-      <Pagination
-        page={2}
-        total={86}
-        pageSize={10}
-        onPageChange={() => {}}
-        ariaLabel={copy.pagination}
-        previousLabel={copy.previousPage}
-        nextLabel={copy.nextPage}
-        totalLabel={() => copy.totalLabel}
-        pageLabel={(page: number) =>
-          copy.pageLabel === 'Page' ? `${copy.pageLabel} ${page}` : `${copy.pageLabel} ${page} 页`
-        }
-      />
+      <div className="ec-data-panel__footer">
+        <Pagination
+          page={2}
+          total={86}
+          pageSize={10}
+          onPageChange={() => {}}
+          ariaLabel={copy.pagination}
+          previousLabel={copy.previousPage}
+          nextLabel={copy.nextPage}
+          totalLabel={() => copy.totalLabel}
+          pageLabel={(page: number) =>
+            copy.pageLabel === 'Page' ? `${copy.pageLabel} ${page}` : `${copy.pageLabel} ${page} 页`
+          }
+        />
+      </div>
     </div>
   );
 }
@@ -93,7 +131,7 @@ const meta = {
   decorators: [
     (Story) => (
       <ThemeProvider>
-        <div style={{ padding: '2rem' }}>
+        <div style={{ padding: '2rem', maxWidth: '52rem' }}>
           <Story />
         </div>
       </ThemeProvider>
@@ -103,6 +141,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const WorkspaceTable: Story = {
-  args: { columns: [], data: [], rowKey: (record: unknown) => String((record as { id: string }).id) },
+  args: {
+    columns: [],
+    data: [],
+    rowKey: (record: unknown) => String((record as { id: string }).id),
+  },
   render: () => <WorkspaceTableExample />,
 };

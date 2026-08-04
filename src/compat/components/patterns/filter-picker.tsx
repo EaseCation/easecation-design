@@ -131,6 +131,7 @@ function FilterPickerMultiple({
         <Button
           type="button"
           variant="outline"
+          pressable={false}
           aria-label={ariaLabel}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
@@ -138,15 +139,15 @@ function FilterPickerMultiple({
           className={cn(
             TOOLBAR_FIELD_HEIGHT_CLASS,
             TOOLBAR_FILTER_TRIGGER_WIDTH_CLASS,
-            "justify-between gap-1 bg-background px-2.5 font-normal touch-manipulation",
+            "justify-between gap-1.5 bg-background px-2.5 font-normal shadow-none touch-manipulation",
             className,
             triggerClassName
           )}
         >
-          <span className="min-w-0 flex-1 truncate text-left">
+          <span className="min-w-0 flex-1 truncate text-left font-normal">
             {triggerLabel}
           </span>
-          <ChevronDownIcon className="size-4 shrink-0 opacity-60" />
+          <ChevronDownIcon className="size-4 shrink-0 text-muted-foreground opacity-65" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
