@@ -1359,8 +1359,7 @@
     inset 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 .ec-input-shell {
-  min-height: 2rem;
-  height: 2rem;
+  min-height: var(--ec-control-md);
   padding: 0 0.75rem;
   border-color: color-mix(in oklch, var(--border) 70%, transparent);
   border-radius: var(--radius-md);
@@ -1375,13 +1374,11 @@
   box-shadow: var(--shadow-glow);
 }
 .ec-input-shell--sm {
-  min-height: 1.75rem;
-  height: 1.75rem;
+  min-height: var(--ec-control-sm);
   padding: 0 0.625rem;
 }
 .ec-input-shell--lg {
-  min-height: 2.25rem;
-  height: 2.25rem;
+  min-height: var(--ec-control-lg);
   padding: 0 0.875rem;
 }
 .ec-input {

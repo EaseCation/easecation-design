@@ -28,6 +28,16 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
 
+      - name: Resolve commit metadata
+        id: commit-metadata
+        shell: bash
+        run: |
+          {
+            echo "message=$(git show -s --format=%s HEAD)"
+            echo "author=$(git show -s --format=%aN HEAD)"
+            echo "time=$(git show -s --format=%aI HEAD)"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
 
@@ -48,6 +58,8 @@ jobs:
           set -euo pipefail
           package_name=$(node -p "require('./package.json').name")
           package_version=$(node -p "require('./package.json').version")
+          echo "name=${package_name}" >> "$GITHUB_OUTPUT"
+          echo "version=${package_version}" >> "$GITHUB_OUTPUT"
 
           if npm view "${package_name}@${package_version}" version --json >/dev/null 2>&1; then
             echo "publish=false" >> "$GITHUB_OUTPUT"
@@ -70,3 +82,48 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Send MsgAPI npm publish notification
+        if: always()
+        continue-on-error: true
+        env:
+          NOTIFY_GENERATOR: sendGithubActionDeployNotification
+          NOTIFY_TITLE: EaseCation Design - npm 发布 ${{ steps.package.outputs.name }}@${{ steps.package.outputs.version }}
+          NOTIFY_STATUS: ${{ job.status }}
+          NOTIFY_ENVIRONMENT: NPM
+          NOTIFY_COMMIT_MESSAGE: ${{ steps.commit-metadata.outputs.message }}
+          NOTIFY_COMMIT_AUTHOR: ${{ steps.commit-metadata.outputs.author }}
+          NOTIFY_COMMIT_TIME: ${{ steps.commit-metadata.outputs.time }}
+          MSG_API_KEY: ${{ secrets.MSG_API_KEY }}
+        run: |
+          MSG_API_URL='https://msg-api.easecation.net'
+          if [ -z "$MSG_API_URL" ] || [ -z "$MSG_API_KEY" ]; then
+            echo "MSG_API_URL or MSG_API_KEY is not configured, skip MsgAPI notification"
+            exit 0
+          fi
+          MSG_API_ENDPOINT="${MSG_API_URL%/}"
+          case "$MSG_API_ENDPOINT" in
+            */sendmsg) ;;
+            *) MSG_API_ENDPOINT="${MSG_API_ENDPOINT}/sendmsg" ;;
+          esac
+          PAYLOAD=$(node <<'NODE'
+          const compact = (value) => value === undefined || value === null || value === "" ? undefined : value;
+          const options = {
+            title: compact(process.env.NOTIFY_TITLE),
+            status: compact(process.env.NOTIFY_STATUS) || "info",
+            commitMessage: compact(process.env.NOTIFY_COMMIT_MESSAGE),
+            commitAuthor: compact(process.env.NOTIFY_COMMIT_AUTHOR),
+            commitTime: compact(process.env.NOTIFY_COMMIT_TIME),
+            environment: compact(process.env.NOTIFY_ENVIRONMENT),
+          };
+          process.stdout.write(JSON.stringify({
+            project: "webDev",
+            generator: process.env.NOTIFY_GENERATOR || "sendGithubActionDeployNotification",
+            options: [options],
+          }));
+          NODE
+          )
+          curl -fsS -X POST "$MSG_API_ENDPOINT" \
+            -H "Content-Type: application/json" \
+            -H "X-Api-Key: $MSG_API_KEY" \
+            -d "$PAYLOAD"

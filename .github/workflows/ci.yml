@@ -45,3 +45,53 @@ jobs:
           name: design-storybook-static
           path: storybook-static
           retention-days: 7
+
+  notify:
+    name: Notify MsgAPI
+    needs: validate
+    runs-on: ubuntu-latest
+    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Send MsgAPI quality-check notification
+        continue-on-error: true
+        env:
+          NOTIFY_GENERATOR: sendGithubActionDeployNotification
+          NOTIFY_TITLE: EaseCation Design - Code Push & Quality Check
+          NOTIFY_STATUS: ${{ needs.validate.result }}
+          NOTIFY_ENVIRONMENT: MAIN
+          NOTIFY_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          NOTIFY_COMMIT_AUTHOR: ${{ github.event.head_commit.author.name }}
+          NOTIFY_COMMIT_TIME: ${{ github.event.head_commit.timestamp }}
+          MSG_API_KEY: ${{ secrets.MSG_API_KEY }}
+        run: |
+          MSG_API_URL='https://msg-api.easecation.net'
+          if [ -z "$MSG_API_URL" ] || [ -z "$MSG_API_KEY" ]; then
+            echo "MSG_API_URL or MSG_API_KEY is not configured, skip MsgAPI notification"
+            exit 0
+          fi
+          MSG_API_ENDPOINT="${MSG_API_URL%/}"
+          case "$MSG_API_ENDPOINT" in
+            */sendmsg) ;;
+            *) MSG_API_ENDPOINT="${MSG_API_ENDPOINT}/sendmsg" ;;
+          esac
+          PAYLOAD=$(node <<'NODE'
+          const compact = (value) => value === undefined || value === null || value === "" ? undefined : value;
+          const options = {
+            title: compact(process.env.NOTIFY_TITLE),
+            status: compact(process.env.NOTIFY_STATUS) || "info",
+            commitMessage: compact(process.env.NOTIFY_COMMIT_MESSAGE),
+            commitAuthor: compact(process.env.NOTIFY_COMMIT_AUTHOR),
+            commitTime: compact(process.env.NOTIFY_COMMIT_TIME),
+            environment: compact(process.env.NOTIFY_ENVIRONMENT),
+          };
+          process.stdout.write(JSON.stringify({
+            project: "webDev",
+            generator: process.env.NOTIFY_GENERATOR || "sendGithubActionDeployNotification",
+            options: [options],
+          }));
+          NODE
+          )
+          curl -fsS -X POST "$MSG_API_ENDPOINT" \
+            -H "Content-Type: application/json" \
+            -H "X-Api-Key: $MSG_API_KEY" \
+            -d "$PAYLOAD"
