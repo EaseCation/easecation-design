@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import type { FormEventHandler, ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { toast, Toaster } from '../Toast';
 import { Button as BaseButton } from '../Button';
@@ -1633,22 +1634,76 @@ export const Dropdown = ({
   children,
   menu,
   overlay,
-  placement: _placement,
+  placement = 'bottomRight',
   trigger: _trigger,
 }: any) => {
   const [open, setOpen] = useState(false);
+  const [menuStyle, setMenuStyle] = useState<React.CSSProperties>();
   const ref = React.useRef<HTMLSpanElement>(null);
+  const menuRef = React.useRef<HTMLDivElement>(null);
+  const updateMenuPosition = React.useCallback(() => {
+    if (typeof window === 'undefined') return;
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    const gap = 8;
+    const viewportGap = 8;
+    const menuWidth = Math.max(176, rect.width, menuRef.current?.offsetWidth ?? 0);
+    const alignLeft = String(placement).toLowerCase().includes('left');
+    const placeTop = String(placement).toLowerCase().startsWith('top');
+    const left = alignLeft ? rect.left : rect.right - menuWidth;
+    setMenuStyle({
+      top: placeTop ? undefined : Math.min(window.innerHeight - viewportGap, rect.bottom + gap),
+      bottom: placeTop ? Math.max(viewportGap, window.innerHeight - rect.top + gap) : undefined,
+      left: Math.max(viewportGap, Math.min(left, window.innerWidth - menuWidth - viewportGap)),
+      minWidth: rect.width,
+    });
+  }, [placement]);
   useEffect(() => {
     if (!open) return;
+    updateMenuPosition();
     const close = (event: MouseEvent) => {
-      if (!ref.current?.contains(event.target as Node)) setOpen(false);
+      const target = event.target as Node;
+      if (!ref.current?.contains(target) && !menuRef.current?.contains(target)) setOpen(false);
     };
+    const reposition = () => updateMenuPosition();
     document.addEventListener('mousedown', close);
-    return () => document.removeEventListener('mousedown', close);
-  }, [open]);
+    window.addEventListener('resize', reposition);
+    window.addEventListener('scroll', reposition, true);
+    return () => {
+      document.removeEventListener('mousedown', close);
+      window.removeEventListener('resize', reposition);
+      window.removeEventListener('scroll', reposition, true);
+    };
+  }, [open, updateMenuPosition]);
   const items = (menu?.items ?? overlay?.items ?? []).filter(
     (item: any) => item && item.type !== 'divider',
   );
+  const dropdownMenu =
+    open && items.length && typeof document !== 'undefined'
+      ? createPortal(
+          <div ref={menuRef} className="ec-dropdown-menu" role="menu" style={menuStyle}>
+            {items.map((item: any) => (
+              <button
+                key={item.key ?? item.label}
+                type="button"
+                role="menuitem"
+                className={cls('ec-dropdown-menu-item', item.danger && 'is-danger')}
+                disabled={item.disabled}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  if (item.disabled) return;
+                  setOpen(false);
+                  item.onClick?.({ key: item.key, domEvent: event });
+                }}
+              >
+                {item.icon ? <span className="ec-dropdown-menu-icon">{item.icon}</span> : null}
+                <span>{item.label}</span>
+              </button>
+            ))}
+          </div>,
+          document.body,
+        )
+      : null;
   return (
     <span
       ref={ref}
@@ -1659,26 +1714,7 @@ export const Dropdown = ({
       }}
     >
       {children}
-      {open && items.length ? (
-        <div className="ec-dropdown-menu" role="menu">
-          {items.map((item: any) => (
-            <button
-              key={item.key ?? item.label}
-              type="button"
-              role="menuitem"
-              className={cls('ec-dropdown-menu-item', item.danger && 'is-danger')}
-              onClick={(event) => {
-                event.stopPropagation();
-                setOpen(false);
-                item.onClick?.({ key: item.key, domEvent: event });
-              }}
-            >
-              {item.icon ? <span className="ec-dropdown-menu-icon">{item.icon}</span> : null}
-              <span>{item.label}</span>
-            </button>
-          ))}
-        </div>
-      ) : null}
+      {dropdownMenu}
     </span>
   );
 };

@@ -1983,7 +1983,7 @@
   max-height: calc(100dvh - 2rem);
   gap: 1rem;
   padding: 1.25rem;
-  overflow: auto;
+  overflow: hidden;
   border: 0;
   border-radius: var(--radius-xl);
   background: var(--popover);
@@ -2030,6 +2030,7 @@
 .ec-modal__header {
   display: flex;
   flex-direction: column;
+  min-height: 0;
   gap: 0.25rem;
   margin: -1.25rem -1.25rem 0;
   padding: 1rem 1.25rem;
@@ -2053,6 +2054,7 @@
   line-height: 1.5;
 }
 .ec-modal__body {
+  min-height: 0;
   padding: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
@@ -2060,6 +2062,7 @@
 .ec-modal__footer {
   display: flex;
   flex-direction: column-reverse;
+  min-height: 0;
   gap: 0.5rem;
   margin: 0 -1.25rem -1.25rem;
   padding: 1rem 1.25rem;
@@ -4477,17 +4480,17 @@
 }
 
 .ec-dropdown-wrap {
-  position: relative;
   display: inline-flex;
 }
 
 .ec-dropdown-menu {
-  position: absolute;
-  top: calc(100% + 0.45rem);
-  right: 0;
-  z-index: var(--ec-z-dropdown, 300);
+  position: fixed;
+  z-index: calc(var(--ec-z-overlay, 500) + 20);
   display: grid;
   min-width: 11rem;
+  max-width: calc(100vw - 1rem);
+  max-height: min(22rem, calc(100dvh - 1rem));
+  overflow: auto;
   padding: 0.35rem;
   background: var(--popover, var(--ec-surface));
   border: 1px solid var(--border, var(--ec-border));
@@ -4511,6 +4514,12 @@
 
 .ec-dropdown-menu-item:hover {
   background: color-mix(in oklch, var(--muted, var(--ec-surface-muted)) 68%, transparent);
+}
+
+.ec-dropdown-menu-item:disabled {
+  color: var(--muted-foreground, var(--ec-text-muted));
+  cursor: not-allowed;
+  opacity: 0.68;
 }
 
 .ec-dropdown-menu-item.is-danger {
