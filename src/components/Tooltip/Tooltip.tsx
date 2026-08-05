@@ -1,5 +1,6 @@
 ﻿import { Tooltip as Primitive } from 'radix-ui';
 import type { ComponentProps, ReactElement, ReactNode } from 'react';
+import { useTheme } from '../../theme/ThemeProvider';
 
 const classes = (...values: Array<string | undefined>) => values.filter(Boolean).join(' ');
 
@@ -55,11 +56,17 @@ export function TooltipContent({
   children,
   ...props
 }: ComponentProps<typeof Primitive.Content>) {
+  const { resolvedMode } = useTheme();
   return (
     <Primitive.Portal>
       <Primitive.Content
         sideOffset={sideOffset}
-        className={classes('ec-tooltip-content', className)}
+        data-ec-theme={resolvedMode}
+        className={classes(
+          'ec-tooltip-content',
+          resolvedMode === 'dark' ? 'dark' : undefined,
+          className,
+        )}
         {...props}
       >
         {children}

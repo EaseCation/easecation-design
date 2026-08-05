@@ -1,5 +1,6 @@
 ﻿import { Popover as Primitive } from 'radix-ui';
 import type { ComponentProps, ReactElement, ReactNode } from 'react';
+import { useTheme } from '../../theme/ThemeProvider';
 
 const classes = (...values: Array<string | undefined>) => values.filter(Boolean).join(' ');
 
@@ -45,12 +46,18 @@ export function PopoverContent({
   sideOffset = 4,
   ...props
 }: ComponentProps<typeof Primitive.Content>) {
+  const { resolvedMode } = useTheme();
   return (
     <Primitive.Portal>
       <Primitive.Content
         align={align}
         sideOffset={sideOffset}
-        className={classes('ec-popover-content', className)}
+        data-ec-theme={resolvedMode}
+        className={classes(
+          'ec-popover-content',
+          resolvedMode === 'dark' ? 'dark' : undefined,
+          className,
+        )}
         {...props}
       />
     </Primitive.Portal>

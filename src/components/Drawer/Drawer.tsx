@@ -3,6 +3,7 @@ import { XIcon } from 'lucide-react';
 import { Dialog as DialogPrimitive } from 'radix-ui';
 import { registerOverlay } from '../../platform/overlayStack';
 import { IconButton } from '../Button';
+import { useTheme } from '../../theme/ThemeProvider';
 
 export interface DrawerProps {
   open: boolean;
@@ -36,6 +37,7 @@ export function Drawer({
   className,
 }: DrawerProps) {
   const id = useId();
+  const { resolvedMode } = useTheme();
   useEffect(() => {
     if (!open) return;
     return registerOverlay({ id, close: () => onOpenChange(false) });
@@ -50,7 +52,15 @@ export function Drawer({
         />
         <DialogPrimitive.Content
           data-side={placement}
-          className={['ec-drawer', instant && 'is-instant', className].filter(Boolean).join(' ')}
+          data-ec-theme={resolvedMode}
+          className={[
+            'ec-drawer',
+            resolvedMode === 'dark' && 'dark',
+            instant && 'is-instant',
+            className,
+          ]
+            .filter(Boolean)
+            .join(' ')}
           style={style}
           aria-describedby={description ? `${id}-description` : undefined}
           onPointerDownOutside={(event) => {

@@ -3,6 +3,7 @@ import { XIcon } from 'lucide-react';
 import { Dialog as DialogPrimitive } from 'radix-ui';
 import { registerOverlay } from '../../platform/overlayStack';
 import { IconButton } from '../Button';
+import { useTheme } from '../../theme/ThemeProvider';
 
 export interface ModalProps {
   open: boolean;
@@ -45,6 +46,7 @@ export function Modal({
   style,
 }: ModalProps) {
   const id = useId();
+  const { resolvedMode } = useTheme();
   useEffect(() => {
     if (!open) return;
     return registerOverlay({ id, close: () => onOpenChange(false) });
@@ -60,12 +62,14 @@ export function Modal({
         <DialogPrimitive.Content
           className={[
             'ec-modal',
+            resolvedMode === 'dark' && 'dark',
             fullScreenOnMobile && 'ec-modal--responsive',
             instant && 'is-instant',
             className,
           ]
             .filter(Boolean)
             .join(' ')}
+          data-ec-theme={resolvedMode}
           aria-describedby={description ? `${id}-description` : undefined}
           style={style}
           onOpenAutoFocus={(event) => {
