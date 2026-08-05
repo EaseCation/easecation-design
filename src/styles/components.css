@@ -4485,7 +4485,7 @@
 
 .ec-dropdown-menu {
   position: fixed;
-  z-index: calc(var(--ec-z-overlay, 500) + 20);
+  z-index: var(--ec-z-dropdown, 700);
   display: grid;
   min-width: 11rem;
   max-width: calc(100vw - 1rem);

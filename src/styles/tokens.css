@@ -183,7 +183,7 @@
   --ec-touch-target: 2.75rem;
   --ec-motion-fast: var(--motion-fast); --ec-motion-base: var(--motion-base); --ec-motion-slow: var(--motion-slow);
   --ec-ease-standard: var(--ease-standard); --ec-ease-emphasized: var(--ease-emphasized); --ec-ease-spring: var(--ease-spring);
-  --ec-z-sticky: 100; --ec-z-dropdown: 300; --ec-z-overlay: 500; --ec-z-modal: 600; --ec-z-toast: 800;
+  --ec-z-sticky: 100; --ec-z-overlay: 500; --ec-z-modal: 600; --ec-z-dropdown: 700; --ec-z-toast: 800;
   --ec-safe-top: max(env(safe-area-inset-top, 0px), env(titlebar-area-height, 0px), var(--native-safe-area-top, 0px));
   --ec-safe-right: env(safe-area-inset-right, 0px);
   --ec-safe-bottom: max(env(safe-area-inset-bottom, 0px), var(--native-safe-area-bottom, 0px));
