@@ -234,6 +234,22 @@
   border-top: 1px solid var(--ec-color-border);
   margin: var(--ec-space-4) 0;
 }
+.ec-divider--with-text {
+  display: flex;
+  align-items: center;
+  gap: var(--ec-space-3);
+  border: 0;
+  color: var(--ec-color-text-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.ec-divider--with-text::before,
+.ec-divider--with-text::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: var(--ec-color-border);
+}
 .ec-layout {
   min-height: 100%;
   display: grid;
@@ -431,7 +447,7 @@
   animation: ec-fade var(--ec-motion-fast) var(--ec-ease-standard);
 }
 .ec-modal {
-  width: min(34rem, 100%);
+  width: min(var(--ec-modal-width, 38rem), 100%);
   max-height: min(48rem, calc(100dvh - 2rem));
   display: flex;
   flex-direction: column;
@@ -1961,8 +1977,9 @@
   left: 50%;
   z-index: calc(var(--ec-z-overlay) + 1);
   display: grid;
-  width: calc(100% - 2rem);
-  max-width: 24rem;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(calc(100% - 2rem), var(--ec-modal-width, 38rem));
+  max-width: var(--ec-modal-max-width, 38rem);
   max-height: calc(100dvh - 2rem);
   gap: 1rem;
   padding: 1.25rem;
@@ -2216,6 +2233,24 @@
   }
 }
 @media (max-width: 639px) {
+  .ec-modal:not(.ec-modal--responsive) {
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: min(calc(100vw - 1.5rem), var(--ec-modal-width, 38rem)) !important;
+    max-width: calc(100vw - 1.5rem) !important;
+    max-height: calc(
+      100dvh - max(var(--ec-safe-top, 0px), 0.75rem) - max(var(--ec-safe-bottom, 0px), 0.75rem)
+    );
+    transform: translate(-50%, -50%) !important;
+  }
+
+  .ec-modal:not(.ec-modal--responsive) .ec-modal__body {
+    min-height: 0;
+    overflow: auto;
+  }
+
   .ec-modal--responsive {
     top: auto;
     bottom: 0;
@@ -2932,7 +2967,11 @@
   display: flex;
   min-height: 100svh;
   background:
-    radial-gradient(120% 80% at 0% 0%, color-mix(in oklch, var(--primary) 6%, transparent), transparent 55%),
+    radial-gradient(
+      120% 80% at 0% 0%,
+      color-mix(in oklch, var(--primary) 6%, transparent),
+      transparent 55%
+    ),
     var(--background);
   color: var(--foreground);
 }
@@ -3661,7 +3700,11 @@
   padding-block: 0;
   border: 1px solid color-mix(in oklch, var(--border, var(--ec-border)) 82%, transparent);
   background:
-    linear-gradient(180deg, color-mix(in oklch, var(--card, var(--ec-surface)) 92%, white 8%), var(--card, var(--ec-surface))),
+    linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--card, var(--ec-surface)) 92%, white 8%),
+      var(--card, var(--ec-surface))
+    ),
     var(--card, var(--ec-surface));
   box-shadow:
     0 1px 0 color-mix(in oklch, white 72%, transparent) inset,
@@ -3691,7 +3734,11 @@
 }
 
 .ec-card-legacy.ec-card--pressable:hover {
-  border-color: color-mix(in oklch, var(--primary, var(--ec-color-primary)) 34%, var(--border, var(--ec-border)));
+  border-color: color-mix(
+    in oklch,
+    var(--primary, var(--ec-color-primary)) 34%,
+    var(--border, var(--ec-border))
+  );
   box-shadow:
     0 1px 0 color-mix(in oklch, white 72%, transparent) inset,
     0 18px 42px color-mix(in oklch, var(--primary, var(--ec-color-primary)) 11%, transparent);
@@ -3791,7 +3838,8 @@
   white-space: nowrap;
   background: var(--ec-ribbon-color, var(--primary, var(--ec-color-primary)));
   border-radius: 999px 999px 999px 0;
-  box-shadow: 0 10px 22px color-mix(in oklch, var(--ec-ribbon-color, var(--primary)) 26%, transparent);
+  box-shadow: 0 10px 22px
+    color-mix(in oklch, var(--ec-ribbon-color, var(--primary)) 26%, transparent);
 }
 
 .ec-ribbon[data-color='green'],
@@ -4005,9 +4053,18 @@
   padding: 0.85rem 1rem;
   color: var(--foreground, var(--ec-text-primary));
   background:
-    linear-gradient(135deg, color-mix(in oklch, var(--ec-alert-color, var(--primary, #2563eb)) 10%, transparent), transparent 60%),
+    linear-gradient(
+      135deg,
+      color-mix(in oklch, var(--ec-alert-color, var(--primary, #2563eb)) 10%, transparent),
+      transparent 60%
+    ),
     color-mix(in oklch, var(--muted, var(--ec-surface-muted)) 46%, transparent);
-  border: 1px solid color-mix(in oklch, var(--ec-alert-color, var(--primary, #2563eb)) 22%, var(--border, var(--ec-border)));
+  border: 1px solid
+    color-mix(
+      in oklch,
+      var(--ec-alert-color, var(--primary, #2563eb)) 22%,
+      var(--border, var(--ec-border))
+    );
   border-radius: var(--radius, var(--ec-radius-lg));
 }
 
@@ -4037,7 +4094,8 @@
   height: 0.65rem;
   background: var(--ec-alert-color, var(--primary, #2563eb));
   border-radius: 50%;
-  box-shadow: 0 0 0 4px color-mix(in oklch, var(--ec-alert-color, var(--primary, #2563eb)) 14%, transparent);
+  box-shadow: 0 0 0 4px
+    color-mix(in oklch, var(--ec-alert-color, var(--primary, #2563eb)) 14%, transparent);
 }
 
 .ec-alert[data-has-description='true'] .ec-alert-mark {
@@ -4137,7 +4195,8 @@
 .ec-segmented-item[data-selected='true'] {
   color: var(--primary-foreground, #fff);
   background: var(--primary, var(--ec-color-primary));
-  box-shadow: 0 8px 18px color-mix(in oklch, var(--primary, var(--ec-color-primary)) 18%, transparent);
+  box-shadow: 0 8px 18px
+    color-mix(in oklch, var(--primary, var(--ec-color-primary)) 18%, transparent);
 }
 
 .ec-tabs-legacy {
@@ -4170,7 +4229,9 @@
 .ec-tabs-legacy-tab[data-active='true'] {
   color: var(--foreground, var(--ec-text-primary));
   background: var(--background, var(--ec-surface));
-  box-shadow: 0 1px 0 color-mix(in oklch, white 72%, transparent) inset, 0 6px 14px rgb(15 23 42 / 7%);
+  box-shadow:
+    0 1px 0 color-mix(in oklch, white 72%, transparent) inset,
+    0 6px 14px rgb(15 23 42 / 7%);
 }
 
 .ec-tabs-legacy-panel {
@@ -4326,7 +4387,12 @@
   background: var(--ec-timeline-color, var(--primary, var(--ec-color-primary)));
   border: 3px solid var(--background, var(--ec-surface));
   border-radius: 50%;
-  box-shadow: 0 0 0 1px color-mix(in oklch, var(--ec-timeline-color, var(--primary, var(--ec-color-primary))) 26%, transparent);
+  box-shadow: 0 0 0 1px
+    color-mix(
+      in oklch,
+      var(--ec-timeline-color, var(--primary, var(--ec-color-primary))) 26%,
+      transparent
+    );
 }
 
 .ec-timeline-item[data-color='green'] {

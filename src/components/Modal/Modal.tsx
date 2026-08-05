@@ -1,4 +1,4 @@
-﻿import { useEffect, useId, type ReactNode } from 'react';
+﻿import { useEffect, useId, type CSSProperties, type ReactNode } from 'react';
 import { XIcon } from 'lucide-react';
 import { Dialog as DialogPrimitive } from 'radix-ui';
 import { registerOverlay } from '../../platform/overlayStack';
@@ -17,6 +17,7 @@ export interface ModalProps {
   closeLabel?: string;
   instant?: boolean;
   className?: string;
+  style?: CSSProperties;
 }
 
 function isTouchDevice() {
@@ -41,6 +42,7 @@ export function Modal({
   closeLabel = 'Close',
   instant = false,
   className,
+  style,
 }: ModalProps) {
   const id = useId();
   useEffect(() => {
@@ -65,6 +67,7 @@ export function Modal({
             .filter(Boolean)
             .join(' ')}
           aria-describedby={description ? `${id}-description` : undefined}
+          style={style}
           onOpenAutoFocus={(event) => {
             if (isTouchDevice()) event.preventDefault();
           }}
@@ -91,7 +94,12 @@ export function Modal({
           {footer ? <footer className="ec-modal__footer">{footer}</footer> : null}
           {showCloseButton ? (
             <DialogPrimitive.Close asChild>
-              <IconButton className="ec-overlay-close" size="sm" label={closeLabel} icon={<XIcon />} />
+              <IconButton
+                className="ec-overlay-close"
+                size="sm"
+                label={closeLabel}
+                icon={<XIcon />}
+              />
             </DialogPrimitive.Close>
           ) : null}
         </DialogPrimitive.Content>
