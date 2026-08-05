@@ -602,16 +602,22 @@ Badge.Ribbon = ({ children, text, color, placement: _placement, ...props }: any)
     {children}
   </div>
 );
-export const Tag = ({ children, color, ...props }: any) => (
-  <span
-    className={cls('ec-tag', props.className)}
-    data-color={color}
-    style={{ '--ec-tag-color': color, ...props.style } as React.CSSProperties}
-    {...props}
-  >
-    {children}
-  </span>
-);
+const presetTagColors = new Set(['red', 'error', 'blue', 'processing', 'green', 'success', 'gold', 'warning', 'default']);
+export const Tag = ({ children, color, ...props }: any) => {
+  const colorStyle = color && !presetTagColors.has(String(color))
+    ? { '--ec-tag-color': color }
+    : {};
+  return (
+    <span
+      className={cls('ec-tag', props.className)}
+      data-color={color}
+      style={{ ...colorStyle, ...props.style } as React.CSSProperties}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+};
 export const Statistic = ({
   title,
   value,

@@ -27,7 +27,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     block = false,
     leadingIcon,
     trailingIcon,
-    pressable = true,
+    pressable = false,
     className,
     children,
     disabled,

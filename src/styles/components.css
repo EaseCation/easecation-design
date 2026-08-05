@@ -1289,7 +1289,7 @@
 .ec-button--primary {
   background: var(--primary);
   color: var(--primary-foreground);
-  box-shadow: 0 1px 1px oklch(0.18 0.02 264 / 0.08);
+  box-shadow: none;
 }
 .ec-button--primary:hover:not(:disabled) {
   background: color-mix(in oklch, var(--primary) 92%, transparent);
@@ -4646,4 +4646,40 @@
     grid-template-columns: 1fr;
     gap: 0.25rem;
   }
+}
+
+/* Keep buttons flat: remove the previous glossy/pressed highlight that read as a white top edge. */
+.ec-button,
+.ec-icon-button {
+  box-shadow: none;
+}
+
+.ec-button__press-light {
+  display: none;
+}
+
+.ec-button.is-pressing .ec-button__press-shade {
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.16);
+}
+
+/* Inputs use a single shell surface; keep native controls transparent in every theme. */
+.ec-input-shell .ec-input,
+.ec-input-shell input,
+.ec-input-shell textarea {
+  border-color: transparent;
+  background: transparent;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.dark .ec-input-shell .ec-input,
+.dark .ec-input-shell input,
+.dark .ec-input-shell textarea,
+[data-ec-theme='dark'] .ec-input-shell .ec-input,
+[data-ec-theme='dark'] .ec-input-shell input,
+[data-ec-theme='dark'] .ec-input-shell textarea {
+  border-color: transparent;
+  background: transparent;
+  background-color: transparent;
+  box-shadow: none;
 }
