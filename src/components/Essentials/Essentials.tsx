@@ -77,9 +77,10 @@ export const theme = { defaultAlgorithm: {}, darkAlgorithm: {}, useToken: () => 
 export const Button: any = forwardRef<any, any>(function Button({ type, danger, ghost, size: s, loading, block, icon, children, className, htmlType, href, target, rel, shape: _shape, ...props }, ref) {
   const resolvedVariant = variant(type, danger, ghost);
   const resolvedSize = size(s);
+  const hasChildren = children !== undefined && children !== null && children !== false;
   if (href) {
     const anchorClassName = cls('ec-button', 'ec-focusable', `ec-button--${resolvedVariant}`, `ec-button--${resolvedSize}`, block && 'ec-button--block', 'ec-btn', className);
-    return <a ref={ref} href={href} target={target} rel={rel ?? (target === '_blank' ? 'noreferrer' : undefined)} aria-busy={loading || undefined} className={anchorClassName} {...props}><span className="ec-button__content">{loading ? <span className="ec-spinner" aria-hidden="true" /> : icon ? <span className="ec-button__icon">{icon}</span> : null}<span>{children}</span></span></a>;
+    return <a ref={ref} href={href} target={target} rel={rel ?? (target === '_blank' ? 'noreferrer' : undefined)} aria-busy={loading || undefined} className={anchorClassName} {...props}><span className="ec-button__content">{loading ? <span className="ec-spinner" aria-hidden="true" /> : icon ? <span className="ec-button__icon">{icon}</span> : null}{hasChildren ? <span>{children}</span> : null}</span></a>;
   }
   return <BaseButton ref={ref} type={htmlType ?? props.type} variant={resolvedVariant} size={resolvedSize} loading={loading} block={block} leadingIcon={icon} className={cls('ec-btn', className)} {...props}>{children}</BaseButton>;
 });

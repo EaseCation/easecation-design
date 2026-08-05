@@ -82,6 +82,16 @@
 }
 .ec-button__icon {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.ec-button__icon svg,
+.ec-icon-button svg {
+  display: block;
+  flex: none;
+  width: 1em;
+  height: 1em;
 }
 .ec-icon-button {
   width: var(--ec-control-md);

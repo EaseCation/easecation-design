@@ -57,8 +57,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   };
   const end = (event: PointerEvent<HTMLButtonElement>) => { onPointerUp?.(event); if (pressable) setPressing(false); };
   const leave = (event: PointerEvent<HTMLButtonElement>) => { onPointerLeave?.(event); if (pressable) setPressing(false); };
+  const hasChildren = children !== undefined && children !== null && children !== false;
   return <button ref={innerRef} type={type} className={['ec-button','ec-focusable',`ec-button--${variant}`,`ec-button--${size}`,block && 'ec-button--block',pressable && 'ec-button--pressable',pressing && 'is-pressing',className].filter(Boolean).join(' ')} style={{...style,...pressStyle}} disabled={disabled || loading} aria-busy={loading || undefined} onPointerDown={start} onPointerUp={end} onPointerLeave={leave} {...props}>
-    <span className="ec-button__content">{loading ? <span className="ec-spinner" aria-hidden="true" /> : leadingIcon ? <span className="ec-button__icon">{leadingIcon}</span> : null}<span>{children}</span>{trailingIcon ? <span className="ec-button__icon">{trailingIcon}</span> : null}</span>
+    <span className="ec-button__content">{loading ? <span className="ec-spinner" aria-hidden="true" /> : leadingIcon ? <span className="ec-button__icon">{leadingIcon}</span> : null}{hasChildren ? <span>{children}</span> : null}{trailingIcon ? <span className="ec-button__icon">{trailingIcon}</span> : null}</span>
     {pressable ? <><span className="ec-button__press-shade" aria-hidden="true"/><span className="ec-button__press-light" aria-hidden="true"/></> : null}
   </button>;
 });
