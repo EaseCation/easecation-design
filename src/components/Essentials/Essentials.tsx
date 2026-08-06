@@ -903,23 +903,29 @@ export const Alert = ({
   banner: _banner,
   className,
   ...props
-}: any) => (
-  <div
-    role="alert"
-    data-tone={type}
-    data-show-icon={showIcon ? 'true' : 'false'}
-    data-has-description={description ? 'true' : 'false'}
-    className={cls('ec-alert', className)}
-    {...props}
-  >
-    {showIcon ? <div className="ec-alert-mark" aria-hidden="true" /> : null}
-    <div className="ec-alert-content">
-      <strong>{message}</strong>
-      {description && <div className="ec-alert-description">{description}</div>}
+}: any) => {
+  const hasMessage = message !== undefined && message !== null && message !== false;
+  const hasDescription = description !== undefined && description !== null && description !== false;
+  const hasAction = action !== undefined && action !== null && action !== false;
+  return (
+    <div
+      role="alert"
+      data-tone={type}
+      data-show-icon={showIcon ? 'true' : 'false'}
+      data-has-description={hasDescription ? 'true' : 'false'}
+      data-has-action={hasAction ? 'true' : 'false'}
+      className={cls('ec-alert', className)}
+      {...props}
+    >
+      {showIcon ? <div className="ec-alert-mark" aria-hidden="true" /> : null}
+      <div className="ec-alert-content">
+        {hasMessage ? <strong>{message}</strong> : null}
+        {hasDescription ? <div className="ec-alert-description">{description}</div> : null}
+      </div>
+      {hasAction ? <div className="ec-alert-action">{action}</div> : null}
     </div>
-    {action ? <div className="ec-alert-action">{action}</div> : null}
-  </div>
-);
+  );
+};
 export const Result = ({ status, title, subTitle, extra, ...props }: any) => (
   <div {...props}>
     <h2>{title ?? status}</h2>
