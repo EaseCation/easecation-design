@@ -8,6 +8,11 @@
 *::after {
   box-sizing: border-box;
 }
+html,
+body,
+.ec-root {
+  -webkit-tap-highlight-color: transparent;
+}
 .ec-root {
   font-family: var(--ec-font-sans);
   color: var(--ec-color-text);
