@@ -1167,6 +1167,89 @@
       "deprecated": false
     },
     {
+      "name": "Combobox",
+      "importPath": "@easecation/design",
+      "category": "input",
+      "maturity": "beta",
+      "platforms": [
+        "web",
+        "pwa",
+        "android-webview",
+        "ios-wkwebview",
+        "windows-webview2",
+        "ssr"
+      ],
+      "accessibility": [
+        "combobox-listbox-semantics",
+        "keyboard-navigation",
+        "active-descendant"
+      ],
+      "tokens": [
+        "--ec-color-border",
+        "--ec-color-focus",
+        "--ec-z-dropdown"
+      ],
+      "stories": [
+        "Components/Form Controls/Advanced Choices"
+      ],
+      "deprecated": false
+    },
+    {
+      "name": "MultiSelect",
+      "importPath": "@easecation/design",
+      "category": "input",
+      "maturity": "beta",
+      "platforms": [
+        "web",
+        "pwa",
+        "android-webview",
+        "ios-wkwebview",
+        "windows-webview2",
+        "ssr"
+      ],
+      "accessibility": [
+        "multiselect-listbox-semantics",
+        "keyboard-tag-removal",
+        "active-descendant"
+      ],
+      "tokens": [
+        "--ec-color-border",
+        "--ec-color-focus",
+        "--ec-z-dropdown"
+      ],
+      "stories": [
+        "Components/Form Controls/Advanced Choices"
+      ],
+      "deprecated": false
+    },
+    {
+      "name": "Accordion",
+      "importPath": "@easecation/design",
+      "category": "display",
+      "maturity": "beta",
+      "platforms": [
+        "web",
+        "pwa",
+        "android-webview",
+        "ios-wkwebview",
+        "windows-webview2",
+        "ssr"
+      ],
+      "accessibility": [
+        "keyboard-navigation",
+        "aria-expanded",
+        "independent-header-actions"
+      ],
+      "tokens": [
+        "--ec-color-border",
+        "--ec-motion-base"
+      ],
+      "stories": [
+        "Components/Form Controls/Advanced Choices"
+      ],
+      "deprecated": false
+    },
+    {
       "name": "Navbar",
       "importPath": "@easecation/design",
       "category": "navigation",

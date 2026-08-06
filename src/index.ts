@@ -40,6 +40,9 @@ export * from './components/Calendar';
 export * from './components/Filters';
 
 export * from './components/AccessGate';
+export * from './components/Combobox';
+export * from './components/MultiSelect';
+export * from './components/Accordion';
 
 export {
   Affix,
