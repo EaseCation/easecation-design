@@ -935,19 +935,21 @@ export const Tooltip = ({ title, content, children, ...props }: any) =>
   ) : (
     <>{children}</>
   );
-export const Popover = ({ trigger, title, content, children, placement, ...props }: any) =>
-  trigger || content || title ? (
+export const Popover = ({ trigger, title, content, children, placement, ...props }: any) => {
+  const triggerNode = React.isValidElement(trigger) ? trigger : React.Children.only(children);
+  return trigger || content || title ? (
     <BasePopover
-      trigger={trigger ?? React.Children.only(children)}
+      trigger={triggerNode}
       title={title}
       placement={placement}
       {...props}
     >
-      {content ?? (trigger ? children : null)}
+      {content ?? (React.isValidElement(trigger) ? children : null)}
     </BasePopover>
   ) : (
     <>{children}</>
   );
+};
 export const Popconfirm = ({ title, onConfirm, okText, cancelText, children }: any) => (
   <span
     onClick={async (e) => {

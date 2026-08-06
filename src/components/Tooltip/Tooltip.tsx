@@ -1,5 +1,5 @@
 ﻿import { Tooltip as Primitive } from 'radix-ui';
-import type { ComponentProps, ReactElement, ReactNode } from 'react';
+import { useEffect, useState, type ComponentProps, type ReactElement, type ReactNode } from 'react';
 import { useTheme } from '../../theme/ThemeProvider';
 
 const classes = (...values: Array<string | undefined>) => values.filter(Boolean).join(' ');
@@ -19,12 +19,34 @@ export type TooltipProps =
       placement?: 'top' | 'bottom' | 'left' | 'right';
       delay?: number;
       disabled?: boolean;
+      disableTouch?: boolean;
       open?: boolean;
       defaultOpen?: boolean;
       onOpenChange?: (open: boolean) => void;
     };
 
+function isCoarsePointer() {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia?.('(hover: none), (pointer: coarse)').matches ?? false;
+}
+
+function useCoarsePointer() {
+  const [coarse, setCoarse] = useState(isCoarsePointer);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    const media = window.matchMedia('(hover: none), (pointer: coarse)');
+    const update = () => setCoarse(media.matches);
+    update();
+    media.addEventListener?.('change', update);
+    return () => media.removeEventListener?.('change', update);
+  }, []);
+
+  return coarse;
+}
+
 export function Tooltip(props: TooltipProps) {
+  const coarsePointer = useCoarsePointer();
   if ('content' in props) {
     const {
       content,
@@ -32,13 +54,17 @@ export function Tooltip(props: TooltipProps) {
       placement = 'top',
       delay = 300,
       disabled = false,
+      disableTouch = true,
       ...rootProps
     } = props;
+    if (disabled || (disableTouch && coarsePointer)) return children;
     return (
       <TooltipProvider delayDuration={delay}>
-        <Primitive.Root {...rootProps} disableHoverableContent={disabled}>
+        <Primitive.Root {...rootProps} disableHoverableContent>
           <Primitive.Trigger asChild>{children}</Primitive.Trigger>
-          <TooltipContent side={placement}>{content}</TooltipContent>
+          <TooltipContent side={placement} collisionPadding={8}>
+            {content}
+          </TooltipContent>
         </Primitive.Root>
       </TooltipProvider>
     );
