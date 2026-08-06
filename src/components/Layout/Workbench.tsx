@@ -62,9 +62,11 @@ export function AppShell({
         >
           <div className="ec-app-shell__mobile-head">
             <IconButton
+              className="ec-app-shell__menu-button"
               label={mobileNavigationLabel}
               icon={<MenuIcon />}
-              variant="outline"
+              variant="ghost"
+              aria-expanded={open}
               onClick={() => change(true)}
             />
             <div>{brand}</div>

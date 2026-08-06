@@ -37,10 +37,24 @@ interface ToastApi {
 const ToastContext = createContext<ToastApi | null>(null);
 let nextId = 1;
 
-export function Toaster({ theme = 'system', ...props }: ToasterProps) {
+export function Toaster({
+  theme = 'system',
+  position = 'top-right',
+  mobileOffset = {
+    top: 'calc(0.875rem + var(--ec-safe-top, 0px))',
+    right: '0.875rem',
+    bottom: '0.875rem',
+    left: '0.875rem',
+  },
+  swipeDirections,
+  ...props
+}: ToasterProps) {
   return (
     <SonnerToaster
       theme={theme}
+      position={position}
+      mobileOffset={mobileOffset}
+      swipeDirections={swipeDirections ?? (position.startsWith('top') ? ['top', 'left', 'right'] : undefined)}
       className="toaster ec-toaster"
       icons={{
         success: <CircleCheckIcon className="ec-toast-icon" />,
