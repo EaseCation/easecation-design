@@ -1113,7 +1113,7 @@
         "--shadow-xl"
       ],
       "stories": [
-        "Patterns/Data Workflows/Overlay"
+        "Patterns/Data Workflows/Compound Responsive Overlay"
       ],
       "deprecated": false
     },
@@ -1274,7 +1274,7 @@
         "--primary"
       ],
       "stories": [
-        "Patterns/App Shell/Dashboard"
+        "Components/Navbar/Product Navigation"
       ],
       "deprecated": false
     }

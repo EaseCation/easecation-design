@@ -5184,3 +5184,72 @@
     animation: none;
   }
 }
+
+/* Mobile interaction contract shared by public controls and workbench patterns. */
+@media (hover: none), (pointer: coarse) {
+  .ec-filter-bar .ec-input-shell,
+  .ec-filter-bar .ec-select__trigger,
+  .ec-filter-bar .ec-calendar input,
+  .ec-filter-bar .ec-filter-picker,
+  .ec-filter-bar .ec-datetime-trigger,
+  .ec-filter-bar__actions .ec-button,
+  .ec-action-bar .ec-button,
+  .ec-form-workbench__footer .ec-button,
+  .ec-datetime-fields .ec-input-shell,
+  .ec-datetime-trigger {
+    height: auto;
+    min-height: var(--ec-touch-target);
+    max-height: none;
+  }
+
+  .ec-overlay-close,
+  .ec-navbar__menu-button,
+  .ec-input-clear,
+  .ec-combobox__icon-button,
+  .ec-multi-select__chevron,
+  .ec-multi-select__tag button {
+    min-width: var(--ec-touch-target);
+    min-height: var(--ec-touch-target);
+  }
+}
+
+@media (max-width: 639px) {
+  .ec-filter-bar__fields,
+  .ec-filter-bar__actions,
+  .ec-filter-field,
+  .ec-filter-field--wide,
+  .ec-filter-select,
+  .ec-datetime-fields {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .ec-filter-field {
+    flex-basis: 100%;
+  }
+
+  .ec-filter-bar__actions {
+    margin-left: 0;
+  }
+
+  .ec-filter-bar__actions .ec-button {
+    min-width: 0;
+    flex: 1 1 0;
+  }
+
+  .ec-page-scaffold h1,
+  .ec-dashboard-feed__title,
+  .ec-dashboard-feed__meta,
+  .ec-action-bar,
+  .ec-form-workbench__footer {
+    overflow-wrap: anywhere;
+  }
+
+  .ec-drawer[data-side='left'],
+  .ec-drawer[data-side='right'] {
+    width: min(88vw, 24rem);
+    padding-top: var(--ec-safe-top, 0px);
+    padding-bottom: var(--ec-safe-bottom, 0px);
+  }
+}
