@@ -2,6 +2,13 @@
 
 本项目遵循 Semantic Versioning。所有重要变更都会记录在此文件中。
 
+## 0.4.0 - 2026-09-04
+
+- 强化 Modal、Drawer 与 ResponsiveOverlay 的移动端布局，支持 Visual Viewport、软键盘、Safe Area、长内容滚动和真正的移动端全屏 Modal。
+- 为无标题 Modal 与 Drawer 增加 `ariaLabel`，并为 Drawer 增加 `style`，保留既有公开 API 与兼容层调用方式。
+- 统一浮层层级和暗色主题继承，提升触控设备上的点击目标、筛选栏、操作栏、日期时间与表单底栏布局。
+- 为 Navbar 与 ResponsiveOverlay 补充正式 Storybook 场景，并增加移动端浮层回归测试。
+
 ## 0.1.0 - Unreleased
 
 - 建立完整的 Design Tokens、主题、密度和 CSS Variables 系统。

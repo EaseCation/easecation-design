@@ -19,7 +19,9 @@ import "@easecation/design/style.css"
 
 ## API
 
-open；onOpenChange；title；description；footer；placement；size；closeOnBackdrop。
+open；onOpenChange；title；description；footer；placement；size；closeOnBackdrop；showCloseButton；closeLabel；ariaLabel；instant；className；style。
+
+Drawer 会跟随 `visualViewport` 的高度和偏移，在虚拟键盘弹出或 WebView 可视区域变化时保持内容可滚动、底部操作可达。左右侧 Drawer 在小屏幕上自动限制宽度并应用顶部与底部 Safe Area。无 `title` 时使用 `ariaLabel` 提供对话框名称。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -43,7 +45,7 @@ open；onOpenChange；title；description；footer；placement；size；closeOnB
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function Drawer({ open, onOpenChange, title, description, children, footer, placement, size, closeOnBackdrop, showCloseButton, instant, className, }: DrawerProps): JSX.Element;
+export declare function Drawer({ open, onOpenChange, title, description, children, footer, placement, size, closeOnBackdrop, showCloseButton, closeLabel, ariaLabel, instant, className, style, }: DrawerProps): JSX.Element;
 
 export declare interface DrawerProps {
     open: boolean;
@@ -56,7 +58,10 @@ export declare interface DrawerProps {
     size?: string;
     closeOnBackdrop?: boolean;
     showCloseButton?: boolean;
+    closeLabel?: string;
+    ariaLabel?: string;
     instant?: boolean;
     className?: string;
+    style?: CSSProperties;
 }
 ```
