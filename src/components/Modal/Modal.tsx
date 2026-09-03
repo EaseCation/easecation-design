@@ -2,6 +2,7 @@
 import { XIcon } from 'lucide-react';
 import { Dialog as DialogPrimitive } from 'radix-ui';
 import { registerOverlay } from '../../platform/overlayStack';
+import { useOverlayViewportStyle } from '../../platform/useOverlayViewport';
 import { IconButton } from '../Button';
 import { useTheme } from '../../theme/ThemeProvider';
 
@@ -16,6 +17,7 @@ export interface ModalProps {
   fullScreenOnMobile?: boolean;
   showCloseButton?: boolean;
   closeLabel?: string;
+  ariaLabel?: string;
   instant?: boolean;
   className?: string;
   style?: CSSProperties;
@@ -41,12 +43,14 @@ export function Modal({
   fullScreenOnMobile = false,
   showCloseButton = true,
   closeLabel = 'Close',
+  ariaLabel,
   instant = false,
   className,
   style,
 }: ModalProps) {
   const id = useId();
   const { resolvedMode } = useTheme();
+  const viewportStyle = useOverlayViewportStyle(style);
   useEffect(() => {
     if (!open) return;
     return registerOverlay({ id, close: () => onOpenChange(false) });
@@ -70,8 +74,9 @@ export function Modal({
             .filter(Boolean)
             .join(' ')}
           data-ec-theme={resolvedMode}
+          aria-label={title ? undefined : (ariaLabel ?? closeLabel)}
           aria-describedby={description ? `${id}-description` : undefined}
-          style={style}
+          style={viewportStyle}
           onOpenAutoFocus={(event) => {
             if (isTouchDevice()) event.preventDefault();
           }}
@@ -85,7 +90,7 @@ export function Modal({
           {title || description ? (
             <header className="ec-modal__header">
               {title ? (
-                <DialogPrimitive.Title id={`${id}-title`}>{title}</DialogPrimitive.Title>
+                <DialogPrimitive.Title>{title}</DialogPrimitive.Title>
               ) : null}
               {description ? (
                 <DialogPrimitive.Description id={`${id}-description`}>

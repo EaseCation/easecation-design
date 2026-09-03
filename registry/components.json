@@ -362,7 +362,7 @@
         "describedby"
       ],
       "tokens": [
-        "--ec-z-dropdown",
+        "--ec-z-tooltip",
         "--ec-shadow-md"
       ],
       "stories": [

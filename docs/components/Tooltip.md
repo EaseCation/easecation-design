@@ -24,7 +24,7 @@ TooltipProvider、Tooltip、TooltipTrigger、TooltipContent 组合使用。
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **可访问性**：tooltip-role, focus-trigger, describedby
-- **主要 Token**：`--ec-z-dropdown`, `--ec-shadow-md`
+- **主要 Token**：`--ec-z-tooltip`, `--ec-shadow-md`
 
 ## 使用约束
 

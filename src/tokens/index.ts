@@ -15,7 +15,7 @@ export const defaultTokens = {
   radius: { sm: '0.325rem', md: '0.425rem', lg: '0.5rem', xl: '0.675rem', '2xl': '0.875rem', pill: '999px' },
   size: { sm: '2rem', md: '2.5rem', lg: '3rem' },
   motion: { fast: '180ms', base: '280ms', slow: '420ms' },
-  zIndex: { base: 0, sticky: 100, dropdown: 300, overlay: 500, modal: 600, toast: 800 },
+  zIndex: { base: 0, sticky: 100, overlay: 500, modal: 600, dropdown: 700, tooltip: 750, toast: 800 },
   touchTarget: '2.75rem',
 } as const;
 
