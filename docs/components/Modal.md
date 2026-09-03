@@ -19,7 +19,9 @@ import "@easecation/design/style.css"
 
 ## API
 
-open；onOpenChange；title；description；footer；closeOnBackdrop；fullScreenOnMobile；showCloseButton。
+open；onOpenChange；title；description；footer；closeOnBackdrop；fullScreenOnMobile；showCloseButton；closeLabel；ariaLabel；instant；className；style。
+
+`fullScreenOnMobile` 在小屏幕上使用完整可视视口，而不是仅改变宽度。组件会跟随 `visualViewport` 的高度和偏移，在虚拟键盘弹出、页面缩放或 WebView 可视区域变化时保持内容与操作区可达。无 `title` 时使用 `ariaLabel` 提供对话框名称。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -43,7 +45,7 @@ open；onOpenChange；title；description；footer；closeOnBackdrop；fullScree
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function Modal({ open, onOpenChange, title, description, children, footer, closeOnBackdrop, fullScreenOnMobile, showCloseButton, instant, className, }: ModalProps): JSX.Element;
+export declare function Modal({ open, onOpenChange, title, description, children, footer, closeOnBackdrop, fullScreenOnMobile, showCloseButton, closeLabel, ariaLabel, instant, className, style, }: ModalProps): JSX.Element;
 
 export declare interface ModalProps {
     open: boolean;
@@ -55,7 +57,10 @@ export declare interface ModalProps {
     closeOnBackdrop?: boolean;
     fullScreenOnMobile?: boolean;
     showCloseButton?: boolean;
+    closeLabel?: string;
+    ariaLabel?: string;
     instant?: boolean;
     className?: string;
+    style?: CSSProperties;
 }
 ```

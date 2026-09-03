@@ -1,6 +1,7 @@
 import { CheckIcon, ChevronRightIcon } from 'lucide-react';
 import { DropdownMenu as Primitive } from 'radix-ui';
 import type { ComponentProps } from 'react';
+import { useTheme } from '../../theme/ThemeProvider';
 
 const classes = (...values: Array<string | false | undefined>) => values.filter(Boolean).join(' ');
 export const DropdownMenu = Primitive.Root;
@@ -15,13 +16,15 @@ export function DropdownMenuContent({
   sideOffset = 4,
   ...props
 }: ComponentProps<typeof Primitive.Content>) {
+  const { resolvedMode } = useTheme();
   return (
     <Primitive.Portal>
       <Primitive.Content
         data-slot="dropdown-menu-content"
+        data-ec-theme={resolvedMode}
         align={align}
         sideOffset={sideOffset}
-        className={classes('ec-dropdown-content', className)}
+        className={classes('ec-dropdown-content', resolvedMode === 'dark' && 'dark', className)}
         {...props}
       />
     </Primitive.Portal>
@@ -132,9 +135,16 @@ export function DropdownMenuSubContent({
   className,
   ...props
 }: ComponentProps<typeof Primitive.SubContent>) {
+  const { resolvedMode } = useTheme();
   return (
     <Primitive.SubContent
-      className={classes('ec-dropdown-content', 'ec-dropdown-sub-content', className)}
+      data-ec-theme={resolvedMode}
+      className={classes(
+        'ec-dropdown-content',
+        'ec-dropdown-sub-content',
+        resolvedMode === 'dark' && 'dark',
+        className,
+      )}
       {...props}
     />
   );

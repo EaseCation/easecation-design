@@ -3,6 +3,7 @@ import { XIcon } from 'lucide-react';
 import { createContext, useContext, type ComponentProps, type ReactNode } from 'react';
 import { Dialog as Primitive } from 'radix-ui';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { useOverlayViewportStyle } from '../../platform/useOverlayViewport';
 import { IconButton } from '../Button';
 import { EmptyState, InlineQueryError } from '../State';
 import { Skeleton } from '../Skeleton';
@@ -193,9 +194,11 @@ export function ResponsiveOverlayContent({
   closeLabel = 'Close',
   instant = false,
   forceMount,
+  style,
   ...props
 }: ResponsiveOverlayContentProps) {
   const { mobile } = useContext(OverlayContext);
+  const viewportStyle = useOverlayViewportStyle(style);
   return (
     <Primitive.Portal forceMount={forceMount}>
       <Primitive.Overlay
@@ -212,6 +215,7 @@ export function ResponsiveOverlayContent({
         ]
           .filter(Boolean)
           .join(' ')}
+        style={viewportStyle}
         {...props}
       >
         {children}

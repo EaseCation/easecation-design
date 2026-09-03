@@ -1,7 +1,20 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import { Button, QueryDataTable, ResponsiveDialog, ThemeProvider } from '../src';
+import {
+  Button,
+  QueryDataTable,
+  ResponsiveDialog,
+  ResponsiveOverlay,
+  ResponsiveOverlayBody,
+  ResponsiveOverlayContent,
+  ResponsiveOverlayDescription,
+  ResponsiveOverlayFooter,
+  ResponsiveOverlayHeader,
+  ResponsiveOverlayTitle,
+  ResponsiveOverlayTrigger,
+  ThemeProvider,
+} from '../src';
 import { useStoryTranslations } from '../.storybook/story-locale';
 
 const helper = createColumnHelper<{ id: string; name: string; status: string }>();
@@ -75,6 +88,33 @@ function Demo() {
   );
 }
 
+function CompoundOverlayDemo() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ padding: '2rem' }}>
+      <ResponsiveOverlay open={open} onOpenChange={setOpen}>
+        <ResponsiveOverlayTrigger asChild>
+          <Button>Open workspace settings</Button>
+        </ResponsiveOverlayTrigger>
+        <ResponsiveOverlayContent desktopSize="md" mobileSide="bottom">
+          <ResponsiveOverlayHeader>
+            <ResponsiveOverlayTitle>Workspace settings</ResponsiveOverlayTitle>
+            <ResponsiveOverlayDescription>
+              The same content uses a dialog on desktop and a sheet on mobile.
+            </ResponsiveOverlayDescription>
+          </ResponsiveOverlayHeader>
+          <ResponsiveOverlayBody>
+            <p style={{ margin: 0 }}>Domain-neutral settings content.</p>
+          </ResponsiveOverlayBody>
+          <ResponsiveOverlayFooter>
+            <Button onClick={() => setOpen(false)}>Save changes</Button>
+          </ResponsiveOverlayFooter>
+        </ResponsiveOverlayContent>
+      </ResponsiveOverlay>
+    </div>
+  );
+}
+
 const meta = {
   title: 'Patterns/Data Workflows',
   component: QueryDataTable,
@@ -90,3 +130,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 export const Table: Story = { args: { data: [], columns: [] }, render: () => <Demo /> };
 export const Overlay = Table;
+export const CompoundResponsiveOverlay: Story = {
+  args: { data: [], columns: [] },
+  render: () => <CompoundOverlayDemo />,
+};

@@ -99,6 +99,8 @@ export function QueryDataTable<TData>({
 }: QueryDataTableProps<TData>) {
   const isMobile = useMediaQuery(MOBILE_MEDIA_QUERY)
   const useTableLayout = layout === "table" || !isMobile
+  // TanStack Table returns callable objects that the React Compiler intentionally leaves un-memoized.
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,

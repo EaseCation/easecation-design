@@ -969,6 +969,7 @@ export const Popconfirm = ({ title, onConfirm, okText, cancelText, children }: a
 export const Modal = ({
   open,
   visible,
+  onOpenChange,
   onCancel,
   onOk,
   title,
@@ -989,8 +990,16 @@ export const Modal = ({
   cancelButtonProps,
   okButtonProps,
   style,
+  description,
+  fullScreenOnMobile,
+  showCloseButton,
+  closeLabel,
+  ariaLabel,
+  instant,
+  closeOnBackdrop,
   ...props
 }: any & { onOpenChange?: (open: boolean) => void }) => {
+  const usesPublicApi = typeof onOpenChange === 'function';
   const resolvedWidth = typeof width === 'number' ? `${width}px` : width;
   const modalStyle = resolvedWidth
     ? { ...style, '--ec-modal-width': resolvedWidth, '--ec-modal-max-width': resolvedWidth }
@@ -998,12 +1007,20 @@ export const Modal = ({
   return (
     <BaseModal
       open={Boolean(open ?? visible)}
-      onOpenChange={(n: boolean) => !n && onCancel?.()}
+      onOpenChange={(next: boolean) => {
+        onOpenChange?.(next);
+        if (!next) onCancel?.();
+      }}
       title={title}
-      closeOnBackdrop={maskClosable !== false}
-      showCloseButton={closable !== false}
+      description={description}
+      closeOnBackdrop={closeOnBackdrop ?? maskClosable !== false}
+      showCloseButton={showCloseButton ?? closable !== false}
+      closeLabel={closeLabel}
+      ariaLabel={ariaLabel}
+      fullScreenOnMobile={fullScreenOnMobile}
+      instant={instant}
       footer={
-        footer === null ? null : footer === undefined ? (
+        footer === null ? null : footer === undefined && !usesPublicApi ? (
           <div className="ec-modal-actions">
             <Button onClick={onCancel} {...cancelButtonProps}>
               {cancelText}
@@ -1012,9 +1029,7 @@ export const Modal = ({
               {okText}
             </Button>
           </div>
-        ) : (
-          footer
-        )
+        ) : footer
       }
       style={modalStyle}
       {...props}
@@ -1125,6 +1140,7 @@ Modal.useModal = () => [Modal, null];
 export const Drawer = ({
   open,
   visible,
+  onOpenChange,
   onClose,
   title,
   children,
@@ -1141,18 +1157,34 @@ export const Drawer = ({
   keyboard: _keyboard,
   closable,
   className,
+  description,
+  size,
+  style,
+  showCloseButton,
+  closeLabel,
+  ariaLabel,
+  instant,
+  closeOnBackdrop,
   ...props
 }: any) => (
   <BaseDrawer
     open={Boolean(open ?? visible)}
-    onOpenChange={(next: boolean) => !next && onClose?.()}
+    onOpenChange={(next: boolean) => {
+      onOpenChange?.(next);
+      if (!next) onClose?.();
+    }}
     title={title}
+    description={description}
     footer={footer}
     placement={placement}
-    size={placement === 'top' || placement === 'bottom' ? height : width}
-    closeOnBackdrop={maskClosable !== false}
-    showCloseButton={closable !== false}
+    size={size ?? (placement === 'top' || placement === 'bottom' ? height : width)}
+    closeOnBackdrop={closeOnBackdrop ?? maskClosable !== false}
+    showCloseButton={showCloseButton ?? closable !== false}
+    closeLabel={closeLabel}
+    ariaLabel={ariaLabel}
+    instant={instant}
     className={className}
+    style={style}
     {...props}
   >
     <div style={styles?.body}>{children}</div>

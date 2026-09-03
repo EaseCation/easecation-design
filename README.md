@@ -94,7 +94,7 @@ pnpm ai:validate
 
 ## 发布
 
-`.github/workflows/release.yml` 提供 `workflow_dispatch` 手动发布流程。发布前会执行许可证检查、类型检查、Lint、测试、构建和 npm 包内容验证。
+`main` 分支的 CI 成功后，`.github/workflows/release.yml` 会针对通过验证的提交自动运行 `Publish npm package`。工作流会跳过 npm 上已经存在的版本，并在发布前重新构建和检查包内容。
 
 包遵循 SemVer。Breaking Changes、废弃 API 和迁移说明必须记录在 Changesets 与 `CHANGELOG.md` 中。
 

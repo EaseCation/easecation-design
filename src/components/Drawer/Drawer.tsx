@@ -1,9 +1,20 @@
 ﻿import { useEffect, useId, type ReactNode } from 'react';
 import { XIcon } from 'lucide-react';
+import type { CSSProperties } from 'react';
 import { Dialog as DialogPrimitive } from 'radix-ui';
 import { registerOverlay } from '../../platform/overlayStack';
+import { useOverlayViewportStyle } from '../../platform/useOverlayViewport';
 import { IconButton } from '../Button';
 import { useTheme } from '../../theme/ThemeProvider';
+
+function isTouchDevice() {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
+  return (
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0 ||
+    window.matchMedia?.('(pointer: coarse)').matches
+  );
+}
 
 export interface DrawerProps {
   open: boolean;
@@ -17,8 +28,10 @@ export interface DrawerProps {
   closeOnBackdrop?: boolean;
   showCloseButton?: boolean;
   closeLabel?: string;
+  ariaLabel?: string;
   instant?: boolean;
   className?: string;
+  style?: CSSProperties;
 }
 
 export function Drawer({
@@ -33,8 +46,10 @@ export function Drawer({
   closeOnBackdrop = true,
   showCloseButton = true,
   closeLabel = 'Close',
+  ariaLabel,
   instant = false,
   className,
+  style,
 }: DrawerProps) {
   const id = useId();
   const { resolvedMode } = useTheme();
@@ -43,7 +58,10 @@ export function Drawer({
     return registerOverlay({ id, close: () => onOpenChange(false) });
   }, [id, onOpenChange, open]);
 
-  const style = placement === 'top' || placement === 'bottom' ? { height: size } : { width: size };
+  const viewportStyle = useOverlayViewportStyle({
+    ...style,
+    ...(placement === 'top' || placement === 'bottom' ? { height: size } : { width: size }),
+  });
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Portal>
@@ -61,8 +79,12 @@ export function Drawer({
           ]
             .filter(Boolean)
             .join(' ')}
-          style={style}
+          style={viewportStyle}
+          aria-label={title ? undefined : (ariaLabel ?? closeLabel)}
           aria-describedby={description ? `${id}-description` : undefined}
+          onOpenAutoFocus={(event) => {
+            if (isTouchDevice()) event.preventDefault();
+          }}
           onPointerDownOutside={(event) => {
             if (!closeOnBackdrop) event.preventDefault();
           }}
@@ -72,9 +94,7 @@ export function Drawer({
         >
           {title || description ? (
             <header className="ec-drawer__header">
-              {title ? (
-                <DialogPrimitive.Title id={`${id}-title`}>{title}</DialogPrimitive.Title>
-              ) : null}
+              {title ? <DialogPrimitive.Title>{title}</DialogPrimitive.Title> : null}
               {description ? (
                 <DialogPrimitive.Description id={`${id}-description`}>
                   {description}
@@ -86,7 +106,12 @@ export function Drawer({
           {footer ? <footer className="ec-drawer__footer">{footer}</footer> : null}
           {showCloseButton ? (
             <DialogPrimitive.Close asChild>
-              <IconButton className="ec-overlay-close" size="sm" label={closeLabel} icon={<XIcon />} />
+              <IconButton
+                className="ec-overlay-close"
+                size="sm"
+                label={closeLabel}
+                icon={<XIcon />}
+              />
             </DialogPrimitive.Close>
           ) : null}
         </DialogPrimitive.Content>
