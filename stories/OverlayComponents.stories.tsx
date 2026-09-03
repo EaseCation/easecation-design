@@ -162,6 +162,32 @@ function DialogScene() {
     </Frame>
   );
 }
+function FullScreenMobileScene() {
+  return (
+    <Frame>
+      <Modal
+        open
+        instant
+        fullScreenOnMobile
+        onOpenChange={noop}
+        title="Workspace preferences"
+        description="Review every section before saving your changes."
+        footer={<Button>Save preferences</Button>}
+      >
+        <div style={{ display: 'grid', gap: '1rem' }}>
+          {Array.from({ length: 12 }, (_, index) => (
+            <section key={index}>
+              <strong>Preference group {index + 1}</strong>
+              <p style={{ margin: '.25rem 0 0', color: 'var(--muted-foreground)' }}>
+                Domain-neutral settings content remains reachable in compact viewports.
+              </p>
+            </section>
+          ))}
+        </div>
+      </Modal>
+    </Frame>
+  );
+}
 function SheetScene() {
   const copy = useStoryTranslations(translations);
   return (
@@ -249,6 +275,10 @@ type Story = StoryObj<typeof meta>;
 const args = { open: false, onOpenChange: noop, children: null };
 export const Menu: Story = { args, render: () => <MenuScene /> };
 export const Dialog: Story = { args: { ...args, open: true }, render: () => <DialogScene /> };
+export const MobileFullScreen: Story = {
+  args: { ...args, open: true },
+  render: () => <FullScreenMobileScene />,
+};
 export const Sheet: Story = { args, render: () => <SheetScene /> };
 export const PopoverSurface: Story = { args, render: () => <PopoverScene /> };
 export const TooltipSurface: Story = { args, render: () => <TooltipScene /> };

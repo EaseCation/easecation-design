@@ -7,6 +7,15 @@ import { useOverlayViewportStyle } from '../../platform/useOverlayViewport';
 import { IconButton } from '../Button';
 import { useTheme } from '../../theme/ThemeProvider';
 
+function isTouchDevice() {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
+  return (
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0 ||
+    window.matchMedia?.('(pointer: coarse)').matches
+  );
+}
+
 export interface DrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -73,6 +82,9 @@ export function Drawer({
           style={viewportStyle}
           aria-label={title ? undefined : (ariaLabel ?? closeLabel)}
           aria-describedby={description ? `${id}-description` : undefined}
+          onOpenAutoFocus={(event) => {
+            if (isTouchDevice()) event.preventDefault();
+          }}
           onPointerDownOutside={(event) => {
             if (!closeOnBackdrop) event.preventDefault();
           }}
@@ -82,9 +94,7 @@ export function Drawer({
         >
           {title || description ? (
             <header className="ec-drawer__header">
-              {title ? (
-                <DialogPrimitive.Title>{title}</DialogPrimitive.Title>
-              ) : null}
+              {title ? <DialogPrimitive.Title>{title}</DialogPrimitive.Title> : null}
               {description ? (
                 <DialogPrimitive.Description id={`${id}-description`}>
                   {description}
@@ -96,7 +106,12 @@ export function Drawer({
           {footer ? <footer className="ec-drawer__footer">{footer}</footer> : null}
           {showCloseButton ? (
             <DialogPrimitive.Close asChild>
-              <IconButton className="ec-overlay-close" size="sm" label={closeLabel} icon={<XIcon />} />
+              <IconButton
+                className="ec-overlay-close"
+                size="sm"
+                label={closeLabel}
+                icon={<XIcon />}
+              />
             </DialogPrimitive.Close>
           ) : null}
         </DialogPrimitive.Content>

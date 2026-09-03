@@ -1874,8 +1874,7 @@
 .ec-modal {
   position: fixed;
   top: calc(
-    var(--ec-overlay-viewport-offset-top, 0px) +
-      (var(--ec-overlay-viewport-height, 100dvh) / 2)
+    var(--ec-overlay-viewport-offset-top, 0px) + (var(--ec-overlay-viewport-height, 100dvh) / 2)
   );
   left: 50%;
   z-index: calc(var(--ec-z-overlay) + 1);
@@ -2028,7 +2027,7 @@
   top: var(--ec-overlay-viewport-offset-top, 0px);
   bottom: auto;
   height: var(--ec-overlay-viewport-height, 100dvh);
-  width: 75%;
+  width: min(26rem, 92vw);
 }
 .ec-drawer[data-side='left'] {
   left: 0;
@@ -3429,8 +3428,7 @@
 .ec-responsive-overlay {
   position: fixed;
   top: calc(
-    var(--ec-overlay-viewport-offset-top, 0px) +
-      (var(--ec-overlay-viewport-height, 100dvh) / 2)
+    var(--ec-overlay-viewport-offset-top, 0px) + (var(--ec-overlay-viewport-height, 100dvh) / 2)
   );
   left: 50%;
   z-index: calc(var(--ec-z-overlay) + 1);
