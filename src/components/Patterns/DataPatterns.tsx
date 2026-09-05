@@ -221,7 +221,12 @@ export function ResponsiveOverlayContent({
         {children}
         {showCloseButton ? (
           <Primitive.Close asChild>
-            <IconButton className="ec-overlay-close" size="sm" label={closeLabel} icon={<XIcon />} />
+            <IconButton
+              className="ec-overlay-close"
+              size="sm"
+              label={closeLabel}
+              icon={<XIcon />}
+            />
           </Primitive.Close>
         ) : null}
       </Primitive.Content>

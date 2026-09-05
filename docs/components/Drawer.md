@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { Drawer } from "@easecation/design"
-import "@easecation/design/style.css"
+import { Drawer } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -14,7 +14,9 @@ import "@easecation/design/style.css"
 ## 基础示例
 
 ```tsx
-<Drawer open={open} onOpenChange={setOpen} placement="right">详情</Drawer>
+<Drawer open={open} onOpenChange={setOpen} placement="right">
+  详情
+</Drawer>
 ```
 
 ## API
@@ -45,23 +47,39 @@ Drawer 会跟随 `visualViewport` 的高度和偏移，在虚拟键盘弹出或 
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function Drawer({ open, onOpenChange, title, description, children, footer, placement, size, closeOnBackdrop, showCloseButton, closeLabel, ariaLabel, instant, className, style, }: DrawerProps): JSX.Element;
+export declare function Drawer({
+  open,
+  onOpenChange,
+  title,
+  description,
+  children,
+  footer,
+  placement,
+  size,
+  closeOnBackdrop,
+  showCloseButton,
+  closeLabel,
+  ariaLabel,
+  instant,
+  className,
+  style,
+}: DrawerProps): JSX.Element;
 
 export declare interface DrawerProps {
-    open: boolean;
-    onOpenChange: (open: boolean) => void;
-    title?: ReactNode;
-    description?: ReactNode;
-    children: ReactNode;
-    footer?: ReactNode;
-    placement?: 'left' | 'right' | 'top' | 'bottom';
-    size?: string;
-    closeOnBackdrop?: boolean;
-    showCloseButton?: boolean;
-    closeLabel?: string;
-    ariaLabel?: string;
-    instant?: boolean;
-    className?: string;
-    style?: CSSProperties;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  title?: ReactNode;
+  description?: ReactNode;
+  children: ReactNode;
+  footer?: ReactNode;
+  placement?: 'left' | 'right' | 'top' | 'bottom';
+  size?: string;
+  closeOnBackdrop?: boolean;
+  showCloseButton?: boolean;
+  closeLabel?: string;
+  ariaLabel?: string;
+  instant?: boolean;
+  className?: string;
+  style?: CSSProperties;
 }
 ```

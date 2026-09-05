@@ -5,7 +5,7 @@
 ## 导入
 
 ```tsx
-import { Accordion } from "@easecation/design"
+import { Accordion } from '@easecation/design';
 ```
 
 ## API

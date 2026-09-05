@@ -1,13 +1,13 @@
-import type * as React from "react"
-import { InboxIcon } from "lucide-react"
+import type * as React from 'react';
+import { InboxIcon } from 'lucide-react';
 
-import { cn } from "../../lib/utils"
+import { cn } from '../../lib/utils';
 
-export interface EmptyStateProps extends React.ComponentProps<"div"> {
-  title: string
-  description?: string
-  icon?: React.ReactNode
-  action?: React.ReactNode
+export interface EmptyStateProps extends React.ComponentProps<'div'> {
+  title: string;
+  description?: string;
+  icon?: React.ReactNode;
+  action?: React.ReactNode;
 }
 
 export function EmptyState({
@@ -21,8 +21,8 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        "flex min-h-56 flex-col items-center justify-center gap-4 rounded-xl border border-border/40 bg-card p-8 text-center",
-        className
+        'flex min-h-56 flex-col items-center justify-center gap-4 rounded-xl border border-border/40 bg-card p-8 text-center',
+        className,
       )}
       {...props}
     >
@@ -32,12 +32,10 @@ export function EmptyState({
       <div className="space-y-1">
         <h3 className="text-sm font-semibold">{title}</h3>
         {description ? (
-          <p className="max-w-md text-[0.8125rem] text-muted-foreground">
-            {description}
-          </p>
+          <p className="max-w-md text-[0.8125rem] text-muted-foreground">{description}</p>
         ) : null}
       </div>
       {action}
     </div>
-  )
+  );
 }

@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { Table } from "@easecation/design"
-import "@easecation/design/style.css"
+import { Table } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -43,18 +43,29 @@ columns；data；rowKey；caption；loading；emptyText；compact；mobile；onR
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function Table<T>({ columns, data, rowKey, caption, loading, emptyText, compact, mobile, className, onRowClick }: TableProps<T>): JSX.Element;
+export declare function Table<T>({
+  columns,
+  data,
+  rowKey,
+  caption,
+  loading,
+  emptyText,
+  compact,
+  mobile,
+  className,
+  onRowClick,
+}: TableProps<T>): JSX.Element;
 
 export declare interface TableProps<T> {
-    columns: TableColumn<T>[];
-    data: T[];
-    rowKey: keyof T | ((record: T) => Key);
-    caption?: ReactNode;
-    loading?: boolean;
-    emptyText?: ReactNode;
-    compact?: boolean;
-    mobile?: 'scroll' | 'cards';
-    className?: string;
-    onRowClick?: (record: T, index: number) => void;
+  columns: TableColumn<T>[];
+  data: T[];
+  rowKey: keyof T | ((record: T) => Key);
+  caption?: ReactNode;
+  loading?: boolean;
+  emptyText?: ReactNode;
+  compact?: boolean;
+  mobile?: 'scroll' | 'cards';
+  className?: string;
+  onRowClick?: (record: T, index: number) => void;
 }
 ```

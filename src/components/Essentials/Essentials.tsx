@@ -602,11 +602,20 @@ Badge.Ribbon = ({ children, text, color, placement: _placement, ...props }: any)
     {children}
   </div>
 );
-const presetTagColors = new Set(['red', 'error', 'blue', 'processing', 'green', 'success', 'gold', 'warning', 'default']);
+const presetTagColors = new Set([
+  'red',
+  'error',
+  'blue',
+  'processing',
+  'green',
+  'success',
+  'gold',
+  'warning',
+  'default',
+]);
 export const Tag = ({ children, color, ...props }: any) => {
-  const colorStyle = color && !presetTagColors.has(String(color))
-    ? { '--ec-tag-color': color }
-    : {};
+  const colorStyle =
+    color && !presetTagColors.has(String(color)) ? { '--ec-tag-color': color } : {};
   return (
     <span
       className={cls('ec-tag', props.className)}
@@ -944,12 +953,7 @@ export const Tooltip = ({ title, content, children, ...props }: any) =>
 export const Popover = ({ trigger, title, content, children, placement, ...props }: any) => {
   const triggerNode = React.isValidElement(trigger) ? trigger : React.Children.only(children);
   return trigger || content || title ? (
-    <BasePopover
-      trigger={triggerNode}
-      title={title}
-      placement={placement}
-      {...props}
-    >
+    <BasePopover trigger={triggerNode} title={title} placement={placement} {...props}>
       {content ?? (React.isValidElement(trigger) ? children : null)}
     </BasePopover>
   ) : (
@@ -1029,7 +1033,9 @@ export const Modal = ({
               {okText}
             </Button>
           </div>
-        ) : footer
+        ) : (
+          footer
+        )
       }
       style={modalStyle}
       {...props}

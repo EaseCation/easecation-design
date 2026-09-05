@@ -1,32 +1,28 @@
-import type * as React from "react"
-import {
-  ArrowDownRightIcon,
-  ArrowRightIcon,
-  ArrowUpRightIcon,
-} from "lucide-react"
+import type * as React from 'react';
+import { ArrowDownRightIcon, ArrowRightIcon, ArrowUpRightIcon } from 'lucide-react';
 
-import { cn } from "../../lib/utils"
+import { cn } from '../../lib/utils';
 
-export interface StatCardProps extends React.ComponentProps<"article"> {
-  label: string
-  value: string
-  delta: string
-  hint?: string
-  trend: "up" | "down" | "steady"
-  icon?: React.ReactNode
+export interface StatCardProps extends React.ComponentProps<'article'> {
+  label: string;
+  value: string;
+  delta: string;
+  hint?: string;
+  trend: 'up' | 'down' | 'steady';
+  icon?: React.ReactNode;
 }
 
 const trendIcon = {
   up: <ArrowUpRightIcon className="size-3.5" />,
   down: <ArrowDownRightIcon className="size-3.5" />,
   steady: <ArrowRightIcon className="size-3.5" />,
-}
+};
 
 const trendClass = {
-  up: "text-success",
-  down: "text-danger",
-  steady: "text-muted-foreground",
-}
+  up: 'text-success',
+  down: 'text-danger',
+  steady: 'text-muted-foreground',
+};
 
 export function StatCard({
   label,
@@ -41,8 +37,8 @@ export function StatCard({
   return (
     <article
       className={cn(
-        "group/stat relative overflow-hidden rounded-xl border border-border/40 bg-card p-5 text-card-foreground transition-all duration-[var(--motion-base)] hover:border-border/60",
-        className
+        'group/stat relative overflow-hidden rounded-xl border border-border/40 bg-card p-5 text-card-foreground transition-all duration-[var(--motion-base)] hover:border-border/60',
+        className,
       )}
       {...props}
     >
@@ -52,13 +48,11 @@ export function StatCard({
             {label}
           </p>
           <div className="space-y-1.5">
-            <p className="text-[1.75rem] font-bold tracking-[-0.02em] leading-none">
-              {value}
-            </p>
+            <p className="text-[1.75rem] font-bold tracking-[-0.02em] leading-none">{value}</p>
             <div
               className={cn(
-                "inline-flex items-center gap-1 text-xs font-medium",
-                trendClass[trend]
+                'inline-flex items-center gap-1 text-xs font-medium',
+                trendClass[trend],
               )}
             >
               {trendIcon[trend]}
@@ -72,9 +66,7 @@ export function StatCard({
           </div>
         ) : null}
       </div>
-      {hint ? (
-        <p className="mt-4 truncate text-xs text-muted-foreground">{hint}</p>
-      ) : null}
+      {hint ? <p className="mt-4 truncate text-xs text-muted-foreground">{hint}</p> : null}
     </article>
-  )
+  );
 }

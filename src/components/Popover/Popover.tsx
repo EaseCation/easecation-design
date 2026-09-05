@@ -17,7 +17,9 @@ export type PopoverProps =
       className?: string;
     };
 
-function resolvePlacement(placement: NonNullable<Extract<PopoverProps, { trigger: ReactElement }>['placement']> | string) {
+function resolvePlacement(
+  placement: NonNullable<Extract<PopoverProps, { trigger: ReactElement }>['placement']> | string,
+) {
   const normalized = String(placement)
     .replace('Left', '-start')
     .replace('Right', '-end')
@@ -27,7 +29,10 @@ function resolvePlacement(placement: NonNullable<Extract<PopoverProps, { trigger
   const [rawSide, rawAlign] = normalized.split('-');
   const side = ['top', 'right', 'bottom', 'left'].includes(rawSide) ? rawSide : 'bottom';
   const align = ['start', 'center', 'end'].includes(rawAlign) ? rawAlign : 'start';
-  return { side: side as 'top' | 'right' | 'bottom' | 'left', align: align as 'start' | 'center' | 'end' };
+  return {
+    side: side as 'top' | 'right' | 'bottom' | 'left',
+    align: align as 'start' | 'center' | 'end',
+  };
 }
 
 export function Popover(props: PopoverProps) {

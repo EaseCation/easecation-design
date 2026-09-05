@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { SafeArea } from "@easecation/design"
-import "@easecation/design/style.css"
+import { SafeArea } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -14,7 +14,9 @@ import "@easecation/design/style.css"
 ## 基础示例
 
 ```tsx
-<SafeArea edges={["top", "bottom"]}><App /></SafeArea>
+<SafeArea edges={['top', 'bottom']}>
+  <App />
+</SafeArea>
 ```
 
 ## API
@@ -43,9 +45,11 @@ edges: top | right | bottom | left[]；通过 --ec-safe-* Token 控制安全区�
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare const SafeArea: ForwardRefExoticComponent<SafeAreaProps & RefAttributes<HTMLDivElement>>;
+export declare const SafeArea: ForwardRefExoticComponent<
+  SafeAreaProps & RefAttributes<HTMLDivElement>
+>;
 
 export declare interface SafeAreaProps extends HTMLAttributes<HTMLDivElement> {
-    edges?: Array<'top' | 'right' | 'bottom' | 'left'>;
+  edges?: Array<'top' | 'right' | 'bottom' | 'left'>;
 }
 ```

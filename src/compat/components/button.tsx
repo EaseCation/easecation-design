@@ -1,48 +1,46 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-import { Slot } from "radix-ui"
+import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { Slot } from 'radix-ui';
 
-import { cn } from "../lib/utils"
+import { cn } from '../lib/utils';
 
 const buttonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center whitespace-nowrap font-medium outline-none select-none disabled:pointer-events-none disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  'inline-flex shrink-0 items-center justify-center whitespace-nowrap font-medium outline-none select-none disabled:pointer-events-none disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0',
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-[0_1px_1px_oklch(0.18_0.02_264/0.08)] hover:bg-primary/92",
+          'bg-primary text-primary-foreground shadow-[0_1px_1px_oklch(0.18_0.02_264/0.08)] hover:bg-primary/92',
         outline:
-          "border border-border/70 bg-background text-foreground hover:bg-muted/60 dark:border-input/50 dark:bg-transparent dark:hover:bg-input/30",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/75",
-        ghost:
-          "text-foreground hover:bg-muted/60 dark:hover:bg-muted/35",
+          'border border-border/70 bg-background text-foreground hover:bg-muted/60 dark:border-input/50 dark:bg-transparent dark:hover:bg-input/30',
+        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/75',
+        ghost: 'text-foreground hover:bg-muted/60 dark:hover:bg-muted/35',
         destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/16 dark:bg-destructive/15 dark:hover:bg-destructive/22",
-        link: "text-primary underline-offset-4 hover:underline",
+          'bg-destructive/10 text-destructive hover:bg-destructive/16 dark:bg-destructive/15 dark:hover:bg-destructive/22',
+        link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
-        default: "h-8 gap-1.5 rounded-md px-3 text-[0.8125rem]",
-        xs: "h-6 gap-1 rounded-md px-2 text-xs",
-        sm: "h-7 gap-1 rounded-md px-2.5 text-[0.8rem]",
-        lg: "h-9 gap-1.5 rounded-lg px-3.5 text-sm",
-        icon: "size-8 rounded-md",
-        "icon-xs": "size-6 rounded-md",
-        "icon-sm": "size-7 rounded-md",
-        "icon-lg": "size-9 rounded-lg",
+        default: 'h-8 gap-1.5 rounded-md px-3 text-[0.8125rem]',
+        xs: 'h-6 gap-1 rounded-md px-2 text-xs',
+        sm: 'h-7 gap-1 rounded-md px-2.5 text-[0.8rem]',
+        lg: 'h-9 gap-1.5 rounded-lg px-3.5 text-sm',
+        icon: 'size-8 rounded-md',
+        'icon-xs': 'size-6 rounded-md',
+        'icon-sm': 'size-7 rounded-md',
+        'icon-lg': 'size-9 rounded-lg',
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: 'default',
+      size: 'default',
     },
-  }
-)
+  },
+);
 
 function Button({
   className,
-  variant = "default",
-  size = "default",
+  variant = 'default',
+  size = 'default',
   asChild = false,
   pressable = true,
   children,
@@ -51,54 +49,54 @@ function Button({
   onPointerLeave,
   style,
   ...props
-}: React.ComponentProps<"button"> &
+}: React.ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
+    asChild?: boolean;
     /** 是否启用卡片式按压倾斜动画；密集操作区建议关闭 */
-    pressable?: boolean
+    pressable?: boolean;
   }) {
-  const buttonRef = React.useRef<HTMLButtonElement>(null)
-  const [isPressing, setIsPressing] = React.useState(false)
-  const [pressStyle, setPressStyle] = React.useState<React.CSSProperties>({})
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const [isPressing, setIsPressing] = React.useState(false);
+  const [pressStyle, setPressStyle] = React.useState<React.CSSProperties>({});
 
   const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
-    onPointerDown?.(e)
-    if (!pressable || e.defaultPrevented) return
+    onPointerDown?.(e);
+    if (!pressable || e.defaultPrevented) return;
 
-    const button = buttonRef.current
-    if (!button) return
+    const button = buttonRef.current;
+    if (!button) return;
 
-    const rect = button.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    const centerX = rect.width / 2
-    const centerY = rect.height / 2
+    const rect = button.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
 
-    const offsetX = ((x - centerX) / centerX) * 15
-    const offsetY = ((y - centerY) / centerY) * 15
+    const offsetX = ((x - centerX) / centerX) * 15;
+    const offsetY = ((y - centerY) / centerY) * 15;
 
     setPressStyle({
-      "--press-x": `${x}px`,
-      "--press-y": `${y}px`,
-      "--rotate-x": `${-offsetY}deg`,
-      "--rotate-y": `${offsetX}deg`,
-    } as React.CSSProperties)
-    setIsPressing(true)
-  }
+      '--press-x': `${x}px`,
+      '--press-y': `${y}px`,
+      '--rotate-x': `${-offsetY}deg`,
+      '--rotate-y': `${offsetX}deg`,
+    } as React.CSSProperties);
+    setIsPressing(true);
+  };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLButtonElement>) => {
-    onPointerUp?.(e)
-    if (!pressable) return
-    setIsPressing(false)
-  }
+    onPointerUp?.(e);
+    if (!pressable) return;
+    setIsPressing(false);
+  };
 
   const handlePointerLeave = (e: React.PointerEvent<HTMLButtonElement>) => {
-    onPointerLeave?.(e)
-    if (!pressable) return
-    setIsPressing(false)
-  }
+    onPointerLeave?.(e);
+    if (!pressable) return;
+    setIsPressing(false);
+  };
 
-  const Comp = asChild ? Slot.Root : "button"
+  const Comp = asChild ? Slot.Root : 'button';
 
   return (
     <Comp
@@ -109,10 +107,10 @@ function Button({
       className={cn(
         buttonVariants({ variant, size, className }),
         pressable &&
-          "relative overflow-hidden [perspective:600px] transition-all duration-200 ease-out",
+          'relative overflow-hidden [perspective:600px] transition-all duration-200 ease-out',
         pressable &&
           isPressing &&
-          "[transform:perspective(600px)_rotateX(var(--rotate-x))_rotateY(var(--rotate-y))_scale(0.94)]"
+          '[transform:perspective(600px)_rotateX(var(--rotate-x))_rotateY(var(--rotate-y))_scale(0.94)]',
       )}
       style={
         (pressable
@@ -134,8 +132,8 @@ function Button({
           </span>
           <span
             className={cn(
-              "absolute inset-0 z-0 pointer-events-none transition-all duration-300",
-              isPressing ? "opacity-100" : "opacity-0"
+              'absolute inset-0 z-0 pointer-events-none transition-all duration-300',
+              isPressing ? 'opacity-100' : 'opacity-0',
             )}
             style={{
               background: `
@@ -144,13 +142,13 @@ function Button({
               `,
               boxShadow: isPressing
                 ? `inset 0 4px 12px rgba(0,0,0,0.3), inset 0 2px 4px rgba(0,0,0,0.2)`
-                : "none",
+                : 'none',
             }}
           />
           <span
             className={cn(
-              "absolute inset-0 z-[1] pointer-events-none transition-opacity duration-200",
-              isPressing ? "opacity-100" : "opacity-0"
+              'absolute inset-0 z-[1] pointer-events-none transition-opacity duration-200',
+              isPressing ? 'opacity-100' : 'opacity-0',
             )}
             style={{
               background: `radial-gradient(circle 50px at var(--press-x) var(--press-y), rgba(255,255,255,0.2), transparent 50%)`,
@@ -161,7 +159,7 @@ function Button({
         children
       )}
     </Comp>
-  )
+  );
 }
 
-export { Button, buttonVariants }
+export { Button, buttonVariants };

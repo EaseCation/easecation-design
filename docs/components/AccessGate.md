@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { AccessGate } from "@easecation/design"
-import "@easecation/design/style.css"
+import { AccessGate } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -14,7 +14,9 @@ import "@easecation/design/style.css"
 ## 基础示例
 
 ```tsx
-<AccessGate allowed={canEdit} fallback={null}><Editor /></AccessGate>
+<AccessGate allowed={canEdit} fallback={null}>
+  <Editor />
+</AccessGate>
 ```
 
 ## API
@@ -46,9 +48,9 @@ allowed；fallback；children。PermissionGate 是兼容别名。
 export declare function AccessGate({ allowed, fallback, children }: AccessGateProps): JSX.Element;
 
 export declare interface AccessGateProps {
-    allowed: boolean;
-    fallback?: ReactNode;
-    children: ReactNode;
+  allowed: boolean;
+  fallback?: ReactNode;
+  children: ReactNode;
 }
 
 /** @deprecated Prefer the domain-neutral AccessGate name. */

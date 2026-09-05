@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { Badge } from "@easecation/design"
-import "@easecation/design/style.css"
+import { Badge } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -46,6 +46,6 @@ variant；children；其余属性继承 span。
 export declare const Badge: ForwardRefExoticComponent<BadgeProps & RefAttributes<HTMLSpanElement>>;
 
 export declare interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-    variant?: BadgeVariant;
+  variant?: BadgeVariant;
 }
 ```

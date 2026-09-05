@@ -1,4 +1,43 @@
 import { render, screen } from '@testing-library/react';
-import { Avatar, AvatarFallback, Badge, Card, CardContent, CardHeader, CardTitle, Skeleton, ThemeProvider, easecationTokens } from '../src';
-it('exposes EaseCation token values and black-gold theme',()=>{expect(easecationTokens.light['--primary']).toBe('oklch(0.54 0.24 262)');render(<ThemeProvider mode="dark" colorTheme="black-gold"><span>theme</span></ThemeProvider>);const root=screen.getByText('theme').parentElement!;expect(root).toHaveClass('dark');expect(root).toHaveAttribute('data-color-theme','black-gold');});
-it('renders migrated display primitives',()=>{render(<Card><CardHeader><CardTitle>状态</CardTitle></CardHeader><CardContent><Badge>运行中</Badge><Avatar><AvatarFallback>EC</AvatarFallback></Avatar><Skeleton data-testid="skeleton"/></CardContent></Card>);expect(screen.getByText('状态')).toBeInTheDocument();expect(screen.getByText('运行中')).toBeInTheDocument();expect(screen.getByTestId('skeleton')).toHaveAttribute('aria-hidden','true');});
+import {
+  Avatar,
+  AvatarFallback,
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Skeleton,
+  ThemeProvider,
+  easecationTokens,
+} from '../src';
+it('exposes EaseCation token values and black-gold theme', () => {
+  expect(easecationTokens.light['--primary']).toBe('oklch(0.54 0.24 262)');
+  render(
+    <ThemeProvider mode="dark" colorTheme="black-gold">
+      <span>theme</span>
+    </ThemeProvider>,
+  );
+  const root = screen.getByText('theme').parentElement!;
+  expect(root).toHaveClass('dark');
+  expect(root).toHaveAttribute('data-color-theme', 'black-gold');
+});
+it('renders migrated display primitives', () => {
+  render(
+    <Card>
+      <CardHeader>
+        <CardTitle>状态</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Badge>运行中</Badge>
+        <Avatar>
+          <AvatarFallback>EC</AvatarFallback>
+        </Avatar>
+        <Skeleton data-testid="skeleton" />
+      </CardContent>
+    </Card>,
+  );
+  expect(screen.getByText('状态')).toBeInTheDocument();
+  expect(screen.getByText('运行中')).toBeInTheDocument();
+  expect(screen.getByTestId('skeleton')).toHaveAttribute('aria-hidden', 'true');
+});

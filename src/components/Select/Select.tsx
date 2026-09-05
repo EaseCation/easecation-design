@@ -119,10 +119,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
         onKeyDown={keyDown}
       >
         <span
-          className={[
-            'ec-select__label',
-            selectedOption ? undefined : 'ec-select__placeholder',
-          ]
+          className={['ec-select__label', selectedOption ? undefined : 'ec-select__placeholder']
             .filter(Boolean)
             .join(' ')}
         >

@@ -1,13 +1,16 @@
 name: Publish npm package
 
 on:
-  workflow_run:
-    workflows: [CI]
-    branches: [main]
-    types: [completed]
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: Full 40-character commit SHA to verify and publish
+        required: true
+        type: string
 
 permissions:
   contents: read
+  id-token: write
 
 concurrency:
   group: npm-publish
@@ -15,28 +18,34 @@ concurrency:
 
 jobs:
   publish:
-    if: >-
-      github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.event == 'push' &&
-      github.event.workflow_run.head_branch == 'main' &&
-      github.event.workflow_run.head_repository.full_name == github.repository
     runs-on: ubuntu-latest
     environment: npm
     steps:
-      - name: Checkout the verified commit
+      - name: Validate release commit input
+        shell: bash
+        env:
+          RELEASE_SHA: ${{ inputs.commit_sha }}
+        run: |
+          set -euo pipefail
+          if [[ ! "$RELEASE_SHA" =~ ^[0-9a-fA-F]{40}$ ]]; then
+            echo "commit_sha must be a full 40-character Git commit SHA."
+            exit 1
+          fi
+
+      - name: Checkout the requested commit
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: ${{ inputs.commit_sha }}
+          fetch-depth: 0
 
-      - name: Resolve commit metadata
-        id: commit-metadata
+      - name: Verify the checked-out commit
         shell: bash
+        env:
+          RELEASE_SHA: ${{ inputs.commit_sha }}
         run: |
-          {
-            echo "message=$(git show -s --format=%s HEAD)"
-            echo "author=$(git show -s --format=%aN HEAD)"
-            echo "time=$(git show -s --format=%aI HEAD)"
-          } >> "$GITHUB_OUTPUT"
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "${RELEASE_SHA,,}"
+          git merge-base --is-ancestor HEAD origin/main
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
@@ -51,7 +60,19 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Check whether this version is already published
+      - name: Run the complete quality gate
+        run: pnpm check
+
+      - name: Confirm all changesets were consumed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find .changeset -maxdepth 1 -type f -name '*.md' ! -name 'README.md' -print -quit | grep -q .; then
+            echo "Pending changesets remain. Run pnpm version-packages and publish the resulting commit."
+            exit 1
+          fi
+
+      - name: Confirm the package version is unpublished
         id: package
         shell: bash
         run: |
@@ -60,70 +81,12 @@ jobs:
           package_version=$(node -p "require('./package.json').version")
           echo "name=${package_name}" >> "$GITHUB_OUTPUT"
           echo "version=${package_version}" >> "$GITHUB_OUTPUT"
-
           if npm view "${package_name}@${package_version}" version --json >/dev/null 2>&1; then
-            echo "publish=false" >> "$GITHUB_OUTPUT"
-            echo "${package_name}@${package_version} is already published; skipping."
-          else
-            echo "publish=true" >> "$GITHUB_OUTPUT"
-            echo "${package_name}@${package_version} will be published."
+            echo "${package_name}@${package_version} is already published."
+            exit 1
           fi
-
-      - name: Build package
-        if: steps.package.outputs.publish == 'true'
-        run: pnpm build
-
-      - name: Check package contents
-        if: steps.package.outputs.publish == 'true'
-        run: pnpm pack:check
 
       - name: Publish package
-        if: steps.package.outputs.publish == 'true'
-        run: npm publish --access public
+        run: npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Send MsgAPI npm publish notification
-        if: always()
-        continue-on-error: true
-        env:
-          NOTIFY_GENERATOR: sendGithubActionDeployNotification
-          NOTIFY_TITLE: EaseCation Design - npm 发布 ${{ steps.package.outputs.name }}@${{ steps.package.outputs.version }}
-          NOTIFY_STATUS: ${{ job.status }}
-          NOTIFY_ENVIRONMENT: NPM
-          NOTIFY_COMMIT_MESSAGE: ${{ steps.commit-metadata.outputs.message }}
-          NOTIFY_COMMIT_AUTHOR: ${{ steps.commit-metadata.outputs.author }}
-          NOTIFY_COMMIT_TIME: ${{ steps.commit-metadata.outputs.time }}
-          MSG_API_KEY: ${{ secrets.MSG_API_KEY }}
-        run: |
-          MSG_API_URL='https://msg-api.easecation.net'
-          if [ -z "$MSG_API_URL" ] || [ -z "$MSG_API_KEY" ]; then
-            echo "MSG_API_URL or MSG_API_KEY is not configured, skip MsgAPI notification"
-            exit 0
-          fi
-          MSG_API_ENDPOINT="${MSG_API_URL%/}"
-          case "$MSG_API_ENDPOINT" in
-            */sendmsg) ;;
-            *) MSG_API_ENDPOINT="${MSG_API_ENDPOINT}/sendmsg" ;;
-          esac
-          PAYLOAD=$(node <<'NODE'
-          const compact = (value) => value === undefined || value === null || value === "" ? undefined : value;
-          const options = {
-            title: compact(process.env.NOTIFY_TITLE),
-            status: compact(process.env.NOTIFY_STATUS) || "info",
-            commitMessage: compact(process.env.NOTIFY_COMMIT_MESSAGE),
-            commitAuthor: compact(process.env.NOTIFY_COMMIT_AUTHOR),
-            commitTime: compact(process.env.NOTIFY_COMMIT_TIME),
-            environment: compact(process.env.NOTIFY_ENVIRONMENT),
-          };
-          process.stdout.write(JSON.stringify({
-            project: "webDev",
-            generator: process.env.NOTIFY_GENERATOR || "sendGithubActionDeployNotification",
-            options: [options],
-          }));
-          NODE
-          )
-          curl -fsS -X POST "$MSG_API_ENDPOINT" \
-            -H "Content-Type: application/json" \
-            -H "X-Api-Key: $MSG_API_KEY" \
-            -d "$PAYLOAD"

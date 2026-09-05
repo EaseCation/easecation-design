@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { AppShell } from "@easecation/design"
-import "@easecation/design/style.css"
+import { AppShell } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -14,7 +14,9 @@ import "@easecation/design/style.css"
 ## 基础示例
 
 ```tsx
-<AppShell brand={<Brand />} sidebar={<Sidebar />}><Outlet /></AppShell>
+<AppShell brand={<Brand />} sidebar={<Sidebar />}>
+  <Outlet />
+</AppShell>
 ```
 
 ## API
@@ -43,19 +45,30 @@ brand；headerTitle；headerActions；sidebar；mobileSidebar；bottomBar；coll
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function AppShell({ brand, headerTitle, headerActions, sidebar, mobileSidebar, bottomBar, children, collapsed, sidebarWidth, collapsedSidebarWidth, }: AppShellProps): JSX.Element;
+export declare function AppShell({
+  brand,
+  headerTitle,
+  headerActions,
+  sidebar,
+  mobileSidebar,
+  bottomBar,
+  children,
+  collapsed,
+  sidebarWidth,
+  collapsedSidebarWidth,
+}: AppShellProps): JSX.Element;
 
 export declare interface AppShellProps {
-    brand: ReactNode;
-    headerTitle?: ReactNode;
-    headerActions?: ReactNode;
-    sidebar: ReactNode;
-    mobileSidebar?: ReactNode;
-    bottomBar?: ReactNode;
-    children: ReactNode;
-    collapsed?: boolean;
-    onCollapse?: (collapsed: boolean) => void;
-    sidebarWidth?: number;
-    collapsedSidebarWidth?: number;
+  brand: ReactNode;
+  headerTitle?: ReactNode;
+  headerActions?: ReactNode;
+  sidebar: ReactNode;
+  mobileSidebar?: ReactNode;
+  bottomBar?: ReactNode;
+  children: ReactNode;
+  collapsed?: boolean;
+  onCollapse?: (collapsed: boolean) => void;
+  sidebarWidth?: number;
+  collapsedSidebarWidth?: number;
 }
 ```

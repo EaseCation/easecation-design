@@ -1,20 +1,20 @@
-import type * as React from "react"
-import { AlertTriangleIcon } from "lucide-react"
+import type * as React from 'react';
+import { AlertTriangleIcon } from 'lucide-react';
 
-import { Button } from "../button"
-import { cn } from "../../lib/utils"
+import { Button } from '../button';
+import { cn } from '../../lib/utils';
 
-export interface ErrorStateProps extends React.ComponentProps<"div"> {
-  title: string
-  description?: string
-  actionLabel?: string
-  onRetry?: () => void
+export interface ErrorStateProps extends React.ComponentProps<'div'> {
+  title: string;
+  description?: string;
+  actionLabel?: string;
+  onRetry?: () => void;
 }
 
 export function ErrorState({
   title,
   description,
-  actionLabel = "重试",
+  actionLabel = '重试',
   onRetry,
   className,
   ...props
@@ -22,8 +22,8 @@ export function ErrorState({
   return (
     <div
       className={cn(
-        "flex min-h-56 flex-col items-center justify-center gap-4 rounded-xl border border-destructive/15 bg-card p-8 text-center",
-        className
+        'flex min-h-56 flex-col items-center justify-center gap-4 rounded-xl border border-destructive/15 bg-card p-8 text-center',
+        className,
       )}
       {...props}
     >
@@ -33,9 +33,7 @@ export function ErrorState({
       <div className="space-y-1">
         <h3 className="text-sm font-semibold">{title}</h3>
         {description ? (
-          <p className="max-w-md text-[0.8125rem] text-muted-foreground">
-            {description}
-          </p>
+          <p className="max-w-md text-[0.8125rem] text-muted-foreground">{description}</p>
         ) : null}
       </div>
       {onRetry ? (
@@ -44,5 +42,5 @@ export function ErrorState({
         </Button>
       ) : null}
     </div>
-  )
+  );
 }

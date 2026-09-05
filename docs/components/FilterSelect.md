@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { FilterSelect } from "@easecation/design"
-import "@easecation/design/style.css"
+import { FilterSelect } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -43,14 +43,22 @@ options；value；onValueChange；placeholder；disabled。
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function FilterSelect({ value, onValueChange, options, placeholder, className, disabled, 'aria-label': ariaLabel, }: {
-    value: string;
-    onValueChange: (value: string) => void;
-    options: FilterSelectOption[];
-    placeholder?: string;
-    className?: string;
-    triggerClassName?: string;
-    disabled?: boolean;
-    'aria-label'?: string;
+export declare function FilterSelect({
+  value,
+  onValueChange,
+  options,
+  placeholder,
+  className,
+  disabled,
+  'aria-label': ariaLabel,
+}: {
+  value: string;
+  onValueChange: (value: string) => void;
+  options: FilterSelectOption[];
+  placeholder?: string;
+  className?: string;
+  triggerClassName?: string;
+  disabled?: boolean;
+  'aria-label'?: string;
 }): JSX.Element;
 ```

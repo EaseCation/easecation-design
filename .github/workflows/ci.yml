@@ -16,6 +16,7 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
       - run: pnpm registry:check
       - run: pnpm visual:migration:check
       - run: pnpm check:open-source
@@ -25,6 +26,7 @@ jobs:
       - run: pnpm build
       - run: pnpm build:storybook
       - run: pnpm pack:check
+      - run: pnpm build:example
       - name: Write deploy metadata
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: bash

@@ -38,6 +38,18 @@ export function App() {
 
 组件支持从根入口按需导入，打包产物保留 ESM Tree Shaking 能力。React 和 React DOM 作为 `peerDependencies`，不会重复打入组件库产物。
 
+正式组件只从根入口导出。Typed Tokens 使用独立入口：
+
+```ts
+import { defaultTokens, type ThemeOverrides } from '@easecation/design/tokens';
+```
+
+兼容 API 与正式组件隔离。已有项目需要兼容组件时显式使用 `@easecation/design/compat`；Ant Design 兼容符号使用 `@easecation/design/compat/antd`：
+
+```ts
+import { Alert, ConfigProvider } from '@easecation/design/compat/antd';
+```
+
 ## 主题定制
 
 ```tsx
@@ -55,6 +67,10 @@ export function App() {
 
 所有公开 Token 都可以通过 CSS Variables 或 `ThemeProvider` 覆盖。建议优先覆盖语义 Token，而不是在组件内部写固定颜色和尺寸。
 
+公共 CSS 不下载或内联字体。它声明 Outfit 与 Geist Variable 为默认字体名，并提供通用字体回退；应用可以使用自己的品牌字体，也可以自行安装并导入 `@fontsource-variable/outfit` 与 `@fontsource-variable/geist`。
+
+`mode="system"` 在 SSR 输出中使用稳定的浅色快照，hydration 完成后同步系统偏好，以避免服务端与客户端属性不一致。需要首屏颜色完全确定时，应由应用根据服务端可用的用户设置显式传入 `light` 或 `dark`。
+
 ## WebView 与 Capacitor
 
 核心包只使用标准 React、DOM 和 CSS。Safe Area 使用 `env(safe-area-inset-*)`；Android 返回键可以调用 `closeTopOverlay()`；虚拟键盘布局可以使用 `observeKeyboardViewport()`。
@@ -66,14 +82,10 @@ export function App() {
 ```bash
 pnpm install
 pnpm dev
-pnpm typecheck
-pnpm lint
-pnpm test
-pnpm build
-pnpm build:storybook
-pnpm pack:check
 pnpm check
 ```
+
+面向消费者的变更使用 `pnpm changeset` 添加发布记录。`pnpm check` 包含格式、registry、开放源代码边界、类型、Lint、测试、构建、Storybook、npm 包和示例应用检查。
 
 AI 辅助研发命令：
 
@@ -94,7 +106,7 @@ pnpm ai:validate
 
 ## 发布
 
-`main` 分支的 CI 成功后，`.github/workflows/release.yml` 会针对通过验证的提交自动运行 `Publish npm package`。工作流会跳过 npm 上已经存在的版本，并在发布前重新构建和检查包内容。
+维护者先合并由 `pnpm version-packages` 生成的版本提交，再手动运行 `Publish npm package` 工作流并输入该提交的完整 SHA。工作流会检出精确提交、重跑完整质量门禁、确认 changeset 已消费且版本尚未发布，然后通过 npm token 发布带 provenance 的公共包。仓库提交或 CI 成功本身不会自动发布。
 
 包遵循 SemVer。Breaking Changes、废弃 API 和迁移说明必须记录在 Changesets 与 `CHANGELOG.md` 中。
 

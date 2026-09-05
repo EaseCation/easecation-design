@@ -2028,17 +2028,16 @@
   bottom: auto;
   height: var(--ec-overlay-viewport-height, 100dvh);
   width: min(26rem, 92vw);
+  border-radius: 0;
 }
 .ec-drawer[data-side='left'] {
   left: 0;
   border-width: 0 1px 0 0;
-  border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
   animation-name: ec-sheet-left-in;
 }
 .ec-drawer[data-side='right'] {
   right: 0;
   border-width: 0 0 0 1px;
-  border-radius: var(--radius-xl) 0 0 var(--radius-xl);
   animation-name: ec-sheet-right-in;
 }
 .ec-drawer[data-side='top'],
@@ -2053,14 +2052,14 @@
 .ec-drawer[data-side='top'] {
   top: 0;
   border-width: 0 0 1px;
-  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  border-radius: 0 0 var(--ec-radius-lg) var(--ec-radius-lg);
   animation-name: ec-sheet-top-in;
 }
 .ec-drawer[data-side='bottom'] {
   bottom: 0;
   padding-bottom: var(--ec-safe-bottom);
   border-width: 1px 0 0;
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  border-radius: var(--ec-radius-lg) var(--ec-radius-lg) 0 0;
   animation-name: ec-sheet-bottom-in;
 }
 .ec-drawer[data-state='closed'][data-side='left'] {

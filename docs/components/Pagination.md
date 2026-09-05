@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { Pagination } from "@easecation/design"
-import "@easecation/design/style.css"
+import { Pagination } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -43,16 +43,25 @@ page；pageCount；onPageChange；siblingCount；disabled。
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function Pagination({ page, total, pageSize, onPageChange, siblingCount, disabled, className, showTotal }: PaginationProps): JSX.Element;
+export declare function Pagination({
+  page,
+  total,
+  pageSize,
+  onPageChange,
+  siblingCount,
+  disabled,
+  className,
+  showTotal,
+}: PaginationProps): JSX.Element;
 
 export declare interface PaginationProps {
-    page: number;
-    total: number;
-    pageSize?: number;
-    onPageChange: (page: number) => void;
-    siblingCount?: number;
-    disabled?: boolean;
-    className?: string;
-    showTotal?: boolean;
+  page: number;
+  total: number;
+  pageSize?: number;
+  onPageChange: (page: number) => void;
+  siblingCount?: number;
+  disabled?: boolean;
+  className?: string;
+  showTotal?: boolean;
 }
 ```

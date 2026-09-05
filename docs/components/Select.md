@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { Select } from "@easecation/design"
-import "@easecation/design/style.css"
+import { Select } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -43,20 +43,22 @@ options；value/defaultValue；onValueChange；placeholder；label；size；stat
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare const Select: ForwardRefExoticComponent<SelectProps & RefAttributes<HTMLButtonElement>>;
+export declare const Select: ForwardRefExoticComponent<
+  SelectProps & RefAttributes<HTMLButtonElement>
+>;
 
 export declare interface SelectProps {
-    options: SelectOption[];
-    value?: string;
-    defaultValue?: string;
-    onValueChange?: (value: string) => void;
-    placeholder?: string;
-    label?: string;
-    size?: ComponentSize;
-    status?: 'default' | 'error' | 'warning' | 'success';
-    disabled?: boolean;
-    required?: boolean;
-    name?: string;
-    className?: string;
+  options: SelectOption[];
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+  placeholder?: string;
+  label?: string;
+  size?: ComponentSize;
+  status?: 'default' | 'error' | 'warning' | 'success';
+  disabled?: boolean;
+  required?: boolean;
+  name?: string;
+  className?: string;
 }
 ```

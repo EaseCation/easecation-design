@@ -1,4 +1,10 @@
-import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type HTMLAttributes, type ReactNode } from 'react';
+import {
+  forwardRef,
+  type AnchorHTMLAttributes,
+  type ButtonHTMLAttributes,
+  type HTMLAttributes,
+  type ReactNode,
+} from 'react';
 export const Layout = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function Layout(
   { className, ...props },
   ref,
@@ -142,14 +148,19 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(function Navbar(
   },
   ref,
 ) {
-  const { className: menuButtonClassName, type: menuButtonType, ...restMenuButtonProps } =
-    menuButtonProps ?? {};
+  const {
+    className: menuButtonClassName,
+    type: menuButtonType,
+    ...restMenuButtonProps
+  } = menuButtonProps ?? {};
 
   return (
     <header
       ref={ref}
       className={['ec-navbar', fixed && 'ec-navbar--fixed', className].filter(Boolean).join(' ')}
-      style={{ ...style, '--ec-navbar-max-width': maxWidth } as HTMLAttributes<HTMLElement>['style']}
+      style={
+        { ...style, '--ec-navbar-max-width': maxWidth } as HTMLAttributes<HTMLElement>['style']
+      }
       {...props}
     >
       <div className="ec-navbar__inner">

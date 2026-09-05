@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { Input } from "@easecation/design"
-import "@easecation/design/style.css"
+import { Input } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -45,21 +45,26 @@ value/defaultValue；status；prefix；suffix；clearable；onClear。Textarea �
 ```ts
 export declare const Input: ForwardRefExoticComponent<InputProps & RefAttributes<HTMLInputElement>>;
 
-export declare interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix'> {
-    size?: ComponentSize;
-    status?: InputStatus;
-    prefix?: ReactNode;
-    suffix?: ReactNode;
-    clearable?: boolean;
-    onClear?: () => void;
+export declare interface InputProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'size' | 'prefix'
+> {
+  size?: ComponentSize;
+  status?: InputStatus;
+  prefix?: ReactNode;
+  suffix?: ReactNode;
+  clearable?: boolean;
+  onClear?: () => void;
 }
 
 export declare type InputStatus = 'default' | 'error' | 'warning' | 'success';
 
-export declare const Textarea: ForwardRefExoticComponent<TextareaProps & RefAttributes<HTMLTextAreaElement>>;
+export declare const Textarea: ForwardRefExoticComponent<
+  TextareaProps & RefAttributes<HTMLTextAreaElement>
+>;
 
 export declare interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-    status?: InputStatus;
-    autoResize?: boolean;
+  status?: InputStatus;
+  autoResize?: boolean;
 }
 ```

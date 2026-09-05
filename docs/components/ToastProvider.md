@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { ToastProvider } from "@easecation/design"
-import "@easecation/design/style.css"
+import { ToastProvider } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -14,7 +14,10 @@ import "@easecation/design/style.css"
 ## 基础示例
 
 ```tsx
-<><Toaster /><Button onClick={() => toast.success("保存成功")}>保存</Button></>
+<>
+  <Toaster />
+  <Button onClick={() => toast.success('保存成功')}>保存</Button>
+</>
 ```
 
 ## API
@@ -46,26 +49,29 @@ children；position。也可以使用 Toaster 和全局 toast 控制器。
 export declare const toast: ToastController;
 
 export declare interface ToastController {
-    success: (message: ReactNode, data?: ExternalToast) => string | number;
-    info: (message: ReactNode, data?: ExternalToast) => string | number;
-    warning: (message: ReactNode, data?: ExternalToast) => string | number;
-    error: (message: ReactNode, data?: ExternalToast) => string | number;
-    loading: (message: ReactNode, data?: ExternalToast) => string | number;
-    dismiss: (id?: string | number) => string | number;
+  success: (message: ReactNode, data?: ExternalToast) => string | number;
+  info: (message: ReactNode, data?: ExternalToast) => string | number;
+  warning: (message: ReactNode, data?: ExternalToast) => string | number;
+  error: (message: ReactNode, data?: ExternalToast) => string | number;
+  loading: (message: ReactNode, data?: ExternalToast) => string | number;
+  dismiss: (id?: string | number) => string | number;
 }
 
 export declare function Toaster({ theme, ...props }: ToasterProps): JSX.Element;
 
 export declare interface ToastOptions {
-    title: string;
-    description?: string;
-    tone?: ToastTone;
-    duration?: number;
+  title: string;
+  description?: string;
+  tone?: ToastTone;
+  duration?: number;
 }
 
-export declare function ToastProvider({ children, position, }: {
-    children: ReactNode;
-    position?: 'top-right' | 'top-center' | 'bottom-center';
+export declare function ToastProvider({
+  children,
+  position,
+}: {
+  children: ReactNode;
+  position?: 'top-right' | 'top-center' | 'bottom-center';
 }): JSX.Element;
 
 export declare type ToastTone = 'info' | 'success' | 'warning' | 'danger';

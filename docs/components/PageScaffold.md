@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { PageScaffold } from "@easecation/design"
-import "@easecation/design/style.css"
+import { PageScaffold } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -14,7 +14,9 @@ import "@easecation/design/style.css"
 ## 基础示例
 
 ```tsx
-<PageScaffold title="列表" actions={<Button>导出</Button>}>内容</PageScaffold>
+<PageScaffold title="列表" actions={<Button>导出</Button>}>
+  内容
+</PageScaffold>
 ```
 
 ## API
@@ -43,12 +45,20 @@ title；titleIcon；eyebrow；actions；children。
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function PageScaffold({ title, titleIcon, eyebrow, actions, className, children, ...props }: PageScaffoldProps): JSX.Element;
+export declare function PageScaffold({
+  title,
+  titleIcon,
+  eyebrow,
+  actions,
+  className,
+  children,
+  ...props
+}: PageScaffoldProps): JSX.Element;
 
 export declare interface PageScaffoldProps extends Omit<ComponentProps<'section'>, 'title'> {
-    title: ReactNode;
-    titleIcon?: ReactNode;
-    eyebrow?: ReactNode;
-    actions?: ReactNode;
+  title: ReactNode;
+  titleIcon?: ReactNode;
+  eyebrow?: ReactNode;
+  actions?: ReactNode;
 }
 ```

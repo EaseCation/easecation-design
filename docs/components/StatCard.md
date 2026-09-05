@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { StatCard } from "@easecation/design"
-import "@easecation/design/style.css"
+import { StatCard } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -43,14 +43,23 @@ label；value；delta；hint；trend: up | down | steady；icon。
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function StatCard({ label, value, delta, hint, trend, icon, className, ...props }: StatCardProps): JSX.Element;
+export declare function StatCard({
+  label,
+  value,
+  delta,
+  hint,
+  trend,
+  icon,
+  className,
+  ...props
+}: StatCardProps): JSX.Element;
 
 export declare interface StatCardProps extends ComponentProps<'article'> {
-    label: string;
-    value: string;
-    delta: string;
-    hint?: string;
-    trend: 'up' | 'down' | 'steady';
-    icon?: ReactNode;
+  label: string;
+  value: string;
+  delta: string;
+  hint?: string;
+  trend: 'up' | 'down' | 'steady';
+  icon?: ReactNode;
 }
 ```

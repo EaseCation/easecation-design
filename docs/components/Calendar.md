@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { Calendar } from "@easecation/design"
-import "@easecation/design/style.css"
+import { Calendar } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -43,13 +43,15 @@ mode: single | range；selected；onSelect；defaultMonth；numberOfMonths。
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare const Calendar: ForwardRefExoticComponent<Omit<CalendarProps, "ref"> & RefAttributes<HTMLDivElement>>;
+export declare const Calendar: ForwardRefExoticComponent<
+  Omit<CalendarProps, 'ref'> & RefAttributes<HTMLDivElement>
+>;
 
 export declare interface CalendarProps extends Omit<ComponentProps<'div'>, 'onSelect'> {
-    mode?: 'single' | 'range';
-    selected?: Date | DateRange;
-    onSelect?: (value: CalendarSelectValue) => void;
-    defaultMonth?: Date;
-    numberOfMonths?: number;
+  mode?: 'single' | 'range';
+  selected?: Date | DateRange;
+  onSelect?: (value: CalendarSelectValue) => void;
+  defaultMonth?: Date;
+  numberOfMonths?: number;
 }
 ```

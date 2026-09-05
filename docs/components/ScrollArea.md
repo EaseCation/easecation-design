@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { ScrollArea } from "@easecation/design"
-import "@easecation/design/style.css"
+import { ScrollArea } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -43,7 +43,15 @@ ScrollArea 继承 Radix Root 属性；ScrollBar 支持 orientation。
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function ScrollArea({ className, children, ...props }: ComponentProps<typeof ScrollArea_2.Root>): JSX.Element;
+export declare function ScrollArea({
+  className,
+  children,
+  ...props
+}: ComponentProps<typeof ScrollArea_2.Root>): JSX.Element;
 
-export declare function ScrollBar({ className, orientation, ...props }: ComponentProps<typeof ScrollArea_2.ScrollAreaScrollbar>): JSX.Element;
+export declare function ScrollBar({
+  className,
+  orientation,
+  ...props
+}: ComponentProps<typeof ScrollArea_2.ScrollAreaScrollbar>): JSX.Element;
 ```

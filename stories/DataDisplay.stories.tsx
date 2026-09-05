@@ -1,13 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import {
-  Badge,
-  Button,
-  Pagination,
-  Popover,
-  Table,
-  ThemeProvider,
-  Tooltip,
-} from '../src';
+import { Badge, Button, Pagination, Popover, Table, ThemeProvider, Tooltip } from '../src';
 import { useStoryTranslations } from '../.storybook/story-locale';
 
 const translations = {

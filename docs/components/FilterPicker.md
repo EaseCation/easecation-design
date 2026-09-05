@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { FilterPicker } from "@easecation/design"
-import "@easecation/design/style.css"
+import { FilterPicker } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -45,13 +45,15 @@ mode: single | multiple；options；value；onValueChange；placeholder；disabl
 ```ts
 export declare function FilterPicker(props: FilterPickerProps): JSX.Element;
 
-export declare type FilterPickerProps = (PickerBase & {
-    mode?: 'single';
-    value: string;
-    onValueChange: (value: string) => void;
-}) | (PickerBase & {
-    mode: 'multiple';
-    value: string[];
-    onValueChange: (value: string[]) => void;
-});
+export declare type FilterPickerProps =
+  | (PickerBase & {
+      mode?: 'single';
+      value: string;
+      onValueChange: (value: string) => void;
+    })
+  | (PickerBase & {
+      mode: 'multiple';
+      value: string[];
+      onValueChange: (value: string[]) => void;
+    });
 ```

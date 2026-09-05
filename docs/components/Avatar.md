@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { Avatar } from "@easecation/design"
-import "@easecation/design/style.css"
+import { Avatar } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -14,7 +14,10 @@ import "@easecation/design/style.css"
 ## 基础示例
 
 ```tsx
-<Avatar><AvatarImage src={url} /><AvatarFallback>EC</AvatarFallback></Avatar>
+<Avatar>
+  <AvatarImage src={url} />
+  <AvatarFallback>EC</AvatarFallback>
+</Avatar>
 ```
 
 ## API
@@ -43,5 +46,7 @@ Avatar size；AvatarImage；AvatarFallback；AvatarBadge；AvatarGroup；AvatarG
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare const Avatar: ForwardRefExoticComponent<AvatarProps & RefAttributes<HTMLSpanElement>>;
+export declare const Avatar: ForwardRefExoticComponent<
+  AvatarProps & RefAttributes<HTMLSpanElement>
+>;
 ```

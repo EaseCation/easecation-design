@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Alert } from '../src';
+import { Alert } from '../src/antd-compat';
 
 it('tracks alert slots so empty columns do not affect content spacing', () => {
   const { rerender } = render(<Alert message="Heads up" showIcon={false} />);

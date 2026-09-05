@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { FormWorkbench } from "@easecation/design"
-import "@easecation/design/style.css"
+import { FormWorkbench } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -14,7 +14,9 @@ import "@easecation/design/style.css"
 ## 基础示例
 
 ```tsx
-<FormWorkbench aside={<Help />} footer={<Button>保存</Button>}>表单</FormWorkbench>
+<FormWorkbench aside={<Help />} footer={<Button>保存</Button>}>
+  表单
+</FormWorkbench>
 ```
 
 ## API
@@ -43,10 +45,16 @@ aside；footer；children；继承 div 属性。
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function FormWorkbench({ aside, footer, className, children, ...props }: FormWorkbenchProps): JSX.Element;
+export declare function FormWorkbench({
+  aside,
+  footer,
+  className,
+  children,
+  ...props
+}: FormWorkbenchProps): JSX.Element;
 
 export declare interface FormWorkbenchProps extends ComponentProps<'div'> {
-    aside?: ReactNode;
-    footer?: ReactNode;
+  aside?: ReactNode;
+  footer?: ReactNode;
 }
 ```

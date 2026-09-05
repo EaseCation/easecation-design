@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { ThemeProvider } from "@easecation/design"
-import "@easecation/design/style.css"
+import { ThemeProvider } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -14,8 +14,12 @@ import "@easecation/design/style.css"
 ## 基础示例
 
 ```tsx
-<ThemeProvider mode="system"><App /></ThemeProvider>
+<ThemeProvider mode="system">
+  <App />
+</ThemeProvider>
 ```
+
+SSR 时 `system` 使用浅色服务端快照，并在 hydration 后同步 `prefers-color-scheme`，避免服务端与客户端标记不一致。服务端已知用户偏好时可显式传入 `light` 或 `dark`，使首屏颜色也保持确定。
 
 ## API
 
@@ -31,6 +35,7 @@ children；mode: light | dark | system；density；tokens；colorTheme；asChild
 - 业务状态、请求、权限和路由由应用层维护，通过 Props 和回调传入。
 - 同一个值不要同时使用受控属性与 default* 属性。
 - 不覆盖组件内部 DOM 选择器；品牌和密度通过 ThemeProvider、Token 或公开 className 调整。
+- `asChild` 要求一个可接收 `className`、`style` 和 `data-*` 属性的单一 React 元素。
 - 在 320、390、768 和桌面宽度验证响应式；交互组件同时验证键盘、焦点和禁用状态。
 - 完整类型以 @easecation/design 发布包的 TypeScript 声明为准，Storybook 是行为和视觉事实来源。
 
@@ -43,15 +48,25 @@ children；mode: light | dark | system；density；tokens；colorTheme；asChild
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function ThemeProvider({ children, mode, density, tokens, colorTheme, className, style, asChild, ...props }: ThemeProviderProps): JSX.Element;
+export declare function ThemeProvider({
+  children,
+  mode,
+  density,
+  tokens,
+  colorTheme,
+  className,
+  style,
+  asChild,
+  ...props
+}: ThemeProviderProps): JSX.Element;
 
 export declare interface ThemeProviderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'color'> {
-    children: ReactNode;
-    mode?: ThemeMode;
-    density?: Density;
-    tokens?: ThemeOverrides;
-    colorTheme?: 'default' | 'black-gold';
-    asChild?: boolean;
+  children: ReactNode;
+  mode?: ThemeMode;
+  density?: Density;
+  tokens?: ThemeOverrides;
+  colorTheme?: 'default' | 'black-gold';
+  asChild?: boolean;
 }
 
 export declare const useTheme: () => ThemeContextValue;

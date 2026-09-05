@@ -1,5 +1,49 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Modal, closeTopOverlay, getOverlayCount } from '../src';
-it('registers modal and closes with escape',async()=>{const user=userEvent.setup();let open=true;const {rerender}=render(<Modal open={open} onOpenChange={(next: boolean)=>{open=next}} title="确认">内容</Modal>);expect(screen.getByRole('dialog')).toBeInTheDocument();expect(getOverlayCount()).toBe(1);await user.keyboard('{Escape}');expect(open).toBe(false);rerender(<Modal open={open} onOpenChange={(next: boolean)=>{open=next}} title="确认">内容</Modal>);expect(screen.queryByRole('dialog')).not.toBeInTheDocument();});
-it('supports platform back stack closing',()=>{let open=true;render(<Modal open={open} onOpenChange={(next: boolean)=>{open=next}}>内容</Modal>);expect(closeTopOverlay()).toBe(true);expect(open).toBe(false);});
+it('registers modal and closes with escape', async () => {
+  const user = userEvent.setup();
+  let open = true;
+  const { rerender } = render(
+    <Modal
+      open={open}
+      onOpenChange={(next: boolean) => {
+        open = next;
+      }}
+      title="确认"
+    >
+      内容
+    </Modal>,
+  );
+  expect(screen.getByRole('dialog')).toBeInTheDocument();
+  expect(getOverlayCount()).toBe(1);
+  await user.keyboard('{Escape}');
+  expect(open).toBe(false);
+  rerender(
+    <Modal
+      open={open}
+      onOpenChange={(next: boolean) => {
+        open = next;
+      }}
+      title="确认"
+    >
+      内容
+    </Modal>,
+  );
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+});
+it('supports platform back stack closing', () => {
+  let open = true;
+  render(
+    <Modal
+      open={open}
+      onOpenChange={(next: boolean) => {
+        open = next;
+      }}
+    >
+      内容
+    </Modal>,
+  );
+  expect(closeTopOverlay()).toBe(true);
+  expect(open).toBe(false);
+});

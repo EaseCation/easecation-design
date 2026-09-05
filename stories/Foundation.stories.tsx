@@ -114,16 +114,18 @@ function ButtonsExample() {
 }
 function DashboardExample() {
   const copy = useStoryTranslations(translations);
-  const icons = [<UsersIcon key="users" />, <GaugeIcon key="gauge" />, <ActivityIcon key="activity" />];
+  const icons = [
+    <UsersIcon key="users" />,
+    <GaugeIcon key="gauge" />,
+    <ActivityIcon key="activity" />,
+  ];
   return (
     <div className="ec-foundation-dashboard">
       <PageHeader
         eyebrow={copy.eyebrow}
         title={copy.title}
         description={copy.description}
-        actions={
-          <Button pressable={false}>{copy.createReport}</Button>
-        }
+        actions={<Button pressable={false}>{copy.createReport}</Button>}
       />
       <div className="ec-dashboard-metrics">
         {copy.metrics.map((metric, index) => (

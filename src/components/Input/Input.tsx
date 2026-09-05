@@ -130,7 +130,8 @@ export function FormItem({
           {label}
           {required ? (
             <span aria-hidden="true" className="ec-required">
-              {' '}*
+              {' '}
+              *
             </span>
           ) : null}
         </label>

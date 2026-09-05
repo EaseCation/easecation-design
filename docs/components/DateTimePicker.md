@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { DateTimePicker } from "@easecation/design"
-import "@easecation/design/style.css"
+import { DateTimePicker } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -43,11 +43,17 @@ value；onChange；placeholder；className；aria-label。
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function DateTimePicker({ value, onChange, placeholder, className, 'aria-label': ariaLabel, }: {
-    value: string;
-    onChange: (value: string) => void;
-    placeholder?: string;
-    className?: string;
-    'aria-label'?: string;
+export declare function DateTimePicker({
+  value,
+  onChange,
+  placeholder,
+  className,
+  'aria-label': ariaLabel,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  className?: string;
+  'aria-label'?: string;
 }): JSX.Element;
 ```

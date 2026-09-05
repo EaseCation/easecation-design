@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { FilterBar } from "@easecation/design"
-import "@easecation/design/style.css"
+import { FilterBar } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -14,7 +14,11 @@ import "@easecation/design/style.css"
 ## 基础示例
 
 ```tsx
-<FilterBar onSearch={search}><FilterField label="关键词"><Input /></FilterField></FilterBar>
+<FilterBar onSearch={search}>
+  <FilterField label="关键词">
+    <Input />
+  </FilterField>
+</FilterBar>
 ```
 
 ## API
@@ -43,11 +47,18 @@ actions；variant: card | plain；onSearch；children。
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function FilterBar({ className, actions, children, variant, onSearch, ...props }: FilterBarProps): JSX.Element;
+export declare function FilterBar({
+  className,
+  actions,
+  children,
+  variant,
+  onSearch,
+  ...props
+}: FilterBarProps): JSX.Element;
 
 export declare interface FilterBarProps extends ComponentProps<'div'> {
-    actions?: ReactNode;
-    variant?: 'card' | 'plain';
-    onSearch?: () => void;
+  actions?: ReactNode;
+  variant?: 'card' | 'plain';
+  onSearch?: () => void;
 }
 ```

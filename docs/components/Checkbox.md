@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { Checkbox } from "@easecation/design"
-import "@easecation/design/style.css"
+import { Checkbox } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -43,11 +43,16 @@ label；description；indeterminate；其余属性继承原生 checkbox。
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare const Checkbox: ForwardRefExoticComponent<CheckboxProps & RefAttributes<HTMLInputElement>>;
+export declare const Checkbox: ForwardRefExoticComponent<
+  CheckboxProps & RefAttributes<HTMLInputElement>
+>;
 
-export declare interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
-    label?: ReactNode;
-    description?: ReactNode;
-    indeterminate?: boolean;
+export declare interface CheckboxProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'type' | 'size'
+> {
+  label?: ReactNode;
+  description?: ReactNode;
+  indeterminate?: boolean;
 }
 ```

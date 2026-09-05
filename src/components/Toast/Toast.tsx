@@ -54,7 +54,9 @@ export function Toaster({
       theme={theme}
       position={position}
       mobileOffset={mobileOffset}
-      swipeDirections={swipeDirections ?? (position.startsWith('top') ? ['top', 'left', 'right'] : undefined)}
+      swipeDirections={
+        swipeDirections ?? (position.startsWith('top') ? ['top', 'left', 'right'] : undefined)
+      }
       className="toaster ec-toaster"
       icons={{
         success: <CircleCheckIcon className="ec-toast-icon" />,

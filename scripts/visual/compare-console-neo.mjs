@@ -68,26 +68,22 @@ const scenes = [
   {
     name: 'app-shell',
     sourceUrl: 'http://127.0.0.1:8002/__design-shell-reference',
-    targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=patterns-app-shell--dashboard&viewMode=story',
+    targetUrl: 'http://127.0.0.1:6006/iframe.html?id=patterns-app-shell--dashboard&viewMode=story',
   },
   {
     name: 'detail-workbench',
     sourceUrl: 'http://127.0.0.1:8002/__design-workbench-reference?scene=detail',
-    targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=patterns-workbench--detail&viewMode=story',
+    targetUrl: 'http://127.0.0.1:6006/iframe.html?id=patterns-workbench--detail&viewMode=story',
   },
   {
     name: 'form-workbench',
     sourceUrl: 'http://127.0.0.1:8002/__design-workbench-reference?scene=form',
-    targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=patterns-workbench--form&viewMode=story',
+    targetUrl: 'http://127.0.0.1:6006/iframe.html?id=patterns-workbench--form&viewMode=story',
   },
   {
     name: 'inline-query-error',
     sourceUrl: 'http://127.0.0.1:8002/__design-workbench-reference?scene=error',
-    targetUrl:
-      'http://127.0.0.1:6006/iframe.html?id=patterns-workbench--error&viewMode=story',
+    targetUrl: 'http://127.0.0.1:6006/iframe.html?id=patterns-workbench--error&viewMode=story',
   },
   {
     name: 'datetime-picker',

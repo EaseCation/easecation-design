@@ -6,25 +6,10 @@
       "importPath": "@easecation/design",
       "category": "foundation",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "reduced-motion",
-        "system-color-scheme"
-      ],
-      "tokens": [
-        "--ec-color-primary",
-        "--ec-density-scale"
-      ],
-      "stories": [
-        "Foundation/Tokens and Theme"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["reduced-motion", "system-color-scheme"],
+      "tokens": ["--ec-color-primary", "--ec-density-scale"],
+      "stories": ["foundation-tokens-and-theme--buttons"],
       "deprecated": false
     },
     {
@@ -32,28 +17,10 @@
       "importPath": "@easecation/design",
       "category": "foundation",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "focus-visible",
-        "disabled",
-        "aria-busy",
-        "keyboard"
-      ],
-      "tokens": [
-        "--ec-color-primary",
-        "--ec-control-md",
-        "--ec-motion-fast"
-      ],
-      "stories": [
-        "Foundation/Tokens and Theme/Buttons"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["focus-visible", "disabled", "aria-busy", "keyboard"],
+      "tokens": ["--ec-color-primary", "--ec-control-md", "--ec-motion-fast"],
+      "stories": ["foundation-tokens-and-theme--buttons"],
       "deprecated": false
     },
     {
@@ -61,27 +28,10 @@
       "importPath": "@easecation/design",
       "category": "input",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "aria-invalid",
-        "focus-visible",
-        "label-compatible"
-      ],
-      "tokens": [
-        "--ec-color-border",
-        "--ec-color-focus",
-        "--ec-control-md"
-      ],
-      "stories": [
-        "Foundation/Tokens and Theme/Generic Dashboard"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["aria-invalid", "focus-visible", "label-compatible"],
+      "tokens": ["--ec-color-border", "--ec-color-focus", "--ec-control-md"],
+      "stories": ["foundation-tokens-and-theme--generic-dashboard"],
       "deprecated": false
     },
     {
@@ -89,26 +39,10 @@
       "importPath": "@easecation/design",
       "category": "navigation",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "roving-tabindex",
-        "arrow-keys",
-        "tabpanel-semantics"
-      ],
-      "tokens": [
-        "--ec-color-primary",
-        "--ec-color-border"
-      ],
-      "stories": [
-        "Foundation/Tokens and Theme/Generic Dashboard"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["roving-tabindex", "arrow-keys", "tabpanel-semantics"],
+      "tokens": ["--ec-color-primary", "--ec-color-border"],
+      "stories": ["foundation-tokens-and-theme--generic-dashboard"],
       "deprecated": false
     },
     {
@@ -116,27 +50,10 @@
       "importPath": "@easecation/design",
       "category": "feedback",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "aria-modal",
-        "escape-close",
-        "focus-restore"
-      ],
-      "tokens": [
-        "--ec-color-overlay",
-        "--ec-z-modal",
-        "--ec-safe-top"
-      ],
-      "stories": [
-        "Feedback/Overlays/Interactive"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["aria-modal", "escape-close", "focus-restore"],
+      "tokens": ["--ec-color-overlay", "--ec-z-modal", "--ec-safe-top"],
+      "stories": ["components-modal-drawer-and-toast--interactive"],
       "deprecated": false
     },
     {
@@ -144,25 +61,10 @@
       "importPath": "@easecation/design",
       "category": "feedback",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "aria-modal",
-        "escape-close"
-      ],
-      "tokens": [
-        "--ec-color-overlay",
-        "--ec-safe-bottom"
-      ],
-      "stories": [
-        "Feedback/Overlays/Interactive"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["aria-modal", "escape-close"],
+      "tokens": ["--ec-color-overlay", "--ec-safe-bottom"],
+      "stories": ["components-modal-drawer-and-toast--interactive"],
       "deprecated": false
     },
     {
@@ -170,26 +72,10 @@
       "importPath": "@easecation/design",
       "category": "feedback",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "aria-live",
-        "dismiss-label"
-      ],
-      "tokens": [
-        "--ec-z-toast",
-        "--ec-safe-top",
-        "--ec-safe-bottom"
-      ],
-      "stories": [
-        "Feedback/Overlays/Interactive"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["aria-live", "dismiss-label"],
+      "tokens": ["--ec-z-toast", "--ec-safe-top", "--ec-safe-bottom"],
+      "stories": ["components-modal-drawer-and-toast--interactive"],
       "deprecated": false
     },
     {
@@ -197,480 +83,197 @@
       "importPath": "@easecation/design",
       "category": "platform",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": [],
-      "tokens": [
-        "--ec-safe-top",
-        "--ec-safe-right",
-        "--ec-safe-bottom",
-        "--ec-safe-left"
-      ],
-      "stories": [
-        "Foundation/Tokens and Theme/Platform Boundaries"
-      ],
+      "tokens": ["--ec-safe-top", "--ec-safe-right", "--ec-safe-bottom", "--ec-safe-left"],
+      "stories": ["foundation-tokens-and-theme--platform-boundaries"],
       "deprecated": false
     },
     {
       "name": "Select",
       "category": "input",
-      "accessibility": [
-        "combobox-semantics",
-        "listbox-semantics",
-        "keyboard-navigation"
-      ],
-      "tokens": [
-        "--ec-color-border",
-        "--ec-color-focus",
-        "--ec-z-dropdown"
-      ],
-      "stories": [
-        "Data Entry/Form controls/Complete Form"
-      ],
+      "accessibility": ["combobox-semantics", "listbox-semantics", "keyboard-navigation"],
+      "tokens": ["--ec-color-border", "--ec-color-focus", "--ec-z-dropdown"],
+      "stories": ["components-form-controls--complete-form"],
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false
     },
     {
       "name": "Checkbox",
       "category": "input",
-      "accessibility": [
-        "native-checkbox",
-        "mixed-state",
-        "focus-visible"
-      ],
-      "tokens": [
-        "--ec-color-primary",
-        "--ec-color-border-strong"
-      ],
-      "stories": [
-        "Data Entry/Form controls/Complete Form"
-      ],
+      "accessibility": ["native-checkbox", "mixed-state", "focus-visible"],
+      "tokens": ["--ec-color-primary", "--ec-color-border-strong"],
+      "stories": ["components-form-controls--complete-form"],
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false
     },
     {
       "name": "Switch",
       "category": "input",
-      "accessibility": [
-        "switch-role",
-        "keyboard",
-        "focus-visible"
-      ],
-      "tokens": [
-        "--ec-color-primary",
-        "--ec-motion-fast"
-      ],
-      "stories": [
-        "Data Entry/Form controls/Complete Form"
-      ],
+      "accessibility": ["switch-role", "keyboard", "focus-visible"],
+      "tokens": ["--ec-color-primary", "--ec-motion-fast"],
+      "stories": ["components-form-controls--complete-form"],
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false
     },
     {
       "name": "Form",
       "category": "input",
-      "accessibility": [
-        "label-association",
-        "describedby",
-        "error-alert"
-      ],
-      "tokens": [
-        "--ec-space-4",
-        "--ec-color-danger"
-      ],
-      "stories": [
-        "Data Entry/Form controls/Complete Form"
-      ],
+      "accessibility": ["label-association", "describedby", "error-alert"],
+      "tokens": ["--ec-space-4", "--ec-color-danger"],
+      "stories": ["components-form-controls--complete-form"],
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false
     },
     {
       "name": "Table",
       "category": "display",
-      "accessibility": [
-        "native-table",
-        "caption",
-        "keyboard-row-action"
-      ],
-      "tokens": [
-        "--ec-color-border",
-        "--ec-color-panel"
-      ],
-      "stories": [
-        "Data Display/Table and floating/Workspace Table"
-      ],
+      "accessibility": ["native-table", "caption", "keyboard-row-action"],
+      "tokens": ["--ec-color-border", "--ec-color-panel"],
+      "stories": ["components-table--workspace-table"],
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false
     },
     {
       "name": "Tooltip",
       "category": "feedback",
-      "accessibility": [
-        "tooltip-role",
-        "focus-trigger",
-        "describedby"
-      ],
-      "tokens": [
-        "--ec-z-tooltip",
-        "--ec-shadow-md"
-      ],
-      "stories": [
-        "Data Display/Table and floating/Workspace Table"
-      ],
+      "accessibility": ["tooltip-role", "focus-trigger", "describedby"],
+      "tokens": ["--ec-z-tooltip", "--ec-shadow-md"],
+      "stories": ["components-floating-overlays--tooltip-surface"],
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false
     },
     {
       "name": "Popover",
       "category": "feedback",
-      "accessibility": [
-        "dialog-role",
-        "escape-close",
-        "outside-click"
-      ],
-      "tokens": [
-        "--ec-z-dropdown",
-        "--ec-shadow-lg"
-      ],
-      "stories": [
-        "Data Display/Table and floating/Workspace Table"
-      ],
+      "accessibility": ["dialog-role", "escape-close", "outside-click"],
+      "tokens": ["--ec-z-dropdown", "--ec-shadow-lg"],
+      "stories": ["components-floating-overlays--popover-surface"],
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false
     },
     {
       "name": "Pagination",
       "category": "navigation",
-      "accessibility": [
-        "navigation-label",
-        "aria-current",
-        "button-labels"
-      ],
-      "tokens": [
-        "--ec-color-primary",
-        "--ec-color-secondary"
-      ],
-      "stories": [
-        "Data Display/Table and floating/Workspace Table"
-      ],
+      "accessibility": ["navigation-label", "aria-current", "button-labels"],
+      "tokens": ["--ec-color-primary", "--ec-color-secondary"],
+      "stories": ["components-table--workspace-table"],
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false
     },
     {
       "name": "Card",
       "category": "display",
-      "accessibility": [
-        "semantic-composition",
-        "pointer-events"
-      ],
-      "tokens": [
-        "--card",
-        "--card-foreground",
-        "--radius-xl",
-        "--border"
-      ],
-      "stories": [
-        "Components/Data Display/Exact Primitives"
-      ],
+      "accessibility": ["semantic-composition", "pointer-events"],
+      "tokens": ["--card", "--card-foreground", "--radius-xl", "--border"],
+      "stories": ["components-data-display--overview"],
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false
     },
     {
       "name": "Badge",
       "category": "display",
-      "accessibility": [
-        "text-status",
-        "non-color-label"
-      ],
-      "tokens": [
-        "--primary",
-        "--secondary",
-        "--destructive"
-      ],
-      "stories": [
-        "Components/Data Display/Exact Primitives"
-      ],
+      "accessibility": ["text-status", "non-color-label"],
+      "tokens": ["--primary", "--secondary", "--destructive"],
+      "stories": ["components-data-display--overview"],
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false
     },
     {
       "name": "Skeleton",
       "category": "display",
-      "accessibility": [
-        "aria-hidden",
-        "reduced-motion"
-      ],
-      "tokens": [
-        "--muted",
-        "--radius-lg"
-      ],
-      "stories": [
-        "Components/Data Display/Exact Primitives"
-      ],
+      "accessibility": ["aria-hidden", "reduced-motion"],
+      "tokens": ["--muted", "--radius-lg"],
+      "stories": ["components-data-display--overview"],
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false
     },
     {
       "name": "Avatar",
       "category": "display",
-      "accessibility": [
-        "image-alt",
-        "fallback-content"
-      ],
-      "tokens": [
-        "--muted",
-        "--muted-foreground",
-        "--border"
-      ],
-      "stories": [
-        "Components/Data Display/Exact Primitives"
-      ],
+      "accessibility": ["image-alt", "fallback-content"],
+      "tokens": ["--muted", "--muted-foreground", "--border"],
+      "stories": ["components-data-display--overview"],
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false
     },
     {
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false,
       "name": "DropdownMenu",
       "category": "navigation",
-      "accessibility": [
-        "radix-roving-focus",
-        "keyboard-navigation",
-        "menu-roles"
-      ],
-      "tokens": [
-        "--popover",
-        "--accent",
-        "--shadow-lg"
-      ],
-      "stories": [
-        "Components/Primitives/Menu"
-      ]
+      "accessibility": ["radix-roving-focus", "keyboard-navigation", "menu-roles"],
+      "tokens": ["--popover", "--accent", "--shadow-lg"],
+      "stories": ["components-primitives--menu"]
     },
     {
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false,
       "name": "ScrollArea",
       "category": "layout",
-      "accessibility": [
-        "native-scroll-viewport",
-        "focus-visible",
-        "touch-scroll"
-      ],
-      "tokens": [
-        "--border",
-        "--ring"
-      ],
-      "stories": [
-        "Components/Primitives/Scroll And Separator"
-      ]
+      "accessibility": ["native-scroll-viewport", "focus-visible", "touch-scroll"],
+      "tokens": ["--border", "--ring"],
+      "stories": ["components-primitives--scroll-and-separator"]
     },
     {
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false,
       "name": "Separator",
       "category": "foundation",
-      "accessibility": [
-        "decorative-or-semantic",
-        "orientation"
-      ],
-      "tokens": [
-        "--border"
-      ],
-      "stories": [
-        "Components/Primitives/Scroll And Separator"
-      ]
+      "accessibility": ["decorative-or-semantic", "orientation"],
+      "tokens": ["--border"],
+      "stories": ["components-primitives--scroll-and-separator"]
     },
     {
       "importPath": "@easecation/design",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "deprecated": false,
       "name": "Label",
       "category": "input",
-      "accessibility": [
-        "native-label-association",
-        "disabled-state"
-      ],
-      "tokens": [
-        "--foreground"
-      ],
-      "stories": [
-        "Components/Primitives/Scroll And Separator"
-      ]
+      "accessibility": ["native-label-association", "disabled-state"],
+      "tokens": ["--foreground"],
+      "stories": ["components-primitives--scroll-and-separator"]
     },
     {
       "name": "EmptyState",
       "importPath": "@easecation/design",
       "category": "feedback",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "semantic-heading",
-        "custom-action"
-      ],
-      "tokens": [
-        "--card",
-        "--muted"
-      ],
-      "stories": [
-        "Patterns/Feedback and Metrics/States"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["semantic-heading", "custom-action"],
+      "tokens": ["--card", "--muted"],
+      "stories": ["patterns-feedback-and-metrics--states"],
       "deprecated": false
     },
     {
@@ -678,25 +281,10 @@
       "importPath": "@easecation/design",
       "category": "feedback",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "semantic-heading",
-        "retry-action"
-      ],
-      "tokens": [
-        "--destructive",
-        "--card"
-      ],
-      "stories": [
-        "Patterns/Feedback and Metrics/States"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["semantic-heading", "retry-action"],
+      "tokens": ["--destructive", "--card"],
+      "stories": ["patterns-feedback-and-metrics--states"],
       "deprecated": false
     },
     {
@@ -704,25 +292,10 @@
       "importPath": "@easecation/design",
       "category": "feedback",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "alert-role",
-        "retry-action"
-      ],
-      "tokens": [
-        "--destructive",
-        "--card"
-      ],
-      "stories": [
-        "Patterns/Feedback and Metrics/States"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["alert-role", "retry-action"],
+      "tokens": ["--destructive", "--card"],
+      "stories": ["patterns-feedback-and-metrics--states"],
       "deprecated": false
     },
     {
@@ -730,25 +303,10 @@
       "importPath": "@easecation/design",
       "category": "display",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "section-landmark",
-        "semantic-heading"
-      ],
-      "tokens": [
-        "--card",
-        "--border"
-      ],
-      "stories": [
-        "Patterns/Feedback and Metrics/States"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["section-landmark", "semantic-heading"],
+      "tokens": ["--card", "--border"],
+      "stories": ["patterns-feedback-and-metrics--states"],
       "deprecated": false
     },
     {
@@ -756,26 +314,10 @@
       "importPath": "@easecation/design",
       "category": "display",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "non-color-trend-label",
-        "semantic-article"
-      ],
-      "tokens": [
-        "--card",
-        "--success",
-        "--danger"
-      ],
-      "stories": [
-        "Patterns/Feedback and Metrics/Metrics"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["non-color-trend-label", "semantic-article"],
+      "tokens": ["--card", "--success", "--danger"],
+      "stories": ["patterns-feedback-and-metrics--metrics"],
       "deprecated": false
     },
     {
@@ -783,25 +325,10 @@
       "importPath": "@easecation/design",
       "category": "input",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "native-date-input",
-        "label-association"
-      ],
-      "tokens": [
-        "--input",
-        "--background"
-      ],
-      "stories": [
-        "Patterns/Filter Toolbar/Toolbar"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["native-date-input", "label-association"],
+      "tokens": ["--input", "--background"],
+      "stories": ["patterns-filter-toolbar--toolbar"],
       "deprecated": false
     },
     {
@@ -809,25 +336,10 @@
       "importPath": "@easecation/design",
       "category": "input",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "label-association",
-        "keyboard-popover"
-      ],
-      "tokens": [
-        "--input",
-        "--popover"
-      ],
-      "stories": [
-        "Patterns/Filter Toolbar/Toolbar"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["label-association", "keyboard-popover"],
+      "tokens": ["--input", "--popover"],
+      "stories": ["patterns-filter-toolbar--toolbar"],
       "deprecated": false
     },
     {
@@ -835,25 +347,10 @@
       "importPath": "@easecation/design",
       "category": "layout",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "enter-search",
-        "responsive-reflow"
-      ],
-      "tokens": [
-        "--card",
-        "--border"
-      ],
-      "stories": [
-        "Patterns/Filter Toolbar/Toolbar"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["enter-search", "responsive-reflow"],
+      "tokens": ["--card", "--border"],
+      "stories": ["patterns-filter-toolbar--toolbar"],
       "deprecated": false
     },
     {
@@ -861,24 +358,10 @@
       "importPath": "@easecation/design",
       "category": "input",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "label-association",
-        "responsive-layout"
-      ],
-      "tokens": [
-        "--muted-foreground"
-      ],
-      "stories": [
-        "Patterns/Filter Toolbar/Toolbar"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["label-association", "responsive-layout"],
+      "tokens": ["--muted-foreground"],
+      "stories": ["patterns-filter-toolbar--toolbar"],
       "deprecated": false
     },
     {
@@ -886,25 +369,10 @@
       "importPath": "@easecation/design",
       "category": "input",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "combobox-role",
-        "keyboard-navigation"
-      ],
-      "tokens": [
-        "--input",
-        "--popover"
-      ],
-      "stories": [
-        "Patterns/Filter Toolbar/Toolbar"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["combobox-role", "keyboard-navigation"],
+      "tokens": ["--input", "--popover"],
+      "stories": ["patterns-filter-toolbar--toolbar"],
       "deprecated": false
     },
     {
@@ -912,25 +380,10 @@
       "importPath": "@easecation/design",
       "category": "input",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "menu-checkbox-role",
-        "touch-pointer"
-      ],
-      "tokens": [
-        "--input",
-        "--popover"
-      ],
-      "stories": [
-        "Patterns/Filter Toolbar/Toolbar"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["menu-checkbox-role", "touch-pointer"],
+      "tokens": ["--input", "--popover"],
+      "stories": ["patterns-filter-toolbar--toolbar"],
       "deprecated": false
     },
     {
@@ -938,27 +391,10 @@
       "importPath": "@easecation/design",
       "category": "layout",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "landmark-layout",
-        "mobile-navigation-dialog",
-        "safe-area"
-      ],
-      "tokens": [
-        "--panel",
-        "--surface",
-        "--motion-base"
-      ],
-      "stories": [
-        "Patterns/App Shell/Dashboard"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["landmark-layout", "mobile-navigation-dialog", "safe-area"],
+      "tokens": ["--panel", "--surface", "--motion-base"],
+      "stories": ["patterns-app-shell--dashboard"],
       "deprecated": false
     },
     {
@@ -966,25 +402,10 @@
       "importPath": "@easecation/design",
       "category": "layout",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "semantic-section",
-        "semantic-heading"
-      ],
-      "tokens": [
-        "--primary",
-        "--foreground"
-      ],
-      "stories": [
-        "Patterns/App Shell/Dashboard"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["semantic-section", "semantic-heading"],
+      "tokens": ["--primary", "--foreground"],
+      "stories": ["patterns-app-shell--dashboard"],
       "deprecated": false
     },
     {
@@ -992,24 +413,10 @@
       "importPath": "@easecation/design",
       "category": "layout",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "responsive-reflow"
-      ],
-      "tokens": [
-        "--card",
-        "--border"
-      ],
-      "stories": [
-        "Patterns/App Shell/Dashboard"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["responsive-reflow"],
+      "tokens": ["--card", "--border"],
+      "stories": ["patterns-app-shell--dashboard"],
       "deprecated": false
     },
     {
@@ -1017,24 +424,10 @@
       "importPath": "@easecation/design",
       "category": "layout",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "aside-landmark",
-        "responsive-grid"
-      ],
-      "tokens": [
-        "--ec-space-4"
-      ],
-      "stories": [
-        "Patterns/App Shell/Dashboard"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["aside-landmark", "responsive-grid"],
+      "tokens": ["--ec-space-4"],
+      "stories": ["patterns-app-shell--dashboard"],
       "deprecated": false
     },
     {
@@ -1042,25 +435,10 @@
       "importPath": "@easecation/design",
       "category": "layout",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "aside-landmark",
-        "sticky-footer"
-      ],
-      "tokens": [
-        "--panel",
-        "--shadow-lg"
-      ],
-      "stories": [
-        "Patterns/App Shell/Dashboard"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["aside-landmark", "sticky-footer"],
+      "tokens": ["--panel", "--shadow-lg"],
+      "stories": ["patterns-app-shell--dashboard"],
       "deprecated": false
     },
     {
@@ -1068,26 +446,10 @@
       "importPath": "@easecation/design",
       "category": "display",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "native-table",
-        "mobile-card-fallback",
-        "loading-empty-error-states"
-      ],
-      "tokens": [
-        "--card",
-        "--border"
-      ],
-      "stories": [
-        "Patterns/Data Workflows/Table"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["native-table", "mobile-card-fallback", "loading-empty-error-states"],
+      "tokens": ["--card", "--border"],
+      "stories": ["patterns-data-workflows--table"],
       "deprecated": false
     },
     {
@@ -1095,26 +457,10 @@
       "importPath": "@easecation/design",
       "category": "feedback",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "dialog-focus-trap",
-        "escape-close",
-        "responsive-sheet"
-      ],
-      "tokens": [
-        "--popover",
-        "--shadow-xl"
-      ],
-      "stories": [
-        "Patterns/Data Workflows/Compound Responsive Overlay"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["dialog-focus-trap", "escape-close", "responsive-sheet"],
+      "tokens": ["--popover", "--shadow-xl"],
+      "stories": ["patterns-data-workflows--compound-responsive-overlay"],
       "deprecated": false
     },
     {
@@ -1122,25 +468,10 @@
       "importPath": "@easecation/design",
       "category": "feedback",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "dialog-title-description",
-        "responsive-sheet"
-      ],
-      "tokens": [
-        "--popover",
-        "--shadow-xl"
-      ],
-      "stories": [
-        "Patterns/Data Workflows/Overlay"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["dialog-title-description", "responsive-sheet"],
+      "tokens": ["--popover", "--shadow-xl"],
+      "stories": ["patterns-data-workflows--overlay"],
       "deprecated": false
     },
     {
@@ -1148,22 +479,10 @@
       "importPath": "@easecation/design",
       "category": "navigation",
       "maturity": "stable",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "fallback-content",
-        "domain-neutral-authorization-boundary"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["fallback-content", "domain-neutral-authorization-boundary"],
       "tokens": [],
-      "stories": [
-        "Foundation/Tokens and Theme/Platform Boundaries"
-      ],
+      "stories": ["foundation-tokens-and-theme--platform-boundaries"],
       "deprecated": false
     },
     {
@@ -1171,27 +490,10 @@
       "importPath": "@easecation/design",
       "category": "input",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "combobox-listbox-semantics",
-        "keyboard-navigation",
-        "active-descendant"
-      ],
-      "tokens": [
-        "--ec-color-border",
-        "--ec-color-focus",
-        "--ec-z-dropdown"
-      ],
-      "stories": [
-        "Components/Form Controls/Advanced Choices"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["combobox-listbox-semantics", "keyboard-navigation", "active-descendant"],
+      "tokens": ["--ec-color-border", "--ec-color-focus", "--ec-z-dropdown"],
+      "stories": ["components-form-controls-advanced-choices--complete-example"],
       "deprecated": false
     },
     {
@@ -1199,27 +501,14 @@
       "importPath": "@easecation/design",
       "category": "input",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": [
         "multiselect-listbox-semantics",
         "keyboard-tag-removal",
         "active-descendant"
       ],
-      "tokens": [
-        "--ec-color-border",
-        "--ec-color-focus",
-        "--ec-z-dropdown"
-      ],
-      "stories": [
-        "Components/Form Controls/Advanced Choices"
-      ],
+      "tokens": ["--ec-color-border", "--ec-color-focus", "--ec-z-dropdown"],
+      "stories": ["components-form-controls-advanced-choices--complete-example"],
       "deprecated": false
     },
     {
@@ -1227,26 +516,10 @@
       "importPath": "@easecation/design",
       "category": "display",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "keyboard-navigation",
-        "aria-expanded",
-        "independent-header-actions"
-      ],
-      "tokens": [
-        "--ec-color-border",
-        "--ec-motion-base"
-      ],
-      "stories": [
-        "Components/Form Controls/Advanced Choices"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["keyboard-navigation", "aria-expanded", "independent-header-actions"],
+      "tokens": ["--ec-color-border", "--ec-motion-base"],
+      "stories": ["components-form-controls-advanced-choices--complete-example"],
       "deprecated": false
     },
     {
@@ -1254,28 +527,10 @@
       "importPath": "@easecation/design",
       "category": "navigation",
       "maturity": "beta",
-      "platforms": [
-        "web",
-        "pwa",
-        "android-webview",
-        "ios-wkwebview",
-        "windows-webview2",
-        "ssr"
-      ],
-      "accessibility": [
-        "landmark-navigation",
-        "aria-current",
-        "keyboard-links"
-      ],
-      "tokens": [
-        "--background",
-        "--foreground",
-        "--border",
-        "--primary"
-      ],
-      "stories": [
-        "Components/Navbar/Product Navigation"
-      ],
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["landmark-navigation", "aria-current", "keyboard-links"],
+      "tokens": ["--background", "--foreground", "--border", "--primary"],
+      "stories": ["components-navbar--product-navigation"],
       "deprecated": false
     }
   ]

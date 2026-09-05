@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { Button } from "@easecation/design"
-import "@easecation/design/style.css"
+import { Button } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -14,7 +14,9 @@ import "@easecation/design/style.css"
 ## 基础示例
 
 ```tsx
-<Button variant="primary" loading={saving}>保存</Button>
+<Button variant="primary" loading={saving}>
+  保存
+</Button>
 ```
 
 ## API
@@ -43,29 +45,33 @@ variant: primary | secondary | outline | ghost | danger；size: sm | md | lg；l
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<HTMLButtonElement>>;
+export declare const Button: ForwardRefExoticComponent<
+  ButtonProps & RefAttributes<HTMLButtonElement>
+>;
 
 export declare interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: ButtonVariant;
-    size?: ComponentSize;
-    loading?: boolean;
-    block?: boolean;
-    leadingIcon?: ReactNode;
-    trailingIcon?: ReactNode;
-    pressable?: boolean;
+  variant?: ButtonVariant;
+  size?: ComponentSize;
+  loading?: boolean;
+  block?: boolean;
+  leadingIcon?: ReactNode;
+  trailingIcon?: ReactNode;
+  pressable?: boolean;
 }
 
 export declare type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
 
 export declare type ComponentSize = 'sm' | 'md' | 'lg';
 
-export declare const IconButton: ForwardRefExoticComponent<IconButtonProps & RefAttributes<HTMLButtonElement>>;
+export declare const IconButton: ForwardRefExoticComponent<
+  IconButtonProps & RefAttributes<HTMLButtonElement>
+>;
 
 export declare interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    label: string;
-    icon: ReactNode;
-    variant?: ButtonVariant;
-    size?: ComponentSize;
-    loading?: boolean;
+  label: string;
+  icon: ReactNode;
+  variant?: ButtonVariant;
+  size?: ComponentSize;
+  loading?: boolean;
 }
 ```

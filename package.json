@@ -2,6 +2,14 @@
   "name": "@easecation/design",
   "version": "0.4.0",
   "description": "EaseCation 自研、可主题化、跨端友好的 React 设计系统与组件库",
+  "homepage": "https://github.com/EaseCation/easecation-design#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EaseCation/easecation-design.git"
+  },
+  "bugs": {
+    "url": "https://github.com/EaseCation/easecation-design/issues"
+  },
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -16,13 +24,17 @@
     },
     "./style.css": "./dist/style.css",
     "./tokens": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js"
     },
     "./package.json": "./package.json",
     "./compat": {
       "types": "./dist/compat.d.ts",
       "import": "./dist/compat.js"
+    },
+    "./compat/antd": {
+      "types": "./dist/antd-compat.d.ts",
+      "import": "./dist/antd-compat.js"
     }
   },
   "files": [
@@ -46,6 +58,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
     "test": "vitest run",
     "test:watch": "vitest",
     "registry:check": "node scripts/validate-registry.mjs",
@@ -53,7 +67,7 @@
     "ai:context": "node scripts/generate-ai-context.mjs",
     "ai:validate": "pnpm registry:check && pnpm typecheck && pnpm test",
     "pack:check": "node scripts/check-package.mjs",
-    "check": "pnpm registry:check && pnpm visual:migration:check && pnpm check:open-source && pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm build:storybook && pnpm pack:check && pnpm build:example",
+    "check": "pnpm format:check && pnpm registry:check && pnpm visual:migration:check && pnpm check:open-source && pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm build:storybook && pnpm pack:check && pnpm build:example",
     "build:example": "pnpm --filter @easecation-design/example-generic-dashboard build",
     "check:open-source": "node scripts/check-open-source.mjs",
     "visual:migration:check": "node scripts/check-visual-migration.mjs",
@@ -66,7 +80,10 @@
     "react-dom": ">=18.3.0 <20"
   },
   "devDependencies": {
+    "@changesets/cli": "^3.0.2",
     "@eslint/js": "^9.39.1",
+    "@fontsource-variable/geist": "5.2.8",
+    "@fontsource-variable/outfit": "5.2.8",
     "@storybook/addon-a11y": "^9.1.10",
     "@storybook/addon-docs": "^9.1.10",
     "@storybook/react-vite": "^9.1.10",
@@ -108,15 +125,13 @@
   "license": "MIT",
   "packageManager": "pnpm@11.17.0",
   "dependencies": {
-    "@fontsource-variable/geist": "5.2.8",
-    "@fontsource-variable/outfit": "5.2.8",
     "@tanstack/react-table": "^8.21.3",
-    "lucide-react": "^0.577.0",
-    "radix-ui": "^1.6.7",
-    "sonner": "^2.0.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "tailwind-merge": "^3.5.0",
-    "next-themes": "^0.4.6"
+    "lucide-react": "^0.577.0",
+    "next-themes": "^0.4.6",
+    "radix-ui": "^1.6.7",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.5.0"
   }
 }

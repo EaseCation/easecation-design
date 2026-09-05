@@ -62,7 +62,11 @@ export function StatCard({
             </div>
           </div>
         </div>
-        <div className="ec-stat-card__icon" data-empty={icon ? undefined : 'true'} aria-hidden={icon ? undefined : true}>
+        <div
+          className="ec-stat-card__icon"
+          data-empty={icon ? undefined : 'true'}
+          aria-hidden={icon ? undefined : true}
+        >
           {icon}
         </div>
       </div>

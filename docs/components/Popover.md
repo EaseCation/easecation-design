@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { Popover } from "@easecation/design"
-import "@easecation/design/style.css"
+import { Popover } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。

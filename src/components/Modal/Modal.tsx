@@ -89,9 +89,7 @@ export function Modal({
         >
           {title || description ? (
             <header className="ec-modal__header">
-              {title ? (
-                <DialogPrimitive.Title>{title}</DialogPrimitive.Title>
-              ) : null}
+              {title ? <DialogPrimitive.Title>{title}</DialogPrimitive.Title> : null}
               {description ? (
                 <DialogPrimitive.Description id={`${id}-description`}>
                   {description}

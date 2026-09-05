@@ -1,6 +1,8 @@
 import { createElement } from 'react';
 import type { Preview } from '@storybook/react-vite';
 import { getStoryLocale, StoryLocaleProvider } from './story-locale';
+import '@fontsource-variable/outfit';
+import '@fontsource-variable/geist';
 import '../src/styles/index.css';
 import './preview.css';
 

@@ -1,15 +1,12 @@
-import type * as React from "react"
+import type * as React from 'react';
 
-import { cn } from "../../lib/utils"
+import { cn } from '../../lib/utils';
 
-export interface PageScaffoldProps extends Omit<
-  React.ComponentProps<"section">,
-  "title"
-> {
-  title: React.ReactNode
-  titleIcon?: React.ReactNode
-  eyebrow?: React.ReactNode
-  actions?: React.ReactNode
+export interface PageScaffoldProps extends Omit<React.ComponentProps<'section'>, 'title'> {
+  title: React.ReactNode;
+  titleIcon?: React.ReactNode;
+  eyebrow?: React.ReactNode;
+  actions?: React.ReactNode;
 }
 
 export function PageScaffold({
@@ -22,10 +19,7 @@ export function PageScaffold({
   ...props
 }: PageScaffoldProps) {
   return (
-    <section
-      className={cn("page-gutter page-stack py-5 sm:py-7", className)}
-      {...props}
-    >
+    <section className={cn('page-gutter page-stack py-5 sm:py-7', className)} {...props}>
       <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-1">
           {eyebrow ? (
@@ -38,11 +32,9 @@ export function PageScaffold({
             {title}
           </h1>
         </div>
-        {actions ? (
-          <div className="flex flex-wrap items-center gap-2">{actions}</div>
-        ) : null}
+        {actions ? <div className="flex flex-wrap items-center gap-2">{actions}</div> : null}
       </header>
       {children}
     </section>
-  )
+  );
 }

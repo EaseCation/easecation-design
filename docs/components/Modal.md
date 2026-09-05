@@ -5,8 +5,8 @@
 ## 导入
 
 ```tsx
-import { Modal } from "@easecation/design"
-import "@easecation/design/style.css"
+import { Modal } from '@easecation/design';
+import '@easecation/design/style.css';
 ```
 
 组件只从包根入口导入。不要依赖 src/、dist/ 或内部组件路径。
@@ -14,7 +14,9 @@ import "@easecation/design/style.css"
 ## 基础示例
 
 ```tsx
-<Modal open={open} onOpenChange={setOpen} title="确认">内容</Modal>
+<Modal open={open} onOpenChange={setOpen} title="确认">
+  内容
+</Modal>
 ```
 
 ## API
@@ -45,22 +47,37 @@ open；onOpenChange；title；description；footer；closeOnBackdrop；fullScree
 以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
 
 ```ts
-export declare function Modal({ open, onOpenChange, title, description, children, footer, closeOnBackdrop, fullScreenOnMobile, showCloseButton, closeLabel, ariaLabel, instant, className, style, }: ModalProps): JSX.Element;
+export declare function Modal({
+  open,
+  onOpenChange,
+  title,
+  description,
+  children,
+  footer,
+  closeOnBackdrop,
+  fullScreenOnMobile,
+  showCloseButton,
+  closeLabel,
+  ariaLabel,
+  instant,
+  className,
+  style,
+}: ModalProps): JSX.Element;
 
 export declare interface ModalProps {
-    open: boolean;
-    onOpenChange: (open: boolean) => void;
-    title?: ReactNode;
-    description?: ReactNode;
-    children: ReactNode;
-    footer?: ReactNode;
-    closeOnBackdrop?: boolean;
-    fullScreenOnMobile?: boolean;
-    showCloseButton?: boolean;
-    closeLabel?: string;
-    ariaLabel?: string;
-    instant?: boolean;
-    className?: string;
-    style?: CSSProperties;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  title?: ReactNode;
+  description?: ReactNode;
+  children: ReactNode;
+  footer?: ReactNode;
+  closeOnBackdrop?: boolean;
+  fullScreenOnMobile?: boolean;
+  showCloseButton?: boolean;
+  closeLabel?: string;
+  ariaLabel?: string;
+  instant?: boolean;
+  className?: string;
+  style?: CSSProperties;
 }
 ```
