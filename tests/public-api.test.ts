@@ -7,6 +7,7 @@ import { DescriptionList } from '../src/components/DescriptionList';
 import { Input } from '../src/components/Input';
 import { Modal } from '../src/components/Modal';
 import { SegmentedControl } from '../src/components/SegmentedControl';
+import { TreeView } from '../src/components/TreeView';
 
 it('exports the formal components from the package root', () => {
   expect(publicApi.Button).toBe(Button);
@@ -16,6 +17,7 @@ it('exports the formal components from the package root', () => {
   expect(publicApi.Alert).toBe(Alert);
   expect(publicApi.SegmentedControl).toBe(SegmentedControl);
   expect(publicApi.DescriptionList).toBe(DescriptionList);
+  expect(publicApi.TreeView).toBe(TreeView);
 });
 
 it('keeps Ant Design compatibility symbols out of the package root', () => {

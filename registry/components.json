@@ -624,6 +624,23 @@
         "components-description-list--vertical"
       ],
       "deprecated": false
+    },
+    {
+      "name": "TreeView",
+      "importPath": "@easecation/design",
+      "category": "navigation",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": [
+        "tree-semantics",
+        "roving-tabindex",
+        "arrow-key-navigation",
+        "visible-focus",
+        "disabled-items"
+      ],
+      "tokens": ["--ec-color-primary", "--ec-color-focus", "--ec-touch-target"],
+      "stories": ["components-tree-view--interactive", "components-tree-view--empty"],
+      "deprecated": false
     }
   ]
 }

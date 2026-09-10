@@ -1,7 +1,7 @@
 import { act } from 'react';
 import { hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
-import { ActionCard, ThemeProvider } from '../src';
+import { ActionCard, ThemeProvider, TreeView } from '../src';
 
 it('imports public API without requiring browser globals at module scope', async () => {
   const api = await import('../src');
@@ -69,4 +69,18 @@ it('renders ActionCard with native button semantics on the server', () => {
   expect(markup).toContain('<button');
   expect(markup).toContain('aria-pressed="true"');
   expect(markup).toContain('Open player');
+});
+
+it('renders TreeView hierarchy without browser globals on the server', () => {
+  const markup = renderToString(
+    <TreeView
+      ariaLabel="Files"
+      defaultExpandedValues={['root']}
+      items={[{ value: 'root', label: 'Root', children: [{ value: 'readme', label: 'README' }] }]}
+    />,
+  );
+
+  expect(markup).toContain('role="tree"');
+  expect(markup).toContain('role="treeitem"');
+  expect(markup).toContain('README');
 });

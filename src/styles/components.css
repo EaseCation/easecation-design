@@ -5423,11 +5423,107 @@
     opacity: 0;
   }
 }
+
+.ec-tree-view {
+  display: grid;
+  min-width: 0;
+  gap: 0.125rem;
+  color: var(--ec-color-text);
+  font: 400 var(--ec-font-size-sm) / 1.35 var(--ec-font-sans);
+}
+.ec-tree-view__item {
+  width: 100%;
+  min-width: 0;
+  min-height: var(--ec-control-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--ec-space-2);
+  padding: 0.375rem 0.625rem;
+  padding-inline-start: calc(0.625rem + var(--ec-tree-indent, 0rem));
+  border: 0;
+  border-radius: var(--ec-radius-md);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.ec-tree-view__item:hover:not(:disabled) {
+  background: var(--ec-color-surface-muted);
+}
+.ec-tree-view__item:focus-visible {
+  outline: 3px solid var(--ec-color-focus);
+  outline-offset: -3px;
+}
+.ec-tree-view__item[data-selected='true'] {
+  background: color-mix(in oklch, var(--ec-color-primary) 10%, var(--ec-color-surface));
+  color: var(--ec-color-text);
+}
+.ec-tree-view__item:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+.ec-tree-view__disclosure,
+.ec-tree-view__icon {
+  width: 1rem;
+  height: 1rem;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--ec-color-text-muted);
+}
+.ec-tree-view__disclosure svg,
+.ec-tree-view__icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+.ec-tree-view__disclosure svg {
+  transition: transform var(--ec-motion-fast) var(--ec-ease-standard);
+}
+.ec-tree-view__disclosure svg[data-expanded='true'] {
+  transform: rotate(90deg);
+}
+.ec-tree-view__copy {
+  min-width: 0;
+  display: grid;
+  flex: 1;
+  gap: 0.125rem;
+}
+.ec-tree-view__label,
+.ec-tree-view__description {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ec-tree-view__label {
+  font-weight: 600;
+}
+.ec-tree-view__description {
+  color: var(--ec-color-text-muted);
+  font-size: var(--ec-font-size-xs);
+  font-weight: 400;
+}
+.ec-tree-view__empty {
+  padding: var(--ec-space-5);
+  color: var(--ec-color-text-muted);
+  text-align: center;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .ec-tree-view__item {
+    min-height: var(--ec-touch-target);
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .ec-combobox__menu,
   .ec-multi-select__menu,
   .ec-accordion__content {
     animation: none;
+  }
+  .ec-tree-view__disclosure svg {
+    transition: none;
   }
 }
 
