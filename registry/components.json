@@ -532,6 +532,75 @@
       "tokens": ["--background", "--foreground", "--border", "--primary"],
       "stories": ["components-navbar--product-navigation"],
       "deprecated": false
+    },
+    {
+      "name": "StatusBadge",
+      "importPath": "@easecation/design",
+      "category": "display",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["text-status", "non-color-label", "decorative-icon-hidden"],
+      "tokens": [
+        "--ec-color-success",
+        "--ec-color-warning",
+        "--ec-color-danger",
+        "--ec-color-info"
+      ],
+      "stories": ["components-status-badge--tones", "components-status-badge--appearances"],
+      "deprecated": false
+    },
+    {
+      "name": "Alert",
+      "importPath": "@easecation/design",
+      "category": "feedback",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": [
+        "semantic-live-region",
+        "decorative-icon-hidden",
+        "labelled-dismiss-control"
+      ],
+      "tokens": [
+        "--ec-color-info",
+        "--ec-color-success",
+        "--ec-color-warning",
+        "--ec-color-danger"
+      ],
+      "stories": ["components-alert--tones", "components-alert--responsive-with-action"],
+      "deprecated": false
+    },
+    {
+      "name": "SegmentedControl",
+      "importPath": "@easecation/design",
+      "category": "input",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["radiogroup-semantics", "roving-tabindex", "arrow-keys", "touch-target"],
+      "tokens": ["--ec-color-muted", "--ec-color-panel", "--ec-color-focus", "--ec-touch-target"],
+      "stories": [
+        "components-segmented-control--interactive",
+        "components-segmented-control--sizes"
+      ],
+      "deprecated": false
+    },
+    {
+      "name": "DescriptionList",
+      "importPath": "@easecation/design",
+      "category": "display",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["native-description-list", "responsive-reading-order"],
+      "tokens": [
+        "--ec-color-text",
+        "--ec-color-text-muted",
+        "--ec-color-border",
+        "--ec-color-panel"
+      ],
+      "stories": [
+        "components-description-list--responsive",
+        "components-description-list--vertical"
+      ],
+      "deprecated": false
     }
   ]
 }

@@ -33,6 +33,8 @@ const requiredFiles = [
   'dist/tokens.js',
   'dist/tokens.d.ts',
   'dist/style.css',
+  'eslint.js',
+  'eslint.d.ts',
   'README.md',
   'LICENSE',
   'NOTICE',
@@ -81,6 +83,13 @@ for (const [file, limit] of Object.entries(fileSizeLimits)) {
 
 const publicApi = await import(pathToFileURL(path.join(root, 'dist', 'index.js')));
 const antdCompat = await import(pathToFileURL(path.join(root, 'dist', 'antd-compat.js')));
+const eslintPlugin = await import(pathToFileURL(path.join(root, 'eslint.js')));
+
+for (const rule of ['no-raw-ui-elements', 'no-visual-overrides', 'no-compat-imports']) {
+  if (!(rule in eslintPlugin.default.rules)) {
+    throw new Error(`ESLint plugin is missing rule: ${rule}`);
+  }
+}
 
 for (const component of registry.components) {
   if (!(component.name in publicApi)) {
@@ -88,7 +97,7 @@ for (const component of registry.components) {
   }
 }
 
-for (const symbol of ['Alert', 'ConfigProvider', 'AntButton']) {
+for (const symbol of ['ConfigProvider', 'AntButton']) {
   if (symbol in publicApi) {
     throw new Error(`Ant Design compatibility symbol leaked into the package root: ${symbol}`);
   }
@@ -100,8 +109,22 @@ for (const symbol of ['Alert', 'ConfigProvider', 'Button']) {
   }
 }
 
+if (publicApi.Alert === antdCompat.Alert) {
+  throw new Error(
+    'The formal Alert export must not reuse the Ant Design compatibility implementation.',
+  );
+}
+
 const rootTypes = await fs.readFile(path.join(root, 'dist', 'index.d.ts'), 'utf8');
-for (const component of ['Button', 'Input', 'Modal', 'Select']) {
+for (const component of [
+  'Alert',
+  'Button',
+  'DescriptionList',
+  'Input',
+  'Modal',
+  'SegmentedControl',
+  'Select',
+]) {
   const anyDeclaration = new RegExp(`export declare (?:const|function) ${component}[^;]*\\bany\\b`);
   if (anyDeclaration.test(rootTypes)) {
     throw new Error(`Public declaration degraded to any: ${component}`);

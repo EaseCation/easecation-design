@@ -144,6 +144,10 @@
 [data-ec-theme] {
   --ec-font-sans: 'Outfit', sans-serif;
   --ec-font-mono: 'Geist Variable', monospace;
+  --ec-font-size-xs: 0.75rem;
+  --ec-font-size-sm: 0.875rem;
+  --ec-font-size-md: 1rem;
+  --ec-font-size-lg: 1.125rem;
   --ec-color-bg: var(--background);
   --ec-color-surface: var(--surface);
   --ec-color-surface-raised: var(--card);
@@ -164,9 +168,13 @@
   --ec-color-border-strong: var(--input);
   --ec-color-focus: var(--ring);
   --ec-color-success: var(--success);
+  --ec-color-on-success: var(--success-foreground);
   --ec-color-warning: var(--warning);
+  --ec-color-on-warning: var(--warning-foreground);
   --ec-color-danger: var(--danger);
+  --ec-color-on-danger: var(--danger-foreground);
   --ec-color-info: var(--info);
+  --ec-color-on-info: var(--info-foreground);
   --ec-color-overlay: oklch(0.12 0.02 260 / 0.48);
   --ec-radius-sm: var(--radius-sm);
   --ec-radius-md: var(--radius-md);

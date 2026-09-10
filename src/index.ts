@@ -25,6 +25,10 @@ export * from './components/Popover';
 export * from './components/Pagination';
 export * from './components/Card';
 export * from './components/Badge';
+export * from './components/StatusBadge';
+export * from './components/Alert';
+export * from './components/SegmentedControl';
+export * from './components/DescriptionList';
 export * from './components/Skeleton';
 export * from './components/Avatar';
 

@@ -96,6 +96,8 @@ pnpm ai:context
 pnpm ai:validate
 ```
 
+消费端可使用 `@easecation/design/eslint` 的 flat-config 规则，禁止原生 UI 控件、设计组件视觉覆盖和新增兼容层依赖。完整治理策略见 `docs/guide/governance.md`。
+
 ## 文档
 
 - 接入与研发教程位于 `docs/guide/`。

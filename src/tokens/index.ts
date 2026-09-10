@@ -23,6 +23,9 @@ export const defaultTokens = {
     10: '2.5rem',
     12: '3rem',
   },
+  typography: {
+    size: { xs: '0.75rem', sm: '0.875rem', md: '1rem', lg: '1.125rem' },
+  },
   radius: {
     sm: '0.325rem',
     md: '0.425rem',
