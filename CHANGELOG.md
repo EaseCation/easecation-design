@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.0
+
+### Minor Changes
+
+- f058b20: Add ActionCard for accessible, responsive content-rich actions and selectable surfaces.
+
 ## 0.5.0
 
 ### Minor Changes
