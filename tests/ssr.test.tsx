@@ -1,7 +1,7 @@
 import { act } from 'react';
 import { hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
-import { ActionCard, ThemeProvider, TreeView } from '../src';
+import { ActionCard, FileButton, ThemeProvider, TreeView } from '../src';
 
 it('imports public API without requiring browser globals at module scope', async () => {
   const api = await import('../src');
@@ -83,4 +83,11 @@ it('renders TreeView hierarchy without browser globals on the server', () => {
   expect(markup).toContain('role="tree"');
   expect(markup).toContain('role="treeitem"');
   expect(markup).toContain('README');
+});
+
+it('renders FileButton without accessing browser APIs on the server', () => {
+  const markup = renderToString(<FileButton accept="application/json">Import</FileButton>);
+
+  expect(markup).toContain('type="file"');
+  expect(markup).toContain('Import');
 });

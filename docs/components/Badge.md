@@ -5,7 +5,7 @@
 ## 导入
 
 ```tsx
-import { Badge } from '@easecation/design';
+import { Badge, BadgeButton } from '@easecation/design';
 import '@easecation/design/style.css';
 ```
 
@@ -15,11 +15,14 @@ import '@easecation/design/style.css';
 
 ```tsx
 <Badge variant="secondary">运行中</Badge>
+<BadgeButton variant="outline" onClick={openDetails}>查看状态</BadgeButton>
 ```
 
 ## API
 
-variant；children；其余属性继承 span。
+`Badge`：variant；children；其余属性继承 span。
+
+`BadgeButton`：variant；children；其余属性继承 button。仅在 Badge 本身触发操作或浮层时使用。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -44,6 +47,10 @@ variant；children；其余属性继承 span。
 
 ```ts
 export declare const Badge: ForwardRefExoticComponent<BadgeProps & RefAttributes<HTMLSpanElement>>;
+
+export declare const BadgeButton: ForwardRefExoticComponent<
+  BadgeButtonProps & RefAttributes<HTMLButtonElement>
+>;
 
 export declare interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;

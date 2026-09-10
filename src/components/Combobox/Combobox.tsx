@@ -31,6 +31,7 @@ export interface ComboboxProps {
   placeholder?: string;
   searchPlaceholder?: string;
   emptyText?: ReactNode;
+  allowCustomValue?: boolean;
   clearable?: boolean;
   clearLabel?: string;
   label?: string;
@@ -73,6 +74,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
     placeholder = 'Select an option',
     searchPlaceholder,
     emptyText = 'No options found',
+    allowCustomValue = false,
     clearable = false,
     clearLabel = 'Clear selection',
     label,
@@ -112,15 +114,23 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
   }, [options, query]);
 
   useEffect(() => {
-    if (!open) setQuery(selectedOption ? optionText(selectedOption) : '');
-  }, [open, selectedOption]);
+    if (!open)
+      setQuery(selectedOption ? optionText(selectedOption) : allowCustomValue ? selected : '');
+  }, [allowCustomValue, open, selected, selectedOption]);
 
   useEffect(() => {
+    if (allowCustomValue) {
+      const exactIndex = filteredOptions.findIndex(
+        (option) => !option.disabled && (option.value === selected || optionText(option) === query),
+      );
+      setActiveIndex(exactIndex);
+      return;
+    }
     const selectedIndex = filteredOptions.findIndex(
       (option) => option.value === selected && !option.disabled,
     );
     setActiveIndex(selectedIndex >= 0 ? selectedIndex : firstEnabledIndex(filteredOptions));
-  }, [filteredOptions, selected]);
+  }, [allowCustomValue, filteredOptions, query, selected]);
 
   useEffect(() => {
     if (!open || typeof document === 'undefined') return;
@@ -152,7 +162,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
   };
 
   const openOptions = () => {
-    if (!open) setQuery('');
+    if (!open && !allowCustomValue) setQuery('');
     setOpen(true);
   };
 
@@ -167,6 +177,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
       event.preventDefault();
       const option = filteredOptions[activeIndex];
       if (option) choose(option);
+      else if (allowCustomValue) setOpen(false);
       return;
     }
     if (open && (event.key === 'Home' || event.key === 'End')) {
@@ -233,6 +244,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
           onClick={openOptions}
           onChange={(event) => {
             setQuery(event.target.value);
+            if (allowCustomValue) setSelected(event.target.value);
             setOpen(true);
           }}
           onKeyDown={handleKeyDown}

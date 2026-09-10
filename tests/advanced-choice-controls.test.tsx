@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Accordion, Combobox, MultiSelect } from '../src';
@@ -71,6 +72,48 @@ it('supports keywords, Home/End navigation, disabled options, and clearing', asy
 
   await user.click(screen.getByRole('button', { name: 'Clear selection' }));
   expect(input).toHaveValue('');
+});
+
+it('keeps a custom combobox value editable while retaining option selection', async () => {
+  const user = userEvent.setup();
+  let value = 'external-id';
+  function Harness() {
+    const [current, setCurrent] = useState(value);
+    return (
+      <Combobox
+        label="Integration ID"
+        options={regions}
+        value={current}
+        allowCustomValue
+        onValueChange={(next) => {
+          value = next;
+          setCurrent(next);
+        }}
+      />
+    );
+  }
+  render(<Harness />);
+
+  const input = screen.getByRole('combobox', { name: 'Integration ID' });
+  expect(input).toHaveValue('external-id');
+
+  await user.click(input);
+  await user.clear(input);
+  await user.type(input, 'eas');
+  await user.keyboard('{Enter}');
+  expect(value).toBe('eas');
+  expect(input).toHaveValue('eas');
+
+  await user.click(input);
+  await user.clear(input);
+  await user.type(input, 'custom-id');
+  expect(value).toBe('custom-id');
+
+  await user.clear(input);
+  await user.type(input, 'west');
+  await user.keyboard('{Enter}');
+  expect(value).toBe('west');
+  expect(input).toHaveValue('West region');
 });
 
 it('preserves multiple values and accepts creatable comma-delimited tags', async () => {

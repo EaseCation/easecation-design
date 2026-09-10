@@ -5,6 +5,7 @@ import {
   AvatarFallback,
   AvatarGroup,
   Badge,
+  BadgeButton,
   Button,
   Card,
   CardAction,
@@ -55,6 +56,9 @@ function OverviewExample() {
               <AvatarFallback>UI</AvatarFallback>
             </Avatar>
           </AvatarGroup>
+          <BadgeButton variant="outline" onClick={() => undefined}>
+            {copy.active}
+          </BadgeButton>
         </CardContent>
         <CardFooter>
           <Button size="sm">{copy.details}</Button>

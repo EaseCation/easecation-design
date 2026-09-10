@@ -641,6 +641,17 @@
       "tokens": ["--ec-color-primary", "--ec-color-focus", "--ec-touch-target"],
       "stories": ["components-tree-view--interactive", "components-tree-view--empty"],
       "deprecated": false
+    },
+    {
+      "name": "FileButton",
+      "importPath": "@easecation/design",
+      "category": "input",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["native-file-dialog", "keyboard-trigger", "disabled-state"],
+      "tokens": ["--ec-color-primary", "--ec-color-focus", "--ec-touch-target"],
+      "stories": ["components-file-button--states"],
+      "deprecated": false
     }
   ]
 }

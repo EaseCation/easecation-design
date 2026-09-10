@@ -49,3 +49,4 @@ export * from './components/Combobox';
 export * from './components/MultiSelect';
 export * from './components/Accordion';
 export * from './components/TreeView';
+export * from './components/FileButton';

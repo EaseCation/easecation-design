@@ -3,6 +3,7 @@ import * as antdCompat from '../src/antd-compat';
 import { ActionCard } from '../src/components/ActionCard';
 import { Alert } from '../src/components/Alert';
 import { Button } from '../src/components/Button';
+import { FileButton } from '../src/components/FileButton';
 import { DescriptionList } from '../src/components/DescriptionList';
 import { Input } from '../src/components/Input';
 import { Modal } from '../src/components/Modal';
@@ -18,6 +19,8 @@ it('exports the formal components from the package root', () => {
   expect(publicApi.SegmentedControl).toBe(SegmentedControl);
   expect(publicApi.DescriptionList).toBe(DescriptionList);
   expect(publicApi.TreeView).toBe(TreeView);
+  expect(publicApi.FileButton).toBe(FileButton);
+  expect(publicApi.BadgeButton).toBeTypeOf('object');
 });
 
 it('keeps Ant Design compatibility symbols out of the package root', () => {

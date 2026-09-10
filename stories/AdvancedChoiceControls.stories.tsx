@@ -10,6 +10,7 @@ const options = [
 
 function AdvancedChoiceExample() {
   const [region, setRegion] = useState('alpha');
+  const [integrationId, setIntegrationId] = useState('external-workspace');
   const [reviewers, setReviewers] = useState<string[]>(['alpha']);
   return (
     <div style={{ display: 'grid', gap: '1.25rem' }}>
@@ -19,6 +20,14 @@ function AdvancedChoiceExample() {
         value={region}
         onValueChange={setRegion}
         clearable
+      />
+      <Combobox
+        label="Integration ID"
+        options={options}
+        value={integrationId}
+        onValueChange={setIntegrationId}
+        allowCustomValue
+        placeholder="Choose or enter an ID"
       />
       <MultiSelect
         label="Reviewers"

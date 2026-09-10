@@ -5511,9 +5511,33 @@
   text-align: center;
 }
 
+.ec-file-button {
+  display: inline-flex;
+  min-width: 0;
+}
+.ec-file-button__input {
+  display: none;
+}
+
+.ec-badge--interactive {
+  appearance: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+.ec-badge--interactive:hover:not(:disabled) {
+  filter: brightness(0.96);
+}
+.ec-badge--interactive:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
 @media (hover: none), (pointer: coarse) {
   .ec-tree-view__item {
     min-height: var(--ec-touch-target);
+  }
+  .ec-badge--interactive {
+    min-height: var(--ec-control-sm);
   }
 }
 @media (prefers-reduced-motion: reduce) {
