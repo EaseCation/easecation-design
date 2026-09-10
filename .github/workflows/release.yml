@@ -87,6 +87,16 @@ jobs:
           fi
 
       - name: Publish package
-        run: npm publish --access public --provenance
+        shell: bash
         env:
+          REPOSITORY_VISIBILITY: ${{ github.event.repository.visibility }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -euo pipefail
+          publish_args=(--access public)
+          if [ "$REPOSITORY_VISIBILITY" = "public" ]; then
+            publish_args+=(--provenance)
+          else
+            echo "Source repository is ${REPOSITORY_VISIBILITY}; npm provenance is available only for public repositories."
+          fi
+          npm publish "${publish_args[@]}"

@@ -108,7 +108,7 @@ pnpm ai:validate
 
 ## 发布
 
-维护者先合并由 `pnpm version-packages` 生成的版本提交，再手动运行 `Publish npm package` 工作流并输入该提交的完整 SHA。工作流会检出精确提交、重跑完整质量门禁、确认 changeset 已消费且版本尚未发布，然后通过 npm token 发布带 provenance 的公共包。仓库提交或 CI 成功本身不会自动发布。
+维护者先合并由 `pnpm version-packages` 生成的版本提交，再手动运行 `Publish npm package` 工作流并输入该提交的完整 SHA。工作流会检出精确提交、重跑完整质量门禁、确认 changeset 已消费且版本尚未发布，然后通过 npm token 发布公共包；源仓库公开时同时发布 provenance。仓库提交或 CI 成功本身不会自动发布。
 
 包遵循 SemVer。Breaking Changes、废弃 API 和迁移说明必须记录在 Changesets 与 `CHANGELOG.md` 中。
 
