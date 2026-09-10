@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- 527bfb2: Add typed Alert, SegmentedControl, and DescriptionList components with responsive and accessible behavior.
+- 527bfb2: Add the typed StatusBadge component for consistent semantic status presentation.
+- 9ec6cae: Separate the formal component API from the Ant Design compatibility layer. Import legacy compatibility symbols from `@easecation/design/compat/antd`, and use the dedicated `@easecation/design/tokens` entry for the typed token contract. Fix system-theme hydration, externalize runtime dependencies, and stop bundling fonts in the public stylesheet.
+- 527bfb2: Add ESLint presets that prevent raw UI controls, component appearance overrides, and new compatibility imports.
+
 本项目遵循 Semantic Versioning。所有重要变更都会记录在此文件中。
 
 ## 0.4.0 - 2026-09-04
