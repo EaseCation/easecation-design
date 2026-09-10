@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ActivityIcon, GaugeIcon, UsersIcon } from 'lucide-react';
+import { ActivityIcon, GaugeIcon, RefreshCwIcon, UsersIcon } from 'lucide-react';
 import {
   AccessGate,
   Button,
@@ -24,6 +24,8 @@ const translations = {
     outline: 'Outline button',
     ghost: 'Ghost button',
     danger: 'Danger action',
+    link: 'Open details',
+    refresh: 'Refresh',
     loading: 'Processing',
     eyebrow: 'Operations',
     title: 'Operations overview',
@@ -61,6 +63,8 @@ const translations = {
     outline: '边框按钮',
     ghost: '幽灵按钮',
     danger: '危险操作',
+    link: '打开详情',
+    refresh: '刷新',
     loading: '处理中',
     eyebrow: '运营管理',
     title: '运营概览',
@@ -105,6 +109,12 @@ function ButtonsExample() {
       </Button>
       <Button variant="danger" pressable={false}>
         {copy.danger}
+      </Button>
+      <Button variant="link" pressable={false}>
+        {copy.link}
+      </Button>
+      <Button size="icon" variant="outline" aria-label={copy.refresh} pressable={false}>
+        <RefreshCwIcon aria-hidden="true" />
       </Button>
       <Button loading pressable={false}>
         {copy.loading}

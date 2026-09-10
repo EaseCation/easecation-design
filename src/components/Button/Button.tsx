@@ -6,18 +6,23 @@ import {
   type ButtonHTMLAttributes,
   type CSSProperties,
   type PointerEvent,
+  type MouseEvent as ReactMouseEvent,
   type ReactNode,
 } from 'react';
-export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
+import { Slot } from 'radix-ui';
+
+export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link';
 export type ComponentSize = 'sm' | 'md' | 'lg';
+export type ButtonSize = ComponentSize | 'xs' | 'icon-xs' | 'icon-sm' | 'icon' | 'icon-lg';
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
-  size?: ComponentSize;
+  size?: ButtonSize;
   loading?: boolean;
   block?: boolean;
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
   pressable?: boolean;
+  asChild?: boolean;
 }
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   {
@@ -28,11 +33,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     leadingIcon,
     trailingIcon,
     pressable = false,
+    asChild = false,
     className,
     children,
     disabled,
     type = 'button',
     style,
+    onClick,
     onPointerDown,
     onPointerUp,
     onPointerLeave,
@@ -69,25 +76,55 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     if (pressable) setPressing(false);
   };
   const hasChildren = children !== undefined && children !== null && children !== false;
+  const buttonClassName = [
+    'ec-button',
+    'ec-focusable',
+    `ec-button--${variant}`,
+    `ec-button--${size}`,
+    block && 'ec-button--block',
+    pressable && 'ec-button--pressable',
+    pressing && 'is-pressing',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  if (asChild) {
+    return (
+      <Slot.Root
+        ref={innerRef}
+        data-size={size}
+        className={buttonClassName}
+        style={{ ...style, ...pressStyle }}
+        aria-disabled={disabled || loading || undefined}
+        aria-busy={loading || undefined}
+        onClick={(event) => {
+          if (disabled || loading) {
+            event.preventDefault();
+            return;
+          }
+          onClick?.(event as ReactMouseEvent<HTMLButtonElement>);
+        }}
+        onPointerDown={start}
+        onPointerUp={end}
+        onPointerLeave={leave}
+        {...props}
+      >
+        {children}
+      </Slot.Root>
+    );
+  }
+
   return (
     <button
       ref={innerRef}
       type={type}
-      className={[
-        'ec-button',
-        'ec-focusable',
-        `ec-button--${variant}`,
-        `ec-button--${size}`,
-        block && 'ec-button--block',
-        pressable && 'ec-button--pressable',
-        pressing && 'is-pressing',
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
+      data-size={size}
+      className={buttonClassName}
       style={{ ...style, ...pressStyle }}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
+      onClick={onClick}
       onPointerDown={start}
       onPointerUp={end}
       onPointerLeave={leave}

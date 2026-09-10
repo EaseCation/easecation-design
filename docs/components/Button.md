@@ -21,7 +21,7 @@ import '@easecation/design/style.css';
 
 ## API
 
-variant: primary | secondary | outline | ghost | danger；size: sm | md | lg；loading；block；leadingIcon；trailingIcon；pressable。纯图标使用 IconButton。
+variant: primary | secondary | outline | ghost | danger | link；size: xs | sm | md | lg | icon-xs | icon-sm | icon | icon-lg；loading；block；leadingIcon；trailingIcon；pressable；asChild。新代码的常规纯图标操作优先使用 IconButton；`Button` 的 icon 尺寸用于迁移或需要组合子元素的场景。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -51,15 +51,19 @@ export declare const Button: ForwardRefExoticComponent<
 
 export declare interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
-  size?: ComponentSize;
+  size?: ButtonSize;
   loading?: boolean;
   block?: boolean;
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
   pressable?: boolean;
+  asChild?: boolean;
 }
 
-export declare type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
+export declare type ButtonVariant =
+  'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link';
+
+export declare type ButtonSize = ComponentSize | 'xs' | 'icon-xs' | 'icon-sm' | 'icon' | 'icon-lg';
 
 export declare type ComponentSize = 'sm' | 'md' | 'lg';
 

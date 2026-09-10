@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.0
+
+### Minor Changes
+
+- Add composable link buttons and stable extra-small and icon-only button sizes for dense application toolbars.
+
 ## 0.9.1
 
 ### Patch Changes
