@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.0
+
+### Minor Changes
+
+- a118bc0: Add an accessible, responsive TreeView with controlled selection and expansion, roving focus, standard keyboard navigation, disabled states, SSR coverage, and touch-friendly targets.
+
 ## 0.6.0
 
 ### Minor Changes
