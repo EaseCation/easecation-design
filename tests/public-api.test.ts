@@ -1,5 +1,6 @@
 import * as publicApi from '../src';
 import * as antdCompat from '../src/antd-compat';
+import { ActionCard } from '../src/components/ActionCard';
 import { Alert } from '../src/components/Alert';
 import { Button } from '../src/components/Button';
 import { DescriptionList } from '../src/components/DescriptionList';
@@ -9,6 +10,7 @@ import { SegmentedControl } from '../src/components/SegmentedControl';
 
 it('exports the formal components from the package root', () => {
   expect(publicApi.Button).toBe(Button);
+  expect(publicApi.ActionCard).toBe(ActionCard);
   expect(publicApi.Input).toBe(Input);
   expect(publicApi.Modal).toBe(Modal);
   expect(publicApi.Alert).toBe(Alert);

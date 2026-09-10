@@ -1,11 +1,12 @@
 import { act } from 'react';
 import { hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
-import { ThemeProvider } from '../src';
+import { ActionCard, ThemeProvider } from '../src';
 
 it('imports public API without requiring browser globals at module scope', async () => {
   const api = await import('../src');
   expect(api.Button).toBeTypeOf('object');
+  expect(api.ActionCard).toBeTypeOf('object');
   expect(api.closeTopOverlay).toBeTypeOf('function');
 }, 15_000);
 
@@ -60,4 +61,12 @@ it('hydrates system mode without a server/client attribute mismatch', async () =
       value: originalMatchMedia,
     });
   }
+});
+
+it('renders ActionCard with native button semantics on the server', () => {
+  const markup = renderToString(<ActionCard selected>Open player</ActionCard>);
+
+  expect(markup).toContain('<button');
+  expect(markup).toContain('aria-pressed="true"');
+  expect(markup).toContain('Open player');
 });

@@ -24,6 +24,7 @@ export * from './components/Tooltip';
 export * from './components/Popover';
 export * from './components/Pagination';
 export * from './components/Card';
+export * from './components/ActionCard';
 export * from './components/Badge';
 export * from './components/StatusBadge';
 export * from './components/Alert';

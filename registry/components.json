@@ -534,6 +534,29 @@
       "deprecated": false
     },
     {
+      "name": "ActionCard",
+      "importPath": "@easecation/design",
+      "category": "input",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": [
+        "native-button",
+        "keyboard-activation",
+        "visible-focus",
+        "selected-state",
+        "touch-target"
+      ],
+      "tokens": [
+        "--ec-color-panel",
+        "--ec-color-text",
+        "--ec-color-border",
+        "--ec-color-primary",
+        "--ec-touch-target"
+      ],
+      "stories": ["components-action-card--states", "components-action-card--compact"],
+      "deprecated": false
+    },
+    {
       "name": "StatusBadge",
       "importPath": "@easecation/design",
       "category": "display",
