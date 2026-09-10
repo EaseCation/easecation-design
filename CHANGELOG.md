@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.0
+
+### Minor Changes
+
+- 8ba85a5: Add FileButton and BadgeButton, and let Combobox preserve continuously edited custom values for fields that combine presets with arbitrary identifiers.
+
 ## 0.7.0
 
 ### Minor Changes
