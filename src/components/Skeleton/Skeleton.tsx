@@ -1,13 +1,22 @@
 import { forwardRef, type HTMLAttributes } from 'react';
-export const Skeleton = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  function Skeleton({ className, ...props }, ref) {
-    return (
-      <div
-        ref={ref}
-        aria-hidden="true"
-        className={['ec-skeleton', className].filter(Boolean).join(' ')}
-        {...props}
-      />
-    );
-  },
-);
+
+export type SkeletonRadius = 'sm' | 'md' | 'lg' | 'xl' | 'full';
+
+export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
+  radius?: SkeletonRadius;
+}
+
+export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(function Skeleton(
+  { radius = 'lg', className, ...props },
+  ref,
+) {
+  return (
+    <div
+      ref={ref}
+      aria-hidden="true"
+      data-radius={radius}
+      className={['ec-skeleton', className].filter(Boolean).join(' ')}
+      {...props}
+    />
+  );
+});

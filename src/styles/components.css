@@ -1588,6 +1588,18 @@
   background: color-mix(in oklch, var(--muted) 50%, transparent);
   animation: ec-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+.ec-skeleton[data-radius='sm'] {
+  border-radius: var(--radius-sm);
+}
+.ec-skeleton[data-radius='md'] {
+  border-radius: var(--radius-md);
+}
+.ec-skeleton[data-radius='xl'] {
+  border-radius: var(--radius-xl);
+}
+.ec-skeleton[data-radius='full'] {
+  border-radius: 9999px;
+}
 @keyframes ec-skeleton-pulse {
   50% {
     opacity: 0.5;
@@ -2620,6 +2632,10 @@
   background: var(--card);
   color: var(--card-foreground);
   text-align: center;
+}
+.ec-empty-state.is-embedded {
+  border-color: transparent;
+  background: transparent;
 }
 .ec-state-icon {
   display: flex;

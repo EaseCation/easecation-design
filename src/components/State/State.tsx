@@ -6,17 +6,22 @@ export interface EmptyStateProps extends ComponentProps<'div'> {
   description?: string;
   icon?: ReactNode;
   action?: ReactNode;
+  embedded?: boolean;
 }
 export function EmptyState({
   title,
   description,
   icon,
   action,
+  embedded = false,
   className,
   ...props
 }: EmptyStateProps) {
   return (
-    <div className={['ec-empty-state', className].filter(Boolean).join(' ')} {...props}>
+    <div
+      className={['ec-empty-state', embedded && 'is-embedded', className].filter(Boolean).join(' ')}
+      {...props}
+    >
       <div className="ec-state-icon">{icon ?? <InboxIcon />}</div>
       <div className="ec-state-copy">
         <h3>{title}</h3>

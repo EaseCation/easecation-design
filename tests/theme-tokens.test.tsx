@@ -33,11 +33,12 @@ it('renders migrated display primitives', () => {
         <Avatar>
           <AvatarFallback>EC</AvatarFallback>
         </Avatar>
-        <Skeleton data-testid="skeleton" />
+        <Skeleton data-testid="skeleton" radius="xl" />
       </CardContent>
     </Card>,
   );
   expect(screen.getByText('状态')).toBeInTheDocument();
   expect(screen.getByText('运行中')).toBeInTheDocument();
   expect(screen.getByTestId('skeleton')).toHaveAttribute('aria-hidden', 'true');
+  expect(screen.getByTestId('skeleton')).toHaveAttribute('data-radius', 'xl');
 });

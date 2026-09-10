@@ -15,11 +15,14 @@ import '@easecation/design/style.css';
 
 ```tsx
 <EmptyState title="暂无数据" action={<Button>新建</Button>} />
+
+<EmptyState title="暂无结果" embedded />
 ```
 
 ## API
 
-title；description；icon；action。
+`title`；`description`；`icon`；`action`；`embedded`。嵌入已有卡片、表格或浮层时使用
+`embedded`，避免重复的边框和背景。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -57,5 +60,6 @@ export declare interface EmptyStateProps extends ComponentProps<'div'> {
   description?: string;
   icon?: ReactNode;
   action?: ReactNode;
+  embedded?: boolean;
 }
 ```

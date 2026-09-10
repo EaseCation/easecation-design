@@ -3,9 +3,10 @@ import { EmptyState, ErrorState, InlineQueryError, SectionCard, StatCard } from 
 it('renders state components and retry actions', () => {
   const retry = vi.fn();
   const { rerender } = render(
-    <EmptyState title="No records" description="Create the first record" />,
+    <EmptyState title="No records" description="Create the first record" embedded />,
   );
   expect(screen.getByText('No records')).toBeInTheDocument();
+  expect(screen.getByText('No records').closest('.ec-empty-state')).toHaveClass('is-embedded');
   rerender(<ErrorState title="Request failed" onRetry={retry} />);
   fireEvent.click(screen.getByRole('button', { name: 'Retry' }));
   expect(retry).toHaveBeenCalledOnce();

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.0
+
+### Minor Changes
+
+- Add token-based Skeleton radius variants and an embedded EmptyState surface for consistent loading and empty states inside existing containers.
+
 ## 0.8.0
 
 ### Minor Changes

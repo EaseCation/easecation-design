@@ -65,6 +65,7 @@ function StatesExample() {
           title={copy.empty}
           description={copy.emptyDescription}
           action={<Button leadingIcon={<PlusIcon />}>{copy.create}</Button>}
+          embedded
         />
         <ErrorState title={copy.error} description={copy.errorDescription} onRetry={() => {}} />
       </ResponsiveGrid>

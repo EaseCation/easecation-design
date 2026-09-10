@@ -14,12 +14,13 @@ import '@easecation/design/style.css';
 ## 基础示例
 
 ```tsx
-<Skeleton style={{ height: 80 }} />
+<Skeleton radius="xl" style={{ height: 80 }} />
 ```
 
 ## API
 
-继承 div 属性；通过 style/className 设置尺寸。
+继承 div 属性；通过 style/className 设置尺寸。`radius` 使用设计系统圆角 token，支持
+`sm`、`md`、`lg`（默认）、`xl` 和 `full`。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -44,6 +45,12 @@ import '@easecation/design/style.css';
 
 ```ts
 export declare const Skeleton: ForwardRefExoticComponent<
-  HTMLAttributes<HTMLDivElement> & RefAttributes<HTMLDivElement>
+  SkeletonProps & RefAttributes<HTMLDivElement>
 >;
+
+export declare interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
+  radius?: SkeletonRadius;
+}
+
+export declare type SkeletonRadius = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 ```
