@@ -75,7 +75,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     onPointerLeave?.(event);
     if (pressable) setPressing(false);
   };
-  const hasChildren = children !== undefined && children !== null && children !== false;
   const buttonClassName = [
     'ec-button',
     'ec-focusable',
@@ -136,7 +135,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
         ) : leadingIcon ? (
           <span className="ec-button__icon">{leadingIcon}</span>
         ) : null}
-        {hasChildren ? <span>{children}</span> : null}
+        {children}
         {trailingIcon ? <span className="ec-button__icon">{trailingIcon}</span> : null}
       </span>
       {pressable ? (

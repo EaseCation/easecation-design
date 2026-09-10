@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.1
+
+### Patch Changes
+
+- Keep icon and label children as direct flex items so compact buttons do not wrap icons above text.
+
 ## 0.10.0
 
 ### Minor Changes

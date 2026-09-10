@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Button } from '../src';
 import { forwardRef } from 'react';
+import { RefreshCwIcon } from 'lucide-react';
 it('forwards interaction and blocks it while loading', async () => {
   const user = userEvent.setup();
   let count = 0;
@@ -36,4 +37,17 @@ it('supports links and stable compact button sizes', () => {
     </Button>,
   );
   expect(screen.getByRole('button', { name: '刷新' })).toHaveAttribute('data-size', 'icon-xs');
+});
+
+it('keeps icon and label as flex siblings', () => {
+  render(
+    <Button>
+      <RefreshCwIcon data-testid="refresh-icon" />
+      刷新
+    </Button>,
+  );
+
+  const content = screen.getByRole('button', { name: '刷新' }).querySelector('.ec-button__content');
+  expect(content?.childNodes).toHaveLength(2);
+  expect(screen.getByTestId('refresh-icon').parentElement).toBe(content);
 });
