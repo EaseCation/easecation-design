@@ -20,7 +20,7 @@ import '@easecation/design/style.css';
 ## API
 
 继承 div 属性；通过 style/className 设置尺寸。`radius` 使用设计系统圆角 token，支持
-`sm`、`md`、`lg`（默认）、`xl` 和 `full`。
+`sm`、`md`、`lg`（默认）、`xl`、`2xl` 和 `full`。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -52,5 +52,5 @@ export declare interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
   radius?: SkeletonRadius;
 }
 
-export declare type SkeletonRadius = 'sm' | 'md' | 'lg' | 'xl' | 'full';
+export declare type SkeletonRadius = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
 ```

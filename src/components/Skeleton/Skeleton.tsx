@@ -1,6 +1,6 @@
 import { forwardRef, type HTMLAttributes } from 'react';
 
-export type SkeletonRadius = 'sm' | 'md' | 'lg' | 'xl' | 'full';
+export type SkeletonRadius = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
 
 export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
   radius?: SkeletonRadius;

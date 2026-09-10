@@ -67,7 +67,7 @@ function OverviewExample() {
       <Card size="sm">
         <CardContent>
           <Skeleton radius="sm" style={{ height: '1rem', width: '65%' }} />
-          <Skeleton radius="xl" style={{ height: '4rem', marginTop: '.75rem' }} />
+          <Skeleton radius="2xl" style={{ height: '4rem', marginTop: '.75rem' }} />
         </CardContent>
       </Card>
     </div>

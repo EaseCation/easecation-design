@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.1
+
+### Patch Changes
+
+- Add the existing 2xl radius token to Skeleton radius variants.
+
 ## 0.9.0
 
 ### Minor Changes
