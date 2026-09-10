@@ -3215,7 +3215,7 @@
   z-index: 30;
   padding: 0 1rem;
   border-bottom: 1px solid color-mix(in oklch, var(--border) 36%, transparent);
-  background: color-mix(in oklch, var(--background) 86%, transparent);
+  background: var(--background);
   backdrop-filter: blur(18px);
 }
 .ec-app-shell__mobile-head {

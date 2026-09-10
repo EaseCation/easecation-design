@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.2
+
+### Patch Changes
+
+- Use an opaque application header surface so scrolled content remains legible in sticky mobile layouts.
+
 ## 0.10.1
 
 ### Patch Changes
