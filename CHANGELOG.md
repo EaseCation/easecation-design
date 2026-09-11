@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.10
+
+### Patch Changes
+
+- Match `Combobox` and `MultiSelect` typography to standard text inputs instead of inheriting a larger page font.
+
 ## 0.13.9
 
 ### Patch Changes

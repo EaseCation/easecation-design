@@ -5431,6 +5431,7 @@
   border-radius: var(--ec-radius-md);
   background: var(--ec-color-surface);
   color: var(--ec-color-text);
+  font: 400 0.875rem/1.4 var(--ec-font-sans);
   transition:
     border-color var(--ec-motion-fast) var(--ec-ease-standard),
     box-shadow var(--ec-motion-fast) var(--ec-ease-standard);
