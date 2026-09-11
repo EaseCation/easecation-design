@@ -50,6 +50,17 @@ it('combines date and time values', async () => {
   fireEvent.change(screen.getByLabelText('Time'), { target: { value: '10:15' } });
   expect(change).toHaveBeenCalledWith('2026-07-28T10:15');
 });
+it('focuses the date field without scrolling when opened', async () => {
+  const user = userEvent.setup();
+  const focus = vi.spyOn(HTMLInputElement.prototype, 'focus');
+  render(<DateTimePicker value="" onChange={vi.fn()} />);
+
+  await user.click(screen.getByRole('button', { name: 'Select date and time' }));
+
+  expect(screen.getByLabelText('Date')).toHaveFocus();
+  expect(focus).toHaveBeenCalledWith({ preventScroll: true });
+  focus.mockRestore();
+});
 it('keeps a disabled date time picker closed', async () => {
   const user = userEvent.setup();
   render(<DateTimePicker value="2026-07-28T09:30" onChange={vi.fn()} disabled />);

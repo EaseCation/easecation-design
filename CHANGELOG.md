@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.3
+
+### Patch Changes
+
+- Prevent DateTimePicker from scrolling the page when its date field receives initial focus.
+
 ## 0.11.2
 
 ### Patch Changes

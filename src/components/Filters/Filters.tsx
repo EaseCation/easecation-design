@@ -1,5 +1,12 @@
 ﻿import { CalendarIcon, ChevronDownIcon } from 'lucide-react';
-import { useId, useMemo, type ComponentProps, type KeyboardEvent, type ReactNode } from 'react';
+import {
+  useId,
+  useMemo,
+  useRef,
+  type ComponentProps,
+  type KeyboardEvent,
+  type ReactNode,
+} from 'react';
 import { Button } from '../Button';
 import {
   DropdownMenu,
@@ -11,7 +18,7 @@ import {
 } from '../DropdownMenu';
 import { Input } from '../Input';
 import { Label } from '../Label';
-import { Popover } from '../Popover';
+import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
 import { Select } from '../Select';
 export function createFilterEnterSearchHandler(onSearch?: () => void) {
   return (event: KeyboardEvent<HTMLElement>) => {
@@ -200,12 +207,14 @@ export function DateTimePicker({
   const id = useId();
   const dateId = `${id}-date`;
   const timeId = `${id}-time`;
+  const dateInputRef = useRef<HTMLInputElement>(null);
   const part = parse(value);
   const content = useMemo(
     () => (
       <div className="ec-datetime-fields">
         <Label htmlFor={dateId}>{dateLabel}</Label>
         <Input
+          ref={dateInputRef}
           id={dateId}
           type="date"
           value={part.date}
@@ -227,8 +236,8 @@ export function DateTimePicker({
     [dateId, dateLabel, disabled, onChange, part.date, part.time, timeId, timeLabel],
   );
   return (
-    <Popover
-      trigger={
+    <Popover>
+      <PopoverTrigger asChild>
         <Button
           variant="outline"
           size="md"
@@ -240,9 +249,18 @@ export function DateTimePicker({
         >
           {value ? value.replace('T', ' ') : placeholder}
         </Button>
-      }
-    >
-      {content}
+      </PopoverTrigger>
+      <PopoverContent
+        side="bottom"
+        align="start"
+        collisionPadding={8}
+        onOpenAutoFocus={(event) => {
+          event.preventDefault();
+          dateInputRef.current?.focus({ preventScroll: true });
+        }}
+      >
+        <div className="ec-popover-content__body">{content}</div>
+      </PopoverContent>
     </Popover>
   );
 }
