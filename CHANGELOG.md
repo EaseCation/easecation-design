@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.2
+
+### Patch Changes
+
+- Add a complete disabled state to DateTimePicker for consistent use in forms and filter bars.
+
 ## 0.11.1
 
 ### Patch Changes

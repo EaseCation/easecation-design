@@ -50,3 +50,11 @@ it('combines date and time values', async () => {
   fireEvent.change(screen.getByLabelText('Time'), { target: { value: '10:15' } });
   expect(change).toHaveBeenCalledWith('2026-07-28T10:15');
 });
+it('keeps a disabled date time picker closed', async () => {
+  const user = userEvent.setup();
+  render(<DateTimePicker value="2026-07-28T09:30" onChange={vi.fn()} disabled />);
+  const trigger = screen.getByRole('button', { name: /2026-07-28/ });
+  expect(trigger).toBeDisabled();
+  await user.click(trigger);
+  expect(screen.queryByLabelText('Time')).not.toBeInTheDocument();
+});

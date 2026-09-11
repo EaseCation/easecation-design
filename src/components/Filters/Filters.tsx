@@ -177,6 +177,16 @@ const parse = (value: string) => {
   const [date, time = ''] = value.split('T');
   return { date: date ?? '', time: time.slice(0, 5) };
 };
+export interface DateTimePickerProps {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  dateLabel?: string;
+  timeLabel?: string;
+  className?: string;
+  disabled?: boolean;
+  'aria-label'?: string;
+}
 export function DateTimePicker({
   value,
   onChange,
@@ -184,16 +194,9 @@ export function DateTimePicker({
   dateLabel = 'Date',
   timeLabel = 'Time',
   className,
+  disabled = false,
   'aria-label': ariaLabel,
-}: {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  dateLabel?: string;
-  timeLabel?: string;
-  className?: string;
-  'aria-label'?: string;
-}) {
+}: DateTimePickerProps) {
   const id = useId();
   const dateId = `${id}-date`;
   const timeId = `${id}-time`;
@@ -206,6 +209,7 @@ export function DateTimePicker({
           id={dateId}
           type="date"
           value={part.date}
+          disabled={disabled}
           onChange={(e) =>
             onChange(e.target.value ? `${e.target.value}T${part.time || '00:00'}` : '')
           }
@@ -215,11 +219,12 @@ export function DateTimePicker({
           id={timeId}
           type="time"
           value={part.time}
+          disabled={disabled}
           onChange={(e) => onChange(part.date ? `${part.date}T${e.target.value || '00:00'}` : '')}
         />
       </div>
     ),
-    [dateId, dateLabel, onChange, part.date, part.time, timeId, timeLabel],
+    [dateId, dateLabel, disabled, onChange, part.date, part.time, timeId, timeLabel],
   );
   return (
     <Popover
@@ -230,6 +235,7 @@ export function DateTimePicker({
           pressable={false}
           className={['ec-datetime-trigger', className].filter(Boolean).join(' ')}
           aria-label={ariaLabel}
+          disabled={disabled}
           leadingIcon={<CalendarIcon />}
         >
           {value ? value.replace('T', ' ') : placeholder}
