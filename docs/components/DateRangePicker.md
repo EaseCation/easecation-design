@@ -20,6 +20,17 @@ import '@easecation/design/style.css';
 />
 ```
 
+查询条件允许仅设置开始或结束时间时，启用开放区间：
+
+```tsx
+<DateRangePicker
+  mode="datetime"
+  value={{ start, end }}
+  onChange={({ start, end }) => setRange({ start, end })}
+  allowOpenRange
+/>
+```
+
 ## API
 
 value；onChange；mode: date | datetime；presets；placeholder；startLabel；endLabel；startTimeLabel；endTimeLabel；applyLabel；cancelLabel；invalidRangeMessage；size；disabled；className；aria-label。
@@ -56,6 +67,7 @@ export interface DateRangePickerProps {
   onChange: (value: DateRangePickerValue) => void;
   mode?: DateRangePickerMode;
   presets?: readonly DateRangePickerPreset[];
+  allowOpenRange?: boolean;
   placeholder?: string;
   startLabel?: string;
   endLabel?: string;

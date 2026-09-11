@@ -22,6 +22,7 @@ import { Input } from '../Input';
 import { Label } from '../Label';
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
 import { Select } from '../Select';
+import { cn } from '../../utils/classNames';
 export function createFilterEnterSearchHandler(onSearch?: () => void) {
   return (event: KeyboardEvent<HTMLElement>) => {
     if (!onSearch || event.key !== 'Enter' || event.defaultPrevented) return;
@@ -110,7 +111,7 @@ export function FilterSelect({
 }) {
   return (
     <Select
-      className={['ec-filter-select', className].filter(Boolean).join(' ')}
+      className={cn('ec-filter-select', className)}
       value={value}
       onValueChange={onValueChange}
       options={options}
@@ -253,7 +254,7 @@ export function DateTimePicker({
           variant="outline"
           size={size}
           pressable={false}
-          className={['ec-datetime-trigger', className].filter(Boolean).join(' ')}
+          className={cn('ec-datetime-trigger', className)}
           aria-label={ariaLabel}
           disabled={disabled}
           leadingIcon={<CalendarIcon />}
@@ -303,6 +304,8 @@ export interface DateRangePickerProps {
   applyLabel?: string;
   cancelLabel?: string;
   invalidRangeMessage?: string;
+  /** Allow applying a range with only a start or an end value. */
+  allowOpenRange?: boolean;
   size?: ComponentSize;
   className?: string;
   disabled?: boolean;
@@ -363,6 +366,7 @@ export function DateRangePicker({
   applyLabel = 'Apply',
   cancelLabel = 'Cancel',
   invalidRangeMessage = 'The end must not be earlier than the start.',
+  allowOpenRange = false,
   size = 'lg',
   className,
   disabled = false,
@@ -376,6 +380,7 @@ export function DateRangePicker({
     to: inputValueToDate(datePart(draft.end)),
   };
   const complete = Boolean(draft.start && draft.end);
+  const hasValue = Boolean(draft.start || draft.end);
   const invalid = complete && draft.start > draft.end;
 
   const handleOpenChange = (nextOpen: boolean) => {
@@ -391,7 +396,9 @@ export function DateRangePicker({
   };
 
   const commit = (next: DateRangePickerValue) => {
-    if (!next.start || !next.end || next.start > next.end) return;
+    const nextComplete = next.start && next.end;
+    if ((!allowOpenRange && !nextComplete) || !(next.start || next.end)) return;
+    if (nextComplete && next.start > next.end) return;
     onChange(next);
     setOpen(false);
   };
@@ -403,7 +410,7 @@ export function DateRangePicker({
           variant="outline"
           size={size}
           pressable={false}
-          className={['ec-date-range-trigger', className].filter(Boolean).join(' ')}
+          className={cn('ec-date-range-trigger', className)}
           aria-label={ariaLabel}
           disabled={disabled}
           leadingIcon={<CalendarIcon />}
@@ -492,7 +499,11 @@ export function DateRangePicker({
           <Button variant="ghost" tone="muted" size="sm" onClick={() => setOpen(false)}>
             {cancelLabel}
           </Button>
-          <Button size="sm" disabled={!complete || invalid} onClick={() => commit(draft)}>
+          <Button
+            size="sm"
+            disabled={(allowOpenRange ? !hasValue : !complete) || invalid}
+            onClick={() => commit(draft)}
+          >
             {applyLabel}
           </Button>
         </div>

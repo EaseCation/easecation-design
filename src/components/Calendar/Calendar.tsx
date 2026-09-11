@@ -1,4 +1,5 @@
 ﻿import { forwardRef, type ComponentProps } from 'react';
+import { cn } from '../../utils/classNames';
 export type DateRange = { from?: Date; to?: Date };
 export type CalendarSelectValue = Date | DateRange | undefined;
 export interface CalendarProps extends Omit<ComponentProps<'div'>, 'onSelect'> {
@@ -29,11 +30,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
   if (mode === 'range') {
     const range = (selected ?? {}) as DateRange;
     return (
-      <div
-        ref={ref}
-        className={['ec-calendar', 'ec-calendar--range', className].filter(Boolean).join(' ')}
-        {...props}
-      >
+      <div ref={ref} className={cn('ec-calendar', 'ec-calendar--range', className)} {...props}>
         <label>
           {showLabel ? <span>{labels?.rangeStart ?? 'Start date'}</span> : null}
           <input
@@ -57,7 +54,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
   }
   const date = selected instanceof Date ? selected : undefined;
   return (
-    <div ref={ref} className={['ec-calendar', className].filter(Boolean).join(' ')} {...props}>
+    <div ref={ref} className={cn('ec-calendar', className)} {...props}>
       <label>
         {showLabel ? <span>{labels?.single ?? 'Date'}</span> : null}
         <input

@@ -50,6 +50,10 @@ function DateRangeDemo() {
     />
   );
 }
+function OpenDateRangeDemo() {
+  const [value, setValue] = useState({ start: '2026-07-21T09:30', end: '' });
+  return <DateRangePicker mode="datetime" value={value} onChange={setValue} allowOpenRange />;
+}
 function PickerDemo() {
   const [value, setValue] = useState(['active']);
   const copy = useStoryTranslations(translations);
@@ -90,6 +94,14 @@ export const DateRange: Story = {
   render: () => (
     <Frame>
       <DateRangeDemo />
+    </Frame>
+  ),
+};
+export const OpenDateRange: Story = {
+  args: { value: '', onChange: () => {} },
+  render: () => (
+    <Frame>
+      <OpenDateRangeDemo />
     </Frame>
   ),
 };

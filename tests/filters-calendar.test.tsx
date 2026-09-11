@@ -162,6 +162,46 @@ it('preserves precise times in datetime mode', async () => {
   });
 });
 
+it.each([
+  ['start', 'Start', '2026-07-01', { start: '2026-07-01', end: '' }],
+  ['end', 'End', '2026-07-09', { start: '', end: '2026-07-09' }],
+] as const)('applies an open range with only the %s value', async (_, label, input, expected) => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  render(
+    <DateRangePicker
+      value={{ start: '', end: '' }}
+      onChange={change}
+      startLabel="Start"
+      endLabel="End"
+      allowOpenRange
+    />,
+  );
+
+  await user.click(screen.getByRole('button', { name: 'Select date range' }));
+  fireEvent.change(screen.getByLabelText(label), { target: { value: input } });
+  await user.click(screen.getByRole('button', { name: 'Apply' }));
+
+  expect(change).toHaveBeenCalledWith(expected);
+});
+
+it('still requires both values unless open ranges are enabled', async () => {
+  const user = userEvent.setup();
+  render(
+    <DateRangePicker
+      value={{ start: '', end: '' }}
+      onChange={vi.fn()}
+      startLabel="Start"
+      endLabel="End"
+    />,
+  );
+
+  await user.click(screen.getByRole('button', { name: 'Select date range' }));
+  fireEvent.change(screen.getByLabelText('Start'), { target: { value: '2026-07-01' } });
+
+  expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
+});
+
 it('commits presets immediately and rejects an inverted range', async () => {
   const user = userEvent.setup();
   const change = vi.fn();

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.2
+
+### Patch Changes
+
+- Allow DateRangePicker consumers to explicitly apply open-ended ranges.
+
 ## 0.13.1
 
 ### Patch Changes
