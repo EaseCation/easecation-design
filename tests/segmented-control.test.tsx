@@ -8,11 +8,11 @@ const options = [
   { value: 'timeline', label: 'Timeline' },
 ];
 
-function mockNarrowSegmentedControl() {
+function mockNarrowSegmentedControl(width = 170) {
   const clientWidth = vi
     .spyOn(HTMLElement.prototype, 'clientWidth', 'get')
     .mockImplementation(function (this: HTMLElement) {
-      return this.classList.contains('ec-segmented') ? 170 : 0;
+      return this.classList.contains('ec-segmented') ? width : 0;
     });
   const offsetWidth = vi
     .spyOn(HTMLElement.prototype, 'offsetWidth', 'get')
@@ -86,6 +86,18 @@ it('moves clipped options into a menu and keeps the selected option visible', as
 
     expect(screen.getByRole('radio', { name: 'Timeline' })).toBeChecked();
     expect(screen.queryByRole('radio', { name: 'List' })).not.toBeInTheDocument();
+  } finally {
+    restore();
+  }
+});
+
+it('keeps the selected option visible when it is wider than the remaining space', () => {
+  const restore = mockNarrowSegmentedControl(90);
+  try {
+    render(<SegmentedControl ariaLabel="View" options={options} defaultValue="timeline" />);
+
+    expect(screen.getByRole('radio', { name: 'Timeline' })).toBeChecked();
+    expect(screen.getByRole('button', { name: 'More options' })).toBeInTheDocument();
   } finally {
     restore();
   }

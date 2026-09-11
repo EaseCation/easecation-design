@@ -4942,6 +4942,17 @@
   width: 100%;
 }
 
+.ec-segmented[data-overflow='true'] .ec-segmented__items .ec-segmented-item {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.ec-segmented[data-overflow='true'] .ec-segmented-item__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .ec-segmented__items {
   display: flex;
   min-width: 0;

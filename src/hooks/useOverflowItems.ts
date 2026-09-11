@@ -61,6 +61,11 @@ export function useOverflowItems({ itemCount, activeIndex, enabled = true }: Ove
     const budget = Math.max(0, available - overflowTrigger.offsetWidth - gap);
     const selected = new Set<number>();
     let used = 0;
+    const priorityIndex = activeIndex >= 0 && activeIndex < itemCount ? activeIndex : 0;
+    if (itemCount > 0) {
+      selected.add(priorityIndex);
+      used = widths[priorityIndex];
+    }
     const add = (index: number) => {
       if (index < 0 || index >= itemCount || selected.has(index)) return;
       const next = used + widths[index] + (selected.size ? gap : 0);
@@ -69,7 +74,6 @@ export function useOverflowItems({ itemCount, activeIndex, enabled = true }: Ove
       used = next;
     };
 
-    add(activeIndex);
     for (let index = 0; index < itemCount; index += 1) add(index);
     const next = [...selected].sort((left, right) => left - right);
     setVisibleIndexes((current) => (sameIndexes(current, next) ? current : next));

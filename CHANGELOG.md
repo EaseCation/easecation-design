@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.14
+
+### Patch Changes
+
+- Keep the selected segmented-control option visible in extremely narrow intrinsic-width layouts.
+
 ## 0.13.13
 
 ### Patch Changes
