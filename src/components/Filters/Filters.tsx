@@ -40,6 +40,7 @@ export function createFilterEnterSearchHandler(onSearch?: () => void) {
 export interface FilterBarProps extends ComponentProps<'div'> {
   actions?: ReactNode;
   variant?: 'card' | 'plain';
+  align?: 'start' | 'end';
   onSearch?: () => void;
 }
 export function FilterBar({
@@ -47,14 +48,18 @@ export function FilterBar({
   actions,
   children,
   variant = 'card',
+  align = 'end',
   onSearch,
   ...props
 }: FilterBarProps) {
   return (
     <div
-      className={['ec-filter-bar', `ec-filter-bar--${variant}`, className]
-        .filter(Boolean)
-        .join(' ')}
+      className={cn(
+        'ec-filter-bar',
+        `ec-filter-bar--${variant}`,
+        align === 'start' && 'ec-filter-bar--start',
+        className,
+      )}
       onKeyDown={createFilterEnterSearchHandler(onSearch)}
       {...props}
     >
@@ -69,18 +74,23 @@ export function FilterField({
   className,
   htmlFor,
   layout = 'stack',
+  width,
 }: {
   label: string;
   children: ReactNode;
   className?: string;
   htmlFor?: string;
   layout?: 'stack' | 'inline';
+  width?: 'wide' | 'range';
 }) {
   return (
     <div
-      className={['ec-filter-field', `ec-filter-field--${layout}`, className]
-        .filter(Boolean)
-        .join(' ')}
+      className={cn(
+        'ec-filter-field',
+        `ec-filter-field--${layout}`,
+        width && `ec-filter-field--${width}`,
+        className,
+      )}
     >
       <Label htmlFor={htmlFor}>{label}</Label>
       <div>{children}</div>

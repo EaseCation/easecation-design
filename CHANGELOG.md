@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.5
+
+### Patch Changes
+
+- Add top alignment for mixed-height FilterBar controls and a range-width FilterField preset for complete date-time labels.
+
 ## 0.13.4
 
 ### Patch Changes

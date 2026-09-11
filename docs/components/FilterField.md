@@ -14,12 +14,16 @@ import '@easecation/design/style.css';
 ## 基础示例
 
 ```tsx
-<FilterField />
+<FilterField label="时间范围" width="range">
+  <DateRangePicker />
+</FilterField>
 ```
 
 ## API
 
-label；children；标准容器属性。
+label；children；layout: stack | inline；width: wide | range。
+
+日期时间范围使用 `width="range"`，确保完整范围文案有稳定的桌面宽度；移动端仍自动占满可用空间。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -49,11 +53,13 @@ export declare function FilterField({
   className,
   htmlFor,
   layout,
+  width,
 }: {
   label: string;
   children: ReactNode;
   className?: string;
   htmlFor?: string;
   layout?: 'stack' | 'inline';
+  width?: 'wide' | 'range';
 }): JSX.Element;
 ```

@@ -14,8 +14,8 @@ import '@easecation/design/style.css';
 ## 基础示例
 
 ```tsx
-<FilterBar onSearch={search}>
-  <FilterField label="关键词">
+<FilterBar onSearch={search} align="start">
+  <FilterField label="时间范围" width="range">
     <Input />
   </FilterField>
 </FilterBar>
@@ -23,9 +23,11 @@ import '@easecation/design/style.css';
 
 ## API
 
-actions；variant: card | plain；onSearch；children。
+actions；variant: card | plain；align: start | end；onSearch；children。
 
 `actions` 中的按钮会按最长文案自动等宽排列；窄屏下动作区占满可用宽度，避免主次按钮因图标或字数不同而出现尺寸跳变。
+
+混合单行和可增高控件时使用 `align="start"`，保持字段标签顶部对齐。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -54,6 +56,7 @@ export declare function FilterBar({
   actions,
   children,
   variant,
+  align,
   onSearch,
   ...props
 }: FilterBarProps): JSX.Element;
@@ -61,6 +64,7 @@ export declare function FilterBar({
 export declare interface FilterBarProps extends ComponentProps<'div'> {
   actions?: ReactNode;
   variant?: 'card' | 'plain';
+  align?: 'start' | 'end';
   onSearch?: () => void;
 }
 ```

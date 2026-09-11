@@ -58,6 +58,7 @@ function Demo() {
   const copy = useStoryTranslations(translations);
   return (
     <FilterBar
+      align="start"
       actions={
         <>
           <Button variant="outline" pressable={false}>
@@ -92,7 +93,7 @@ function Demo() {
           timeLabel={copy.timeLabel}
         />
       </FilterField>
-      <FilterField label={copy.range} className="ec-filter-field--wide">
+      <FilterField label={copy.range} width="range">
         <DateRangePicker
           value={range}
           onChange={setRange}

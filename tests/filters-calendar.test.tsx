@@ -51,6 +51,20 @@ it('submits filter search and handles multiple picker', async () => {
   await user.click(screen.getByRole('menuitemcheckbox', { name: 'Active' }));
   expect(change).toHaveBeenCalledWith(['active']);
 });
+it('supports top-aligned fields and range-width filters', () => {
+  const { container } = render(
+    <FilterBar align="start">
+      <FilterField label="Range" width="range">
+        <Input aria-label="Range" />
+      </FilterField>
+    </FilterBar>,
+  );
+
+  expect(container.firstElementChild).toHaveClass('ec-filter-bar--start');
+  expect(screen.getByLabelText('Range').closest('.ec-filter-field')).toHaveClass(
+    'ec-filter-field--range',
+  );
+});
 it('uses large toolbar controls by default and accepts trigger classes', () => {
   render(
     <>
