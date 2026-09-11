@@ -6035,10 +6035,6 @@
 }
 
 @media (max-width: 639px) {
-  .ec-segmented[data-orientation='horizontal'] {
-    width: 100%;
-  }
-
   .ec-filter-bar__fields,
   .ec-filter-bar__actions,
   .ec-filter-field,
