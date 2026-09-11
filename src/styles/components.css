@@ -3194,7 +3194,7 @@
 }
 .ec-filter-bar .ec-multi-select__control {
   min-height: 2.25rem;
-  padding-block: 0.125rem;
+  padding-block: 0;
 }
 .ec-filter-bar .ec-calendar {
   width: 100%;

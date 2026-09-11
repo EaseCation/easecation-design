@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.9
+
+### Patch Changes
+
+- Keep the full internal affordance size while aligning single-line `MultiSelect` controls in `FilterBar`.
+
 ## 0.13.8
 
 ### Patch Changes
