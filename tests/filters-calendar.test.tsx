@@ -61,6 +61,20 @@ it('focuses the date field without scrolling when opened', async () => {
   expect(focus).toHaveBeenCalledWith({ preventScroll: true });
   focus.mockRestore();
 });
+it('keeps trigger focus when opened with a coarse pointer', async () => {
+  const user = userEvent.setup();
+  const matchMedia = vi.spyOn(window, 'matchMedia').mockReturnValue({
+    matches: true,
+  } as MediaQueryList);
+  render(<DateTimePicker value="" onChange={vi.fn()} />);
+  const trigger = screen.getByRole('button', { name: 'Select date and time' });
+
+  await user.click(trigger);
+
+  expect(trigger).toHaveFocus();
+  expect(screen.getByLabelText('Date')).not.toHaveFocus();
+  matchMedia.mockRestore();
+});
 it('keeps a disabled date time picker closed', async () => {
   const user = userEvent.setup();
   render(<DateTimePicker value="2026-07-28T09:30" onChange={vi.fn()} disabled />);

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.4
+
+### Patch Changes
+
+- Keep DateTimePicker trigger focus on coarse pointers to prevent mobile WebKit viewport jumps.
+
 ## 0.11.3
 
 ### Patch Changes

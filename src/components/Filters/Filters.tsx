@@ -256,6 +256,7 @@ export function DateTimePicker({
         collisionPadding={8}
         onOpenAutoFocus={(event) => {
           event.preventDefault();
+          if (window.matchMedia?.('(pointer: coarse)').matches) return;
           dateInputRef.current?.focus({ preventScroll: true });
         }}
       >
