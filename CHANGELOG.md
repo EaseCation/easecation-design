@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.1
+
+### Patch Changes
+
+- Keep sticky QueryDataTable columns on the table surface in light and dark themes, without translucent backdrop artifacts.
+
 ## 0.11.0
 
 ### Minor Changes
