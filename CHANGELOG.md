@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.4
+
+### Patch Changes
+
+- Keep FilterBar action buttons equal in width across desktop and mobile layouts.
+
 ## 0.13.3
 
 ### Patch Changes

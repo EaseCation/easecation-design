@@ -3113,8 +3113,9 @@
   min-width: 0;
 }
 .ec-filter-bar__actions {
-  display: flex;
-  flex-wrap: nowrap;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(max-content, 1fr);
   align-items: center;
   justify-content: flex-end;
   gap: 0.5rem;
@@ -5928,7 +5929,6 @@
 
   .ec-filter-bar__actions .ec-button {
     min-width: 0;
-    flex: 1 1 0;
   }
 
   .ec-page-scaffold h1,

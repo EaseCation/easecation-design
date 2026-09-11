@@ -25,6 +25,8 @@ import '@easecation/design/style.css';
 
 actions；variant: card | plain；onSearch；children。
 
+`actions` 中的按钮会按最长文案自动等宽排列；窄屏下动作区占满可用宽度，避免主次按钮因图标或字数不同而出现尺寸跳变。
+
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **可访问性**：enter-search, responsive-reflow
