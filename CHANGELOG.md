@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.14.1
+
+### Patch Changes
+
+- bf9964d: Prevent data-panel toolbar action sizing from shrinking nested filter controls.
+
 ## 0.14.0
 
 ### Minor Changes
