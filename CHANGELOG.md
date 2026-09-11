@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.0
+
+### Minor Changes
+
+- Add portal-based Select menus with label association and grouped options, reusable class-name utilities, separate Input shell and native input styling, standardized filter control sizing, configurable responsive dialog sizing, nesting and dismissal controls, composable Tabs and Table primitives, compact actionable StatCard variants with semantic tones, and Checkbox checked-state interoperability.
+
 ## 0.11.4
 
 ### Patch Changes

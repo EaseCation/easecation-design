@@ -14,12 +14,12 @@ import '@easecation/design/style.css';
 ## 基础示例
 
 ```tsx
-<StatCard label="在线用户" value="12,846" delta="8.7%" trend="up" />
+<StatCard label="在线用户" value="12,846" delta="8.7%" trend="up" size="sm" />
 ```
 
 ## API
 
-label；value；delta；hint；trend: up | down | steady；icon。
+label；value；可选 delta；hint；trend: up | down | steady；icon；action；size: sm | md；tone: default | success | warning | danger。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -50,16 +50,22 @@ export declare function StatCard({
   hint,
   trend,
   icon,
+  action,
+  size,
+  tone,
   className,
   ...props
 }: StatCardProps): JSX.Element;
 
 export declare interface StatCardProps extends ComponentProps<'article'> {
   label: string;
-  value: string;
-  delta: string;
+  value: ReactNode;
+  delta?: string;
   hint?: string;
-  trend: 'up' | 'down' | 'steady';
+  trend?: 'up' | 'down' | 'steady';
   icon?: ReactNode;
+  action?: ReactNode;
+  size?: 'sm' | 'md';
+  tone?: 'default' | 'success' | 'warning' | 'danger';
 }
 ```

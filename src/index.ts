@@ -1,5 +1,6 @@
 import './styles/index.css';
 export * from './tokens';
+export * from './utils';
 export * from './theme/ThemeProvider';
 export * from './hooks/useControllableState';
 export * from './hooks/useMediaQuery';

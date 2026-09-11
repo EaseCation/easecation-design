@@ -21,6 +21,8 @@ import '@easecation/design/style.css';
 
 ## API
 
+桌面宽度使用 `desktopSize: sm | md | lg | xl | full`，移动端方向使用 `mobileSide`。嵌套弹层使用 `layer="nested"`，不要在业务代码中手写 z-index；关闭按钮通过 `showCloseButton` 控制。
+
 open；onOpenChange；title；description；footer；desktopContentClassName；mobileContentClassName；bodyClassName。
 
 - **成熟度**：`beta`
@@ -52,9 +54,14 @@ export declare function ResponsiveDialog({
   description,
   children,
   footer,
+  desktopSize,
+  mobileSide,
+  layer,
   desktopContentClassName,
   mobileContentClassName,
   bodyClassName,
+  showCloseButton,
+  closeLabel,
   instant,
   forceMount,
 }: ResponsiveDialogProps): JSX.Element;
@@ -62,13 +69,18 @@ export declare function ResponsiveDialog({
 export declare interface ResponsiveDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  title: string;
-  description?: string;
+  title: ReactNode;
+  description?: ReactNode;
   children: ReactNode;
   footer?: ReactNode;
+  desktopSize?: ResponsiveOverlayDesktopSize;
+  mobileSide?: 'top' | 'right' | 'bottom' | 'left';
+  layer?: 'default' | 'nested';
   desktopContentClassName?: string;
   mobileContentClassName?: string;
   bodyClassName?: string;
+  showCloseButton?: boolean;
+  closeLabel?: string;
   instant?: boolean;
   forceMount?: true;
 }

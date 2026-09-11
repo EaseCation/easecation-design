@@ -14,12 +14,12 @@ import '@easecation/design/style.css';
 ## 基础示例
 
 ```tsx
-<Select value={value} onValueChange={setValue} options={options} />
+<Select id="region" value={value} onValueChange={setValue} options={options} />
 ```
 
 ## API
 
-options；value/defaultValue；onValueChange；placeholder；label；size；status；disabled；required；name。
+options；value/defaultValue；onValueChange；placeholder；label；size；status；disabled；required；name；className；triggerClassName；contentClassName。菜单通过 portal 渲染，避免被父级 overflow 裁切。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -48,7 +48,8 @@ export declare const Select: ForwardRefExoticComponent<
 >;
 
 export declare interface SelectProps {
-  options: SelectOption[];
+  options: readonly SelectOption[];
+  id?: string;
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
@@ -60,5 +61,7 @@ export declare interface SelectProps {
   required?: boolean;
   name?: string;
   className?: string;
+  triggerClassName?: string;
+  contentClassName?: string;
 }
 ```

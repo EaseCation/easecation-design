@@ -1,4 +1,73 @@
-import type { Key, ReactNode } from 'react';
+import { forwardRef, type ComponentProps, type Key, type ReactNode } from 'react';
+
+export interface TableRootProps extends ComponentProps<'table'> {
+  containerClassName?: string;
+  compact?: boolean;
+  mobile?: 'scroll' | 'cards';
+  layout?: 'auto' | 'fixed';
+}
+export const TableRoot = forwardRef<HTMLTableElement, TableRootProps>(function TableRoot(
+  { containerClassName, compact = false, mobile = 'scroll', layout = 'auto', className, ...props },
+  ref,
+) {
+  return (
+    <div
+      className={[
+        'ec-table-wrap',
+        mobile === 'cards' && 'ec-table-wrap--cards',
+        compact && 'is-compact',
+        containerClassName,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+    >
+      <table
+        ref={ref}
+        data-slot="table"
+        data-layout={layout}
+        className={['ec-table', className].filter(Boolean).join(' ')}
+        {...props}
+      />
+    </div>
+  );
+});
+
+export const TableHeader = forwardRef<HTMLTableSectionElement, ComponentProps<'thead'>>(
+  function TableHeader(props, ref) {
+    return <thead ref={ref} data-slot="table-header" {...props} />;
+  },
+);
+export const TableBody = forwardRef<HTMLTableSectionElement, ComponentProps<'tbody'>>(
+  function TableBody(props, ref) {
+    return <tbody ref={ref} data-slot="table-body" {...props} />;
+  },
+);
+export const TableFooter = forwardRef<HTMLTableSectionElement, ComponentProps<'tfoot'>>(
+  function TableFooter(props, ref) {
+    return <tfoot ref={ref} data-slot="table-footer" {...props} />;
+  },
+);
+export const TableRow = forwardRef<HTMLTableRowElement, ComponentProps<'tr'>>(
+  function TableRow(props, ref) {
+    return <tr ref={ref} data-slot="table-row" {...props} />;
+  },
+);
+export const TableHead = forwardRef<HTMLTableCellElement, ComponentProps<'th'>>(
+  function TableHead(props, ref) {
+    return <th ref={ref} data-slot="table-head" {...props} />;
+  },
+);
+export const TableCell = forwardRef<HTMLTableCellElement, ComponentProps<'td'>>(
+  function TableCell(props, ref) {
+    return <td ref={ref} data-slot="table-cell" {...props} />;
+  },
+);
+export const TableCaption = forwardRef<HTMLTableCaptionElement, ComponentProps<'caption'>>(
+  function TableCaption(props, ref) {
+    return <caption ref={ref} data-slot="table-caption" {...props} />;
+  },
+);
+
 export interface TableColumn<T> {
   key: string;
   title: ReactNode;
@@ -41,76 +110,70 @@ export function Table<T>({
     return column.render ? column.render(value, record, index) : (value as ReactNode);
   };
   return (
-    <div
-      className={[
-        'ec-table-wrap',
-        mobile === 'cards' && 'ec-table-wrap--cards',
-        compact && 'is-compact',
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
+    <TableRoot
+      containerClassName={className}
+      compact={compact}
+      mobile={mobile}
+      layout="fixed"
       aria-busy={loading || undefined}
     >
-      <table className="ec-table">
-        {caption ? <caption>{caption}</caption> : null}
-        <thead>
-          <tr>
-            {columns.map((column) => (
-              <th
-                key={column.key}
-                scope="col"
-                style={{ textAlign: column.align, width: column.width }}
-              >
-                {column.title}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {loading ? (
-            <tr>
-              <td colSpan={columns.length}>
-                <span className="ec-table__state">
-                  <span className="ec-spinner" aria-hidden="true" />
-                  {loadingText}
-                </span>
-              </td>
-            </tr>
-          ) : data.length === 0 ? (
-            <tr>
-              <td colSpan={columns.length}>
-                <span className="ec-table__state">{emptyText}</span>
-              </td>
-            </tr>
-          ) : (
-            data.map((record, index) => (
-              <tr
-                key={getKey(record)}
-                tabIndex={onRowClick ? 0 : undefined}
-                className={onRowClick ? 'is-interactive' : undefined}
-                onClick={() => onRowClick?.(record, index)}
-                onKeyDown={(event) => {
-                  if (onRowClick && (event.key === 'Enter' || event.key === ' ')) {
-                    event.preventDefault();
-                    onRowClick(record, index);
-                  }
-                }}
-              >
-                {columns.map((column) => (
-                  <td
-                    key={column.key}
-                    data-label={column.mobileLabel ?? column.title}
-                    style={{ textAlign: column.align }}
-                  >
-                    {cell(column, record, index)}
-                  </td>
-                ))}
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
+      {caption ? <TableCaption>{caption}</TableCaption> : null}
+      <TableHeader>
+        <TableRow>
+          {columns.map((column) => (
+            <TableHead
+              key={column.key}
+              scope="col"
+              style={{ textAlign: column.align, width: column.width }}
+            >
+              {column.title}
+            </TableHead>
+          ))}
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {loading ? (
+          <TableRow>
+            <TableCell colSpan={columns.length}>
+              <span className="ec-table__state">
+                <span className="ec-spinner" aria-hidden="true" />
+                {loadingText}
+              </span>
+            </TableCell>
+          </TableRow>
+        ) : data.length === 0 ? (
+          <TableRow>
+            <TableCell colSpan={columns.length}>
+              <span className="ec-table__state">{emptyText}</span>
+            </TableCell>
+          </TableRow>
+        ) : (
+          data.map((record, index) => (
+            <TableRow
+              key={getKey(record)}
+              tabIndex={onRowClick ? 0 : undefined}
+              className={onRowClick ? 'is-interactive' : undefined}
+              onClick={() => onRowClick?.(record, index)}
+              onKeyDown={(event) => {
+                if (onRowClick && (event.key === 'Enter' || event.key === ' ')) {
+                  event.preventDefault();
+                  onRowClick(record, index);
+                }
+              }}
+            >
+              {columns.map((column) => (
+                <TableCell
+                  key={column.key}
+                  data-label={column.mobileLabel ?? column.title}
+                  style={{ textAlign: column.align }}
+                >
+                  {cell(column, record, index)}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))
+        )}
+      </TableBody>
+    </TableRoot>
   );
 }

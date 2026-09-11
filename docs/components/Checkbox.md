@@ -19,7 +19,7 @@ import '@easecation/design/style.css';
 
 ## API
 
-label；description；indeterminate；其余属性继承原生 checkbox。
+label；description；indeterminate；checked；onCheckedChange；其余属性继承原生 checkbox。`checked="indeterminate"` 与 `indeterminate` 均可表达混合状态；无 label/description 时自动使用紧凑表格布局。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -49,10 +49,12 @@ export declare const Checkbox: ForwardRefExoticComponent<
 
 export declare interface CheckboxProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  'type' | 'size'
+  'type' | 'size' | 'checked'
 > {
   label?: ReactNode;
   description?: ReactNode;
   indeterminate?: boolean;
+  checked?: boolean | 'indeterminate';
+  onCheckedChange?: (checked: boolean) => void;
 }
 ```

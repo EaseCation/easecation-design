@@ -15,6 +15,7 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   status?: InputStatus;
   prefix?: ReactNode;
   suffix?: ReactNode;
+  inputClassName?: string;
   clearable?: boolean;
   clearLabel?: string;
   onClear?: () => void;
@@ -26,6 +27,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     status = 'default',
     prefix,
     suffix,
+    inputClassName,
     clearable = false,
     clearLabel = 'Clear input',
     onClear,
@@ -65,7 +67,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       {prefix ? <span className="ec-input-affix">{prefix}</span> : null}
       <input
         ref={innerRef}
-        className="ec-input"
+        className={['ec-input', inputClassName].filter(Boolean).join(' ')}
         value={currentValue}
         disabled={disabled}
         aria-invalid={status === 'error' || undefined}

@@ -1,5 +1,60 @@
-import { useId, useRef, type KeyboardEvent, type ReactNode } from 'react';
+import { Tabs as Primitive } from 'radix-ui';
+import { forwardRef, type ComponentProps, type ReactNode } from 'react';
 import { useControllableState } from '../../hooks/useControllableState';
+
+export const TabsRoot = forwardRef<HTMLDivElement, ComponentProps<typeof Primitive.Root>>(
+  function TabsRoot({ className, ...props }, ref) {
+    return (
+      <Primitive.Root
+        ref={ref}
+        className={['ec-tabs', className].filter(Boolean).join(' ')}
+        {...props}
+      />
+    );
+  },
+);
+
+export interface TabsListProps extends ComponentProps<typeof Primitive.List> {
+  variant?: 'default' | 'line';
+}
+export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(function TabsList(
+  { className, variant = 'default', ...props },
+  ref,
+) {
+  return (
+    <Primitive.List
+      ref={ref}
+      data-variant={variant}
+      className={['ec-tab-list', className].filter(Boolean).join(' ')}
+      {...props}
+    />
+  );
+});
+
+export const TabsTrigger = forwardRef<HTMLButtonElement, ComponentProps<typeof Primitive.Trigger>>(
+  function TabsTrigger({ className, ...props }, ref) {
+    return (
+      <Primitive.Trigger
+        ref={ref}
+        className={['ec-tab', 'ec-focusable', className].filter(Boolean).join(' ')}
+        {...props}
+      />
+    );
+  },
+);
+
+export const TabsContent = forwardRef<HTMLDivElement, ComponentProps<typeof Primitive.Content>>(
+  function TabsContent({ className, ...props }, ref) {
+    return (
+      <Primitive.Content
+        ref={ref}
+        className={['ec-tab-panel', className].filter(Boolean).join(' ')}
+        {...props}
+      />
+    );
+  },
+);
+
 export interface TabItem {
   value: string;
   label: ReactNode;
@@ -14,65 +69,26 @@ export interface TabsProps {
   className?: string;
 }
 export function Tabs({ items, value, defaultValue, onValueChange, className }: TabsProps) {
-  const first = items.find((i) => !i.disabled)?.value ?? '';
+  const first = items.find((item) => !item.disabled)?.value ?? '';
   const [active, setActive] = useControllableState({
     value,
     defaultValue: defaultValue ?? first,
     onChange: onValueChange,
   });
-  const id = useId();
-  const refs = useRef<Array<HTMLButtonElement | null>>([]);
-  const keyDown = (event: KeyboardEvent, index: number) => {
-    if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
-    event.preventDefault();
-    const enabled = items.map((x, i) => (!x.disabled ? i : -1)).filter((i) => i >= 0);
-    const pos = enabled.indexOf(index);
-    const next =
-      event.key === 'Home'
-        ? enabled[0]
-        : event.key === 'End'
-          ? enabled.at(-1)!
-          : enabled[
-              (pos + (event.key === 'ArrowRight' ? 1 : -1) + enabled.length) % enabled.length
-            ];
-    refs.current[next]?.focus();
-    setActive(items[next].value);
-  };
-  const item = items.find((x) => x.value === active) ?? items[0];
   return (
-    <div className={['ec-tabs', className].filter(Boolean).join(' ')}>
-      <div role="tablist" className="ec-tab-list">
-        {items.map((tab, index) => (
-          <button
-            key={tab.value}
-            ref={(node) => {
-              refs.current[index] = node;
-            }}
-            role="tab"
-            id={`${id}-tab-${tab.value}`}
-            aria-controls={`${id}-panel-${tab.value}`}
-            aria-selected={active === tab.value}
-            disabled={tab.disabled}
-            tabIndex={active === tab.value ? 0 : -1}
-            className="ec-tab ec-focusable"
-            onClick={() => setActive(tab.value)}
-            onKeyDown={(e) => keyDown(e, index)}
-          >
+    <TabsRoot value={active} onValueChange={setActive} className={className}>
+      <TabsList>
+        {items.map((tab) => (
+          <TabsTrigger key={tab.value} value={tab.value} disabled={tab.disabled}>
             {tab.label}
-          </button>
+          </TabsTrigger>
         ))}
-      </div>
-      {item ? (
-        <div
-          role="tabpanel"
-          tabIndex={0}
-          id={`${id}-panel-${item.value}`}
-          aria-labelledby={`${id}-tab-${item.value}`}
-          className="ec-tab-panel"
-        >
-          {item.content}
-        </div>
-      ) : null}
-    </div>
+      </TabsList>
+      {items.map((tab) => (
+        <TabsContent key={tab.value} value={tab.value}>
+          {tab.content}
+        </TabsContent>
+      ))}
+    </TabsRoot>
   );
 }

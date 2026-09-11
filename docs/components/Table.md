@@ -5,7 +5,15 @@
 ## 导入
 
 ```tsx
-import { Table } from '@easecation/design';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRoot,
+  TableRow,
+} from '@easecation/design';
 import '@easecation/design/style.css';
 ```
 
@@ -15,11 +23,16 @@ import '@easecation/design/style.css';
 
 ```tsx
 <Table columns={columns} data={rows} rowKey="id" mobile="cards" />
+
+<TableRoot compact>
+  <TableHeader><TableRow><TableHead>名称</TableHead></TableRow></TableHeader>
+  <TableBody><TableRow><TableCell>北区</TableCell></TableRow></TableBody>
+</TableRoot>
 ```
 
 ## API
 
-columns；data；rowKey；caption；loading；emptyText；compact；mobile；onRowClick。
+标准数据源使用 `Table`；需要自定义行列结构时使用 `TableRoot` 和语义子组件。两种 API 共用 `compact` 和 `mobile: scroll | cards` 密度与响应式规则。可组合表格的 `layout` 支持 `auto | fixed`，默认 `auto`，避免多列内容被压缩。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr

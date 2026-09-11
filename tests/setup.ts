@@ -23,3 +23,8 @@ Object.defineProperty(globalThis, 'ResizeObserver', {
   writable: true,
   value: TestResizeObserver,
 });
+
+HTMLElement.prototype.scrollIntoView = vi.fn();
+HTMLElement.prototype.hasPointerCapture = vi.fn(() => false);
+HTMLElement.prototype.setPointerCapture = vi.fn();
+HTMLElement.prototype.releasePointerCapture = vi.fn();

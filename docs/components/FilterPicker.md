@@ -19,7 +19,7 @@ import '@easecation/design/style.css';
 
 ## API
 
-mode: single | multiple；options；value；onValueChange；placeholder；disabled。
+mode: single | multiple；options；value；onValueChange；placeholder；size；disabled；className；triggerClassName。默认使用 `lg` 尺寸，与筛选工具栏的 36px 控件高度一致。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -44,6 +44,18 @@ mode: single | multiple；options；value；onValueChange；placeholder；disabl
 
 ```ts
 export declare function FilterPicker(props: FilterPickerProps): JSX.Element;
+
+declare type PickerBase = {
+  options: FilterPickerOption[];
+  placeholder?: string;
+  clearLabel?: string;
+  selectedSeparator?: string;
+  className?: string;
+  triggerClassName?: string;
+  size?: ComponentSize;
+  disabled?: boolean;
+  'aria-label'?: string;
+};
 
 export declare type FilterPickerProps =
   | (PickerBase & {

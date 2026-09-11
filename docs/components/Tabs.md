@@ -5,7 +5,7 @@
 ## 导入
 
 ```tsx
-import { Tabs } from '@easecation/design';
+import { Tabs, TabsContent, TabsList, TabsRoot, TabsTrigger } from '@easecation/design';
 import '@easecation/design/style.css';
 ```
 
@@ -15,11 +15,20 @@ import '@easecation/design/style.css';
 
 ```tsx
 <Tabs items={[{ value: 'info', label: '资料', content: <Info /> }]} />
+
+<TabsRoot defaultValue="info">
+  <TabsList variant="line">
+    <TabsTrigger value="info">资料</TabsTrigger>
+    <TabsTrigger value="history">历史</TabsTrigger>
+  </TabsList>
+  <TabsContent value="info"><Info /></TabsContent>
+  <TabsContent value="history"><History /></TabsContent>
+</TabsRoot>
 ```
 
 ## API
 
-items；value/defaultValue；onValueChange。TabItem 包含 value、label、content、disabled。
+简单页面使用 `Tabs` 的 items API；需要自由布局时使用 `TabsRoot`、`TabsList`、`TabsTrigger` 和 `TabsContent`。`TabsList.variant` 仅支持 `default | line`。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr

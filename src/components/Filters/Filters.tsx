@@ -7,7 +7,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
-import { Button } from '../Button';
+import { Button, type ComponentSize } from '../Button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -91,6 +91,8 @@ export function FilterSelect({
   options,
   placeholder = 'Select an option',
   className,
+  triggerClassName,
+  size = 'lg',
   disabled,
   'aria-label': ariaLabel,
 }: {
@@ -100,6 +102,7 @@ export function FilterSelect({
   placeholder?: string;
   className?: string;
   triggerClassName?: string;
+  size?: ComponentSize;
   disabled?: boolean;
   'aria-label'?: string;
 }) {
@@ -111,6 +114,8 @@ export function FilterSelect({
       options={options}
       placeholder={placeholder}
       label={ariaLabel}
+      triggerClassName={triggerClassName}
+      size={size}
       disabled={disabled}
     />
   );
@@ -123,6 +128,7 @@ type PickerBase = {
   selectedSeparator?: string;
   className?: string;
   triggerClassName?: string;
+  size?: ComponentSize;
   disabled?: boolean;
   'aria-label'?: string;
 };
@@ -140,6 +146,7 @@ export function FilterPicker(props: FilterPickerProps) {
       <DropdownMenuTrigger asChild disabled={props.disabled}>
         <Button
           variant="outline"
+          size={props.size ?? 'lg'}
           pressable={false}
           className={['ec-filter-picker', props.className, props.triggerClassName]
             .filter(Boolean)

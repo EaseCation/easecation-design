@@ -20,6 +20,7 @@ it('exports the formal components from the package root', () => {
   expect(publicApi.DescriptionList).toBe(DescriptionList);
   expect(publicApi.TreeView).toBe(TreeView);
   expect(publicApi.FileButton).toBe(FileButton);
+  expect(publicApi.cn('px-2', 'px-4')).toBe('px-4');
   expect(publicApi.BadgeButton).toBeTypeOf('object');
 });
 

@@ -179,6 +179,7 @@ export interface ResponsiveOverlayContentProps extends ComponentProps<typeof Pri
   mobileClassName?: string;
   mobileSide?: 'top' | 'right' | 'bottom' | 'left';
   desktopSize?: ResponsiveOverlayDesktopSize;
+  layer?: 'default' | 'nested';
   showCloseButton?: boolean;
   closeLabel?: string;
   instant?: boolean;
@@ -190,6 +191,7 @@ export function ResponsiveOverlayContent({
   mobileClassName,
   mobileSide = 'bottom',
   desktopSize = 'lg',
+  layer = 'default',
   showCloseButton = true,
   closeLabel = 'Close',
   instant = false,
@@ -202,12 +204,14 @@ export function ResponsiveOverlayContent({
   return (
     <Primitive.Portal forceMount={forceMount}>
       <Primitive.Overlay
+        data-layer={layer}
         className={['ec-dialog-overlay', instant && 'is-instant'].filter(Boolean).join(' ')}
       />
       <Primitive.Content
         data-mobile={mobile || undefined}
         data-side={mobile ? mobileSide : undefined}
         data-size={desktopSize}
+        data-layer={layer}
         className={[
           'ec-responsive-overlay',
           mobile ? mobileClassName : className,
@@ -261,10 +265,18 @@ export function ResponsiveOverlayFooter({ className, ...props }: ComponentProps<
     />
   );
 }
-export function ResponsiveOverlayBody({ className, ...props }: ComponentProps<'div'>) {
+export interface ResponsiveOverlayBodyProps extends ComponentProps<'div'> {
+  padding?: 'default' | 'none';
+}
+export function ResponsiveOverlayBody({
+  className,
+  padding = 'default',
+  ...props
+}: ResponsiveOverlayBodyProps) {
   return (
     <div
       className={['ec-responsive-overlay__body', className].filter(Boolean).join(' ')}
+      data-padding={padding}
       {...props}
     />
   );
@@ -272,13 +284,17 @@ export function ResponsiveOverlayBody({ className, ...props }: ComponentProps<'d
 export interface ResponsiveDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  title: string;
-  description?: string;
+  title: ReactNode;
+  description?: ReactNode;
   children: ReactNode;
   footer?: ReactNode;
+  desktopSize?: ResponsiveOverlayDesktopSize;
+  mobileSide?: 'top' | 'right' | 'bottom' | 'left';
+  layer?: 'default' | 'nested';
   desktopContentClassName?: string;
   mobileContentClassName?: string;
   bodyClassName?: string;
+  showCloseButton?: boolean;
   closeLabel?: string;
   instant?: boolean;
   forceMount?: true;
@@ -290,9 +306,13 @@ export function ResponsiveDialog({
   description,
   children,
   footer,
+  desktopSize,
+  mobileSide,
+  layer,
   desktopContentClassName,
   mobileContentClassName,
   bodyClassName,
+  showCloseButton,
   closeLabel,
   instant,
   forceMount,
@@ -302,6 +322,10 @@ export function ResponsiveDialog({
       <ResponsiveOverlayContent
         className={desktopContentClassName}
         mobileClassName={mobileContentClassName}
+        desktopSize={desktopSize}
+        mobileSide={mobileSide}
+        layer={layer}
+        showCloseButton={showCloseButton}
         closeLabel={closeLabel}
         instant={instant}
         forceMount={forceMount}

@@ -24,3 +24,11 @@ it('supports typing, invalid state and clearing', async () => {
   expect(cleared).toBe(true);
   expect(input).toHaveValue('');
 });
+
+it('keeps shell and native input class names separate', () => {
+  render(<Input aria-label="Search" className="shell-layout" inputClassName="input-type" />);
+  const input = screen.getByLabelText('Search');
+  expect(input).toHaveClass('input-type');
+  expect(input).not.toHaveClass('shell-layout');
+  expect(input.parentElement).toHaveClass('shell-layout');
+});

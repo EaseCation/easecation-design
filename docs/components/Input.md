@@ -19,7 +19,7 @@ import '@easecation/design/style.css';
 
 ## API
 
-value/defaultValue；status；prefix；suffix；clearable；onClear。Textarea 从同一模块导出。
+value/defaultValue；size；status；prefix；suffix；className；inputClassName；clearable；clearLabel；onClear。`className` 用于输入框外壳的尺寸与布局，`inputClassName` 用于原生 input 的排版。Textarea 从同一模块导出。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -53,7 +53,9 @@ export declare interface InputProps extends Omit<
   status?: InputStatus;
   prefix?: ReactNode;
   suffix?: ReactNode;
+  inputClassName?: string;
   clearable?: boolean;
+  clearLabel?: string;
   onClear?: () => void;
 }
 

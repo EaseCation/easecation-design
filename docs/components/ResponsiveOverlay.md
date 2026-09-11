@@ -19,7 +19,9 @@ import '@easecation/design/style.css';
 
 ## API
 
-Compound API。Content 支持 mobileClassName、mobileSide、desktopSize、showCloseButton、instant。
+Compound API。Content 支持 `mobileSide`、`desktopSize`、`showCloseButton`、`instant` 和
+`layer: default | nested`。嵌套弹层必须使用 `layer="nested"`，不要在业务侧手写 z-index。
+Body 支持 `padding: default | none`。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr

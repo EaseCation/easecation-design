@@ -1,6 +1,14 @@
 ﻿import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Calendar, DateTimePicker, FilterBar, FilterField, FilterPicker, Input } from '../src';
+import {
+  Calendar,
+  DateTimePicker,
+  FilterBar,
+  FilterField,
+  FilterPicker,
+  FilterSelect,
+  Input,
+} from '../src';
 it('emits single and range calendar values', () => {
   const select = vi.fn();
   const { rerender } = render(<Calendar selected={new Date(2026, 6, 28)} onSelect={select} />);
@@ -41,6 +49,30 @@ it('submits filter search and handles multiple picker', async () => {
   await user.click(screen.getByRole('button', { name: 'Select options' }));
   await user.click(screen.getByRole('menuitemcheckbox', { name: 'Active' }));
   expect(change).toHaveBeenCalledWith(['active']);
+});
+it('uses large toolbar controls by default and accepts trigger classes', () => {
+  render(
+    <>
+      <FilterSelect
+        value=""
+        onValueChange={vi.fn()}
+        options={[{ value: 'active', label: 'Active' }]}
+        triggerClassName="custom-filter-trigger"
+        aria-label="Status"
+      />
+      <FilterPicker
+        mode="multiple"
+        value={[]}
+        onValueChange={vi.fn()}
+        options={[{ value: 'active', label: 'Active' }]}
+        aria-label="Teams"
+      />
+    </>,
+  );
+  expect(screen.getByRole('combobox', { name: 'Status' })).toHaveClass('custom-filter-trigger');
+  expect(screen.getByRole('combobox', { name: 'Status' })).toHaveAttribute('data-state', 'closed');
+  expect(screen.getByRole('combobox', { name: 'Status' })).toHaveClass('ec-select__trigger--lg');
+  expect(screen.getByRole('button', { name: 'Teams' })).toHaveAttribute('data-size', 'lg');
 });
 it('combines date and time values', async () => {
   const user = userEvent.setup();

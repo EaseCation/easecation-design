@@ -28,11 +28,14 @@ export function SectionCard({
 }
 export interface StatCardProps extends ComponentProps<'article'> {
   label: string;
-  value: string;
-  delta: string;
+  value: ReactNode;
+  delta?: string;
   hint?: string;
-  trend: 'up' | 'down' | 'steady';
+  trend?: 'up' | 'down' | 'steady';
   icon?: ReactNode;
+  action?: ReactNode;
+  size?: 'sm' | 'md';
+  tone?: 'default' | 'success' | 'warning' | 'danger';
 }
 const icons = {
   up: <ArrowUpRightIcon />,
@@ -44,30 +47,43 @@ export function StatCard({
   value,
   delta,
   hint,
-  trend,
+  trend = 'steady',
   icon,
+  action,
+  size = 'md',
+  tone = 'default',
   className,
   ...props
 }: StatCardProps) {
   return (
-    <article className={['ec-stat-card', className].filter(Boolean).join(' ')} {...props}>
+    <article
+      className={['ec-stat-card', className].filter(Boolean).join(' ')}
+      data-size={size}
+      data-tone={tone}
+      {...props}
+    >
       <div className="ec-stat-card__top">
         <div>
           <p className="ec-stat-card__label">{label}</p>
           <div className="ec-stat-card__value-group">
             <p className="ec-stat-card__value">{value}</p>
-            <div className="ec-stat-card__delta" data-trend={trend}>
-              {icons[trend]}
-              <span>{delta}</span>
-            </div>
+            {delta ? (
+              <div className="ec-stat-card__delta" data-trend={trend}>
+                {icons[trend]}
+                <span>{delta}</span>
+              </div>
+            ) : null}
           </div>
         </div>
-        <div
-          className="ec-stat-card__icon"
-          data-empty={icon ? undefined : 'true'}
-          aria-hidden={icon ? undefined : true}
-        >
-          {icon}
+        <div className="ec-stat-card__aside">
+          <div
+            className="ec-stat-card__icon"
+            data-empty={icon ? undefined : 'true'}
+            aria-hidden={icon ? undefined : true}
+          >
+            {icon}
+          </div>
+          {action ? <div className="ec-stat-card__action">{action}</div> : null}
         </div>
       </div>
       {hint ? <p className="ec-stat-card__hint">{hint}</p> : null}

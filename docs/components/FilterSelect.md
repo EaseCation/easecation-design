@@ -19,7 +19,7 @@ import '@easecation/design/style.css';
 
 ## API
 
-options；value；onValueChange；placeholder；disabled。
+options；value；onValueChange；placeholder；size；disabled；className；triggerClassName。默认使用 `lg` 尺寸，与筛选工具栏的 36px 控件高度一致。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -58,6 +58,7 @@ export declare function FilterSelect({
   placeholder?: string;
   className?: string;
   triggerClassName?: string;
+  size?: ComponentSize;
   disabled?: boolean;
   'aria-label'?: string;
 }): JSX.Element;

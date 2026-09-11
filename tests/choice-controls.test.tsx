@@ -24,3 +24,19 @@ it('announces indeterminate checkbox state', () => {
     'mixed',
   );
 });
+
+it('supports checked-state callbacks and compact unlabeled controls', async () => {
+  const user = userEvent.setup();
+  const onCheckedChange = vi.fn();
+  render(
+    <Checkbox aria-label="Select row" checked="indeterminate" onCheckedChange={onCheckedChange} />,
+  );
+  const checkbox = screen.getByRole('checkbox', { name: 'Select row' });
+  expect(checkbox).toHaveAttribute('aria-checked', 'mixed');
+  expect(checkbox).toHaveAttribute('data-state', 'indeterminate');
+  expect(checkbox).toHaveAttribute('data-slot', 'checkbox');
+  expect(checkbox.parentElement).toBeInstanceOf(HTMLSpanElement);
+  expect(checkbox.parentElement).not.toHaveTextContent('Select row');
+  await user.click(checkbox);
+  expect(onCheckedChange).toHaveBeenCalledWith(true);
+});

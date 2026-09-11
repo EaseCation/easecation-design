@@ -31,3 +31,19 @@ it('renders neutral card patterns', () => {
   expect(screen.getByRole('heading', { name: 'Operations' })).toBeInTheDocument();
   expect(screen.getByText('$24,800')).toBeInTheDocument();
 });
+
+it('supports compact metrics without a delta and an optional action', () => {
+  render(
+    <StatCard
+      label="Members"
+      value="24"
+      size="sm"
+      tone="success"
+      action={<button type="button">View members</button>}
+    />,
+  );
+  expect(screen.getByText('24').closest('article')).toHaveAttribute('data-size', 'sm');
+  expect(screen.getByText('24').closest('article')).toHaveAttribute('data-tone', 'success');
+  expect(screen.queryByText('%')).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'View members' })).toBeInTheDocument();
+});
