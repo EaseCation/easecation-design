@@ -3362,6 +3362,8 @@
 .ec-date-range-trigger .ec-button__content {
   width: 100%;
   min-width: 0;
+  justify-content: flex-start;
+  text-align: left;
 }
 .ec-date-range-trigger .ec-button__icon {
   flex: none;
@@ -3374,6 +3376,7 @@
 }
 .ec-date-range-trigger__label {
   min-width: 0;
+  text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

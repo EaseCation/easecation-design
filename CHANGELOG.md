@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.11
+
+### Patch Changes
+
+- Left-align date-range trigger content consistently, including placeholder and formatted range text.
+
 ## 0.13.10
 
 ### Patch Changes
