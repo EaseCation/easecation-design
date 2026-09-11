@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import {
   Button,
-  Calendar,
+  DateRangePicker,
   DateTimePicker,
   FilterBar,
   FilterField,
@@ -54,10 +54,7 @@ const translations = {
 function Demo() {
   const [date, setDate] = useState('2026-07-28T09:30');
   const [status, setStatus] = useState<string[]>(['active']);
-  const [range, setRange] = useState({
-    from: new Date(2026, 6, 1),
-    to: new Date(2026, 6, 28),
-  });
+  const [range, setRange] = useState({ start: '2026-07-01', end: '2026-07-28' });
   const copy = useStoryTranslations(translations);
   return (
     <FilterBar
@@ -96,16 +93,11 @@ function Demo() {
         />
       </FilterField>
       <FilterField label={copy.range} className="ec-filter-field--wide">
-        <Calendar
-          mode="range"
-          showLabel={false}
-          selected={range}
-          onSelect={(value) => {
-            if (value && !(value instanceof Date)) {
-              setRange({ from: value.from ?? range.from, to: value.to ?? range.to });
-            }
-          }}
-          labels={{ rangeStart: copy.startDate, rangeEnd: copy.endDate }}
+        <DateRangePicker
+          value={range}
+          onChange={setRange}
+          startLabel={copy.startDate}
+          endLabel={copy.endDate}
         />
       </FilterField>
     </FilterBar>

@@ -343,6 +343,17 @@
       "deprecated": false
     },
     {
+      "name": "DateRangePicker",
+      "importPath": "@easecation/design",
+      "category": "input",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["label-association", "keyboard-popover", "responsive-reflow"],
+      "tokens": ["--input", "--popover", "--destructive"],
+      "stories": ["components-filter-controls--date-range", "patterns-filter-toolbar--toolbar"],
+      "deprecated": false
+    },
+    {
       "name": "FilterBar",
       "importPath": "@easecation/design",
       "category": "layout",

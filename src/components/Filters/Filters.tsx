@@ -3,11 +3,13 @@ import {
   useId,
   useMemo,
   useRef,
+  useState,
   type ComponentProps,
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
 import { Button, type ComponentSize } from '../Button';
+import { Calendar, type DateRange } from '../Calendar';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -198,6 +200,7 @@ export interface DateTimePickerProps {
   dateLabel?: string;
   timeLabel?: string;
   className?: string;
+  size?: ComponentSize;
   disabled?: boolean;
   'aria-label'?: string;
 }
@@ -208,6 +211,7 @@ export function DateTimePicker({
   dateLabel = 'Date',
   timeLabel = 'Time',
   className,
+  size = 'lg',
   disabled = false,
   'aria-label': ariaLabel,
 }: DateTimePickerProps) {
@@ -247,7 +251,7 @@ export function DateTimePicker({
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          size="md"
+          size={size}
           pressable={false}
           className={['ec-datetime-trigger', className].filter(Boolean).join(' ')}
           aria-label={ariaLabel}
@@ -268,6 +272,230 @@ export function DateTimePicker({
         }}
       >
         <div className="ec-popover-content__body">{content}</div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+export type DateRangePickerMode = 'date' | 'datetime';
+
+export interface DateRangePickerValue {
+  start: string;
+  end: string;
+}
+
+export interface DateRangePickerPreset {
+  label: ReactNode;
+  value: DateRangePickerValue | (() => DateRangePickerValue);
+}
+
+export interface DateRangePickerProps {
+  value: DateRangePickerValue;
+  onChange: (value: DateRangePickerValue) => void;
+  mode?: DateRangePickerMode;
+  presets?: readonly DateRangePickerPreset[];
+  placeholder?: string;
+  startLabel?: string;
+  endLabel?: string;
+  startTimeLabel?: string;
+  endTimeLabel?: string;
+  presetsLabel?: string;
+  applyLabel?: string;
+  cancelLabel?: string;
+  invalidRangeMessage?: string;
+  size?: ComponentSize;
+  className?: string;
+  disabled?: boolean;
+  'aria-label'?: string;
+}
+
+const datePart = (value: string) => value.split('T')[0] ?? '';
+const timePart = (value: string, fallback: string) => value.split('T')[1]?.slice(0, 5) || fallback;
+
+function dateToInputValue(date?: Date) {
+  if (!date) return '';
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
+    date.getDate(),
+  ).padStart(2, '0')}`;
+}
+
+function inputValueToDate(value: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return undefined;
+  const [year, month, day] = value.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  if (
+    Number.isNaN(date.getTime()) ||
+    date.getFullYear() !== year ||
+    date.getMonth() !== month - 1 ||
+    date.getDate() !== day
+  ) {
+    return undefined;
+  }
+  return date;
+}
+
+function combineDateAndTime(
+  date: string,
+  currentValue: string,
+  fallbackTime: string,
+  mode: DateRangePickerMode,
+) {
+  if (!date) return '';
+  return mode === 'date' ? date : `${date}T${timePart(currentValue, fallbackTime)}`;
+}
+
+function formatRangeValue(value: DateRangePickerValue) {
+  if (!value.start && !value.end) return '';
+  return `${value.start.replace('T', ' ') || '...'} - ${value.end.replace('T', ' ') || '...'}`;
+}
+
+export function DateRangePicker({
+  value,
+  onChange,
+  mode = 'date',
+  presets = [],
+  placeholder = 'Select date range',
+  startLabel = 'Start date',
+  endLabel = 'End date',
+  startTimeLabel = 'Start time',
+  endTimeLabel = 'End time',
+  presetsLabel = 'Quick ranges',
+  applyLabel = 'Apply',
+  cancelLabel = 'Cancel',
+  invalidRangeMessage = 'The end must not be earlier than the start.',
+  size = 'lg',
+  className,
+  disabled = false,
+  'aria-label': ariaLabel,
+}: DateRangePickerProps) {
+  const [open, setOpen] = useState(false);
+  const [draft, setDraft] = useState(value);
+
+  const calendarValue: DateRange = {
+    from: inputValueToDate(datePart(draft.start)),
+    to: inputValueToDate(datePart(draft.end)),
+  };
+  const complete = Boolean(draft.start && draft.end);
+  const invalid = complete && draft.start > draft.end;
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (nextOpen) setDraft(value);
+    setOpen(nextOpen);
+  };
+
+  const handleCalendarChange = (next: DateRange) => {
+    setDraft((current) => ({
+      start: combineDateAndTime(dateToInputValue(next.from), current.start, '00:00', mode),
+      end: combineDateAndTime(dateToInputValue(next.to), current.end, '23:59', mode),
+    }));
+  };
+
+  const commit = (next: DateRangePickerValue) => {
+    if (!next.start || !next.end || next.start > next.end) return;
+    onChange(next);
+    setOpen(false);
+  };
+
+  return (
+    <Popover open={open} onOpenChange={handleOpenChange}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          size={size}
+          pressable={false}
+          className={['ec-date-range-trigger', className].filter(Boolean).join(' ')}
+          aria-label={ariaLabel}
+          disabled={disabled}
+          leadingIcon={<CalendarIcon />}
+        >
+          <span className="ec-date-range-trigger__label">
+            {formatRangeValue(value) || placeholder}
+          </span>
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent
+        align="end"
+        collisionPadding={8}
+        className="ec-date-range-popover"
+        onOpenAutoFocus={(event) => {
+          if (window.matchMedia?.('(pointer: coarse)').matches) event.preventDefault();
+        }}
+      >
+        {presets.length ? (
+          <section className="ec-date-range-presets" aria-label={presetsLabel}>
+            <div>
+              {presets.map((preset, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  size="xs"
+                  onClick={() =>
+                    commit(typeof preset.value === 'function' ? preset.value() : preset.value)
+                  }
+                >
+                  {preset.label}
+                </Button>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        <Calendar
+          mode="range"
+          selected={calendarValue}
+          onSelect={(next) => {
+            if (next && !(next instanceof Date)) handleCalendarChange(next);
+          }}
+          labels={{ rangeStart: startLabel, rangeEnd: endLabel }}
+        />
+
+        {mode === 'datetime' ? (
+          <div className="ec-date-range-times">
+            <Label>
+              {startTimeLabel}
+              <Input
+                type="time"
+                value={timePart(draft.start, '')}
+                disabled={!draft.start}
+                onChange={(event) =>
+                  setDraft((current) => ({
+                    ...current,
+                    start: `${datePart(current.start)}T${event.target.value || '00:00'}`,
+                  }))
+                }
+              />
+            </Label>
+            <Label>
+              {endTimeLabel}
+              <Input
+                type="time"
+                value={timePart(draft.end, '')}
+                disabled={!draft.end}
+                onChange={(event) =>
+                  setDraft((current) => ({
+                    ...current,
+                    end: `${datePart(current.end)}T${event.target.value || '23:59'}`,
+                  }))
+                }
+              />
+            </Label>
+          </div>
+        ) : null}
+
+        {invalid ? (
+          <p className="ec-date-range-error" role="alert">
+            {invalidRangeMessage}
+          </p>
+        ) : null}
+
+        <div className="ec-date-range-actions">
+          <Button variant="ghost" tone="muted" size="sm" onClick={() => setOpen(false)}>
+            {cancelLabel}
+          </Button>
+          <Button size="sm" disabled={!complete || invalid} onClick={() => commit(draft)}>
+            {applyLabel}
+          </Button>
+        </div>
       </PopoverContent>
     </Popover>
   );

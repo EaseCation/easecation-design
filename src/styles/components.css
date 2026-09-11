@@ -3167,6 +3167,7 @@
 .ec-filter-bar .ec-calendar input,
 .ec-filter-bar .ec-filter-picker,
 .ec-filter-bar .ec-datetime-trigger,
+.ec-filter-bar .ec-date-range-trigger,
 .ec-filter-bar .ec-select {
   width: 100%;
   max-width: none;
@@ -3198,6 +3199,10 @@
   padding-inline: 0.75rem;
   font-size: 0.875rem;
   font-weight: 400;
+}
+.ec-filter-bar .ec-date-range-trigger {
+  width: 100%;
+  max-width: none;
 }
 .ec-filter-bar .ec-filter-picker {
   min-width: 0;
@@ -3317,6 +3322,94 @@
 .ec-datetime-fields .ec-input-shell {
   height: 2.25rem;
   min-height: 2.25rem;
+}
+.ec-date-range-trigger {
+  width: min(100%, 20rem);
+  max-width: 100%;
+  min-width: 0;
+  justify-content: flex-start;
+  padding-inline: 0.75rem;
+  background: var(--background);
+  font-size: 0.875rem;
+  font-weight: 400;
+  box-shadow: none;
+}
+.ec-date-range-trigger:hover:not(:disabled),
+.ec-date-range-trigger:active:not(:disabled) {
+  transform: none;
+}
+.ec-date-range-trigger .ec-button__content {
+  width: 100%;
+  min-width: 0;
+}
+.ec-date-range-trigger .ec-button__icon {
+  flex: none;
+  color: var(--muted-foreground);
+  opacity: 0.65;
+}
+.ec-date-range-trigger .ec-button__icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+.ec-date-range-trigger__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ec-date-range-popover {
+  width: min(32rem, calc(100vw - 1rem));
+  max-width: calc(100vw - 1rem);
+  padding: 0;
+  overflow: hidden auto;
+}
+.ec-date-range-popover > .ec-calendar {
+  width: 100%;
+  padding: 1rem;
+}
+.ec-date-range-presets {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.ec-date-range-presets > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.ec-date-range-times {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 0 1rem 1rem;
+}
+.ec-date-range-times > label {
+  display: grid;
+  min-width: 0;
+  gap: 0.375rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+}
+.ec-date-range-times .ec-input-shell {
+  width: 100%;
+}
+.ec-date-range-error {
+  margin: 0;
+  padding: 0 1rem 0.75rem;
+  color: var(--destructive);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+.ec-date-range-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--border);
+  background: color-mix(in oklch, var(--muted) 18%, transparent);
 }
 @media (min-width: 640px) {
   .ec-calendar--range {
@@ -5782,6 +5875,7 @@
   .ec-filter-bar .ec-calendar input,
   .ec-filter-bar .ec-filter-picker,
   .ec-filter-bar .ec-datetime-trigger,
+  .ec-filter-bar .ec-date-range-trigger,
   .ec-filter-bar__actions .ec-button,
   .ec-action-bar .ec-button,
   .ec-form-workbench__footer .ec-button,
@@ -5790,6 +5884,10 @@
     height: auto;
     min-height: var(--ec-touch-target);
     max-height: none;
+  }
+
+  .ec-date-range-trigger {
+    min-height: var(--ec-touch-target);
   }
 
   .ec-overlay-close,
@@ -5809,7 +5907,8 @@
   .ec-filter-field,
   .ec-filter-field--wide,
   .ec-filter-select,
-  .ec-datetime-fields {
+  .ec-datetime-fields,
+  .ec-date-range-trigger {
     width: 100%;
     min-width: 0;
     max-width: none;
@@ -5817,6 +5916,10 @@
 
   .ec-filter-field {
     flex-basis: 100%;
+  }
+
+  .ec-date-range-times {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .ec-filter-bar__actions {

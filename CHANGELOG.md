@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.0
+
+### Minor Changes
+
+- Add a responsive DateRangePicker with date and precise datetime modes, presets, validation, and controlled apply behavior. Align DateTimePicker sizing with other filter controls.
+
 ## 0.12.0
 
 ### Minor Changes

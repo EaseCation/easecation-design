@@ -19,7 +19,7 @@ import '@easecation/design/style.css';
 
 ## API
 
-value；onChange；placeholder；className；aria-label。
+value；onChange；placeholder；dateLabel；timeLabel；size；disabled；className；aria-label。默认使用 `lg` 尺寸，与筛选工具栏的 36px 控件高度一致。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -49,11 +49,17 @@ export declare function DateTimePicker({
   placeholder,
   className,
   'aria-label': ariaLabel,
-}: {
+}: DateTimePickerProps): JSX.Element;
+
+export declare interface DateTimePickerProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  dateLabel?: string;
+  timeLabel?: string;
   className?: string;
+  size?: ComponentSize;
+  disabled?: boolean;
   'aria-label'?: string;
-}): JSX.Element;
+}
 ```

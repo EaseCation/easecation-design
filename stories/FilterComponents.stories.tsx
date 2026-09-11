@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { DateTimePicker, FilterPicker, FilterSelect, ThemeProvider } from '../src';
+import { DateRangePicker, DateTimePicker, FilterPicker, FilterSelect, ThemeProvider } from '../src';
 import { useStoryTranslations } from '../.storybook/story-locale';
 
 const translations = {
@@ -30,6 +30,25 @@ function Frame({ children }: { children: React.ReactNode }) {
 function DateTimeDemo() {
   const [value, setValue] = useState('2026-07-28T09:30');
   return <DateTimePicker value={value} onChange={setValue} />;
+}
+function DateRangeDemo() {
+  const [value, setValue] = useState({
+    start: '2026-07-21T09:30',
+    end: '2026-07-28T18:00',
+  });
+  return (
+    <DateRangePicker
+      mode="datetime"
+      value={value}
+      onChange={setValue}
+      presets={[
+        {
+          label: 'Last 7 days',
+          value: { start: '2026-07-21T00:00', end: '2026-07-28T23:59' },
+        },
+      ]}
+    />
+  );
 }
 function PickerDemo() {
   const [value, setValue] = useState(['active']);
@@ -63,6 +82,14 @@ export const DateTime: Story = {
   render: () => (
     <Frame>
       <DateTimeDemo />
+    </Frame>
+  ),
+};
+export const DateRange: Story = {
+  args: { value: '', onChange: () => {} },
+  render: () => (
+    <Frame>
+      <DateRangeDemo />
     </Frame>
   ),
 };

@@ -2,6 +2,7 @@
 import userEvent from '@testing-library/user-event';
 import {
   Calendar,
+  DateRangePicker,
   DateTimePicker,
   FilterBar,
   FilterField,
@@ -114,4 +115,113 @@ it('keeps a disabled date time picker closed', async () => {
   expect(trigger).toBeDisabled();
   await user.click(trigger);
   expect(screen.queryByLabelText('Time')).not.toBeInTheDocument();
+});
+
+it('applies a complete date range without mutating the controlled value early', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  render(
+    <DateRangePicker
+      value={{ start: '2026-07-01', end: '2026-07-07' }}
+      onChange={change}
+      startLabel="Start"
+      endLabel="End"
+    />,
+  );
+
+  await user.click(screen.getByRole('button', { name: /2026-07-01/ }));
+  fireEvent.change(screen.getByLabelText('End'), { target: { value: '2026-07-09' } });
+  expect(change).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name: 'Apply' }));
+
+  expect(change).toHaveBeenCalledWith({ start: '2026-07-01', end: '2026-07-09' });
+  expect(screen.queryByLabelText('End')).not.toBeInTheDocument();
+});
+
+it('preserves precise times in datetime mode', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  render(
+    <DateRangePicker
+      mode="datetime"
+      value={{ start: '2026-07-01T09:30', end: '2026-07-07T18:00' }}
+      onChange={change}
+      startTimeLabel="From time"
+      endTimeLabel="To time"
+    />,
+  );
+
+  await user.click(screen.getByRole('button', { name: /2026-07-01/ }));
+  fireEvent.change(screen.getByLabelText('From time'), { target: { value: '10:15' } });
+  fireEvent.change(screen.getByLabelText('To time'), { target: { value: '19:45' } });
+  await user.click(screen.getByRole('button', { name: 'Apply' }));
+
+  expect(change).toHaveBeenCalledWith({
+    start: '2026-07-01T10:15',
+    end: '2026-07-07T19:45',
+  });
+});
+
+it('commits presets immediately and rejects an inverted range', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  const { rerender } = render(
+    <DateRangePicker
+      value={{ start: '', end: '' }}
+      onChange={change}
+      presets={[{ label: 'Last 7 days', value: { start: '2026-07-01', end: '2026-07-07' } }]}
+    />,
+  );
+
+  await user.click(screen.getByRole('button', { name: 'Select date range' }));
+  await user.click(screen.getByRole('button', { name: 'Last 7 days' }));
+  expect(change).toHaveBeenCalledWith({ start: '2026-07-01', end: '2026-07-07' });
+
+  rerender(
+    <DateRangePicker
+      value={{ start: '2026-07-07', end: '2026-07-01' }}
+      onChange={change}
+      invalidRangeMessage="Invalid range"
+    />,
+  );
+  await user.click(screen.getByRole('button', { name: /2026-07-07/ }));
+  expect(screen.getByRole('alert')).toHaveTextContent('Invalid range');
+  expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
+});
+
+it('keeps a disabled date range picker closed', async () => {
+  const user = userEvent.setup();
+  render(
+    <DateRangePicker
+      value={{ start: '2026-07-01', end: '2026-07-07' }}
+      onChange={vi.fn()}
+      disabled
+    />,
+  );
+  const trigger = screen.getByRole('button', { name: /2026-07-01/ });
+  expect(trigger).toBeDisabled();
+  await user.click(trigger);
+  expect(screen.queryByText('Apply')).not.toBeInTheDocument();
+});
+
+it('focuses the range start on desktop and keeps trigger focus on coarse pointers', async () => {
+  const user = userEvent.setup();
+  const { unmount } = render(
+    <DateRangePicker value={{ start: '', end: '' }} onChange={vi.fn()} startLabel="Range start" />,
+  );
+  await user.click(screen.getByRole('button', { name: 'Select date range' }));
+  expect(screen.getByLabelText('Range start')).toHaveFocus();
+  unmount();
+
+  const matchMedia = vi.spyOn(window, 'matchMedia').mockReturnValue({
+    matches: true,
+  } as MediaQueryList);
+  render(
+    <DateRangePicker value={{ start: '', end: '' }} onChange={vi.fn()} startLabel="Range start" />,
+  );
+  const trigger = screen.getByRole('button', { name: 'Select date range' });
+  await user.click(trigger);
+  expect(trigger).toHaveFocus();
+  expect(screen.getByLabelText('Range start')).not.toHaveFocus();
+  matchMedia.mockRestore();
 });
