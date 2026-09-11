@@ -1,10 +1,11 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
-import type { ButtonVariant, ComponentSize } from './Button';
+import type { ButtonTone, ButtonVariant, ComponentSize } from './Button';
 export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   icon: ReactNode;
   variant?: ButtonVariant;
-  size?: ComponentSize;
+  tone?: ButtonTone;
+  size?: ComponentSize | 'xs';
   loading?: boolean;
 }
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
@@ -12,6 +13,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
     label,
     icon,
     variant = 'ghost',
+    tone = 'default',
     size = 'md',
     loading = false,
     className,
@@ -32,6 +34,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
         'ec-icon-button',
         'ec-focusable',
         `ec-button--${variant}`,
+        tone !== 'default' && `ec-button--tone-${tone}`,
         `ec-button--${size}`,
         className,
       ]

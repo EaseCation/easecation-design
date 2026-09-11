@@ -89,6 +89,13 @@
   padding: 0 1.5rem;
   font-size: 1rem;
 }
+.ec-button--inline {
+  min-height: 0;
+  height: auto;
+  padding: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
 .ec-button--primary {
   background: var(--ec-color-primary);
   color: var(--ec-color-on-primary);
@@ -148,6 +155,13 @@
 .ec-icon-button.ec-button--sm {
   width: var(--ec-control-sm);
   height: var(--ec-control-sm);
+}
+.ec-icon-button.ec-button--xs {
+  width: 1.5rem;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  min-height: 1.5rem;
+  padding: 0;
 }
 .ec-icon-button.ec-button--lg {
   width: var(--ec-control-lg);
@@ -1327,6 +1341,46 @@
 .ec-button--link:hover:not(:disabled) {
   text-decoration: underline;
   transform: none;
+}
+.ec-button--tone-accent.ec-button--outline,
+.ec-button--tone-accent.ec-button--ghost,
+.ec-button--tone-accent.ec-button--link {
+  color: var(--primary);
+}
+.ec-button--tone-accent.ec-button--outline {
+  border-color: color-mix(in oklch, var(--primary) 30%, var(--border));
+}
+.ec-button--tone-accent.ec-button--outline:hover:not(:disabled),
+.ec-button--tone-accent.ec-button--ghost:hover:not(:disabled) {
+  background: color-mix(in oklch, var(--primary) 10%, transparent);
+}
+.ec-button--tone-danger.ec-button--primary {
+  background: var(--destructive);
+  color: var(--destructive-foreground, white);
+}
+.ec-button--tone-danger.ec-button--secondary,
+.ec-button--tone-danger.ec-button--outline,
+.ec-button--tone-danger.ec-button--ghost,
+.ec-button--tone-danger.ec-button--link {
+  color: var(--destructive);
+}
+.ec-button--tone-danger.ec-button--outline {
+  border-color: color-mix(in oklch, var(--destructive) 35%, var(--border));
+}
+.ec-button--tone-danger.ec-button--secondary,
+.ec-button--tone-danger.ec-button--outline:hover:not(:disabled),
+.ec-button--tone-danger.ec-button--ghost:hover:not(:disabled) {
+  background: color-mix(in oklch, var(--destructive) 10%, transparent);
+}
+.ec-button--tone-muted.ec-button--secondary,
+.ec-button--tone-muted.ec-button--outline,
+.ec-button--tone-muted.ec-button--ghost,
+.ec-button--tone-muted.ec-button--link {
+  color: var(--muted-foreground);
+}
+.ec-button--tone-muted.ec-button--outline:hover:not(:disabled),
+.ec-button--tone-muted.ec-button--ghost:hover:not(:disabled) {
+  color: var(--foreground);
 }
 .ec-button--pressable {
   perspective: 600px;

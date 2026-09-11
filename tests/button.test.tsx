@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button } from '../src';
+import { Button, IconButton } from '../src';
 import { forwardRef } from 'react';
 import { RefreshCwIcon } from 'lucide-react';
 it('forwards interaction and blocks it while loading', async () => {
@@ -54,4 +54,30 @@ it('keeps icon and label as flex siblings', () => {
   const content = screen.getByRole('button', { name: '刷新' }).querySelector('.ec-button__content');
   expect(content?.childNodes).toHaveLength(2);
   expect(screen.getByTestId('refresh-icon').parentElement).toBe(content);
+});
+
+it('provides semantic tones and inline actions without visual overrides', () => {
+  const { rerender } = render(
+    <Button variant="ghost" tone="danger">
+      删除
+    </Button>,
+  );
+  expect(screen.getByRole('button', { name: '删除' })).toHaveClass(
+    'ec-button--ghost',
+    'ec-button--tone-danger',
+  );
+
+  rerender(
+    <Button variant="link" size="inline">
+      查看详情
+    </Button>,
+  );
+  expect(screen.getByRole('button', { name: '查看详情' })).toHaveClass('ec-button--inline');
+
+  rerender(<IconButton label="移除" icon="X" size="xs" tone="danger" />);
+  expect(screen.getByRole('button', { name: '移除' })).toHaveClass(
+    'ec-icon-button',
+    'ec-button--xs',
+    'ec-button--tone-danger',
+  );
 });

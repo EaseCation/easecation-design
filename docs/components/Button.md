@@ -21,7 +21,7 @@ import '@easecation/design/style.css';
 
 ## API
 
-variant: primary | secondary | outline | ghost | danger | link；size: xs | sm | md | lg | xl | icon-xs | icon-sm | icon | icon-lg；loading；block；leadingIcon；trailingIcon；pressable；asChild。`xl` 适用于登录、继续、提交等页面主操作；密集工具栏和表格操作应使用较小尺寸。新代码的常规纯图标操作优先使用 IconButton；`Button` 的 icon 尺寸用于迁移或需要组合子元素的场景。
+variant: primary | secondary | outline | ghost | danger | link；tone: default | accent | danger | muted；size: xs | sm | md | lg | xl | inline | icon-xs | icon-sm | icon | icon-lg；loading；block；leadingIcon；trailingIcon；pressable；asChild。`xl` 适用于登录、继续、提交等页面主操作；`inline` 仅用于正文或表格单元格中的文字操作；密集工具栏和表格操作应使用较小尺寸。语义色使用 `tone`，不要在消费端覆盖颜色与 hover 样式。新代码的常规纯图标操作优先使用 IconButton（size: xs | sm | md | lg）；`Button` 的 icon 尺寸用于迁移或需要组合子元素的场景。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -51,6 +51,7 @@ export declare const Button: ForwardRefExoticComponent<
 
 export declare interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
+  tone?: ButtonTone;
   size?: ButtonSize;
   loading?: boolean;
   block?: boolean;
@@ -63,8 +64,10 @@ export declare interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElem
 export declare type ButtonVariant =
   'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link';
 
+export declare type ButtonTone = 'default' | 'accent' | 'danger' | 'muted';
+
 export declare type ButtonSize =
-  ComponentSize | 'xs' | 'xl' | 'icon-xs' | 'icon-sm' | 'icon' | 'icon-lg';
+  ComponentSize | 'xs' | 'xl' | 'inline' | 'icon-xs' | 'icon-sm' | 'icon' | 'icon-lg';
 
 export declare type ComponentSize = 'sm' | 'md' | 'lg';
 
@@ -76,7 +79,8 @@ export declare interface IconButtonProps extends ButtonHTMLAttributes<HTMLButton
   label: string;
   icon: ReactNode;
   variant?: ButtonVariant;
-  size?: ComponentSize;
+  tone?: ButtonTone;
+  size?: ComponentSize | 'xs';
   loading?: boolean;
 }
 ```

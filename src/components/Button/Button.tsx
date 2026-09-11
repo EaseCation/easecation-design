@@ -12,10 +12,13 @@ import {
 import { Slot } from 'radix-ui';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link';
+export type ButtonTone = 'default' | 'accent' | 'danger' | 'muted';
 export type ComponentSize = 'sm' | 'md' | 'lg';
-export type ButtonSize = ComponentSize | 'xs' | 'xl' | 'icon-xs' | 'icon-sm' | 'icon' | 'icon-lg';
+export type ButtonSize =
+  ComponentSize | 'xs' | 'xl' | 'inline' | 'icon-xs' | 'icon-sm' | 'icon' | 'icon-lg';
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
+  tone?: ButtonTone;
   size?: ButtonSize;
   loading?: boolean;
   block?: boolean;
@@ -27,6 +30,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   {
     variant = 'primary',
+    tone = 'default',
     size = 'md',
     loading = false,
     block = false,
@@ -79,6 +83,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     'ec-button',
     'ec-focusable',
     `ec-button--${variant}`,
+    tone !== 'default' && `ec-button--tone-${tone}`,
     `ec-button--${size}`,
     block && 'ec-button--block',
     pressable && 'ec-button--pressable',
