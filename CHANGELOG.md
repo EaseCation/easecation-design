@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.6
+
+### Patch Changes
+
+- Keep labeled switches content-sized outside forms so compact toolbar settings stay together.
+
 ## 0.13.5
 
 ### Patch Changes

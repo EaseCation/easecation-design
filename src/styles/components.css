@@ -809,6 +809,9 @@
   color: var(--foreground);
   font: 400 0.875rem/1.25rem var(--ec-font-sans);
 }
+.ec-switch-field {
+  width: fit-content;
+}
 .ec-check {
   cursor: pointer;
 }

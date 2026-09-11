@@ -21,6 +21,8 @@ import '@easecation/design/style.css';
 
 checked/defaultChecked；onCheckedChange；label；description；size。
 
+带标签的 Switch 默认按内容收缩，适合在工具栏中并排使用；作为 `.ec-form` 的直接子项时会自动占满表单宽度。
+
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **可访问性**：switch-role, keyboard, focus-visible
