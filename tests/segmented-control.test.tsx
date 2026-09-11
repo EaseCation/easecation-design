@@ -8,6 +8,25 @@ const options = [
   { value: 'timeline', label: 'Timeline' },
 ];
 
+function mockNarrowSegmentedControl() {
+  const clientWidth = vi
+    .spyOn(HTMLElement.prototype, 'clientWidth', 'get')
+    .mockImplementation(function (this: HTMLElement) {
+      return this.classList.contains('ec-segmented') ? 170 : 0;
+    });
+  const offsetWidth = vi
+    .spyOn(HTMLElement.prototype, 'offsetWidth', 'get')
+    .mockImplementation(function (this: HTMLElement) {
+      if (this.hasAttribute('data-overflow-measure-item')) return 80;
+      if (this.hasAttribute('data-overflow-measure-trigger')) return 32;
+      return 0;
+    });
+  return () => {
+    clientWidth.mockRestore();
+    offsetWidth.mockRestore();
+  };
+}
+
 it('selects a value with pointer input', async () => {
   const user = userEvent.setup();
   const onValueChange = vi.fn();
@@ -53,4 +72,21 @@ it('uses vertical arrow keys when vertically oriented', async () => {
   await user.keyboard('{ArrowUp}');
   expect(screen.getByRole('radio', { name: 'List' })).toBeChecked();
   expect(screen.getByRole('radiogroup')).toHaveAttribute('aria-orientation', 'vertical');
+});
+
+it('moves clipped options into a menu and keeps the selected option visible', async () => {
+  const restore = mockNarrowSegmentedControl();
+  const user = userEvent.setup();
+  try {
+    render(<SegmentedControl ariaLabel="View" options={options} defaultValue="list" />);
+
+    expect(screen.queryByRole('radio', { name: 'Timeline' })).not.toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'More options' }));
+    await user.click(screen.getByRole('menuitemradio', { name: 'Timeline' }));
+
+    expect(screen.getByRole('radio', { name: 'Timeline' })).toBeChecked();
+    expect(screen.queryByRole('radio', { name: 'List' })).not.toBeInTheDocument();
+  } finally {
+    restore();
+  }
 });

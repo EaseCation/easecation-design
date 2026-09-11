@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.13
+
+### Patch Changes
+
+- Replace horizontal scrolling in tabs and segmented controls with responsive overflow menus that keep the active option visible.
+
 ## 0.13.12
 
 ### Patch Changes

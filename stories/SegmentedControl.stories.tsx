@@ -55,3 +55,22 @@ export const Sizes: Story = {
     </div>
   ),
 };
+
+export const OverflowMenu: Story = {
+  args: { ariaLabel: 'Workspace section', options },
+  render: () => (
+    <div style={{ width: '18rem' }}>
+      <SegmentedControl
+        ariaLabel="Workspace section"
+        overflowLabel="More sections"
+        options={[
+          ...options,
+          { value: 'activity', label: 'Activity' },
+          { value: 'automation', label: 'Automation' },
+          { value: 'permissions', label: 'Permissions' },
+        ]}
+        defaultValue="list"
+      />
+    </div>
+  ),
+};

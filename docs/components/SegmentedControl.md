@@ -26,7 +26,8 @@ import { SegmentedControl } from '@easecation/design';
 ## API
 
 `options`; `value/defaultValue`; `onValueChange`; `size`: `sm | md | lg`; `orientation`:
-`horizontal | vertical`; `fullWidth`; required `ariaLabel`; remaining props inherit from `div`.
+`horizontal | vertical`; `fullWidth`; required `ariaLabel`; optional `overflowLabel`; remaining props
+inherit from `div`.
 
 ## Usage
 
@@ -34,6 +35,8 @@ import { SegmentedControl } from '@easecation/design';
   tabpanel, or Select when the set is longer.
 - Horizontal controls support Left/Right and vertical controls support Up/Down. Home and End move
   to the first and last enabled options.
+- Horizontal overflow is handled by the built-in trailing menu. The selected option is kept visible
+  when space permits; applications must not add horizontal scrolling to the control.
 - Keep visible labels concise. Icons are supporting decoration and do not replace labels.
 - Do not override the selected surface, focus ring, radius, or control height with `className`.
 

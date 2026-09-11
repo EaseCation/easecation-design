@@ -462,9 +462,8 @@
 .ec-tab-list {
   display: flex;
   gap: 0.25rem;
-  overflow: auto;
+  overflow: hidden;
   border-bottom: 1px solid var(--ec-color-border);
-  scrollbar-width: thin;
 }
 .ec-tab-list[data-variant='line'] {
   gap: 0.25rem;
@@ -1894,17 +1893,59 @@
 .ec-tab-list {
   display: inline-flex;
   width: 100%;
-  min-width: 100%;
+  min-width: 0;
   height: 2.25rem;
   align-items: center;
   justify-content: flex-start;
   gap: 0;
   padding: 0.125rem;
-  overflow-x: auto;
+  overflow: hidden;
   border: 0;
   border-radius: var(--radius-lg);
   background: color-mix(in oklch, var(--muted) 50%, transparent);
   color: var(--muted-foreground);
+}
+.ec-tab-list-shell {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-width: 0;
+}
+.ec-tab-list-shell[data-overflow='true'] .ec-tab-list {
+  padding-right: 2.375rem;
+}
+.ec-tab-list__overflow {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  display: inline-flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: color-mix(in oklch, var(--muted) 92%, var(--background));
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+.ec-tab-list__overflow:hover,
+.ec-tab-list__overflow[data-active='true'] {
+  background: var(--background);
+  color: var(--foreground);
+  box-shadow: var(--shadow-xs);
+}
+.ec-tab-list__overflow > svg {
+  width: 1rem;
+  height: 1rem;
+}
+.ec-tab-list__overflow-menu {
+  min-width: 11rem;
+  max-width: min(22rem, calc(100vw - 1rem));
+}
+.ec-tab-list__measure {
+  gap: 0;
 }
 .ec-tab {
   position: relative;
@@ -2120,9 +2161,10 @@
 }
 .ec-tabs {
   display: flex;
+  min-width: 0;
   flex-direction: column;
   gap: 0.5rem;
-  overflow-x: auto;
+  overflow: visible;
 }
 
 .ec-card__header {
@@ -4889,12 +4931,22 @@
   gap: 0.25rem;
   width: fit-content;
   max-width: 100%;
-  overflow-x: auto;
+  overflow: hidden;
   padding: 0.2rem;
   background: var(--ec-color-muted);
   border: 1px solid var(--ec-color-border);
   border-radius: var(--ec-radius-lg);
-  scrollbar-width: thin;
+}
+
+.ec-segmented[data-overflow='true'] {
+  width: 100%;
+}
+
+.ec-segmented__items {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  gap: inherit;
 }
 
 .ec-segmented--block {
@@ -4907,6 +4959,10 @@
   flex-direction: column;
   width: fit-content;
   overflow: visible;
+}
+
+.ec-segmented[data-orientation='vertical'] .ec-segmented__items {
+  flex-direction: column;
 }
 
 .ec-segmented--block[data-orientation='vertical'] {
@@ -4976,6 +5032,46 @@
 .ec-segmented-item__icon > svg {
   width: 100%;
   height: 100%;
+}
+
+.ec-segmented__overflow {
+  width: var(--ec-control-md);
+  min-width: var(--ec-control-md);
+  flex: none;
+  padding-inline: 0;
+}
+
+.ec-segmented[data-size='sm'] .ec-segmented__overflow {
+  width: var(--ec-control-sm);
+  min-width: var(--ec-control-sm);
+}
+
+.ec-segmented[data-size='lg'] .ec-segmented__overflow {
+  width: var(--ec-control-lg);
+  min-width: var(--ec-control-lg);
+}
+
+.ec-segmented__overflow > svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.ec-segmented__overflow-menu {
+  min-width: 11rem;
+  max-width: min(22rem, calc(100vw - 1rem));
+}
+
+.ec-overflow-measure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+  overflow: hidden;
+  gap: inherit;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 @media (max-width: 767px) {

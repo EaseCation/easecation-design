@@ -28,7 +28,7 @@ import '@easecation/design/style.css';
 
 ## API
 
-简单页面使用 `Tabs` 的 items API；需要自由布局时使用 `TabsRoot`、`TabsList`、`TabsTrigger` 和 `TabsContent`。`TabsList.variant` 仅支持 `default | line`。
+简单页面使用 `Tabs` 的 items API；需要自由布局时使用 `TabsRoot`、`TabsList`、`TabsTrigger` 和 `TabsContent`。`TabsList.variant` 仅支持 `default | line`。横向空间不足时，`TabsList` 会把溢出项收进右侧菜单；可用 `overflowLabel` 覆盖菜单按钮的无障碍名称，不要再为 Tab 列表添加横向滚动。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr

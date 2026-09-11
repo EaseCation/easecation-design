@@ -67,7 +67,7 @@ for (const target of collectExportTargets(packageJson.exports)) {
 }
 
 const fileSizeLimits = {
-  'dist/index.js': 75_000,
+  'dist/index.js': 83_000,
   'dist/compat.js': 110_000,
   'dist/antd-compat.js': 75_000,
   'dist/tokens.js': 15_000,
