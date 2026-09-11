@@ -3377,6 +3377,9 @@
 .ec-date-range-trigger__label {
   min-width: 0;
   text-align: left;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+  letter-spacing: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

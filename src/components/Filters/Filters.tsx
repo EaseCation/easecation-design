@@ -358,8 +358,11 @@ function combineDateAndTime(
 }
 
 function formatRangeValue(value: DateRangePickerValue) {
-  if (!value.start && !value.end) return '';
-  return `${value.start.replace('T', ' ') || '...'} - ${value.end.replace('T', ' ') || '...'}`;
+  return value.start + value.end
+    ? [value.start, value.end]
+        .map((part) => part.replace(/-/g, '/').replace('T', ' ') || '...')
+        .join(' - ')
+    : '';
 }
 
 export function DateRangePicker({

@@ -159,7 +159,8 @@ it('applies a complete date range without mutating the controlled value early', 
     />,
   );
 
-  await user.click(screen.getByRole('button', { name: /2026-07-01/ }));
+  const trigger = screen.getByRole('button', { name: '2026/07/01 - 2026/07/07' });
+  await user.click(trigger);
   fireEvent.change(screen.getByLabelText('End'), { target: { value: '2026-07-09' } });
   expect(change).not.toHaveBeenCalled();
   await user.click(screen.getByRole('button', { name: 'Apply' }));
@@ -181,7 +182,7 @@ it('preserves precise times in datetime mode', async () => {
     />,
   );
 
-  await user.click(screen.getByRole('button', { name: /2026-07-01/ }));
+  await user.click(screen.getByRole('button', { name: /2026\/07\/01/ }));
   fireEvent.change(screen.getByLabelText('From time'), { target: { value: '10:15' } });
   fireEvent.change(screen.getByLabelText('To time'), { target: { value: '19:45' } });
   await user.click(screen.getByRole('button', { name: 'Apply' }));
@@ -254,7 +255,7 @@ it('commits presets immediately and rejects an inverted range', async () => {
       invalidRangeMessage="Invalid range"
     />,
   );
-  await user.click(screen.getByRole('button', { name: /2026-07-07/ }));
+  await user.click(screen.getByRole('button', { name: /2026\/07\/07/ }));
   expect(screen.getByRole('alert')).toHaveTextContent('Invalid range');
   expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
 });
@@ -268,7 +269,7 @@ it('keeps a disabled date range picker closed', async () => {
       disabled
     />,
   );
-  const trigger = screen.getByRole('button', { name: /2026-07-01/ });
+  const trigger = screen.getByRole('button', { name: /2026\/07\/01/ });
   expect(trigger).toBeDisabled();
   await user.click(trigger);
   expect(screen.queryByText('Apply')).not.toBeInTheDocument();

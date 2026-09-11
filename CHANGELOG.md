@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.12
+
+### Patch Changes
+
+- Refine date-range trigger typography and display values with slash-separated dates and tabular numerals.
+
 ## 0.13.11
 
 ### Patch Changes
