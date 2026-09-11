@@ -25,7 +25,7 @@ import '@easecation/design/style.css';
 
 actions；variant: card | plain；align: start | end；onSearch；children。
 
-`actions` 中的按钮会按最长文案自动等宽排列；窄屏下动作区占满可用宽度，避免主次按钮因图标或字数不同而出现尺寸跳变。
+`actions` 中的按钮会等分动作区宽度；窄屏下动作区占满可用宽度，避免主次按钮因图标或字数不同而出现尺寸跳变。
 
 混合单行和可增高控件时使用 `align="start"`，保持字段标签顶部对齐。
 

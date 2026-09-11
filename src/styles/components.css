@@ -3121,7 +3121,7 @@
 .ec-filter-bar__actions {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(max-content, 1fr);
+  grid-auto-columns: minmax(0, 1fr);
   align-items: center;
   justify-content: flex-end;
   gap: 0.5rem;

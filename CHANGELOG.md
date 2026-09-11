@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.7
+
+### Patch Changes
+
+- Keep FilterBar action buttons truly equal in width when labels or icons differ.
+
 ## 0.13.6
 
 ### Patch Changes
