@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.14.3
+
+### Patch Changes
+
+- 1fa4157: Ensure data-panel table layout wins over the desktop embedded-table gutter rule.
+
 ## 0.14.2
 
 ### Patch Changes
