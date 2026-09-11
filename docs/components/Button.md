@@ -21,7 +21,7 @@ import '@easecation/design/style.css';
 
 ## API
 
-variant: primary | secondary | outline | ghost | danger | link；size: xs | sm | md | lg | icon-xs | icon-sm | icon | icon-lg；loading；block；leadingIcon；trailingIcon；pressable；asChild。新代码的常规纯图标操作优先使用 IconButton；`Button` 的 icon 尺寸用于迁移或需要组合子元素的场景。
+variant: primary | secondary | outline | ghost | danger | link；size: xs | sm | md | lg | xl | icon-xs | icon-sm | icon | icon-lg；loading；block；leadingIcon；trailingIcon；pressable；asChild。`xl` 适用于登录、继续、提交等页面主操作；密集工具栏和表格操作应使用较小尺寸。新代码的常规纯图标操作优先使用 IconButton；`Button` 的 icon 尺寸用于迁移或需要组合子元素的场景。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -63,7 +63,8 @@ export declare interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElem
 export declare type ButtonVariant =
   'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link';
 
-export declare type ButtonSize = ComponentSize | 'xs' | 'icon-xs' | 'icon-sm' | 'icon' | 'icon-lg';
+export declare type ButtonSize =
+  ComponentSize | 'xs' | 'xl' | 'icon-xs' | 'icon-sm' | 'icon' | 'icon-lg';
 
 export declare type ComponentSize = 'sm' | 'md' | 'lg';
 

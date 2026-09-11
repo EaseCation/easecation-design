@@ -200,6 +200,7 @@
   --ec-control-sm: 1.75rem;
   --ec-control-md: 2rem;
   --ec-control-lg: 2.25rem;
+  --ec-control-xl: 3rem;
   --ec-touch-target: 2.75rem;
   --ec-motion-fast: var(--motion-fast);
   --ec-motion-base: var(--motion-base);

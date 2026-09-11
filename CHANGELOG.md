@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.0
+
+### Minor Changes
+
+- Add a 48px `xl` Button size for prominent page-level primary actions.
+
 ## 0.10.2
 
 ### Patch Changes

@@ -13,7 +13,7 @@ import { Slot } from 'radix-ui';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link';
 export type ComponentSize = 'sm' | 'md' | 'lg';
-export type ButtonSize = ComponentSize | 'xs' | 'icon-xs' | 'icon-sm' | 'icon' | 'icon-lg';
+export type ButtonSize = ComponentSize | 'xs' | 'xl' | 'icon-xs' | 'icon-sm' | 'icon' | 'icon-lg';
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;

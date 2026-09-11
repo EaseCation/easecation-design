@@ -17,7 +17,7 @@ it('forwards interaction and blocks it while loading', async () => {
   expect(screen.getByRole('button', { name: '保存' })).toBeDisabled();
 });
 
-it('supports links and stable compact button sizes', () => {
+it('supports links and stable button sizes', () => {
   const Link = forwardRef<HTMLAnchorElement, React.ComponentProps<'a'>>((props, ref) => (
     <a ref={ref} {...props} />
   ));
@@ -37,6 +37,10 @@ it('supports links and stable compact button sizes', () => {
     </Button>,
   );
   expect(screen.getByRole('button', { name: '刷新' })).toHaveAttribute('data-size', 'icon-xs');
+
+  rerender(<Button size="xl">继续</Button>);
+  expect(screen.getByRole('button', { name: '继续' })).toHaveAttribute('data-size', 'xl');
+  expect(screen.getByRole('button', { name: '继续' })).toHaveClass('ec-button--xl');
 });
 
 it('keeps icon and label as flex siblings', () => {

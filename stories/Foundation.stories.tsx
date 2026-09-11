@@ -96,29 +96,48 @@ const translations = {
 function ButtonsExample() {
   const copy = useStoryTranslations(translations);
   return (
-    <Flex wrap>
-      <Button pressable={false}>{copy.primary}</Button>
-      <Button variant="secondary" pressable={false}>
-        {copy.secondary}
-      </Button>
-      <Button variant="outline" pressable={false}>
-        {copy.outline}
-      </Button>
-      <Button variant="ghost" pressable={false}>
-        {copy.ghost}
-      </Button>
-      <Button variant="danger" pressable={false}>
-        {copy.danger}
-      </Button>
-      <Button variant="link" pressable={false}>
-        {copy.link}
-      </Button>
-      <Button size="icon" variant="outline" aria-label={copy.refresh} pressable={false}>
-        <RefreshCwIcon aria-hidden="true" />
-      </Button>
-      <Button loading pressable={false}>
-        {copy.loading}
-      </Button>
+    <Flex direction="column">
+      <Flex wrap>
+        <Button pressable={false}>{copy.primary}</Button>
+        <Button variant="secondary" pressable={false}>
+          {copy.secondary}
+        </Button>
+        <Button variant="outline" pressable={false}>
+          {copy.outline}
+        </Button>
+        <Button variant="ghost" pressable={false}>
+          {copy.ghost}
+        </Button>
+        <Button variant="danger" pressable={false}>
+          {copy.danger}
+        </Button>
+        <Button variant="link" pressable={false}>
+          {copy.link}
+        </Button>
+        <Button size="icon" variant="outline" aria-label={copy.refresh} pressable={false}>
+          <RefreshCwIcon aria-hidden="true" />
+        </Button>
+        <Button loading pressable={false}>
+          {copy.loading}
+        </Button>
+      </Flex>
+      <Flex wrap align="center">
+        <Button size="xs" pressable={false}>
+          {copy.primary}
+        </Button>
+        <Button size="sm" pressable={false}>
+          {copy.primary}
+        </Button>
+        <Button size="md" pressable={false}>
+          {copy.primary}
+        </Button>
+        <Button size="lg" pressable={false}>
+          {copy.primary}
+        </Button>
+        <Button size="xl" pressable={false}>
+          {copy.primary}
+        </Button>
+      </Flex>
     </Flex>
   );
 }

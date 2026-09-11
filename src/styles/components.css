@@ -84,6 +84,11 @@
   padding: 0 1.25rem;
   font-size: 0.9375rem;
 }
+.ec-button--xl {
+  min-height: var(--ec-control-xl);
+  padding: 0 1.5rem;
+  font-size: 1rem;
+}
 .ec-button--primary {
   background: var(--ec-color-primary);
   color: var(--ec-color-on-primary);
