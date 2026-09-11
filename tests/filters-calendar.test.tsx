@@ -9,6 +9,7 @@ import {
   FilterPicker,
   FilterSelect,
   Input,
+  MultiSelect,
 } from '../src';
 it('emits single and range calendar values', () => {
   const select = vi.fn();
@@ -64,6 +65,21 @@ it('supports top-aligned fields and range-width filters', () => {
   expect(screen.getByLabelText('Range').closest('.ec-filter-field')).toHaveClass(
     'ec-filter-field--range',
   );
+});
+it('places multi-select controls on the filter bar sizing path', () => {
+  const { container } = render(
+    <FilterBar align="start">
+      <FilterField label="Operators" width="wide">
+        <MultiSelect label="Operators" options={[]} value={[]} onValueChange={vi.fn()} creatable />
+      </FilterField>
+      <FilterField label="Target">
+        <Input aria-label="Target" />
+      </FilterField>
+    </FilterBar>,
+  );
+
+  expect(container.querySelector('.ec-multi-select')).toBeInTheDocument();
+  expect(container.querySelector('.ec-multi-select__control')).toBeInTheDocument();
 });
 it('uses large toolbar controls by default and accepts trigger classes', () => {
   render(
