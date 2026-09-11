@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.14.4
+
+### Patch Changes
+
+- 9faa694: Constrain mobile segmented controls and data-panel headers to their available width so overflow options stay accessible through the menu without stretching the page.
+
 ## 0.14.3
 
 ### Patch Changes
