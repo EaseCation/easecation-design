@@ -4,6 +4,8 @@ import userEvent from '@testing-library/user-event';
 import {
   Button,
   DataPanel,
+  DateRangePicker,
+  FilterBar,
   QueryDataTable,
   ResponsiveDialog,
   ResponsiveOverlay,
@@ -36,6 +38,26 @@ it('composes a data workspace from toolbar, content, and footer slots', () => {
   expect(screen.getByText('Results').parentElement).toHaveClass('ec-data-panel__content');
   expect(screen.getByText('Pagination').parentElement).toHaveClass('ec-data-panel__footer');
   expect(container.querySelectorAll('.ec-data-panel')).toHaveLength(1);
+});
+
+it('preserves filter control sizing inside a data panel toolbar', () => {
+  render(
+    <DataPanel
+      toolbar={
+        <FilterBar>
+          <DateRangePicker
+            aria-label="Date range"
+            value={{ start: '', end: '' }}
+            onChange={() => undefined}
+          />
+        </FilterBar>
+      }
+    >
+      Results
+    </DataPanel>,
+  );
+
+  expect(screen.getByRole('button', { name: 'Date range' })).toHaveClass('ec-button--lg');
 });
 
 it('owns nested overlay stacking and body padding variants', () => {

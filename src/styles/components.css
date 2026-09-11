@@ -2097,7 +2097,7 @@
   align-items: center;
   gap: 0.5rem;
 }
-.ec-data-panel__toolbar .ec-button {
+.ec-data-panel__toolbar-actions .ec-button {
   min-height: 2rem;
   height: 2rem;
   font-size: 0.875rem;
