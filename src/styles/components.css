@@ -3357,7 +3357,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.ec-date-range-popover {
+.ec-popover-content.ec-date-range-popover {
   width: min(32rem, calc(100vw - 1rem));
   max-width: calc(100vw - 1rem);
   padding: 0;

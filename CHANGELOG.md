@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.1
+
+### Patch Changes
+
+- Keep the date range popover at its responsive width instead of inheriting the narrower generic popover width.
+
 ## 0.13.0
 
 ### Minor Changes
