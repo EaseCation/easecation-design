@@ -4936,10 +4936,6 @@
   border-radius: var(--ec-radius-lg);
 }
 
-.ec-segmented[data-overflow='true'] {
-  width: 100%;
-}
-
 .ec-segmented[data-overflow='true'] .ec-segmented__items .ec-segmented-item {
   min-width: 0;
   overflow: hidden;

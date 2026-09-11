@@ -1,5 +1,7 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 
+const LAYOUT_EPSILON = 1;
+
 interface OverflowItemsOptions {
   itemCount: number;
   activeIndex: number;
@@ -50,7 +52,7 @@ export function useOverflowItems({ itemCount, activeIndex, enabled = true }: Ove
       (Number.parseFloat(styles.paddingRight) || 0);
     const total = widths.reduce((sum, width) => sum + width, 0) + gap * (itemCount - 1);
 
-    if (total <= available) {
+    if (total <= available + LAYOUT_EPSILON) {
       setVisibleIndexes((current) => {
         const next = indexes(itemCount);
         return sameIndexes(current, next) ? current : next;
@@ -69,7 +71,7 @@ export function useOverflowItems({ itemCount, activeIndex, enabled = true }: Ove
     const add = (index: number) => {
       if (index < 0 || index >= itemCount || selected.has(index)) return;
       const next = used + widths[index] + (selected.size ? gap : 0);
-      if (next > budget) return;
+      if (next > budget + LAYOUT_EPSILON) return;
       selected.add(index);
       used = next;
     };

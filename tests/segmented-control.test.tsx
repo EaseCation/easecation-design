@@ -102,3 +102,20 @@ it('keeps the selected option visible when it is wider than the remaining space'
     restore();
   }
 });
+
+it('does not overflow options for subpixel measurement rounding', () => {
+  const restore = mockNarrowSegmentedControl(159.5);
+  try {
+    render(
+      <SegmentedControl
+        ariaLabel="Compact view"
+        options={options.filter((option) => !option.disabled)}
+      />,
+    );
+
+    expect(screen.getAllByRole('radio')).toHaveLength(2);
+    expect(screen.queryByRole('button', { name: 'More options' })).not.toBeInTheDocument();
+  } finally {
+    restore();
+  }
+});
