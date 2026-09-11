@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.14.2
+
+### Patch Changes
+
+- ddf22fa: Keep embedded query tables flush with their containing data panel on desktop layouts.
+
 ## 0.14.1
 
 ### Patch Changes
