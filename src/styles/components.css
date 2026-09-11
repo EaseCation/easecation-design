@@ -2111,6 +2111,7 @@
 }
 .ec-data-panel__content > .ec-table-wrap,
 .ec-data-panel__content > .ec-query-table {
+  margin: 0;
   border: 0;
   border-radius: 0;
   background: transparent;

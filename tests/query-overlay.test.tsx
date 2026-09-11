@@ -60,6 +60,24 @@ it('preserves filter control sizing inside a data panel toolbar', () => {
   expect(screen.getByRole('button', { name: 'Date range' })).toHaveClass('ec-button--lg');
 });
 
+it('embeds a query table as the direct data panel content', () => {
+  const columns = [helper.accessor('name', { header: 'Name', cell: (i) => i.getValue() })];
+  const { container } = render(
+    <DataPanel>
+      <QueryDataTable
+        embedded
+        data={[{ id: '1', name: 'North' }]}
+        columns={columns}
+        getRowId={(row) => row.id}
+      />
+    </DataPanel>,
+  );
+
+  expect(container.querySelector('.ec-data-panel__content > .ec-query-table')).toHaveClass(
+    'is-embedded',
+  );
+});
+
 it('owns nested overlay stacking and body padding variants', () => {
   render(
     <ResponsiveOverlay open>
