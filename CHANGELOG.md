@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.14.5
+
+### Patch Changes
+
+- f1a0258: Preserve compact segmented controls on mobile while allowing full-width navigation to opt into responsive overflow handling.
+
 ## 0.14.4
 
 ### Patch Changes
