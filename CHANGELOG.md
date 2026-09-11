@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.3
+
+### Patch Changes
+
+- Anchor date range popovers to the trigger start edge while preserving viewport collision handling.
+
 ## 0.13.2
 
 ### Patch Changes

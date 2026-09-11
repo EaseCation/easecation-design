@@ -421,7 +421,7 @@ export function DateRangePicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        align="end"
+        align="start"
         collisionPadding={8}
         className="ec-date-range-popover"
         onOpenAutoFocus={(event) => {
