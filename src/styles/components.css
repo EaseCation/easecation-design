@@ -2085,6 +2085,9 @@
   color: var(--card-foreground);
   box-shadow: none;
 }
+.ec-data-panel > * {
+  min-width: 0;
+}
 .ec-data-panel__toolbar {
   position: relative;
   z-index: 20;
@@ -6032,6 +6035,10 @@
 }
 
 @media (max-width: 639px) {
+  .ec-segmented[data-orientation='horizontal'] {
+    width: 100%;
+  }
+
   .ec-filter-bar__fields,
   .ec-filter-bar__actions,
   .ec-filter-field,
