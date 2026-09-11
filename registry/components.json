@@ -464,6 +464,17 @@
       "deprecated": false
     },
     {
+      "name": "DataPanel",
+      "importPath": "@easecation/design",
+      "category": "layout",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["semantic-section", "composable-workspace-regions"],
+      "tokens": ["--card", "--card-foreground"],
+      "stories": ["components-table--workspace-table"],
+      "deprecated": false
+    },
+    {
       "name": "ResponsiveOverlay",
       "importPath": "@easecation/design",
       "category": "feedback",

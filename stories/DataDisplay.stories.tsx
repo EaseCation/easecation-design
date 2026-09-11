@@ -1,5 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Badge, Button, Pagination, Popover, Table, ThemeProvider, Tooltip } from '../src';
+import {
+  Badge,
+  Button,
+  DataPanel,
+  Pagination,
+  Popover,
+  Table,
+  ThemeProvider,
+  Tooltip,
+} from '../src';
 import { useStoryTranslations } from '../.storybook/story-locale';
 
 const translations = {
@@ -54,8 +63,8 @@ function statusVariant(status: string): 'primary' | 'outline' | 'secondary' {
 function WorkspaceTableExample() {
   const copy = useStoryTranslations(translations);
   return (
-    <div className="ec-data-panel">
-      <div className="ec-data-panel__toolbar">
+    <DataPanel
+      toolbar={
         <div className="ec-data-panel__toolbar-actions">
           <Popover
             trigger={
@@ -73,7 +82,23 @@ function WorkspaceTableExample() {
             </Button>
           </Tooltip>
         </div>
-      </div>
+      }
+      footer={
+        <Pagination
+          page={2}
+          total={86}
+          pageSize={10}
+          onPageChange={() => {}}
+          ariaLabel={copy.pagination}
+          previousLabel={copy.previousPage}
+          nextLabel={copy.nextPage}
+          totalLabel={() => copy.totalLabel}
+          pageLabel={(page: number) =>
+            copy.pageLabel === 'Page' ? `${copy.pageLabel} ${page}` : `${copy.pageLabel} ${page} 页`
+          }
+        />
+      }
+    >
       <Table
         mobile="scroll"
         columns={[
@@ -98,22 +123,7 @@ function WorkspaceTableExample() {
         data={[...copy.rows]}
         rowKey="id"
       />
-      <div className="ec-data-panel__footer">
-        <Pagination
-          page={2}
-          total={86}
-          pageSize={10}
-          onPageChange={() => {}}
-          ariaLabel={copy.pagination}
-          previousLabel={copy.previousPage}
-          nextLabel={copy.nextPage}
-          totalLabel={() => copy.totalLabel}
-          pageLabel={(page: number) =>
-            copy.pageLabel === 'Page' ? `${copy.pageLabel} ${page}` : `${copy.pageLabel} ${page} 页`
-          }
-        />
-      </div>
-    </div>
+    </DataPanel>
   );
 }
 

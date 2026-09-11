@@ -17,6 +17,8 @@ import '@easecation/design/style.css';
 <SectionCard title="基础信息">内容</SectionCard>
 ```
 
+标题、说明和操作与正文共享同一表面；组件不会生成独立的标题栏、标题底色或分隔线。
+
 ## API
 
 title；description；actions；children。

@@ -1,0 +1,37 @@
+# DataPanel
+
+连续的数据工作区，用于在一个表面内组合筛选、工具栏、查询结果和分页。它不负责请求状态或业务逻辑。
+
+## 导入
+
+```tsx
+import { DataPanel, FilterBar, QueryDataTable } from '@easecation/design';
+import '@easecation/design/style.css';
+```
+
+## 基础示例
+
+```tsx
+<DataPanel
+  toolbar={<FilterBar actions={<Button>查询</Button>}>{filters}</FilterBar>}
+  footer={<Pagination page={page} total={total} onPageChange={setPage} />}
+>
+  <QueryDataTable data={data} columns={columns} embedded />
+</DataPanel>
+```
+
+## API
+
+`DataPanelProps` 继承 `section` 的原生属性，并提供 `header`、`toolbar`、`children` 和 `footer` 插槽。
+
+- **成熟度**：`beta`
+- **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- **可访问性**：semantic-section, composable-workspace-regions
+- **主要 Token**：`--card`, `--card-foreground`
+
+## 使用约束
+
+- 列表页的筛选、结果和分页应放在同一个 `DataPanel` 中，不为筛选栏单独创建卡片。
+- 内部 `QueryDataTable` 使用 `embedded`，避免重复表面和边框。
+- 页面标题属于 `PageScaffold`；内容分区标题属于 `SectionCard`，不要用 `DataPanel` 模拟页面标题卡片。
+- 业务状态、请求、权限和路由由应用层维护，通过 Props 和回调传入。

@@ -1,7 +1,7 @@
 import { act } from 'react';
 import { hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
-import { ActionCard, FileButton, ThemeProvider, TreeView } from '../src';
+import { ActionCard, DataPanel, FileButton, ThemeProvider, TreeView } from '../src';
 
 it('imports public API without requiring browser globals at module scope', async () => {
   const api = await import('../src');
@@ -90,4 +90,16 @@ it('renders FileButton without accessing browser APIs on the server', () => {
 
   expect(markup).toContain('type="file"');
   expect(markup).toContain('Import');
+});
+
+it('renders a data panel without browser APIs on the server', () => {
+  const markup = renderToString(
+    <DataPanel toolbar={<span>Filters</span>} footer={<span>Pages</span>}>
+      Results
+    </DataPanel>,
+  );
+
+  expect(markup).toContain('ec-data-panel__toolbar');
+  expect(markup).toContain('ec-data-panel__content');
+  expect(markup).toContain('ec-data-panel__footer');
 });

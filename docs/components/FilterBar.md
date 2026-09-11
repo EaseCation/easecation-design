@@ -21,6 +21,9 @@ import '@easecation/design/style.css';
 </FilterBar>
 ```
 
+`FilterBar` 只负责筛选控件的响应式排列，不生成独立卡片表面。数据列表页应把它放入
+`DataPanel` 的 `toolbar` 插槽。`variant="card"` 仅为兼容旧调用保留，视觉与默认模式一致。
+
 ## API
 
 actions；variant: card | plain；align: start | end；onSearch；children。

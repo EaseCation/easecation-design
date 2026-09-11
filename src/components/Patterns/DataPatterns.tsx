@@ -7,6 +7,32 @@ import { useOverlayViewportStyle } from '../../platform/useOverlayViewport';
 import { IconButton } from '../Button';
 import { EmptyState, InlineQueryError } from '../State';
 import { Skeleton } from '../Skeleton';
+import { cn } from '../../utils/classNames';
+
+export interface DataPanelProps extends ComponentProps<'section'> {
+  header?: ReactNode;
+  toolbar?: ReactNode;
+  footer?: ReactNode;
+}
+
+export function DataPanel({
+  header,
+  toolbar,
+  footer,
+  className,
+  children,
+  ...props
+}: DataPanelProps) {
+  return (
+    <section className={cn('ec-data-panel', className)} {...props}>
+      {header}
+      {toolbar ? <div className="ec-data-panel__toolbar">{toolbar}</div> : null}
+      <div className="ec-data-panel__content">{children}</div>
+      {footer ? <div className="ec-data-panel__footer">{footer}</div> : null}
+    </section>
+  );
+}
+
 export type QueryDataTableRowRenderProps<T> = {
   rowId: string;
   row: T;
@@ -57,17 +83,15 @@ export function QueryDataTable<T>({
   const mobile = useMediaQuery('(max-width: 767px)');
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel(), getRowId });
-  const shell = [
+  const shell = cn(
     'ec-query-table',
     embedded && 'is-embedded',
     embeddedShellClassName,
     panelClassName,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  );
   if (isLoading)
     return (
-      <div className={['ec-query-loading', embedded && 'is-embedded'].filter(Boolean).join(' ')}>
+      <div className={cn('ec-query-loading', embedded && 'is-embedded')}>
         {Array.from({ length: mobile && layout !== 'table' ? 4 : 6 }, (_, i) => (
           <Skeleton key={i} style={{ height: '5rem' }} />
         ))}
@@ -89,14 +113,13 @@ export function QueryDataTable<T>({
       <EmptyState
         title={emptyTitle}
         description={emptyDescription}
+        embedded={embedded}
         className={embeddedShellClassName}
       />
     );
   if (mobile && layout !== 'table' && mobileCard)
     return (
-      <div className={['ec-query-cards', embedded && 'is-embedded'].filter(Boolean).join(' ')}>
-        {data.map(mobileCard)}
-      </div>
+      <div className={cn('ec-query-cards', embedded && 'is-embedded')}>{data.map(mobileCard)}</div>
     );
   return (
     <div className={shell}>
@@ -205,20 +228,18 @@ export function ResponsiveOverlayContent({
     <Primitive.Portal forceMount={forceMount}>
       <Primitive.Overlay
         data-layer={layer}
-        className={['ec-dialog-overlay', instant && 'is-instant'].filter(Boolean).join(' ')}
+        className={cn('ec-dialog-overlay', instant && 'is-instant')}
       />
       <Primitive.Content
         data-mobile={mobile || undefined}
         data-side={mobile ? mobileSide : undefined}
         data-size={desktopSize}
         data-layer={layer}
-        className={[
+        className={cn(
           'ec-responsive-overlay',
           mobile ? mobileClassName : className,
           instant && 'is-instant',
-        ]
-          .filter(Boolean)
-          .join(' ')}
+        )}
         style={viewportStyle}
         {...props}
       >
@@ -238,12 +259,7 @@ export function ResponsiveOverlayContent({
   );
 }
 export function ResponsiveOverlayHeader({ className, ...props }: ComponentProps<'div'>) {
-  return (
-    <div
-      className={['ec-responsive-overlay__header', className].filter(Boolean).join(' ')}
-      {...props}
-    />
-  );
+  return <div className={cn('ec-responsive-overlay__header', className)} {...props} />;
 }
 export function ResponsiveOverlayTitle({
   className,
@@ -258,12 +274,7 @@ export function ResponsiveOverlayDescription({
   return <Primitive.Description className={className} {...props} />;
 }
 export function ResponsiveOverlayFooter({ className, ...props }: ComponentProps<'div'>) {
-  return (
-    <div
-      className={['ec-responsive-overlay__footer', className].filter(Boolean).join(' ')}
-      {...props}
-    />
-  );
+  return <div className={cn('ec-responsive-overlay__footer', className)} {...props} />;
 }
 export interface ResponsiveOverlayBodyProps extends ComponentProps<'div'> {
   padding?: 'default' | 'none';
@@ -275,7 +286,7 @@ export function ResponsiveOverlayBody({
 }: ResponsiveOverlayBodyProps) {
   return (
     <div
-      className={['ec-responsive-overlay__body', className].filter(Boolean).join(' ')}
+      className={cn('ec-responsive-overlay__body', className)}
       data-padding={padding}
       {...props}
     />

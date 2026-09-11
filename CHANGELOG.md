@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.14.0
+
+### Minor Changes
+
+- Add the formal `DataPanel` workspace component and align `SectionCard` and `FilterBar` with a borderless, continuous surface model.
+
 ## 0.13.14
 
 ### Patch Changes

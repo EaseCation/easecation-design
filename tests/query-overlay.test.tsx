@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   Button,
+  DataPanel,
   QueryDataTable,
   ResponsiveDialog,
   ResponsiveOverlay,
@@ -18,8 +19,23 @@ it('renders query data table data and empty states', () => {
     <QueryDataTable data={[{ id: '1', name: 'North' }]} columns={columns} getRowId={(r) => r.id} />,
   );
   expect(screen.getByText('North')).toBeInTheDocument();
-  rerender(<QueryDataTable data={[]} columns={columns} />);
+  rerender(<QueryDataTable data={[]} columns={columns} embedded />);
   expect(screen.getByText('No data')).toBeInTheDocument();
+  expect(screen.getByText('No data').closest('.ec-empty-state')).toHaveClass('is-embedded');
+});
+
+it('composes a data workspace from toolbar, content, and footer slots', () => {
+  const { container } = render(
+    <DataPanel aria-label="Records" toolbar={<span>Filters</span>} footer={<span>Pagination</span>}>
+      <span>Results</span>
+    </DataPanel>,
+  );
+
+  expect(screen.getByRole('region', { name: 'Records' })).toHaveClass('ec-data-panel');
+  expect(screen.getByText('Filters').parentElement).toHaveClass('ec-data-panel__toolbar');
+  expect(screen.getByText('Results').parentElement).toHaveClass('ec-data-panel__content');
+  expect(screen.getByText('Pagination').parentElement).toHaveClass('ec-data-panel__footer');
+  expect(container.querySelectorAll('.ec-data-panel')).toHaveLength(1);
 });
 
 it('owns nested overlay stacking and body padding variants', () => {

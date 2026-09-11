@@ -1231,10 +1231,10 @@
     font-weight: 500;
     text-align: left;
   }
-  .ec-data-panel > .ec-table-wrap--cards {
+  .ec-data-panel__content > .ec-table-wrap--cards {
     padding: 0.75rem;
   }
-  .ec-data-panel > .ec-table-wrap--cards tr {
+  .ec-data-panel__content > .ec-table-wrap--cards tr {
     background: color-mix(in oklch, var(--muted) 12%, var(--card));
   }
   .ec-pagination__total {
@@ -2080,21 +2080,16 @@
   display: grid;
   gap: 0;
   overflow: hidden;
-  border: 1px solid color-mix(in oklch, var(--border) 45%, transparent);
   border-radius: var(--radius-xl);
   background: var(--card);
   color: var(--card-foreground);
-  box-shadow: 0 1px 2px oklch(0.2 0.02 260 / 0.04);
+  box-shadow: none;
 }
 .ec-data-panel__toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid color-mix(in oklch, var(--border) 35%, transparent);
-  background: color-mix(in oklch, var(--muted) 22%, transparent);
+  position: relative;
+  z-index: 20;
+  min-width: 0;
+  padding: 1rem 1rem 0.5rem;
 }
 .ec-data-panel__toolbar-actions {
   display: inline-flex;
@@ -2108,7 +2103,14 @@
   font-size: 0.875rem;
   font-weight: 500;
 }
-.ec-data-panel > .ec-table-wrap {
+.ec-data-panel__content {
+  position: relative;
+  z-index: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.ec-data-panel__content > .ec-table-wrap,
+.ec-data-panel__content > .ec-query-table {
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -2120,7 +2122,6 @@
   justify-content: flex-end;
   gap: 1rem;
   padding: 0.75rem 1rem;
-  border-top: 1px solid color-mix(in oklch, var(--border) 35%, transparent);
   background: color-mix(in oklch, var(--muted) 16%, transparent);
 }
 .ec-data-panel__footer .ec-pagination {
@@ -2929,7 +2930,6 @@
 }
 .ec-section-card {
   overflow: hidden;
-  border: 1px solid color-mix(in oklch, var(--border) 45%, transparent);
   border-radius: var(--radius-xl);
   background: var(--card);
   box-shadow: none;
@@ -2938,9 +2938,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding: 0.875rem 1.25rem;
-  border-bottom: 1px solid color-mix(in oklch, var(--border) 32%, transparent);
-  background: color-mix(in oklch, var(--muted) 18%, transparent);
+  padding: 1.25rem 1.25rem 0;
 }
 .ec-section-card > header > div {
   min-width: 0;
@@ -2961,7 +2959,7 @@
   line-height: 1.5;
 }
 .ec-section-card__body {
-  padding: 1.25rem;
+  padding: 1rem 1.25rem 1.25rem;
 }
 .ec-stat-card {
   position: relative;
@@ -3143,11 +3141,7 @@
   box-shadow: none;
 }
 .ec-filter-bar--card {
-  padding: 1rem;
-  border: 1px solid color-mix(in oklch, var(--border) 45%, transparent);
-  border-radius: var(--radius-xl);
-  background: var(--card);
-  box-shadow: none;
+  padding: 0;
 }
 .ec-filter-bar__fields {
   display: flex;
@@ -3859,8 +3853,10 @@
   background: var(--card);
 }
 .ec-query-table.is-embedded {
-  margin: 0 0.75rem 0.75rem;
-  border-color: color-mix(in oklch, var(--border) 30%, transparent);
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 .ec-query-table__scroll {
   position: relative;
@@ -3919,10 +3915,8 @@
 }
 .ec-query-loading.is-embedded,
 .ec-query-cards.is-embedded {
-  margin: 0 0.75rem 0.75rem;
-  border: 1px solid color-mix(in oklch, var(--border) 30%, transparent);
-  border-radius: var(--radius-xl);
-  background: var(--card);
+  margin: 0;
+  background: transparent;
 }
 .ec-responsive-overlay {
   position: fixed;

@@ -47,7 +47,7 @@ export function FilterBar({
   className,
   actions,
   children,
-  variant = 'card',
+  variant = 'plain',
   align = 'end',
   onSearch,
   ...props
