@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.14.7
+
+### Patch Changes
+
+- Restore physical press feedback as the default Button and IconButton interaction while preserving the `pressable={false}` opt-out. Keep AppShell drawers and nested action groups within narrow mobile viewports.
+
 ## 0.14.6
 
 ### Patch Changes

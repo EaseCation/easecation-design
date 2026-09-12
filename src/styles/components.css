@@ -1387,7 +1387,7 @@
 .ec-button--pressable {
   perspective: 600px;
 }
-.ec-button--pressable.is-pressing {
+.ec-button--pressable.is-pressing:not(:disabled) {
   transform: perspective(600px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) scale(0.94);
 }
 .ec-button__press-shade,
@@ -3607,8 +3607,8 @@
   line-height: 1.25rem;
 }
 .ec-app-shell__drawer {
-  width: 100% !important;
-  max-width: none !important;
+  width: min(88vw, 24rem) !important;
+  max-width: min(88vw, 24rem) !important;
   gap: 0;
   padding: 0;
 }
@@ -4006,6 +4006,7 @@
 }
 .ec-responsive-overlay__footer {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   flex: none;
   justify-content: flex-end;
@@ -6054,6 +6055,14 @@
 
   .ec-filter-bar__actions {
     margin-left: 0;
+  }
+
+  .ec-page-scaffold__actions > *,
+  .ec-filter-bar__actions > *,
+  .ec-responsive-overlay__footer > * {
+    min-width: 0;
+    max-width: 100%;
+    flex-wrap: wrap;
   }
 
   .ec-filter-bar__actions .ec-button {

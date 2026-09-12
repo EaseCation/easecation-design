@@ -1,5 +1,5 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
-import type { ButtonTone, ButtonVariant, ComponentSize } from './Button';
+import { Button, type ButtonTone, type ButtonVariant, type ComponentSize } from './Button';
 export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   icon: ReactNode;
@@ -7,6 +7,7 @@ export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>
   tone?: ButtonTone;
   size?: ComponentSize | 'xs';
   loading?: boolean;
+  pressable?: boolean;
 }
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
   {
@@ -16,6 +17,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
     tone = 'default',
     size = 'md',
     loading = false,
+    pressable = true,
     className,
     disabled,
     type = 'button',
@@ -24,25 +26,20 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
   ref,
 ) {
   return (
-    <button
+    <Button
       ref={ref}
       type={type}
       aria-label={label}
-      aria-busy={loading || undefined}
+      loading={loading}
       disabled={disabled || loading}
-      className={[
-        'ec-icon-button',
-        'ec-focusable',
-        `ec-button--${variant}`,
-        tone !== 'default' && `ec-button--tone-${tone}`,
-        `ec-button--${size}`,
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
+      variant={variant}
+      tone={tone}
+      size={size}
+      pressable={pressable}
+      className={['ec-icon-button', className].filter(Boolean).join(' ')}
       {...props}
     >
-      {loading ? <span className="ec-spinner" aria-hidden="true" /> : icon}
-    </button>
+      {icon}
+    </Button>
   );
 });

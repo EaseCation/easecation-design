@@ -21,7 +21,7 @@ import '@easecation/design/style.css';
 
 ## API
 
-variant: primary | secondary | outline | ghost | danger | link；tone: default | accent | danger | muted；size: xs | sm | md | lg | xl | inline | icon-xs | icon-sm | icon | icon-lg；loading；block；leadingIcon；trailingIcon；pressable；asChild。`xl` 适用于登录、继续、提交等页面主操作；`inline` 仅用于正文或表格单元格中的文字操作；密集工具栏和表格操作应使用较小尺寸。语义色使用 `tone`，不要在消费端覆盖颜色与 hover 样式。新代码的常规纯图标操作优先使用 IconButton（size: xs | sm | md | lg）；`Button` 的 icon 尺寸用于迁移或需要组合子元素的场景。
+variant: primary | secondary | outline | ghost | danger | link；tone: default | accent | danger | muted；size: xs | sm | md | lg | xl | inline | icon-xs | icon-sm | icon | icon-lg；loading；block；leadingIcon；trailingIcon；pressable；asChild。`Button` 和 `IconButton` 默认启用物理按压反馈；不适合产生位移的固定工具栏或紧凑控件可显式设置 `pressable={false}`。`xl` 适用于登录、继续、提交等页面主操作；`inline` 仅用于正文或表格单元格中的文字操作；密集工具栏和表格操作应使用较小尺寸。语义色使用 `tone`，不要在消费端覆盖颜色与 hover 样式。新代码的常规纯图标操作优先使用 IconButton（size: xs | sm | md | lg）；`Button` 的 icon 尺寸用于迁移或需要组合子元素的场景。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -82,5 +82,6 @@ export declare interface IconButtonProps extends ButtonHTMLAttributes<HTMLButton
   tone?: ButtonTone;
   size?: ComponentSize | 'xs';
   loading?: boolean;
+  pressable?: boolean;
 }
 ```

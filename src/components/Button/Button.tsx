@@ -36,7 +36,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     block = false,
     leadingIcon,
     trailingIcon,
-    pressable = false,
+    pressable = true,
     asChild = false,
     className,
     children,
@@ -57,7 +57,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   useImperativeHandle(ref, () => innerRef.current as HTMLButtonElement);
   const start = (event: PointerEvent<HTMLButtonElement>) => {
     onPointerDown?.(event);
-    if (!pressable || event.defaultPrevented || !innerRef.current) return;
+    if (!pressable || disabled || loading || event.defaultPrevented || !innerRef.current) return;
     const rect = innerRef.current.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Button, IconButton } from '../src';
 import { forwardRef } from 'react';
@@ -54,6 +54,25 @@ it('keeps icon and label as flex siblings', () => {
   const content = screen.getByRole('button', { name: '刷新' }).querySelector('.ec-button__content');
   expect(content?.childNodes).toHaveLength(2);
   expect(screen.getByTestId('refresh-icon').parentElement).toBe(content);
+});
+
+it('provides physical press feedback by default and supports opting out', () => {
+  const { rerender } = render(<Button>保存</Button>);
+  const button = screen.getByRole('button', { name: '保存' });
+  expect(button).toHaveClass('ec-button--pressable');
+  fireEvent.pointerDown(button, { clientX: 10, clientY: 10 });
+  expect(button).toHaveClass('is-pressing');
+  fireEvent.pointerUp(button);
+  expect(button).not.toHaveClass('is-pressing');
+
+  rerender(<Button pressable={false}>保存</Button>);
+  expect(screen.getByRole('button', { name: '保存' })).not.toHaveClass('ec-button--pressable');
+
+  rerender(<IconButton label="刷新" icon={<RefreshCwIcon />} />);
+  const iconButton = screen.getByRole('button', { name: '刷新' });
+  expect(iconButton).toHaveClass('ec-icon-button', 'ec-button--pressable');
+  fireEvent.pointerDown(iconButton, { clientX: 10, clientY: 10 });
+  expect(iconButton).toHaveClass('is-pressing');
 });
 
 it('provides semantic tones and inline actions without visual overrides', () => {
