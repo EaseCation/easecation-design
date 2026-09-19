@@ -3,7 +3,6 @@ on:
   pull_request:
   push:
     branches: [main]
-  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -48,87 +47,6 @@ jobs:
           name: design-storybook-static
           path: storybook-static
           retention-days: 7
-
-  deploy:
-    name: Deploy Storybook to Aliyun OSS
-    needs: validate
-    if: >-
-      always() &&
-      needs.validate.result == 'success' &&
-      github.ref == 'refs/heads/main' &&
-      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-    runs-on: ubuntu-latest
-    concurrency:
-      group: deploy-prod-design-docs
-      cancel-in-progress: false
-    permissions:
-      actions: read
-      contents: read
-      id-token: write
-    env:
-      NODE_VERSION: 22
-      ALIYUN_REGION: ${{ vars.ALIYUN_REGION || 'cn-hangzhou' }}
-      OSS_BUCKET: ${{ vars.OSS_BUCKET }}
-      CDN_REFRESH_URLS: ${{ vars.CDN_REFRESH_URLS }}
-      DEPLOY_DIR: storybook-static
-    steps:
-      - name: Download verified Storybook artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: design-storybook-static
-          path: ${{ env.DEPLOY_DIR }}
-
-      - name: Install Aliyun CLI
-        run: |
-          curl -fL -o /tmp/aliyun.tgz https://aliyuncli.alicdn.com/aliyun-cli-linux-latest-amd64.tgz
-          tar -xzf /tmp/aliyun.tgz -C /tmp
-          sudo mv /tmp/aliyun /usr/local/bin/aliyun
-
-      - name: Configure Aliyun temporary credentials
-        uses: aliyun/configure-aliyun-credentials-action@v1
-        with:
-          role-to-assume: ${{ vars.ALIYUN_STATIC_DEPLOY_ROLE_ARN }}
-          oidc-provider-arn: ${{ vars.ALIYUN_OIDC_PROVIDER_ARN }}
-          role-session-name: gh-${{ github.repository_id }}-${{ github.run_id }}
-          role-session-expiration: 1800
-          audience: sts.aliyuncs.com
-
-      - name: Configure Aliyun CLI
-        run: |
-          set -euo pipefail
-          test -n "$ALIBABA_CLOUD_ACCESS_KEY_ID"
-          test -n "$ALIBABA_CLOUD_ACCESS_KEY_SECRET"
-          test -n "$ALIBABA_CLOUD_SECURITY_TOKEN"
-          aliyun configure set \
-            --mode StsToken \
-            --region "$ALIYUN_REGION" \
-            --access-key-id "$ALIBABA_CLOUD_ACCESS_KEY_ID" \
-            --access-key-secret "$ALIBABA_CLOUD_ACCESS_KEY_SECRET" \
-            --sts-token "$ALIBABA_CLOUD_SECURITY_TOKEN"
-
-      - name: Upload Storybook to Aliyun OSS
-        run: |
-          set -euo pipefail
-          test -n "$OSS_BUCKET"
-          test -d "$DEPLOY_DIR"
-          aliyun ossutil cp -r "./${DEPLOY_DIR}/" "oss://${OSS_BUCKET}/" \
-            --region "$ALIYUN_REGION" \
-            --force
-
-      - name: Refresh Aliyun CDN cache
-        run: |
-          set -euo pipefail
-          if [ -z "$CDN_REFRESH_URLS" ]; then
-            echo "CDN_REFRESH_URLS is not configured, skip CDN refresh"
-            exit 0
-          fi
-
-          while IFS= read -r url; do
-            [ -z "$url" ] && continue
-            if ! aliyun cdn RefreshObjectCaches --ObjectPath "$url" --ObjectType "Directory" --Force "true"; then
-              echo "CDN directory refresh failed for $url, likely due to quota exhaustion. Upload already completed."
-            fi
-          done <<< "$CDN_REFRESH_URLS"
 
   notify:
     name: Notify MsgAPI
