@@ -60,6 +60,23 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.deploy-gate.outputs.should_deploy == 'true'
     steps:
+      - name: Validate deployment variables
+        shell: bash
+        env:
+          ROLE_ARN: ${{ vars.ALIYUN_STATIC_DEPLOY_ROLE_ARN }}
+          OIDC_PROVIDER_ARN: ${{ vars.ALIYUN_OIDC_PROVIDER_ARN }}
+          OSS_BUCKET: ${{ vars.OSS_BUCKET }}
+        run: |
+          set -euo pipefail
+          missing=0
+          for var in ROLE_ARN OIDC_PROVIDER_ARN OSS_BUCKET; do
+            if [ -z "${!var}" ]; then
+              echo "::error::${var} is not configured; set the corresponding repository variable."
+              missing=1
+            fi
+          done
+          exit "$missing"
+
       - name: Checkout
         if: github.event_name == 'workflow_dispatch'
         uses: actions/checkout@v7
