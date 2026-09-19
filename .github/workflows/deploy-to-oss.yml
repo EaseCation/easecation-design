@@ -25,7 +25,7 @@ env:
 
 jobs:
   deploy-gate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     outputs:
       should_deploy: ${{ steps.decide.outputs.should_deploy }}
     steps:
