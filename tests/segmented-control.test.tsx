@@ -104,7 +104,13 @@ it('keeps the selected option visible when it is wider than the remaining space'
 });
 
 it('does not overflow options for subpixel measurement rounding', () => {
-  const restore = mockNarrowSegmentedControl(159.5);
+  // 两个 80px 选项合计 160px，容器 .ec-segmented 还有 0.2rem（3.2px）左右内边距，
+  // 组件用 clientWidth - padding 计算可用宽度；再加上 1px 的 LAYOUT_EPSILON，
+  // 恰好容纳所需的宽度是 160 - 1 + 6.4 = 165.4，这里取 165.5 作为小数宽度，
+  // 用来验证亚像素宽度不会被误判为溢出。
+  // （此前用的 159.5 之所以"能通过"，是因为 jsdom 27 不解析样式表里的 padding，
+  //   一律返回 0；jsdom 30 起会真实解析，159.5 在真实浏览器里确实会溢出。）
+  const restore = mockNarrowSegmentedControl(165.5);
   try {
     render(
       <SegmentedControl
