@@ -21,13 +21,13 @@ import '@easecation/design/style.css';
 
 ## API
 
-桌面宽度使用 `desktopSize: sm | md | lg | xl | full`，移动端方向使用 `mobileSide`。嵌套弹层使用 `layer="nested"`，不要在业务代码中手写 z-index；关闭按钮通过 `showCloseButton` 控制。
+桌面宽度使用 `desktopSize: sm | md | lg | xl | full`，移动端默认居中弹出，需要抽屉时通过 `mobileSide` 指定方向。嵌套弹层使用 `layer="nested"`，不要在业务代码中手写 z-index；关闭按钮通过 `showCloseButton` 控制。
 
 open；onOpenChange；title；description；footer；desktopContentClassName；mobileContentClassName；bodyClassName。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
-- **可访问性**：dialog-title-description, responsive-sheet
+- **可访问性**：dialog-title-description, responsive-centered-dialog
 - **主要 Token**：`--popover`, `--shadow-xl`
 
 ## 使用约束
@@ -74,7 +74,7 @@ export declare interface ResponsiveDialogProps {
   children: ReactNode;
   footer?: ReactNode;
   desktopSize?: ResponsiveOverlayDesktopSize;
-  mobileSide?: 'top' | 'right' | 'bottom' | 'left';
+  mobileSide?: 'top' | 'right' | 'bottom' | 'left' | 'center';
   layer?: 'default' | 'nested';
   desktopContentClassName?: string;
   mobileContentClassName?: string;

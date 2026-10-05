@@ -25,7 +25,7 @@ Body 支持 `padding: default | none`。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
-- **可访问性**：dialog-focus-trap, escape-close, responsive-sheet
+- **可访问性**：dialog-focus-trap, escape-close, responsive-centered-dialog
 - **主要 Token**：`--popover`, `--shadow-xl`
 
 ## 使用约束

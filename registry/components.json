@@ -480,7 +480,7 @@
       "category": "feedback",
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
-      "accessibility": ["dialog-focus-trap", "escape-close", "responsive-sheet"],
+      "accessibility": ["dialog-focus-trap", "escape-close", "responsive-centered-dialog"],
       "tokens": ["--popover", "--shadow-xl"],
       "stories": ["patterns-data-workflows--compound-responsive-overlay"],
       "deprecated": false
@@ -491,7 +491,7 @@
       "category": "feedback",
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
-      "accessibility": ["dialog-title-description", "responsive-sheet"],
+      "accessibility": ["dialog-title-description", "responsive-centered-dialog"],
       "tokens": ["--popover", "--shadow-xl"],
       "stories": ["patterns-data-workflows--overlay"],
       "deprecated": false
