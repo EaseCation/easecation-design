@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.15.0
+
+### Minor Changes
+
+- Mobile overlays now open as a centered card on phones, matching desktop. Pass `mobileSide` to keep a top, bottom, left, or right sheet.
+
 ## 0.14.7
 
 ### Patch Changes

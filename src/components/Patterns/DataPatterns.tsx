@@ -200,7 +200,7 @@ export function ResponsiveOverlay({
 export const ResponsiveOverlayTrigger = Primitive.Trigger;
 export interface ResponsiveOverlayContentProps extends ComponentProps<typeof Primitive.Content> {
   mobileClassName?: string;
-  mobileSide?: 'top' | 'right' | 'bottom' | 'left';
+  mobileSide?: 'top' | 'right' | 'bottom' | 'left' | 'center';
   desktopSize?: ResponsiveOverlayDesktopSize;
   layer?: 'default' | 'nested';
   showCloseButton?: boolean;
@@ -212,7 +212,7 @@ export function ResponsiveOverlayContent({
   children,
   className,
   mobileClassName,
-  mobileSide = 'bottom',
+  mobileSide = 'center',
   desktopSize = 'lg',
   layer = 'default',
   showCloseButton = true,
@@ -300,7 +300,7 @@ export interface ResponsiveDialogProps {
   children: ReactNode;
   footer?: ReactNode;
   desktopSize?: ResponsiveOverlayDesktopSize;
-  mobileSide?: 'top' | 'right' | 'bottom' | 'left';
+  mobileSide?: 'top' | 'right' | 'bottom' | 'left' | 'center';
   layer?: 'default' | 'nested';
   desktopContentClassName?: string;
   mobileContentClassName?: string;
