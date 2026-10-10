@@ -100,6 +100,7 @@ pnpm ai:validate
 
 ## 文档
 
+- 官网：<https://design.easecation.net/>；Storybook：<https://design.easecation.net/storybook/>。
 - 接入与研发教程位于 `docs/guide/`。
 - 组件 API 和使用说明位于 `docs/components/`。
 - 跨端适配说明位于 `docs/cross-platform/`。

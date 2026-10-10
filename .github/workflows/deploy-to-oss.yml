@@ -22,6 +22,7 @@ env:
   OSS_BUCKET: ${{ vars.OSS_BUCKET }}
   CDN_REFRESH_URLS: ${{ vars.CDN_REFRESH_URLS }}
   DEPLOY_DIR: storybook-static
+  OSS_PREFIX: storybook/
 
 jobs:
   deploy-gate:
@@ -177,7 +178,7 @@ jobs:
           set -euo pipefail
           test -n "$OSS_BUCKET"
           test -d "$DEPLOY_DIR"
-          aliyun ossutil cp -r "./${DEPLOY_DIR}/" "oss://${OSS_BUCKET}/" \
+          aliyun ossutil cp -r "./${DEPLOY_DIR}/" "oss://${OSS_BUCKET}/${OSS_PREFIX}" \
             --region "$ALIYUN_REGION" \
             --force
 
