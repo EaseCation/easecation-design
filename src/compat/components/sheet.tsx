@@ -1,3 +1,4 @@
+import { useTheme } from '../../theme/ThemeProvider';
 import * as React from 'react';
 import { Dialog as SheetPrimitive } from 'radix-ui';
 
@@ -33,7 +34,14 @@ function SheetClose({ ...props }: React.ComponentProps<typeof SheetPrimitive.Clo
 }
 
 function SheetPortal({ ...props }: React.ComponentProps<typeof SheetPrimitive.Portal>) {
-  return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />;
+  const { portalContainer } = useTheme();
+  return (
+    <SheetPrimitive.Portal
+      container={portalContainer ?? undefined}
+      data-slot="sheet-portal"
+      {...props}
+    />
+  );
 }
 
 function SheetOverlay({

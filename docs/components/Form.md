@@ -44,9 +44,26 @@ Form: layout、disabled；Field: label、required、help、error 和 render func
 
 ## TypeScript 公开声明
 
-以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
 
 ```ts
+export declare function Form({
+  layout,
+  disabled,
+  className,
+  children,
+  ...props
+}: FormProps): JSX.Element;
+
+export declare interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
+  layout?: FormLayout;
+  disabled?: boolean;
+}
+
+export declare type FormLayout = 'vertical' | 'horizontal' | 'inline';
+
 export declare function Field({
   label,
   required,
@@ -61,22 +78,37 @@ export declare interface FieldProps {
   required?: boolean;
   help?: ReactNode;
   error?: ReactNode;
-  children: (props: { id: string; 'aria-describedby'?: string; disabled?: boolean }) => ReactNode;
+  children: (props: FieldControlProps) => ReactNode;
   className?: string;
 }
 
-export declare function Form({
-  layout,
-  disabled,
+export declare interface FieldControlProps {
+  id: string;
+  'aria-describedby'?: string;
+  'aria-invalid'?: true;
+  'aria-required'?: true;
+  required?: boolean;
+  disabled?: boolean;
+}
+
+export declare function FormItem({
+  label,
+  htmlFor,
+  required,
+  help,
+  error,
   className,
   children,
   ...props
-}: FormProps): JSX.Element;
+}: FormItemProps): JSX.Element;
 
-export declare type FormLayout = 'vertical' | 'horizontal' | 'inline';
-
-export declare interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
-  layout?: FormLayout;
-  disabled?: boolean;
+export declare interface FormItemProps extends React.HTMLAttributes<HTMLDivElement> {
+  label?: ReactNode;
+  htmlFor?: string;
+  required?: boolean;
+  help?: ReactNode;
+  error?: ReactNode;
 }
 ```
+
+<!-- generated-api:end -->

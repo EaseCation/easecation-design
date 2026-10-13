@@ -49,7 +49,9 @@ import '@easecation/design/style.css';
 
 ## TypeScript 公开声明
 
-以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
 
 ```ts
 export declare function Tabs({
@@ -67,4 +69,36 @@ export declare interface TabsProps {
   onValueChange?: (value: string) => void;
   className?: string;
 }
+
+export declare interface TabItem {
+  value: string;
+  label: ReactNode;
+  content: ReactNode;
+  disabled?: boolean;
+}
+
+export declare const TabsContent: ForwardRefExoticComponent<
+  Omit<Tabs_2.TabsContentProps & RefAttributes<HTMLDivElement>, 'ref'> &
+    RefAttributes<HTMLDivElement>
+>;
+
+export declare const TabsList: ForwardRefExoticComponent<
+  Omit<TabsListProps, 'ref'> & RefAttributes<HTMLDivElement>
+>;
+
+export declare interface TabsListProps extends ComponentProps<typeof Tabs_2.List> {
+  variant?: 'default' | 'line';
+  overflowLabel?: string;
+}
+
+export declare const TabsRoot: ForwardRefExoticComponent<
+  Omit<Tabs_2.TabsProps & RefAttributes<HTMLDivElement>, 'ref'> & RefAttributes<HTMLDivElement>
+>;
+
+export declare const TabsTrigger: ForwardRefExoticComponent<
+  Omit<Tabs_2.TabsTriggerProps & RefAttributes<HTMLButtonElement>, 'ref'> &
+    RefAttributes<HTMLButtonElement>
+>;
 ```
+
+<!-- generated-api:end -->

@@ -36,29 +36,23 @@ body,
 }
 
 /* Opt-in global utilities. */
-.ec-root {
-  min-height: 100svh;
-  overflow-x: hidden;
-  background: var(--background);
-  color: var(--foreground);
-}
 .ec-surface-panel {
-  background: var(--panel);
-  color: var(--panel-foreground);
+  background: var(--ec-color-panel);
+  color: var(--ec-color-on-panel);
 }
 .ec-surface-elevated {
-  background: var(--card);
+  background: var(--ec-color-surface-raised);
   color: var(--card-foreground);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--ec-shadow-sm);
 }
 .ec-surface-glass {
-  background: color-mix(in oklch, var(--panel) 70%, transparent);
-  color: var(--panel-foreground);
+  background: color-mix(in oklch, var(--ec-color-panel) 70%, transparent);
+  color: var(--ec-color-on-panel);
   backdrop-filter: blur(24px);
 }
 .ec-surface-muted {
-  background: var(--surface);
-  color: var(--surface-foreground);
+  background: var(--ec-color-surface);
+  color: var(--ec-color-on-surface);
 }
 .ec-page-gutter {
   padding-inline: 1rem;
@@ -72,16 +66,16 @@ body,
   min-height: 2.75rem;
 }
 .ec-motion-fast {
-  transition-duration: var(--motion-fast);
-  transition-timing-function: var(--ease-standard);
+  transition-duration: var(--ec-motion-fast);
+  transition-timing-function: var(--ec-ease-standard);
 }
 .ec-motion-base {
-  transition-duration: var(--motion-base);
-  transition-timing-function: var(--ease-standard);
+  transition-duration: var(--ec-motion-base);
+  transition-timing-function: var(--ec-ease-standard);
 }
 .ec-motion-emphasized {
-  transition-duration: var(--motion-base);
-  transition-timing-function: var(--ease-emphasized);
+  transition-duration: var(--ec-motion-base);
+  transition-timing-function: var(--ec-ease-emphasized);
 }
 .ec-motion-safe-transform {
   will-change: transform, opacity;
@@ -144,7 +138,7 @@ body,
   }
 }
 .ec-route-transition-enter {
-  animation: ec-route-transition-enter 400ms var(--ease-emphasized) both;
+  animation: ec-route-transition-enter 400ms var(--ec-ease-emphasized) both;
   will-change: transform, opacity;
 }
 html.capacitor-native [data-native-safe-top],

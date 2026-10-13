@@ -1,6 +1,6 @@
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
 import { Select as Primitive } from 'radix-ui';
-import { forwardRef, type ReactNode } from 'react';
+import { forwardRef, type ReactNode, type ButtonHTMLAttributes } from 'react';
 import { useControllableState } from '../../hooks/useControllableState';
 import { useTheme } from '../../theme/ThemeProvider';
 import type { ComponentSize } from '../Button';
@@ -21,7 +21,10 @@ export interface SelectOption {
   description?: ReactNode;
 }
 
-export interface SelectProps {
+export interface SelectProps extends Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'children' | 'value' | 'defaultValue' | 'onChange'
+> {
   options: readonly SelectOption[];
   id?: string;
   value?: string;
@@ -56,6 +59,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
     className,
     triggerClassName,
     contentClassName,
+    ...triggerProps
   },
   ref,
 ) {
@@ -64,7 +68,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
     defaultValue,
     onChange: onValueChange,
   });
-  const { resolvedMode } = useTheme();
+  const { portalContainer } = useTheme();
   const selectedValue = toPrimitiveValue(selected);
   const optionGroups = new Map<string | undefined, SelectOption[]>();
   for (const option of options) {
@@ -103,6 +107,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
         name={name}
       >
         <Primitive.Trigger
+          {...triggerProps}
           ref={ref}
           id={id}
           className={[
@@ -114,24 +119,22 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
           ]
             .filter(Boolean)
             .join(' ')}
-          aria-label={label}
-          aria-invalid={status === 'error' || undefined}
+          aria-label={label ?? triggerProps['aria-label']}
+          aria-invalid={triggerProps['aria-invalid'] ?? (status === 'error' || undefined)}
+          aria-required={triggerProps['aria-required'] ?? (required || undefined)}
         >
           <Primitive.Value placeholder={placeholder} />
           <Primitive.Icon asChild>
             <ChevronDownIcon className="ec-select__chevron" aria-hidden="true" />
           </Primitive.Icon>
         </Primitive.Trigger>
-        <Primitive.Portal>
+        <Primitive.Portal container={portalContainer ?? undefined}>
           <Primitive.Content
             position="popper"
             align="start"
             sideOffset={4}
             collisionPadding={8}
-            data-ec-theme={resolvedMode}
-            className={['ec-select__menu', resolvedMode === 'dark' && 'dark', contentClassName]
-              .filter(Boolean)
-              .join(' ')}
+            className={['ec-select__menu', contentClassName].filter(Boolean).join(' ')}
           >
             <Primitive.ScrollUpButton className="ec-select__scroll-button">
               <ChevronUpIcon aria-hidden="true" />

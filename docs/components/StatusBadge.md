@@ -35,3 +35,28 @@ import '@easecation/design/style.css';
 - **Platforms**: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **Accessibility**: text-status, non-color-label, decorative-icon-hidden
 - **Tokens**: `--ec-color-success`, `--ec-color-warning`, `--ec-color-danger`, `--ec-color-info`
+
+## TypeScript 公开声明
+
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
+
+```ts
+export declare const StatusBadge: ForwardRefExoticComponent<
+  StatusBadgeProps & RefAttributes<HTMLSpanElement>
+>;
+
+export declare interface StatusBadgeProps extends HTMLAttributes<HTMLSpanElement> {
+  tone?: StatusBadgeTone;
+  appearance?: StatusBadgeAppearance;
+  icon?: ReactNode;
+  showDot?: boolean;
+}
+
+export declare type StatusBadgeTone = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
+
+export declare type StatusBadgeAppearance = 'soft' | 'solid' | 'outline';
+```
+
+<!-- generated-api:end -->

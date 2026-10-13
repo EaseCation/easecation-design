@@ -1,3 +1,5 @@
+import { Popover as ChoicePopover } from 'radix-ui';
+import { useTheme } from '../../theme/ThemeProvider';
 import {
   forwardRef,
   useEffect,
@@ -8,6 +10,7 @@ import {
   useState,
   type KeyboardEvent,
   type ReactNode,
+  type InputHTMLAttributes,
 } from 'react';
 import { CheckIcon, ChevronDownIcon, XIcon } from 'lucide-react';
 import { useControllableState } from '../../hooks/useControllableState';
@@ -23,7 +26,10 @@ export interface ComboboxOption {
   disabled?: boolean;
 }
 
-export interface ComboboxProps {
+export interface ComboboxProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'size' | 'value' | 'defaultValue' | 'onChange' | 'children'
+> {
   options: ComboboxOption[];
   value?: string;
   defaultValue?: string;
@@ -84,6 +90,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
     required = false,
     name,
     className,
+    ...inputProps
   },
   ref,
 ) {
@@ -92,7 +99,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
     defaultValue,
     onChange: onValueChange,
   });
-  const rootRef = useRef<HTMLDivElement>(null);
+  const { portalContainer } = useTheme();
   const inputRef = useRef<HTMLInputElement>(null);
   const listId = useId();
   const [open, setOpen] = useState(false);
@@ -132,15 +139,6 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
     setActiveIndex(selectedIndex >= 0 ? selectedIndex : firstEnabledIndex(filteredOptions));
   }, [allowCustomValue, filteredOptions, query, selected]);
 
-  useEffect(() => {
-    if (!open || typeof document === 'undefined') return;
-    const close = (event: PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
-    };
-    document.addEventListener('pointerdown', close);
-    return () => document.removeEventListener('pointerdown', close);
-  }, [open]);
-
   const choose = (option: ComboboxOption) => {
     if (option.disabled) return;
     setSelected(option.value);
@@ -167,6 +165,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.nativeEvent.isComposing) return;
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault();
       if (!open) openOptions();
@@ -190,6 +189,10 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
       return;
     }
     if (event.key === 'Escape') {
+      if (open) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
       setOpen(false);
       return;
     }
@@ -212,104 +215,133 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
   }, [activeOptionId, open]);
 
   return (
-    <div ref={rootRef} className={['ec-combobox', className].filter(Boolean).join(' ')}>
-      {name ? <input type="hidden" name={name} value={selected} /> : null}
-      <div
-        className={[
-          'ec-combobox__control',
-          `ec-combobox__control--${size}`,
-          `ec-input-shell--${status}`,
-          disabled && 'is-disabled',
-        ]
-          .filter(Boolean)
-          .join(' ')}
-      >
-        <input
-          ref={inputRef}
-          role="combobox"
-          className="ec-combobox__input"
-          aria-label={label}
-          aria-expanded={open}
-          aria-haspopup="listbox"
-          aria-controls={listId}
-          aria-activedescendant={open ? activeOptionId : undefined}
-          aria-autocomplete="list"
-          aria-required={required || undefined}
-          aria-invalid={status === 'error' || undefined}
-          autoComplete="off"
-          disabled={disabled}
-          placeholder={open ? (searchPlaceholder ?? placeholder) : placeholder}
-          value={query}
-          onFocus={openOptions}
-          onClick={openOptions}
-          onChange={(event) => {
-            setQuery(event.target.value);
-            if (allowCustomValue) setSelected(event.target.value);
-            setOpen(true);
-          }}
-          onKeyDown={handleKeyDown}
-        />
-        {clearable && selected && !disabled ? (
-          <button
-            type="button"
-            className="ec-combobox__icon-button"
-            aria-label={clearLabel}
-            onClick={clear}
+    <div className={['ec-combobox', className].filter(Boolean).join(' ')}>
+      <ChoicePopover.Root open={open && !disabled} onOpenChange={setOpen}>
+        {name ? <input type="hidden" name={name} value={selected} disabled={disabled} /> : null}
+        <ChoicePopover.Anchor asChild>
+          <div
+            className={[
+              'ec-combobox__control',
+              `ec-combobox__control--${size}`,
+              `ec-input-shell--${status}`,
+              disabled && 'is-disabled',
+            ]
+              .filter(Boolean)
+              .join(' ')}
           >
-            <XIcon aria-hidden="true" />
-          </button>
-        ) : null}
-        <button
-          type="button"
-          className="ec-combobox__icon-button"
-          aria-label={open ? 'Close options' : 'Open options'}
-          aria-expanded={open}
-          disabled={disabled}
-          onClick={() => {
-            if (open) setOpen(false);
-            else openOptions();
-            inputRef.current?.focus();
-          }}
-        >
-          <ChevronDownIcon aria-hidden="true" />
-        </button>
-      </div>
-      {open && !disabled ? (
-        <div id={listId} role="listbox" className="ec-combobox__menu" aria-label={label}>
-          {filteredOptions.length ? (
-            filteredOptions.map((option, index) => (
+            <input
+              {...inputProps}
+              ref={inputRef}
+              role="combobox"
+              className="ec-combobox__input"
+              aria-label={label ?? inputProps['aria-label']}
+              aria-expanded={open}
+              aria-haspopup="listbox"
+              aria-controls={listId}
+              aria-activedescendant={open ? activeOptionId : undefined}
+              aria-autocomplete="list"
+              aria-required={inputProps['aria-required'] ?? (required || undefined)}
+              aria-invalid={inputProps['aria-invalid'] ?? (status === 'error' || undefined)}
+              autoComplete="off"
+              disabled={disabled}
+              placeholder={open ? (searchPlaceholder ?? placeholder) : placeholder}
+              value={query}
+              onFocus={(event) => {
+                inputProps.onFocus?.(event);
+                if (!event.defaultPrevented) openOptions();
+              }}
+              onClick={(event) => {
+                inputProps.onClick?.(event);
+                if (!event.defaultPrevented) openOptions();
+              }}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                if (allowCustomValue) setSelected(event.target.value);
+                setOpen(true);
+              }}
+              onKeyDown={(event) => {
+                inputProps.onKeyDown?.(event);
+                if (!event.defaultPrevented) handleKeyDown(event);
+              }}
+            />
+            {clearable && selected && !disabled ? (
               <button
-                id={`${listId}-option-${index}`}
-                key={option.value}
                 type="button"
-                role="option"
-                aria-selected={selected === option.value}
-                disabled={option.disabled}
-                className={[
-                  'ec-combobox__option',
-                  index === activeIndex && 'is-active',
-                  selected === option.value && 'is-selected',
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-                onPointerMove={() => setActiveIndex(index)}
-                onPointerDown={(event) => event.preventDefault()}
-                onClick={() => choose(option)}
+                className="ec-combobox__icon-button"
+                aria-label={clearLabel}
+                onClick={clear}
               >
-                <span className="ec-combobox__option-copy">
-                  <span>{option.label}</span>
-                  {option.description ? <small>{option.description}</small> : null}
-                </span>
-                <span className="ec-combobox__option-check" aria-hidden="true">
-                  {selected === option.value ? <CheckIcon /> : null}
-                </span>
+                <XIcon aria-hidden="true" />
               </button>
-            ))
-          ) : (
-            <div className="ec-combobox__empty">{emptyText}</div>
-          )}
-        </div>
-      ) : null}
+            ) : null}
+            <button
+              type="button"
+              className="ec-combobox__icon-button"
+              aria-label={open ? 'Close options' : 'Open options'}
+              aria-expanded={open}
+              disabled={disabled}
+              onClick={() => {
+                if (open) setOpen(false);
+                else openOptions();
+                inputRef.current?.focus();
+              }}
+            >
+              <ChevronDownIcon aria-hidden="true" />
+            </button>
+          </div>
+        </ChoicePopover.Anchor>
+        <ChoicePopover.Portal container={portalContainer ?? undefined}>
+          <ChoicePopover.Content
+            id={listId}
+            role="listbox"
+            className="ec-combobox__menu"
+            aria-label={label}
+            side="bottom"
+            align="start"
+            sideOffset={6}
+            collisionPadding={8}
+            onOpenAutoFocus={(event) => event.preventDefault()}
+            onCloseAutoFocus={(event) => event.preventDefault()}
+            onInteractOutside={(event) => {
+              if (inputRef.current?.contains(event.target as Node)) event.preventDefault();
+            }}
+          >
+            {filteredOptions.length ? (
+              filteredOptions.map((option, index) => (
+                <button
+                  id={`${listId}-option-${index}`}
+                  key={option.value}
+                  type="button"
+                  role="option"
+                  tabIndex={-1}
+                  aria-selected={selected === option.value}
+                  disabled={option.disabled}
+                  className={[
+                    'ec-combobox__option',
+                    index === activeIndex && 'is-active',
+                    selected === option.value && 'is-selected',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  onPointerMove={() => setActiveIndex(index)}
+                  onPointerDown={(event) => event.preventDefault()}
+                  onClick={() => choose(option)}
+                >
+                  <span className="ec-combobox__option-copy">
+                    <span>{option.label}</span>
+                    {option.description ? <small>{option.description}</small> : null}
+                  </span>
+                  <span className="ec-combobox__option-check" aria-hidden="true">
+                    {selected === option.value ? <CheckIcon /> : null}
+                  </span>
+                </button>
+              ))
+            ) : (
+              <div className="ec-combobox__empty">{emptyText}</div>
+            )}
+          </ChoicePopover.Content>
+        </ChoicePopover.Portal>
+      </ChoicePopover.Root>
     </div>
   );
 });

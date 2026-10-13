@@ -1,5 +1,7 @@
 'use client';
 
+import { useTheme } from '../../theme/ThemeProvider';
+
 import * as React from 'react';
 import { Dialog as DialogPrimitive } from 'radix-ui';
 
@@ -31,7 +33,14 @@ function DialogTrigger({ ...props }: React.ComponentProps<typeof DialogPrimitive
 }
 
 function DialogPortal({ ...props }: React.ComponentProps<typeof DialogPrimitive.Portal>) {
-  return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />;
+  const { portalContainer } = useTheme();
+  return (
+    <DialogPrimitive.Portal
+      container={portalContainer ?? undefined}
+      data-slot="dialog-portal"
+      {...props}
+    />
+  );
 }
 
 function DialogClose({ ...props }: React.ComponentProps<typeof DialogPrimitive.Close>) {

@@ -43,9 +43,19 @@ children；position。也可以使用 Toaster 和全局 toast 控制器。
 
 ## TypeScript 公开声明
 
-以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
 
 ```ts
+export declare function ToastProvider({
+  children,
+  position,
+}: {
+  children: ReactNode;
+  position?: 'top-right' | 'top-center' | 'bottom-center';
+}): JSX.Element;
+
 export declare const toast: ToastController;
 
 export declare interface ToastController {
@@ -57,22 +67,13 @@ export declare interface ToastController {
   dismiss: (id?: string | number) => string | number;
 }
 
-export declare function Toaster({ theme, ...props }: ToasterProps): JSX.Element;
-
-export declare interface ToastOptions {
-  title: string;
-  description?: string;
-  tone?: ToastTone;
-  duration?: number;
-}
-
-export declare function ToastProvider({
-  children,
+export declare function Toaster({
+  theme,
   position,
-}: {
-  children: ReactNode;
-  position?: 'top-right' | 'top-center' | 'bottom-center';
-}): JSX.Element;
-
-export declare type ToastTone = 'info' | 'success' | 'warning' | 'danger';
+  mobileOffset,
+  swipeDirections,
+  ...props
+}: ToasterProps): JSX.Element;
 ```
+
+<!-- generated-api:end -->

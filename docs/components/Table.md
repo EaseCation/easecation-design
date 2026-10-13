@@ -53,7 +53,9 @@ import '@easecation/design/style.css';
 
 ## TypeScript 公开声明
 
-以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
 
 ```ts
 export declare function Table<T>({
@@ -63,6 +65,7 @@ export declare function Table<T>({
   caption,
   loading,
   emptyText,
+  loadingText,
   compact,
   mobile,
   className,
@@ -76,9 +79,74 @@ export declare interface TableProps<T> {
   caption?: ReactNode;
   loading?: boolean;
   emptyText?: ReactNode;
+  loadingText?: ReactNode;
   compact?: boolean;
   mobile?: 'scroll' | 'cards';
   className?: string;
   onRowClick?: (record: T, index: number) => void;
 }
+
+export declare interface TableColumn<T> {
+  key: string;
+  title: ReactNode;
+  dataIndex?: keyof T;
+  render?: (value: unknown, record: T, index: number) => ReactNode;
+  align?: 'left' | 'center' | 'right';
+  width?: string | number;
+  mobileLabel?: ReactNode;
+}
+
+export declare const TableBody: ForwardRefExoticComponent<
+  Omit<DetailedHTMLProps<HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>, 'ref'> &
+    RefAttributes<HTMLTableSectionElement>
+>;
+
+export declare const TableCaption: ForwardRefExoticComponent<
+  Omit<DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>, 'ref'> &
+    RefAttributes<HTMLTableCaptionElement>
+>;
+
+export declare const TableCell: ForwardRefExoticComponent<
+  Omit<
+    DetailedHTMLProps<TdHTMLAttributes<HTMLTableDataCellElement>, HTMLTableDataCellElement>,
+    'ref'
+  > &
+    RefAttributes<HTMLTableCellElement>
+>;
+
+export declare const TableFooter: ForwardRefExoticComponent<
+  Omit<DetailedHTMLProps<HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>, 'ref'> &
+    RefAttributes<HTMLTableSectionElement>
+>;
+
+export declare const TableHead: ForwardRefExoticComponent<
+  Omit<
+    DetailedHTMLProps<ThHTMLAttributes<HTMLTableHeaderCellElement>, HTMLTableHeaderCellElement>,
+    'ref'
+  > &
+    RefAttributes<HTMLTableCellElement>
+>;
+
+export declare const TableHeader: ForwardRefExoticComponent<
+  Omit<DetailedHTMLProps<HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>, 'ref'> &
+    RefAttributes<HTMLTableSectionElement>
+>;
+
+export declare const TableRoot: ForwardRefExoticComponent<
+  Omit<TableRootProps, 'ref'> & RefAttributes<HTMLTableElement>
+>;
+
+export declare interface TableRootProps extends ComponentProps<'table'> {
+  containerClassName?: string;
+  compact?: boolean;
+  mobile?: 'scroll' | 'cards';
+  layout?: 'auto' | 'fixed';
+}
+
+export declare const TableRow: ForwardRefExoticComponent<
+  Omit<DetailedHTMLProps<HTMLAttributes<HTMLTableRowElement>, HTMLTableRowElement>, 'ref'> &
+    RefAttributes<HTMLTableRowElement>
+>;
 ```
+
+<!-- generated-api:end -->

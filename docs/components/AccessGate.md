@@ -26,7 +26,7 @@ allowed；fallback；children。PermissionGate 是兼容别名。
 - **成熟度**：`stable`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **可访问性**：fallback-content, domain-neutral-authorization-boundary
-- **主要 Token**：无专用 Token
+- **主要 Token**：
 
 ## 使用约束
 
@@ -42,7 +42,9 @@ allowed；fallback；children。PermissionGate 是兼容别名。
 
 ## TypeScript 公开声明
 
-以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
 
 ```ts
 export declare function AccessGate({ allowed, fallback, children }: AccessGateProps): JSX.Element;
@@ -53,8 +55,7 @@ export declare interface AccessGateProps {
   children: ReactNode;
 }
 
-/** @deprecated Prefer the domain-neutral AccessGate name. */
 export declare const PermissionGate: typeof AccessGate;
-
-export declare type PermissionGateProps = AccessGateProps;
 ```
+
+<!-- generated-api:end -->

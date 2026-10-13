@@ -22,7 +22,7 @@ function block(selector) {
   );
 }
 const actual = {
-  light: block(':root'),
+  light: block("[data-ec-theme='light']"),
   dark: block("[data-ec-theme='dark']"),
   blackGold: block("[data-ec-color-theme='black-gold']"),
 };

@@ -82,15 +82,15 @@ export function TooltipContent({
   children,
   ...props
 }: ComponentProps<typeof Primitive.Content>) {
-  const { resolvedMode } = useTheme();
+  const { portalContainer } = useTheme();
   return (
-    <Primitive.Portal>
+    <Primitive.Portal container={portalContainer ?? undefined}>
       <Primitive.Content
         sideOffset={sideOffset}
-        data-ec-theme={resolvedMode}
+
         className={classes(
           'ec-tooltip-content',
-          resolvedMode === 'dark' ? 'dark' : undefined,
+
           className,
         )}
         {...props}

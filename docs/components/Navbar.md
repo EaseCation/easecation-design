@@ -42,5 +42,33 @@ import '@easecation/design/style.css';
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **可访问性**：landmark-navigation, aria-current, keyboard-links
-- **主要 Token**：`--background`, `--foreground`, `--border`, `--primary`
+- **主要 Token**：`--ec-color-bg`, `--ec-color-text`, `--ec-color-border`, `--ec-color-primary`
 - **Storybook**：`components-navbar--product-navigation`
+
+## TypeScript 公开声明
+
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
+
+```ts
+export declare const Navbar: ForwardRefExoticComponent<NavbarProps & RefAttributes<HTMLElement>>;
+
+export declare interface NavbarProps extends HTMLAttributes<HTMLElement> {
+  brand: ReactNode;
+  brandHref?: string;
+  items?: NavbarItem[];
+  actions?: ReactNode;
+  fixed?: boolean;
+  maxWidth?: string;
+  menuButton?: ReactNode;
+  menuButtonProps?: ButtonHTMLAttributes<HTMLButtonElement>;
+}
+
+export declare interface NavbarItem extends AnchorHTMLAttributes<HTMLAnchorElement> {
+  label: ReactNode;
+  active?: boolean;
+}
+```
+
+<!-- generated-api:end -->

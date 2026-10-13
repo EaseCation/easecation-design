@@ -35,7 +35,9 @@ children；mode: light | dark | system；density；tokens；colorTheme；asChild
 - 业务状态、请求、权限和路由由应用层维护，通过 Props 和回调传入。
 - 同一个值不要同时使用受控属性与 default* 属性。
 - 不覆盖组件内部 DOM 选择器；品牌和密度通过 ThemeProvider、Token 或公开 className 调整。
-- `asChild` 要求一个可接收 `className`、`style` 和 `data-*` 属性的单一 React 元素。
+- `asChild` 要求一个能转发 DOM ref、`className`、`style` 和 `data-*` 属性的单一 React 元素。
+- Provider 只建立主题作用域；页面高度、背景和滚动由应用布局负责。
+- 浮层继承当前作用域的模式、配色、密度、字体与 Token。嵌套 Provider 继承未指定的配置，可显式切换为浅色。
 - 在 320、390、768 和桌面宽度验证响应式；交互组件同时验证键盘、焦点和禁用状态。
 - 完整类型以 @easecation/design 发布包的 TypeScript 声明为准，Storybook 是行为和视觉事实来源。
 
@@ -45,15 +47,17 @@ children；mode: light | dark | system；density；tokens；colorTheme；asChild
 
 ## TypeScript 公开声明
 
-以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
 
 ```ts
 export declare function ThemeProvider({
   children,
-  mode,
-  density,
+  mode: requestedMode,
+  density: requestedDensity,
   tokens,
-  colorTheme,
+  colorTheme: requestedColorTheme,
   className,
   style,
   asChild,
@@ -69,5 +73,22 @@ export declare interface ThemeProviderProps extends Omit<HTMLAttributes<HTMLDivE
   asChild?: boolean;
 }
 
+export declare type ThemeMode = 'light' | 'dark' | 'system';
+
+export declare type Density = 'compact' | 'comfortable';
+
+export declare type ThemeOverrides = Partial<Record<`--ec-${string}`, string | number>>;
+
 export declare const useTheme: () => ThemeContextValue;
+
+export declare interface ThemeContextValue {
+  mode: ThemeMode;
+  resolvedMode: 'light' | 'dark';
+  density: Density;
+  colorTheme: 'default' | 'black-gold';
+  tokens: ThemeOverrides;
+  portalContainer: HTMLDivElement | null;
+}
 ```
+
+<!-- generated-api:end -->

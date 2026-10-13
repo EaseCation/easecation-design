@@ -52,7 +52,7 @@ export function Drawer({
   style,
 }: DrawerProps) {
   const id = useId();
-  const { resolvedMode } = useTheme();
+  const { portalContainer } = useTheme();
   useEffect(() => {
     if (!open) return;
     return registerOverlay({ id, close: () => onOpenChange(false) });
@@ -64,21 +64,14 @@ export function Drawer({
   });
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
-      <DialogPrimitive.Portal>
+      <DialogPrimitive.Portal container={portalContainer ?? undefined}>
         <DialogPrimitive.Overlay
           className={['ec-dialog-overlay', instant && 'is-instant'].filter(Boolean).join(' ')}
         />
         <DialogPrimitive.Content
           data-side={placement}
-          data-ec-theme={resolvedMode}
-          className={[
-            'ec-drawer',
-            resolvedMode === 'dark' && 'dark',
-            instant && 'is-instant',
-            className,
-          ]
-            .filter(Boolean)
-            .join(' ')}
+
+          className={['ec-drawer', instant && 'is-instant', className].filter(Boolean).join(' ')}
           style={viewportStyle}
           aria-label={title ? undefined : (ariaLabel ?? closeLabel)}
           aria-describedby={description ? `${id}-description` : undefined}

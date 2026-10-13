@@ -24,6 +24,7 @@ import { Tooltip as BaseTooltip } from '../Tooltip';
 import { Popover as BasePopover } from '../Popover';
 import { Flex as BaseFlex, Divider as BaseDivider } from '../primitives';
 import { EmptyState } from '../State';
+import { useTheme } from '../../theme/ThemeProvider';
 
 export type SizeType = 'small' | 'middle' | 'large' | undefined;
 export type Breakpoint = 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs';
@@ -1691,6 +1692,7 @@ export const Dropdown = ({
 }: any) => {
   const [open, setOpen] = useState(false);
   const [menuStyle, setMenuStyle] = useState<React.CSSProperties>();
+  const { portalContainer } = useTheme();
   const ref = React.useRef<HTMLSpanElement>(null);
   const menuRef = React.useRef<HTMLDivElement>(null);
   const updateMenuPosition = React.useCallback(() => {
@@ -1753,7 +1755,7 @@ export const Dropdown = ({
               </button>
             ))}
           </div>,
-          document.body,
+          portalContainer ?? document.body,
         )
       : null;
   return (

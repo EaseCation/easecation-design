@@ -27,7 +27,7 @@ import '@easecation/design/style.css';
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **可访问性**：semantic-section, composable-workspace-regions
-- **主要 Token**：`--card`, `--card-foreground`
+- **主要 Token**：`--ec-color-surface-raised`, `--ec-color-on-surface-raised`
 
 ## 使用约束
 
@@ -35,3 +35,28 @@ import '@easecation/design/style.css';
 - 内部 `QueryDataTable` 使用 `embedded`，避免重复表面和边框。
 - 页面标题属于 `PageScaffold`；内容分区标题属于 `SectionCard`，不要用 `DataPanel` 模拟页面标题卡片。
 - 业务状态、请求、权限和路由由应用层维护，通过 Props 和回调传入。
+
+## TypeScript 公开声明
+
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
+
+```ts
+export declare function DataPanel({
+  header,
+  toolbar,
+  footer,
+  className,
+  children,
+  ...props
+}: DataPanelProps): JSX.Element;
+
+export declare interface DataPanelProps extends ComponentProps<'section'> {
+  header?: ReactNode;
+  toolbar?: ReactNode;
+  footer?: ReactNode;
+}
+```
+
+<!-- generated-api:end -->

@@ -36,3 +36,26 @@ import { Alert } from '@easecation/design';
 - **Accessibility**: semantic-live-region, decorative-icon-hidden, labelled-dismiss-control
 - **Tokens**: `--ec-color-info`, `--ec-color-success`, `--ec-color-warning`,
   `--ec-color-danger`
+
+## TypeScript 公开声明
+
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
+
+```ts
+export declare const Alert: ForwardRefExoticComponent<AlertProps & RefAttributes<HTMLDivElement>>;
+
+export declare interface AlertProps extends Omit<ComponentPropsWithoutRef<'div'>, 'title'> {
+  tone?: AlertTone;
+  title?: ReactNode;
+  icon?: ReactNode | false;
+  action?: ReactNode;
+  onDismiss?: () => void;
+  dismissLabel?: string;
+}
+
+export declare type AlertTone = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
+```
+
+<!-- generated-api:end -->

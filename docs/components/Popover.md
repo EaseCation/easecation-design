@@ -40,8 +40,42 @@ import '@easecation/design/style.css';
 
 ## TypeScript 公开声明
 
-以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
 
 ```ts
 export declare function Popover(props: PopoverProps): JSX.Element;
+
+export declare type PopoverProps =
+  | ComponentProps<typeof Popover_2.Root>
+  | {
+      trigger: ReactElement;
+      children: ReactNode;
+      open?: boolean;
+      defaultOpen?: boolean;
+      onOpenChange?: (open: boolean) => void;
+      placement?: 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
+      title?: ReactNode;
+      className?: string;
+    };
+
+export declare function PopoverAnchor(props: ComponentProps<typeof Popover_2.Anchor>): JSX.Element;
+
+export declare function PopoverContent({
+  className,
+  align,
+  sideOffset,
+  ...props
+}: ComponentProps<typeof Popover_2.Content>): JSX.Element;
+
+export declare const Content: ForwardRefExoticComponent<
+  HTMLAttributes<HTMLElement> & RefAttributes<HTMLElement>
+>;
+
+export declare function PopoverTrigger(
+  props: ComponentProps<typeof Popover_2.Trigger>,
+): JSX.Element;
 ```
+
+<!-- generated-api:end -->

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.15.1
+
+### Patch Changes
+
+- Make public color, size and radius tokens effective across controls, apply density, and preserve scoped themes in formal and compatibility portals. Forward Field accessibility attributes to choice controls and render searchable menus outside scrolling containers. Keep ThemeProvider free of page layout constraints and generate public API documentation from built declarations.
+
 ## 0.15.0
 
 ### Minor Changes

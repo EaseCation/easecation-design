@@ -32,8 +32,16 @@ export interface FieldProps {
   required?: boolean;
   help?: ReactNode;
   error?: ReactNode;
-  children: (props: { id: string; 'aria-describedby'?: string; disabled?: boolean }) => ReactNode;
+  children: (props: FieldControlProps) => ReactNode;
   className?: string;
+}
+export interface FieldControlProps {
+  id: string;
+  'aria-describedby'?: string;
+  'aria-invalid'?: true;
+  'aria-required'?: true;
+  required?: boolean;
+  disabled?: boolean;
 }
 export function Field({ label, required, help, error, children, className }: FieldProps) {
   const { disabled } = useContext(FormContext);
@@ -53,7 +61,14 @@ export function Field({ label, required, help, error, children, className }: Fie
         </label>
       ) : null}
       <div className="ec-form-field__control">
-        {children({ id, 'aria-describedby': help || error ? messageId : undefined, disabled })}
+        {children({
+          id,
+          'aria-describedby': help || error ? messageId : undefined,
+          'aria-invalid': error ? true : undefined,
+          'aria-required': required ? true : undefined,
+          required,
+          disabled,
+        })}
       </div>
       {error ? (
         <div id={messageId} className="ec-form-help ec-form-help--error" role="alert">

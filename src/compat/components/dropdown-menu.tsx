@@ -1,5 +1,7 @@
 'use client';
 
+import { useTheme } from '../../theme/ThemeProvider';
+
 import * as React from 'react';
 import { DropdownMenu as DropdownMenuPrimitive } from 'radix-ui';
 
@@ -13,7 +15,14 @@ function DropdownMenu({ ...props }: React.ComponentProps<typeof DropdownMenuPrim
 function DropdownMenuPortal({
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Portal>) {
-  return <DropdownMenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />;
+  const { portalContainer } = useTheme();
+  return (
+    <DropdownMenuPrimitive.Portal
+      container={portalContainer ?? undefined}
+      data-slot="dropdown-menu-portal"
+      {...props}
+    />
+  );
 }
 
 function DropdownMenuTrigger({
@@ -28,8 +37,9 @@ function DropdownMenuContent({
   sideOffset = 4,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Content>) {
+  const { portalContainer } = useTheme();
   return (
-    <DropdownMenuPrimitive.Portal>
+    <DropdownMenuPrimitive.Portal container={portalContainer ?? undefined}>
       <DropdownMenuPrimitive.Content
         data-slot="dropdown-menu-content"
         sideOffset={sideOffset}

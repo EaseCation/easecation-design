@@ -47,8 +47,46 @@ TooltipProvider、Tooltip、TooltipTrigger、TooltipContent 组合使用。
 
 ## TypeScript 公开声明
 
-以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
 
 ```ts
 export declare function Tooltip(props: TooltipProps): JSX.Element;
+
+export declare type TooltipProps =
+  | ComponentProps<typeof Tooltip_2.Root>
+  | {
+      content: ReactNode;
+      children: ReactElement;
+      placement?: 'top' | 'bottom' | 'left' | 'right';
+      delay?: number;
+      disabled?: boolean;
+      disableTouch?: boolean;
+      open?: boolean;
+      defaultOpen?: boolean;
+      onOpenChange?: (open: boolean) => void;
+    };
+
+export declare function TooltipContent({
+  className,
+  sideOffset,
+  children,
+  ...props
+}: ComponentProps<typeof Tooltip_2.Content>): JSX.Element;
+
+export declare const Content: ForwardRefExoticComponent<
+  HTMLAttributes<HTMLElement> & RefAttributes<HTMLElement>
+>;
+
+export declare function TooltipProvider({
+  delayDuration,
+  ...props
+}: ComponentProps<typeof Tooltip_2.Provider>): JSX.Element;
+
+export declare function TooltipTrigger(
+  props: ComponentProps<typeof Tooltip_2.Trigger>,
+): JSX.Element;
 ```
+
+<!-- generated-api:end -->

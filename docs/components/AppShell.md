@@ -26,7 +26,7 @@ brand；headerTitle；headerActions；sidebar；mobileSidebar；bottomBar；coll
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **可访问性**：landmark-layout, mobile-navigation-dialog, safe-area
-- **主要 Token**：`--panel`, `--surface`, `--motion-base`
+- **主要 Token**：`--ec-color-panel`, `--ec-color-surface`, `--ec-motion-base`
 
 ## 使用约束
 
@@ -42,7 +42,9 @@ brand；headerTitle；headerActions；sidebar；mobileSidebar；bottomBar；coll
 
 ## TypeScript 公开声明
 
-以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
 
 ```ts
 export declare function AppShell({
@@ -56,6 +58,7 @@ export declare function AppShell({
   collapsed,
   sidebarWidth,
   collapsedSidebarWidth,
+  mobileNavigationLabel,
 }: AppShellProps): JSX.Element;
 
 export declare interface AppShellProps {
@@ -70,5 +73,8 @@ export declare interface AppShellProps {
   onCollapse?: (collapsed: boolean) => void;
   sidebarWidth?: number;
   collapsedSidebarWidth?: number;
+  mobileNavigationLabel?: string;
 }
 ```
+
+<!-- generated-api:end -->
