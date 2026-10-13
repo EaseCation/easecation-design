@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useMemo,
   useLayoutEffect,
@@ -78,7 +79,12 @@ export function ThemeProvider({
   const density = requestedDensity ?? parent.density;
   const colorTheme = requestedColorTheme ?? parent.colorTheme;
   const rootRef = useRef<HTMLDivElement>(null);
+  const portalRef = useRef<HTMLDivElement | null>(null);
   const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null);
+  const attachPortal = useCallback((element: HTMLDivElement | null) => {
+    portalRef.current = element;
+    setPortalContainer(element);
+  }, []);
   const mounted = useSyncExternalStore(
     subscribeToNothing,
     () => true,
@@ -100,12 +106,13 @@ export function ThemeProvider({
     [mode, resolvedMode, density, colorTheme, inheritedTokens, portalContainer],
   );
   useLayoutEffect(() => {
-    if (!rootRef.current || !portalContainer) return;
+    const portal = portalRef.current;
+    if (!rootRef.current || !portal) return;
     const computed = getComputedStyle(rootRef.current);
-    portalContainer.style.cssText = '';
+    portal.style.cssText = '';
     for (const property of computed) {
       if (property.startsWith('--'))
-        portalContainer.style.setProperty(property, computed.getPropertyValue(property));
+        portal.style.setProperty(property, computed.getPropertyValue(property));
     }
   }, [resolvedMode, density, colorTheme, tokenStyle, className, portalContainer]);
   const rootProps = {
@@ -129,7 +136,7 @@ export function ThemeProvider({
       {mounted
         ? createPortal(
             <div
-              ref={setPortalContainer}
+              ref={attachPortal}
               className="ec-root ec-theme-portal"
               data-ec-theme={resolvedMode}
               data-ec-color-theme={colorTheme}

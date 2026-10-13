@@ -61,7 +61,7 @@
     "build": "vite build",
     "build:storybook": "storybook build",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint .",
+    "lint": "pnpm exec eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "changeset": "changeset",
