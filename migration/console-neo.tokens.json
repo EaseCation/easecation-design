@@ -1,6 +1,6 @@
 {
   "source": "packages/tokens/src/theme.css",
-  "sha256": "67af329f2bd4bd2cf77831a3a724e2ec2c55940e5e33fa8236479023e825fa0c",
+  "sha256": "62874ac9d9e6b9ee5a90e40bd8ddeb629f1aaa25101e5c31f33f6ed1155817da",
   "light": {
     "--background": "oklch(0.985 0.005 255)",
     "--foreground": "oklch(0.18 0.025 264)",
@@ -131,5 +131,7 @@
     "--sidebar-primary-foreground": "oklch(0.15 0.02 85)",
     "--shadow-glow": "0 0 0 3px oklch(0.80 0.16 85 / 0.15), 0 0 20px -4px oklch(0.80 0.16 85 / 0.18)",
     "--chart-1": "oklch(0.78 0.16 85)"
-  }
+  },
+  "originalSourceSha256": "67af329f2bd4bd2cf77831a3a724e2ec2c55940e5e33fa8236479023e825fa0c",
+  "sourceRole": "Tailwind mappings only; palettes are now owned by the public token contract."
 }

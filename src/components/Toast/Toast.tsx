@@ -21,6 +21,7 @@ import {
   type ExternalToast,
   type ToasterProps,
 } from 'sonner';
+import { useTheme } from '../../theme/ThemeProvider';
 
 export type ToastTone = 'info' | 'success' | 'warning' | 'danger';
 export interface ToastOptions {
@@ -38,7 +39,7 @@ const ToastContext = createContext<ToastApi | null>(null);
 let nextId = 1;
 
 export function Toaster({
-  theme = 'system',
+  theme,
   position = 'top-right',
   mobileOffset = {
     top: 'calc(0.875rem + var(--ec-safe-top, 0px))',
@@ -49,9 +50,10 @@ export function Toaster({
   swipeDirections,
   ...props
 }: ToasterProps) {
+  const { resolvedMode } = useTheme();
   return (
     <SonnerToaster
-      theme={theme}
+      theme={theme ?? resolvedMode}
       position={position}
       mobileOffset={mobileOffset}
       swipeDirections={

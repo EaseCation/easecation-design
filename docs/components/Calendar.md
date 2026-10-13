@@ -19,12 +19,12 @@ import '@easecation/design/style.css';
 
 ## API
 
-mode: single | range；selected；onSelect；defaultMonth；numberOfMonths。
+mode: single | range；selected；onSelect；showLabel；labels；className。当前使用原生日期输入，不提供月份面板或多月展示属性。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **可访问性**：native-date-input, label-association
-- **主要 Token**：`--input`, `--background`
+- **主要 Token**：`--ec-color-border-strong`, `--ec-color-bg`
 
 ## 使用约束
 
@@ -40,7 +40,9 @@ mode: single | range；selected；onSelect；defaultMonth；numberOfMonths。
 
 ## TypeScript 公开声明
 
-以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
 
 ```ts
 export declare const Calendar: ForwardRefExoticComponent<
@@ -51,7 +53,20 @@ export declare interface CalendarProps extends Omit<ComponentProps<'div'>, 'onSe
   mode?: 'single' | 'range';
   selected?: Date | DateRange;
   onSelect?: (value: CalendarSelectValue) => void;
-  defaultMonth?: Date;
-  numberOfMonths?: number;
+  showLabel?: boolean;
+  labels?: {
+    single?: string;
+    rangeStart?: string;
+    rangeEnd?: string;
+  };
 }
+
+export declare type DateRange = {
+  from?: Date;
+  to?: Date;
+};
+
+export declare type CalendarSelectValue = Date | DateRange | undefined;
 ```
+
+<!-- generated-api:end -->

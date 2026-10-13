@@ -38,7 +38,7 @@ value；onChange；mode: date | datetime；presets；placeholder；startLabel；
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **可访问性**：label-association, keyboard-popover, responsive-reflow
-- **主要 Token**：`--input`, `--popover`, `--destructive`
+- **主要 Token**：`--ec-color-border-strong`, `--ec-color-popover`, `--ec-color-danger`
 
 ## 行为约定
 
@@ -49,25 +49,37 @@ value；onChange；mode: date | datetime；presets；placeholder；startLabel；
 
 ## TypeScript 公开声明
 
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
+
 ```ts
-export type DateRangePickerMode = 'date' | 'datetime';
+export declare function DateRangePicker({
+  value,
+  onChange,
+  mode,
+  presets,
+  placeholder,
+  startLabel,
+  endLabel,
+  startTimeLabel,
+  endTimeLabel,
+  presetsLabel,
+  applyLabel,
+  cancelLabel,
+  invalidRangeMessage,
+  allowOpenRange,
+  size,
+  className,
+  disabled,
+  'aria-label': ariaLabel,
+}: DateRangePickerProps): JSX.Element;
 
-export interface DateRangePickerValue {
-  start: string;
-  end: string;
-}
-
-export interface DateRangePickerPreset {
-  label: ReactNode;
-  value: DateRangePickerValue | (() => DateRangePickerValue);
-}
-
-export interface DateRangePickerProps {
+export declare interface DateRangePickerProps {
   value: DateRangePickerValue;
   onChange: (value: DateRangePickerValue) => void;
   mode?: DateRangePickerMode;
   presets?: readonly DateRangePickerPreset[];
-  allowOpenRange?: boolean;
   placeholder?: string;
   startLabel?: string;
   endLabel?: string;
@@ -77,9 +89,27 @@ export interface DateRangePickerProps {
   applyLabel?: string;
   cancelLabel?: string;
   invalidRangeMessage?: string;
+  /** Allow applying a range with only a start or an end value. */
+  allowOpenRange?: boolean;
   size?: ComponentSize;
   className?: string;
   disabled?: boolean;
   'aria-label'?: string;
 }
+
+export declare interface DateRangePickerValue {
+  start: string;
+  end: string;
+}
+
+export declare type DateRangePickerMode = 'date' | 'datetime';
+
+export declare interface DateRangePickerPreset {
+  label: ReactNode;
+  value: DateRangePickerValue | (() => DateRangePickerValue);
+}
+
+export declare type ComponentSize = 'sm' | 'md' | 'lg';
 ```
+
+<!-- generated-api:end -->

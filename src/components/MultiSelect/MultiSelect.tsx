@@ -1,3 +1,5 @@
+import { Popover as ChoicePopover } from 'radix-ui';
+import { useTheme } from '../../theme/ThemeProvider';
 import {
   forwardRef,
   useEffect,
@@ -9,6 +11,7 @@ import {
   type ChangeEvent,
   type KeyboardEvent,
   type ReactNode,
+  type InputHTMLAttributes,
 } from 'react';
 import { CheckIcon, ChevronDownIcon, PlusIcon, XIcon } from 'lucide-react';
 import { useControllableState } from '../../hooks/useControllableState';
@@ -24,7 +27,10 @@ export interface MultiSelectOption {
   disabled?: boolean;
 }
 
-export interface MultiSelectProps {
+export interface MultiSelectProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'size' | 'value' | 'defaultValue' | 'onChange' | 'children'
+> {
   options: MultiSelectOption[];
   value?: string[];
   defaultValue?: string[];
@@ -87,6 +93,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(functi
     required = false,
     name,
     className,
+    ...inputProps
   },
   ref,
 ) {
@@ -95,7 +102,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(functi
     defaultValue,
     onChange: onValueChange,
   });
-  const rootRef = useRef<HTMLDivElement>(null);
+  const { portalContainer } = useTheme();
   const inputRef = useRef<HTMLInputElement>(null);
   const listId = useId();
   const [open, setOpen] = useState(false);
@@ -128,15 +135,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(functi
   useEffect(() => {
     setActiveIndex(firstEnabledIndex(filteredOptions));
   }, [filteredOptions]);
-
-  useEffect(() => {
-    if (!open || typeof document === 'undefined') return;
-    const close = (event: PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
-    };
-    document.addEventListener('pointerdown', close);
-    return () => document.removeEventListener('pointerdown', close);
-  }, [open]);
 
   const toggle = (option: MultiSelectOption) => {
     if (option.disabled) return;
@@ -193,6 +191,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(functi
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.nativeEvent.isComposing) return;
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault();
       if (!open) setOpen(true);
@@ -220,6 +219,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(functi
       return;
     }
     if (event.key === 'Escape') {
+      if (open) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
       setOpen(false);
       return;
     }
@@ -235,130 +238,154 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(functi
   }, [activeOptionId, open]);
 
   return (
-    <div ref={rootRef} className={['ec-multi-select', className].filter(Boolean).join(' ')}>
-      {name
-        ? selected.map((item) => <input key={item} type="hidden" name={name} value={item} />)
-        : null}
-      <div
-        className={[
-          'ec-multi-select__control',
-          `ec-multi-select__control--${size}`,
-          `ec-input-shell--${status}`,
-          disabled && 'is-disabled',
-        ]
-          .filter(Boolean)
-          .join(' ')}
-        onClick={() => inputRef.current?.focus()}
-      >
-        {selected.map((item) => {
-          const option = optionByValue.get(item);
-          return (
-            <span key={item} className="ec-multi-select__tag">
-              <span>{option?.label ?? item}</span>
-              {!disabled ? (
-                <button
-                  type="button"
-                  aria-label={removeLabel(item)}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    setSelected(selected.filter((selectedItem) => selectedItem !== item));
-                  }}
-                >
-                  <XIcon aria-hidden="true" />
-                </button>
-              ) : null}
-            </span>
-          );
-        })}
-        <input
-          ref={inputRef}
-          role="combobox"
-          className="ec-multi-select__input"
-          aria-label={label}
-          aria-expanded={open}
-          aria-haspopup="listbox"
-          aria-controls={listId}
-          aria-activedescendant={open ? activeOptionId : undefined}
-          aria-autocomplete="list"
-          aria-required={required || undefined}
-          aria-invalid={status === 'error' || undefined}
-          autoComplete="off"
-          disabled={disabled}
-          placeholder={selected.length ? searchPlaceholder : placeholder}
-          value={query}
-          onFocus={() => setOpen(true)}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-        />
-        <button
-          type="button"
-          className="ec-multi-select__chevron"
-          aria-label={open ? 'Close options' : 'Open options'}
-          aria-expanded={open}
-          disabled={disabled}
-          onClick={(event) => {
-            event.stopPropagation();
-            setOpen((current) => !current);
-            inputRef.current?.focus();
-          }}
-        >
-          <ChevronDownIcon aria-hidden="true" />
-        </button>
-      </div>
-      {open && !disabled ? (
-        <div
-          id={listId}
-          role="listbox"
-          aria-label={label}
-          aria-multiselectable="true"
-          className="ec-multi-select__menu"
-        >
-          {filteredOptions.map((option, index) => (
-            <button
-              id={`${listId}-option-${index}`}
-              key={option.value}
-              type="button"
-              role="option"
-              aria-selected={selectedSet.has(option.value)}
-              disabled={option.disabled}
-              className={[
-                'ec-multi-select__option',
-                index === activeIndex && 'is-active',
-                selectedSet.has(option.value) && 'is-selected',
-              ]
-                .filter(Boolean)
-                .join(' ')}
-              onPointerMove={() => setActiveIndex(index)}
-              onPointerDown={(event) => event.preventDefault()}
-              onClick={() => toggle(option)}
-            >
-              <span className="ec-multi-select__option-copy">
-                <span>{option.label}</span>
-                {option.description ? <small>{option.description}</small> : null}
-              </span>
-              <span className="ec-multi-select__option-check" aria-hidden="true">
-                {selectedSet.has(option.value) ? <CheckIcon /> : null}
-              </span>
-            </button>
-          ))}
-          {canCreate ? (
+    <div className={['ec-multi-select', className].filter(Boolean).join(' ')}>
+      <ChoicePopover.Root open={open && !disabled} onOpenChange={setOpen}>
+        {name
+          ? selected.map((item) => (
+              <input key={item} type="hidden" name={name} value={item} disabled={disabled} />
+            ))
+          : null}
+        <ChoicePopover.Anchor asChild>
+          <div
+            className={[
+              'ec-multi-select__control',
+              `ec-multi-select__control--${size}`,
+              `ec-input-shell--${status}`,
+              disabled && 'is-disabled',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+            onClick={() => inputRef.current?.focus()}
+          >
+            {selected.map((item) => {
+              const option = optionByValue.get(item);
+              return (
+                <span key={item} className="ec-multi-select__tag">
+                  <span>{option?.label ?? item}</span>
+                  {!disabled ? (
+                    <button
+                      type="button"
+                      aria-label={removeLabel(item)}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setSelected(selected.filter((selectedItem) => selectedItem !== item));
+                      }}
+                    >
+                      <XIcon aria-hidden="true" />
+                    </button>
+                  ) : null}
+                </span>
+              );
+            })}
+            <input
+              {...inputProps}
+              ref={inputRef}
+              role="combobox"
+              className="ec-multi-select__input"
+              aria-label={label ?? inputProps['aria-label']}
+              aria-expanded={open}
+              aria-haspopup="listbox"
+              aria-controls={listId}
+              aria-activedescendant={open ? activeOptionId : undefined}
+              aria-autocomplete="list"
+              aria-required={inputProps['aria-required'] ?? (required || undefined)}
+              aria-invalid={inputProps['aria-invalid'] ?? (status === 'error' || undefined)}
+              autoComplete="off"
+              disabled={disabled}
+              placeholder={selected.length ? searchPlaceholder : placeholder}
+              value={query}
+              onFocus={(event) => {
+                inputProps.onFocus?.(event);
+                if (!event.defaultPrevented) setOpen(true);
+              }}
+              onChange={handleChange}
+              onKeyDown={(event) => {
+                inputProps.onKeyDown?.(event);
+                if (!event.defaultPrevented) handleKeyDown(event);
+              }}
+            />
             <button
               type="button"
-              role="option"
-              aria-selected="false"
-              className="ec-multi-select__option ec-multi-select__create"
-              onPointerDown={(event) => event.preventDefault()}
-              onClick={() => addCustomValues([customValue])}
+              className="ec-multi-select__chevron"
+              aria-label={open ? 'Close options' : 'Open options'}
+              aria-expanded={open}
+              disabled={disabled}
+              onClick={(event) => {
+                event.stopPropagation();
+                setOpen((current) => !current);
+                inputRef.current?.focus();
+              }}
             >
-              <PlusIcon aria-hidden="true" />
-              <span>{createLabel(customValue)}</span>
+              <ChevronDownIcon aria-hidden="true" />
             </button>
-          ) : null}
-          {!filteredOptions.length && !canCreate ? (
-            <div className="ec-multi-select__empty">{emptyText}</div>
-          ) : null}
-        </div>
-      ) : null}
+          </div>
+        </ChoicePopover.Anchor>
+        <ChoicePopover.Portal container={portalContainer ?? undefined}>
+          <ChoicePopover.Content
+            side="bottom"
+            align="start"
+            sideOffset={6}
+            collisionPadding={8}
+            onOpenAutoFocus={(event) => event.preventDefault()}
+            onCloseAutoFocus={(event) => event.preventDefault()}
+            onInteractOutside={(event) => {
+              if (inputRef.current?.contains(event.target as Node)) event.preventDefault();
+            }}
+            id={listId}
+            role="listbox"
+            aria-label={label}
+            aria-multiselectable="true"
+            className="ec-multi-select__menu"
+          >
+            {filteredOptions.map((option, index) => (
+              <button
+                id={`${listId}-option-${index}`}
+                key={option.value}
+                type="button"
+                role="option"
+                tabIndex={-1}
+                aria-selected={selectedSet.has(option.value)}
+                disabled={option.disabled}
+                className={[
+                  'ec-multi-select__option',
+                  index === activeIndex && 'is-active',
+                  selectedSet.has(option.value) && 'is-selected',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+                onPointerMove={() => setActiveIndex(index)}
+                onPointerDown={(event) => event.preventDefault()}
+                onClick={() => toggle(option)}
+              >
+                <span className="ec-multi-select__option-copy">
+                  <span>{option.label}</span>
+                  {option.description ? <small>{option.description}</small> : null}
+                </span>
+                <span className="ec-multi-select__option-check" aria-hidden="true">
+                  {selectedSet.has(option.value) ? <CheckIcon /> : null}
+                </span>
+              </button>
+            ))}
+            {canCreate ? (
+              <button
+                type="button"
+                role="option"
+                tabIndex={-1}
+                aria-selected="false"
+                className="ec-multi-select__option ec-multi-select__create"
+                onPointerDown={(event) => event.preventDefault()}
+                onClick={() => addCustomValues([customValue])}
+              >
+                <PlusIcon aria-hidden="true" />
+                <span>{createLabel(customValue)}</span>
+              </button>
+            ) : null}
+            {!filteredOptions.length && !canCreate ? (
+              <div className="ec-multi-select__empty">{emptyText}</div>
+            ) : null}
+          </ChoicePopover.Content>
+        </ChoicePopover.Portal>
+      </ChoicePopover.Root>
     </div>
   );
 });

@@ -8,6 +8,7 @@ import { IconButton } from '../Button';
 import { EmptyState, InlineQueryError } from '../State';
 import { Skeleton } from '../Skeleton';
 import { cn } from '../../utils/classNames';
+import { useTheme } from '../../theme/ThemeProvider';
 
 export interface DataPanelProps extends ComponentProps<'section'> {
   header?: ReactNode;
@@ -223,9 +224,10 @@ export function ResponsiveOverlayContent({
   ...props
 }: ResponsiveOverlayContentProps) {
   const { mobile } = useContext(OverlayContext);
+  const { portalContainer } = useTheme();
   const viewportStyle = useOverlayViewportStyle(style);
   return (
-    <Primitive.Portal forceMount={forceMount}>
+    <Primitive.Portal forceMount={forceMount} container={portalContainer ?? undefined}>
       <Primitive.Overlay
         data-layer={layer}
         className={cn('ec-dialog-overlay', instant && 'is-instant')}

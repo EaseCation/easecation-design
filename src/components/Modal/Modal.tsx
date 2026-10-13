@@ -49,7 +49,7 @@ export function Modal({
   style,
 }: ModalProps) {
   const id = useId();
-  const { resolvedMode } = useTheme();
+  const { portalContainer } = useTheme();
   const viewportStyle = useOverlayViewportStyle(style);
   useEffect(() => {
     if (!open) return;
@@ -58,7 +58,7 @@ export function Modal({
 
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
-      <DialogPrimitive.Portal>
+      <DialogPrimitive.Portal container={portalContainer ?? undefined}>
         <DialogPrimitive.Overlay
           className={['ec-dialog-overlay', instant && 'is-instant'].filter(Boolean).join(' ')}
           data-testid="modal-overlay"
@@ -66,14 +66,14 @@ export function Modal({
         <DialogPrimitive.Content
           className={[
             'ec-modal',
-            resolvedMode === 'dark' && 'dark',
+
             fullScreenOnMobile && 'ec-modal--responsive',
             instant && 'is-instant',
             className,
           ]
             .filter(Boolean)
             .join(' ')}
-          data-ec-theme={resolvedMode}
+
           aria-label={title ? undefined : (ariaLabel ?? closeLabel)}
           aria-describedby={description ? `${id}-description` : undefined}
           style={viewportStyle}

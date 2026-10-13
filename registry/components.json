@@ -181,7 +181,12 @@
       "name": "Card",
       "category": "display",
       "accessibility": ["semantic-composition", "pointer-events"],
-      "tokens": ["--card", "--card-foreground", "--radius-xl", "--border"],
+      "tokens": [
+        "--ec-color-surface-raised",
+        "--ec-color-on-surface-raised",
+        "--ec-radius-xl",
+        "--ec-color-border"
+      ],
       "stories": ["components-data-display--overview"],
       "importPath": "@easecation/design",
       "maturity": "beta",
@@ -192,7 +197,7 @@
       "name": "Badge",
       "category": "display",
       "accessibility": ["text-status", "non-color-label"],
-      "tokens": ["--primary", "--secondary", "--destructive"],
+      "tokens": ["--ec-color-primary", "--ec-color-secondary", "--ec-color-danger"],
       "stories": ["components-data-display--overview"],
       "importPath": "@easecation/design",
       "maturity": "beta",
@@ -203,7 +208,7 @@
       "name": "Skeleton",
       "category": "display",
       "accessibility": ["aria-hidden", "reduced-motion"],
-      "tokens": ["--muted", "--radius-lg"],
+      "tokens": ["--ec-color-muted", "--ec-radius-lg"],
       "stories": ["components-data-display--overview"],
       "importPath": "@easecation/design",
       "maturity": "beta",
@@ -214,7 +219,7 @@
       "name": "Avatar",
       "category": "display",
       "accessibility": ["image-alt", "fallback-content"],
-      "tokens": ["--muted", "--muted-foreground", "--border"],
+      "tokens": ["--ec-color-muted", "--ec-color-text-muted", "--ec-color-border"],
       "stories": ["components-data-display--overview"],
       "importPath": "@easecation/design",
       "maturity": "beta",
@@ -229,7 +234,7 @@
       "name": "DropdownMenu",
       "category": "navigation",
       "accessibility": ["radix-roving-focus", "keyboard-navigation", "menu-roles"],
-      "tokens": ["--popover", "--accent", "--shadow-lg"],
+      "tokens": ["--ec-color-popover", "--ec-color-accent", "--ec-shadow-lg"],
       "stories": ["components-primitives--menu"]
     },
     {
@@ -240,7 +245,7 @@
       "name": "ScrollArea",
       "category": "layout",
       "accessibility": ["native-scroll-viewport", "focus-visible", "touch-scroll"],
-      "tokens": ["--border", "--ring"],
+      "tokens": ["--ec-color-border", "--ec-color-focus"],
       "stories": ["components-primitives--scroll-and-separator"]
     },
     {
@@ -251,7 +256,7 @@
       "name": "Separator",
       "category": "foundation",
       "accessibility": ["decorative-or-semantic", "orientation"],
-      "tokens": ["--border"],
+      "tokens": ["--ec-color-border"],
       "stories": ["components-primitives--scroll-and-separator"]
     },
     {
@@ -262,7 +267,7 @@
       "name": "Label",
       "category": "input",
       "accessibility": ["native-label-association", "disabled-state"],
-      "tokens": ["--foreground"],
+      "tokens": ["--ec-color-text"],
       "stories": ["components-primitives--scroll-and-separator"]
     },
     {
@@ -272,7 +277,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["semantic-heading", "custom-action"],
-      "tokens": ["--card", "--muted"],
+      "tokens": ["--ec-color-surface-raised", "--ec-color-muted"],
       "stories": ["patterns-feedback-and-metrics--states"],
       "deprecated": false
     },
@@ -283,7 +288,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["semantic-heading", "retry-action"],
-      "tokens": ["--destructive", "--card"],
+      "tokens": ["--ec-color-danger", "--ec-color-surface-raised"],
       "stories": ["patterns-feedback-and-metrics--states"],
       "deprecated": false
     },
@@ -294,7 +299,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["alert-role", "retry-action"],
-      "tokens": ["--destructive", "--card"],
+      "tokens": ["--ec-color-danger", "--ec-color-surface-raised"],
       "stories": ["patterns-feedback-and-metrics--states"],
       "deprecated": false
     },
@@ -305,7 +310,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["section-landmark", "semantic-heading"],
-      "tokens": ["--card", "--border"],
+      "tokens": ["--ec-color-surface-raised", "--ec-color-border"],
       "stories": ["patterns-feedback-and-metrics--states"],
       "deprecated": false
     },
@@ -316,7 +321,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["non-color-trend-label", "semantic-article"],
-      "tokens": ["--card", "--success", "--danger"],
+      "tokens": ["--ec-color-surface-raised", "--ec-color-success", "--ec-color-danger"],
       "stories": ["patterns-feedback-and-metrics--metrics"],
       "deprecated": false
     },
@@ -327,7 +332,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["native-date-input", "label-association"],
-      "tokens": ["--input", "--background"],
+      "tokens": ["--ec-color-border-strong", "--ec-color-bg"],
       "stories": ["patterns-filter-toolbar--toolbar"],
       "deprecated": false
     },
@@ -338,7 +343,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["label-association", "keyboard-popover"],
-      "tokens": ["--input", "--popover"],
+      "tokens": ["--ec-color-border-strong", "--ec-color-popover"],
       "stories": ["patterns-filter-toolbar--toolbar"],
       "deprecated": false
     },
@@ -349,7 +354,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["label-association", "keyboard-popover", "responsive-reflow"],
-      "tokens": ["--input", "--popover", "--destructive"],
+      "tokens": ["--ec-color-border-strong", "--ec-color-popover", "--ec-color-danger"],
       "stories": ["components-filter-controls--date-range", "patterns-filter-toolbar--toolbar"],
       "deprecated": false
     },
@@ -360,7 +365,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["enter-search", "responsive-reflow"],
-      "tokens": ["--card", "--border"],
+      "tokens": ["--ec-color-surface-raised", "--ec-color-border"],
       "stories": ["patterns-filter-toolbar--toolbar"],
       "deprecated": false
     },
@@ -371,7 +376,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["label-association", "responsive-layout"],
-      "tokens": ["--muted-foreground"],
+      "tokens": ["--ec-color-text-muted"],
       "stories": ["patterns-filter-toolbar--toolbar"],
       "deprecated": false
     },
@@ -382,7 +387,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["combobox-role", "keyboard-navigation"],
-      "tokens": ["--input", "--popover"],
+      "tokens": ["--ec-color-border-strong", "--ec-color-popover"],
       "stories": ["patterns-filter-toolbar--toolbar"],
       "deprecated": false
     },
@@ -393,7 +398,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["menu-checkbox-role", "touch-pointer"],
-      "tokens": ["--input", "--popover"],
+      "tokens": ["--ec-color-border-strong", "--ec-color-popover"],
       "stories": ["patterns-filter-toolbar--toolbar"],
       "deprecated": false
     },
@@ -404,7 +409,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["landmark-layout", "mobile-navigation-dialog", "safe-area"],
-      "tokens": ["--panel", "--surface", "--motion-base"],
+      "tokens": ["--ec-color-panel", "--ec-color-surface", "--ec-motion-base"],
       "stories": ["patterns-app-shell--dashboard"],
       "deprecated": false
     },
@@ -415,7 +420,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["semantic-section", "semantic-heading"],
-      "tokens": ["--primary", "--foreground"],
+      "tokens": ["--ec-color-primary", "--ec-color-text"],
       "stories": ["patterns-app-shell--dashboard"],
       "deprecated": false
     },
@@ -426,7 +431,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["responsive-reflow"],
-      "tokens": ["--card", "--border"],
+      "tokens": ["--ec-color-surface-raised", "--ec-color-border"],
       "stories": ["patterns-app-shell--dashboard"],
       "deprecated": false
     },
@@ -448,7 +453,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["aside-landmark", "sticky-footer"],
-      "tokens": ["--panel", "--shadow-lg"],
+      "tokens": ["--ec-color-panel", "--ec-shadow-lg"],
       "stories": ["patterns-app-shell--dashboard"],
       "deprecated": false
     },
@@ -459,7 +464,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["native-table", "mobile-card-fallback", "loading-empty-error-states"],
-      "tokens": ["--card", "--border"],
+      "tokens": ["--ec-color-surface-raised", "--ec-color-border"],
       "stories": ["patterns-data-workflows--table"],
       "deprecated": false
     },
@@ -470,7 +475,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["semantic-section", "composable-workspace-regions"],
-      "tokens": ["--card", "--card-foreground"],
+      "tokens": ["--ec-color-surface-raised", "--ec-color-on-surface-raised"],
       "stories": ["components-table--workspace-table"],
       "deprecated": false
     },
@@ -481,7 +486,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["dialog-focus-trap", "escape-close", "responsive-centered-dialog"],
-      "tokens": ["--popover", "--shadow-xl"],
+      "tokens": ["--ec-color-popover", "--ec-shadow-xl"],
       "stories": ["patterns-data-workflows--compound-responsive-overlay"],
       "deprecated": false
     },
@@ -492,7 +497,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["dialog-title-description", "responsive-centered-dialog"],
-      "tokens": ["--popover", "--shadow-xl"],
+      "tokens": ["--ec-color-popover", "--ec-shadow-xl"],
       "stories": ["patterns-data-workflows--overlay"],
       "deprecated": false
     },
@@ -551,7 +556,7 @@
       "maturity": "beta",
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["landmark-navigation", "aria-current", "keyboard-links"],
-      "tokens": ["--background", "--foreground", "--border", "--primary"],
+      "tokens": ["--ec-color-bg", "--ec-color-text", "--ec-color-border", "--ec-color-primary"],
       "stories": ["components-navbar--product-navigation"],
       "deprecated": false
     },

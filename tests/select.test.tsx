@@ -49,8 +49,8 @@ it('renders its menu in a themed portal and supports an empty option', async () 
   expect(trigger.parentElement).toHaveClass('select-layout');
   await user.click(trigger);
   const content = screen.getByRole('listbox');
-  expect(content).toHaveClass('select-content', 'dark');
-  expect(content).toHaveAttribute('data-ec-theme', 'dark');
+  expect(content).toHaveClass('select-content');
+  expect(content.closest('.ec-theme-portal')).toHaveAttribute('data-ec-theme', 'dark');
   expect(container).not.toContainElement(content);
   await user.click(screen.getByRole('option', { name: 'All' }));
   expect(onValueChange).toHaveBeenCalledWith('');

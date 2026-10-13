@@ -36,3 +36,48 @@ move the single roving focus target through visible enabled items.
 - **Platforms**: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **Accessibility**: tree semantics, roving tabindex, arrow navigation, visible focus, disabled items
 - **Primary tokens**: `--ec-color-primary`, `--ec-color-focus`, `--ec-touch-target`
+
+## TypeScript 公开声明
+
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
+
+```ts
+export declare function TreeView({
+  items,
+  selectedValue,
+  defaultSelectedValue,
+  onSelectedValueChange,
+  expandedValues,
+  defaultExpandedValues,
+  onExpandedValuesChange,
+  ariaLabel,
+  emptyText,
+  className,
+}: TreeViewProps): JSX.Element;
+
+export declare interface TreeViewProps {
+  items: readonly TreeViewItem[];
+  selectedValue?: string;
+  defaultSelectedValue?: string;
+  onSelectedValueChange?: (value: string) => void;
+  expandedValues?: string[];
+  defaultExpandedValues?: string[];
+  onExpandedValuesChange?: (values: string[]) => void;
+  ariaLabel: string;
+  emptyText?: ReactNode;
+  className?: string;
+}
+
+export declare interface TreeViewItem {
+  value: string;
+  label: ReactNode;
+  description?: ReactNode;
+  icon?: ReactNode;
+  children?: readonly TreeViewItem[];
+  disabled?: boolean;
+}
+```
+
+<!-- generated-api:end -->

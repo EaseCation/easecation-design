@@ -35,3 +35,22 @@ When `selected` is provided, ActionCard exposes the state through `aria-pressed`
 - **Platforms**: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **Accessibility**: native-button, keyboard-activation, visible-focus, selected-state, touch-target
 - **Tokens**: `--ec-color-panel`, `--ec-color-text`, `--ec-color-border`, `--ec-color-primary`, `--ec-touch-target`
+
+## TypeScript 公开声明
+
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
+
+```ts
+export declare const ActionCard: ForwardRefExoticComponent<
+  ActionCardProps & RefAttributes<HTMLButtonElement>
+>;
+
+export declare interface ActionCardProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  size?: 'sm' | 'md';
+  selected?: boolean;
+}
+```
+
+<!-- generated-api:end -->

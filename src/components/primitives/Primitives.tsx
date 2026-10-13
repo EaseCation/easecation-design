@@ -1,4 +1,5 @@
 import { createPortal } from 'react-dom';
+import { useTheme } from '../../theme/ThemeProvider';
 import {
   forwardRef,
   type CSSProperties,
@@ -81,6 +82,7 @@ export function Portal({
   children: ReactNode;
   container?: Element | null;
 }) {
+  const { portalContainer } = useTheme();
   if (typeof document === 'undefined') return null;
-  return createPortal(children, container ?? document.body);
+  return createPortal(children, container ?? portalContainer ?? document.body);
 }

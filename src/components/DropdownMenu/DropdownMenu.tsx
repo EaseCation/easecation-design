@@ -5,7 +5,10 @@ import { useTheme } from '../../theme/ThemeProvider';
 
 const classes = (...values: Array<string | false | undefined>) => values.filter(Boolean).join(' ');
 export const DropdownMenu = Primitive.Root;
-export const DropdownMenuPortal = Primitive.Portal;
+export function DropdownMenuPortal(props: ComponentProps<typeof Primitive.Portal>) {
+  const { portalContainer } = useTheme();
+  return <Primitive.Portal container={portalContainer ?? undefined} {...props} />;
+}
 export const DropdownMenuTrigger = Primitive.Trigger;
 export const DropdownMenuGroup = Primitive.Group;
 export const DropdownMenuRadioGroup = Primitive.RadioGroup;
@@ -16,15 +19,15 @@ export function DropdownMenuContent({
   sideOffset = 4,
   ...props
 }: ComponentProps<typeof Primitive.Content>) {
-  const { resolvedMode } = useTheme();
+  const { portalContainer } = useTheme();
   return (
-    <Primitive.Portal>
+    <Primitive.Portal container={portalContainer ?? undefined}>
       <Primitive.Content
         data-slot="dropdown-menu-content"
-        data-ec-theme={resolvedMode}
+
         align={align}
         sideOffset={sideOffset}
-        className={classes('ec-dropdown-content', resolvedMode === 'dark' && 'dark', className)}
+        className={classes('ec-dropdown-content', className)}
         {...props}
       />
     </Primitive.Portal>
@@ -135,14 +138,12 @@ export function DropdownMenuSubContent({
   className,
   ...props
 }: ComponentProps<typeof Primitive.SubContent>) {
-  const { resolvedMode } = useTheme();
   return (
     <Primitive.SubContent
-      data-ec-theme={resolvedMode}
       className={classes(
         'ec-dropdown-content',
         'ec-dropdown-sub-content',
-        resolvedMode === 'dark' && 'dark',
+
         className,
       )}
       {...props}

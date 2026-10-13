@@ -40,14 +40,19 @@ options；value/defaultValue；onValueChange；placeholder；label；size；stat
 
 ## TypeScript 公开声明
 
-以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
 
 ```ts
 export declare const Select: ForwardRefExoticComponent<
   SelectProps & RefAttributes<HTMLButtonElement>
 >;
 
-export declare interface SelectProps {
+export declare interface SelectProps extends Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'children' | 'value' | 'defaultValue' | 'onChange'
+> {
   options: readonly SelectOption[];
   id?: string;
   value?: string;
@@ -64,4 +69,16 @@ export declare interface SelectProps {
   triggerClassName?: string;
   contentClassName?: string;
 }
+
+export declare interface SelectOption {
+  value: string;
+  label: ReactNode;
+  group?: string;
+  disabled?: boolean;
+  description?: ReactNode;
+}
+
+export declare type ComponentSize = 'sm' | 'md' | 'lg';
 ```
+
+<!-- generated-api:end -->

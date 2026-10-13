@@ -6,6 +6,7 @@ EaseCation Design 的视觉事实由 Design Tokens、组件实现、Storybook �
 
 - `migration/manifest.json` 保存开发期源文件哈希与实现映射。
 - Token 快照用于检测主题值意外偏移。
+- Console 的调色板已由公共包统一提供；源文件仅保留 Tailwind 映射。快照保留原迁移哈希，并记录本次审查后的映射文件哈希。
 - `pnpm visual:migration:check` 校验视觉基线和组件来源哈希。
 - `pnpm visual:compare` 对桌面和移动视口执行同场景截图比较。
 

@@ -1,5 +1,7 @@
 'use client';
 
+import { useTheme } from '../../theme/ThemeProvider';
+
 import * as React from 'react';
 import { Select as SelectPrimitive } from 'radix-ui';
 
@@ -59,8 +61,9 @@ function SelectContent({
   align = 'center',
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Content>) {
+  const { portalContainer } = useTheme();
   return (
-    <SelectPrimitive.Portal>
+    <SelectPrimitive.Portal container={portalContainer ?? undefined}>
       <SelectPrimitive.Content
         data-slot="select-content"
         data-align-trigger={position === 'item-aligned'}

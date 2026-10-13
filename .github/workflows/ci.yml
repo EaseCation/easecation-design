@@ -17,13 +17,17 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm format:check
+      - run: pnpm tokens:check
       - run: pnpm registry:check
       - run: pnpm visual:migration:check
       - run: pnpm check:open-source
       - run: pnpm typecheck
       - run: pnpm lint
       - run: pnpm test
+      - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm build
+      - run: pnpm test:browser
+      - run: pnpm docs:check
       - run: pnpm build:storybook
       - run: pnpm pack:check
       - run: pnpm build:example

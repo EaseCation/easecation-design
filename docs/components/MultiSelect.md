@@ -16,3 +16,54 @@ import { MultiSelect } from '@easecation/design';
 - Backspace 删除最后一个标签，逗号等 `tokenSeparators` 可批量提交自定义值。
 - 禁用选项不可通过鼠标或键盘加入。
 - 下拉列表支持方向键与 Home/End 导航，并自动滚动到键盘高亮项。
+
+## TypeScript 公开声明
+
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
+
+```ts
+export declare const MultiSelect: ForwardRefExoticComponent<
+  MultiSelectProps & RefAttributes<HTMLInputElement>
+>;
+
+export declare interface MultiSelectProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'size' | 'value' | 'defaultValue' | 'onChange' | 'children'
+> {
+  options: MultiSelectOption[];
+  value?: string[];
+  defaultValue?: string[];
+  onValueChange?: (value: string[]) => void;
+  placeholder?: string;
+  searchPlaceholder?: string;
+  emptyText?: ReactNode;
+  creatable?: boolean;
+  createLabel?: (value: string) => ReactNode;
+  tokenSeparators?: string[];
+  label?: string;
+  removeLabel?: (value: string) => string;
+  size?: ComponentSize;
+  status?: InputStatus;
+  disabled?: boolean;
+  required?: boolean;
+  name?: string;
+  className?: string;
+}
+
+export declare interface MultiSelectOption {
+  value: string;
+  label: ReactNode;
+  textValue?: string;
+  description?: ReactNode;
+  keywords?: string[];
+  disabled?: boolean;
+}
+
+export declare type ComponentSize = 'sm' | 'md' | 'lg';
+
+export declare type InputStatus = 'default' | 'error' | 'warning' | 'success';
+```
+
+<!-- generated-api:end -->

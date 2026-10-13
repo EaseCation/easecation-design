@@ -40,7 +40,9 @@ value/defaultValue；size；status；prefix；suffix；className；inputClassNam
 
 ## TypeScript 公开声明
 
-以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
 
 ```ts
 export declare const Input: ForwardRefExoticComponent<InputProps & RefAttributes<HTMLInputElement>>;
@@ -59,6 +61,8 @@ export declare interface InputProps extends Omit<
   onClear?: () => void;
 }
 
+export declare type ComponentSize = 'sm' | 'md' | 'lg';
+
 export declare type InputStatus = 'default' | 'error' | 'warning' | 'success';
 
 export declare const Textarea: ForwardRefExoticComponent<
@@ -70,3 +74,5 @@ export declare interface TextareaProps extends React.TextareaHTMLAttributes<HTML
   autoResize?: boolean;
 }
 ```
+
+<!-- generated-api:end -->

@@ -64,17 +64,17 @@ export function PopoverContent({
   sideOffset = 4,
   ...props
 }: ComponentProps<typeof Primitive.Content>) {
-  const { resolvedMode } = useTheme();
+  const { portalContainer } = useTheme();
   return (
-    <Primitive.Portal>
+    <Primitive.Portal container={portalContainer ?? undefined}>
       <Primitive.Content
         align={align}
         sideOffset={sideOffset}
         collisionPadding={8}
-        data-ec-theme={resolvedMode}
+
         className={classes(
           'ec-popover-content',
-          resolvedMode === 'dark' ? 'dark' : undefined,
+
           className,
         )}
         {...props}

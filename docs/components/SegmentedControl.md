@@ -44,3 +44,49 @@ inherit from `div`.
 - **Platforms**: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **Accessibility**: radiogroup-semantics, roving-tabindex, arrow-keys, touch-target
 - **Tokens**: `--ec-color-muted`, `--ec-color-panel`, `--ec-color-focus`, `--ec-touch-target`
+
+## TypeScript 公开声明
+
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
+
+```ts
+export declare function SegmentedControl({
+  options,
+  value,
+  defaultValue,
+  onValueChange,
+  size,
+  orientation,
+  fullWidth,
+  ariaLabel,
+  overflowLabel,
+  className,
+  ...props
+}: SegmentedControlProps): JSX.Element;
+
+export declare interface SegmentedControlProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'defaultValue' | 'onChange'
+> {
+  options: SegmentedControlOption[];
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+  size?: 'sm' | 'md' | 'lg';
+  orientation?: 'horizontal' | 'vertical';
+  fullWidth?: boolean;
+  ariaLabel: string;
+  overflowLabel?: string;
+}
+
+export declare interface SegmentedControlOption {
+  value: string;
+  label: ReactNode;
+  icon?: ReactNode;
+  disabled?: boolean;
+}
+```
+
+<!-- generated-api:end -->

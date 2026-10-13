@@ -26,7 +26,7 @@ Body 支持 `padding: default | none`。
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **可访问性**：dialog-focus-trap, escape-close, responsive-centered-dialog
-- **主要 Token**：`--popover`, `--shadow-xl`
+- **主要 Token**：`--ec-color-popover`, `--ec-shadow-xl`
 
 ## 使用约束
 
@@ -42,7 +42,9 @@ Body 支持 `padding: default | none`。
 
 ## TypeScript 公开声明
 
-以下内容直接来自发布包的 `index.d.ts`，用于核对完整 Props、联合类型、泛型和原生属性继承。
+以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
+
+<!-- generated-api:start -->
 
 ```ts
 export declare function ResponsiveOverlay({
@@ -54,4 +56,74 @@ export declare function ResponsiveOverlay({
   onOpenChange?: (open: boolean) => void;
   children: ReactNode;
 }): JSX.Element;
+
+export declare function ResponsiveOverlayBody({
+  className,
+  padding,
+  ...props
+}: ResponsiveOverlayBodyProps): JSX.Element;
+
+export declare interface ResponsiveOverlayBodyProps extends ComponentProps<'div'> {
+  padding?: 'default' | 'none';
+}
+
+export declare function ResponsiveOverlayContent({
+  children,
+  className,
+  mobileClassName,
+  mobileSide,
+  desktopSize,
+  layer,
+  showCloseButton,
+  closeLabel,
+  instant,
+  forceMount,
+  style,
+  ...props
+}: ResponsiveOverlayContentProps): JSX.Element;
+
+export declare interface ResponsiveOverlayContentProps extends ComponentProps<
+  typeof Dialog.Content
+> {
+  mobileClassName?: string;
+  mobileSide?: 'top' | 'right' | 'bottom' | 'left' | 'center';
+  desktopSize?: ResponsiveOverlayDesktopSize;
+  layer?: 'default' | 'nested';
+  showCloseButton?: boolean;
+  closeLabel?: string;
+  instant?: boolean;
+  forceMount?: true;
+}
+
+export declare const Content: ForwardRefExoticComponent<
+  HTMLAttributes<HTMLElement> & RefAttributes<HTMLElement>
+>;
+
+export declare type ResponsiveOverlayDesktopSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
+
+export declare function ResponsiveOverlayDescription({
+  className,
+  ...props
+}: ComponentProps<typeof Dialog.Description>): JSX.Element;
+
+export declare function ResponsiveOverlayFooter({
+  className,
+  ...props
+}: ComponentProps<'div'>): JSX.Element;
+
+export declare function ResponsiveOverlayHeader({
+  className,
+  ...props
+}: ComponentProps<'div'>): JSX.Element;
+
+export declare function ResponsiveOverlayTitle({
+  className,
+  ...props
+}: ComponentProps<typeof Dialog.Title>): JSX.Element;
+
+export declare const ResponsiveOverlayTrigger: ForwardRefExoticComponent<
+  Dialog.DialogTriggerProps & RefAttributes<HTMLButtonElement>
+>;
 ```
+
+<!-- generated-api:end -->
