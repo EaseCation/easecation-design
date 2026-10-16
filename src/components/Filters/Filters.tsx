@@ -1,5 +1,6 @@
-﻿import { CalendarIcon, ChevronDownIcon } from 'lucide-react';
+import { CalendarIcon, ChevronDownIcon } from 'lucide-react';
 import {
+  forwardRef,
   useId,
   useMemo,
   useRef,
@@ -23,9 +24,17 @@ import { Label } from '../Label';
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
 import { Select } from '../Select';
 import { cn } from '../../utils/classNames';
+import { useLocale } from '../../locale/LocaleProvider';
 export function createFilterEnterSearchHandler(onSearch?: () => void) {
   return (event: KeyboardEvent<HTMLElement>) => {
-    if (!onSearch || event.key !== 'Enter' || event.defaultPrevented) return;
+    if (
+      !onSearch ||
+      event.key !== 'Enter' ||
+      event.defaultPrevented ||
+      event.nativeEvent.isComposing ||
+      event.nativeEvent.keyCode === 229
+    )
+      return;
     const target = event.target;
     if (
       !(target instanceof HTMLInputElement) ||
@@ -50,6 +59,7 @@ export function FilterBar({
   variant = 'plain',
   align = 'end',
   onSearch,
+  onKeyDown,
   ...props
 }: FilterBarProps) {
   return (
@@ -60,7 +70,10 @@ export function FilterBar({
         align === 'start' && 'ec-filter-bar--start',
         className,
       )}
-      onKeyDown={createFilterEnterSearchHandler(onSearch)}
+      onKeyDown={(event) => {
+        onKeyDown?.(event);
+        createFilterEnterSearchHandler(onSearch)(event);
+      }}
       {...props}
     >
       <div className="ec-filter-bar__fields">{children}</div>
@@ -98,41 +111,43 @@ export function FilterField({
   );
 }
 export type FilterSelectOption = { value: string; label: string };
-export function FilterSelect({
-  value,
-  onValueChange,
-  options,
-  placeholder = 'Select an option',
-  className,
-  triggerClassName,
-  size = 'lg',
-  disabled,
-  'aria-label': ariaLabel,
-}: {
+export interface FilterSelectProps extends Omit<ComponentProps<typeof Select>, 'options' | 'ref'> {
   value: string;
   onValueChange: (value: string) => void;
   options: FilterSelectOption[];
-  placeholder?: string;
-  className?: string;
-  triggerClassName?: string;
-  size?: ComponentSize;
-  disabled?: boolean;
-  'aria-label'?: string;
-}) {
+}
+export const FilterSelect = forwardRef<HTMLButtonElement, FilterSelectProps>(function FilterSelect(
+  {
+    value,
+    onValueChange,
+    options,
+    placeholder = 'Select an option',
+    className,
+    triggerClassName,
+    size = 'lg',
+    disabled,
+    'aria-label': ariaLabel,
+    ...controlProps
+  },
+  ref,
+) {
   return (
     <Select
+      {...controlProps}
+      ref={ref}
       className={cn('ec-filter-select', className)}
       value={value}
       onValueChange={onValueChange}
       options={options}
       placeholder={placeholder}
-      label={ariaLabel}
+      label={ariaLabel ?? controlProps.label}
       triggerClassName={triggerClassName}
       size={size}
       disabled={disabled}
     />
   );
-}
+});
+
 export type FilterPickerOption = FilterSelectOption;
 type PickerBase = {
   options: FilterPickerOption[];
@@ -149,6 +164,7 @@ export type FilterPickerProps =
   | (PickerBase & { mode?: 'single'; value: string; onValueChange: (value: string) => void })
   | (PickerBase & { mode: 'multiple'; value: string[]; onValueChange: (value: string[]) => void });
 export function FilterPicker(props: FilterPickerProps) {
+  const { messages } = useLocale();
   if (props.mode !== 'multiple') return <FilterSelect {...props} />;
   const labels = props.options.filter((o) => props.value.includes(o.value)).map((o) => o.label);
   const text = labels.length
@@ -177,7 +193,7 @@ export function FilterPicker(props: FilterPickerProps) {
             props.onValueChange([]);
           }}
         >
-          {props.clearLabel ?? 'All'}
+          {props.clearLabel ?? messages.all}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         {props.options.map((o) => (
@@ -278,7 +294,10 @@ export function DateTimePicker({
         collisionPadding={8}
         onOpenAutoFocus={(event) => {
           event.preventDefault();
-          if (window.matchMedia?.('(pointer: coarse)').matches) return;
+          if (window.matchMedia?.('(pointer: coarse)').matches) {
+            (event.target as HTMLElement | null)?.focus({ preventScroll: true });
+            return;
+          }
           dateInputRef.current?.focus({ preventScroll: true });
         }}
       >
@@ -376,8 +395,8 @@ export function DateRangePicker({
   startTimeLabel = 'Start time',
   endTimeLabel = 'End time',
   presetsLabel = 'Quick ranges',
-  applyLabel = 'Apply',
-  cancelLabel = 'Cancel',
+  applyLabel,
+  cancelLabel,
   invalidRangeMessage = 'The end must not be earlier than the start.',
   allowOpenRange = false,
   size = 'lg',
@@ -385,6 +404,7 @@ export function DateRangePicker({
   disabled = false,
   'aria-label': ariaLabel,
 }: DateRangePickerProps) {
+  const { messages } = useLocale();
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState(value);
 
@@ -438,7 +458,10 @@ export function DateRangePicker({
         collisionPadding={8}
         className="ec-date-range-popover"
         onOpenAutoFocus={(event) => {
-          if (window.matchMedia?.('(pointer: coarse)').matches) event.preventDefault();
+          if (window.matchMedia?.('(pointer: coarse)').matches) {
+            event.preventDefault();
+            (event.target as HTMLElement | null)?.focus({ preventScroll: true });
+          }
         }}
       >
         {presets.length ? (
@@ -510,14 +533,14 @@ export function DateRangePicker({
 
         <div className="ec-date-range-actions">
           <Button variant="ghost" tone="muted" size="sm" onClick={() => setOpen(false)}>
-            {cancelLabel}
+            {cancelLabel ?? messages.cancel}
           </Button>
           <Button
             size="sm"
             disabled={(allowOpenRange ? !hasValue : !complete) || invalid}
             onClick={() => commit(draft)}
           >
-            {applyLabel}
+            {applyLabel ?? messages.apply}
           </Button>
         </div>
       </PopoverContent>

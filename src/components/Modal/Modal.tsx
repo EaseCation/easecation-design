@@ -1,7 +1,8 @@
-﻿import { useEffect, useId, type CSSProperties, type ReactNode } from 'react';
+import { useLocale } from '../../locale/LocaleProvider';
+import { useId, type CSSProperties, type ReactNode } from 'react';
 import { XIcon } from 'lucide-react';
 import { Dialog as DialogPrimitive } from 'radix-ui';
-import { registerOverlay } from '../../platform/overlayStack';
+import { useOverlayBehavior, useOverlayFocus } from '../../platform/useOverlayBehavior';
 import { useOverlayViewportStyle } from '../../platform/useOverlayViewport';
 import { IconButton } from '../Button';
 import { useTheme } from '../../theme/ThemeProvider';
@@ -14,6 +15,9 @@ export interface ModalProps {
   children: ReactNode;
   footer?: ReactNode;
   closeOnBackdrop?: boolean;
+  /** Blocks every user dismissal, including host Back. */
+  dismissible?: boolean;
+  pending?: boolean;
   fullScreenOnMobile?: boolean;
   showCloseButton?: boolean;
   closeLabel?: string;
@@ -21,15 +25,6 @@ export interface ModalProps {
   instant?: boolean;
   className?: string;
   style?: CSSProperties;
-}
-
-function isTouchDevice() {
-  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
-  return (
-    'ontouchstart' in window ||
-    navigator.maxTouchPoints > 0 ||
-    window.matchMedia?.('(pointer: coarse)').matches
-  );
 }
 
 export function Modal({
@@ -40,30 +35,36 @@ export function Modal({
   children,
   footer,
   closeOnBackdrop = true,
+  dismissible = true,
+  pending = false,
   fullScreenOnMobile = false,
   showCloseButton = true,
-  closeLabel = 'Close',
+  closeLabel: closeLabelProp,
   ariaLabel,
   instant = false,
   className,
   style,
 }: ModalProps) {
+  const { messages } = useLocale();
+  const closeLabel = closeLabelProp ?? messages.close;
   const id = useId();
   const { portalContainer } = useTheme();
   const viewportStyle = useOverlayViewportStyle(style);
-  useEffect(() => {
-    if (!open) return;
-    return registerOverlay({ id, close: () => onOpenChange(false) });
-  }, [id, onOpenChange, open]);
+  const canDismiss = dismissible && !pending;
+  const changeOpen = useOverlayBehavior(open, onOpenChange, canDismiss);
+  const focus = useOverlayFocus();
 
   return (
-    <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
+    <DialogPrimitive.Root open={open} onOpenChange={changeOpen}>
       <DialogPrimitive.Portal container={portalContainer ?? undefined}>
         <DialogPrimitive.Overlay
           className={['ec-dialog-overlay', instant && 'is-instant'].filter(Boolean).join(' ')}
           data-testid="modal-overlay"
         />
         <DialogPrimitive.Content
+          {...focus}
+          tabIndex={-1}
+          aria-busy={pending || undefined}
           className={[
             'ec-modal',
 
@@ -77,14 +78,14 @@ export function Modal({
           aria-label={title ? undefined : (ariaLabel ?? closeLabel)}
           aria-describedby={description ? `${id}-description` : undefined}
           style={viewportStyle}
-          onOpenAutoFocus={(event) => {
-            if (isTouchDevice()) event.preventDefault();
+          onEscapeKeyDown={(event) => {
+            if (!canDismiss) event.preventDefault();
           }}
           onPointerDownOutside={(event) => {
-            if (!closeOnBackdrop) event.preventDefault();
+            if (!closeOnBackdrop || !canDismiss) event.preventDefault();
           }}
           onInteractOutside={(event) => {
-            if (!closeOnBackdrop) event.preventDefault();
+            if (!closeOnBackdrop || !canDismiss) event.preventDefault();
           }}
         >
           {title || description ? (
@@ -105,6 +106,7 @@ export function Modal({
                 className="ec-overlay-close"
                 size="sm"
                 label={closeLabel}
+                disabled={!canDismiss}
                 icon={<XIcon />}
               />
             </DialogPrimitive.Close>

@@ -23,11 +23,45 @@ export default defineConfig({
     },
     cssCodeSplit: false,
     rollupOptions: {
+      preserveEntrySignatures: 'allow-extension',
       external: (id) =>
         externalPackages.some(
           (packageName) => id === packageName || id.startsWith(`${packageName}/`),
         ),
       output: {
+        // Keep the common interaction primitives independent of advanced controls.
+        // Few semantic chunks avoid per-module compression overhead while allowing
+        // consumer routes to defer tables, pickers and other documentation examples.
+        strictExecutionOrder: false,
+        codeSplitting: {
+          includeDependenciesRecursively: false,
+          groups: [
+            {
+              name(id) {
+                if (/\/src\/(hooks|theme|locale|platform)\//.test(id)) return 'foundation';
+                if (/\/src\/utils\//.test(id)) return 'advanced-controls';
+                const component = id.match(/\/src\/components\/([^/]+)\//)?.[1];
+                if (!component || component === 'Essentials') return;
+                const core = new Set([
+                  'Button',
+                  'Badge',
+                  'Card',
+                  'Switch',
+                  'Modal',
+                  'Drawer',
+                  'DropdownMenu',
+                  'ThemeModeMenuItems',
+                  'Spinner',
+                  'Skeleton',
+                  'PageSkeleton',
+                  'PageTransition',
+                  'Input',
+                ]);
+                return core.has(component) ? 'controls' : 'advanced-controls';
+              },
+            },
+          ],
+        },
         assetFileNames: (asset) =>
           asset.name?.endsWith('.css') ? 'style.css' : 'assets/[name][extname]',
       },

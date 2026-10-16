@@ -54,6 +54,14 @@ export declare interface CalendarProps extends Omit<ComponentProps<'div'>, 'onSe
   selected?: Date | DateRange;
   onSelect?: (value: CalendarSelectValue) => void;
   showLabel?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  required?: boolean;
+  /** Inclusive local-calendar date bounds. Strings use YYYY-MM-DD. */
+  min?: Date | string;
+  max?: Date | string;
+  /** Native date-input step in days. */
+  step?: number;
   labels?: {
     single?: string;
     rangeStart?: string;

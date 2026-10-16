@@ -45,34 +45,58 @@ options；value；onValueChange；placeholder；size；disabled；className；tr
 <!-- generated-api:start -->
 
 ```ts
-export declare function FilterSelect({
-  value,
-  onValueChange,
-  options,
-  placeholder,
-  className,
-  triggerClassName,
-  size,
-  disabled,
-  'aria-label': ariaLabel,
-}: {
+export declare const FilterSelect: ForwardRefExoticComponent<
+  FilterSelectProps & RefAttributes<HTMLButtonElement>
+>;
+
+export declare interface FilterSelectProps extends Omit<
+  ComponentProps<typeof Select>,
+  'options' | 'ref'
+> {
   value: string;
   onValueChange: (value: string) => void;
   options: FilterSelectOption[];
+}
+
+export declare const Select: ForwardRefExoticComponent<
+  SelectProps & RefAttributes<HTMLButtonElement>
+>;
+
+export declare interface SelectProps extends Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'children' | 'value' | 'defaultValue' | 'onChange'
+> {
+  options: readonly SelectOption[];
+  id?: string;
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
   placeholder?: string;
+  label?: string;
+  size?: ComponentSize;
+  status?: 'default' | 'error' | 'warning' | 'success';
+  disabled?: boolean;
+  required?: boolean;
+  name?: string;
   className?: string;
   triggerClassName?: string;
-  size?: ComponentSize;
+  contentClassName?: string;
+}
+
+export declare interface SelectOption {
+  value: string;
+  label: ReactNode;
+  group?: string;
   disabled?: boolean;
-  'aria-label'?: string;
-}): JSX.Element;
+  description?: ReactNode;
+}
+
+export declare type ComponentSize = 'sm' | 'md' | 'lg';
 
 export declare type FilterSelectOption = {
   value: string;
   label: string;
 };
-
-export declare type ComponentSize = 'sm' | 'md' | 'lg';
 ```
 
 <!-- generated-api:end -->

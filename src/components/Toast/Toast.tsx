@@ -1,4 +1,4 @@
-﻿import {
+import {
   CircleCheckIcon,
   InfoIcon,
   Loader2Icon,
@@ -21,6 +21,7 @@ import {
   type ExternalToast,
   type ToasterProps,
 } from 'sonner';
+import { useLocale } from '../../locale/LocaleProvider';
 import { useTheme } from '../../theme/ThemeProvider';
 
 export type ToastTone = 'info' | 'success' | 'warning' | 'danger';
@@ -48,11 +49,17 @@ export function Toaster({
     left: '0.875rem',
   },
   swipeDirections,
+  toastOptions,
   ...props
 }: ToasterProps) {
   const { resolvedMode } = useTheme();
+  const { messages } = useLocale();
   return (
     <SonnerToaster
+      closeButton
+      richColors
+      duration={4000}
+      containerAriaLabel={messages.notifications}
       theme={theme ?? resolvedMode}
       position={position}
       mobileOffset={mobileOffset}
@@ -78,10 +85,11 @@ export function Toaster({
         } as CSSProperties
       }
       toastOptions={{
-        ...props.toastOptions,
+        closeButtonAriaLabel: messages.close,
+        ...toastOptions,
         classNames: {
-          ...props.toastOptions?.classNames,
-          toast: ['cn-toast', props.toastOptions?.classNames?.toast].filter(Boolean).join(' '),
+          ...toastOptions?.classNames,
+          toast: ['cn-toast', toastOptions?.classNames?.toast].filter(Boolean).join(' '),
         },
       }}
       {...props}

@@ -30,6 +30,12 @@ open；onOpenChange；title；description；footer；closeOnBackdrop；fullScree
 - **可访问性**：aria-modal, escape-close, focus-restore
 - **主要 Token**：`--ec-color-overlay`, `--ec-z-modal`, `--ec-safe-top`
 
+## 关闭与焦点
+
+`dismissible={false}` 或 `pending` 会阻止关闭按钮、Escape、遮罩和宿主返回键关闭。锁定的最上层仍消费返回操作，避免误关下面的弹层。`closeOnBackdrop={false}`（Modal / Drawer）只限制遮罩，保留其他关闭方式。
+
+触屏打开时焦点移入容器，避免自动弹出键盘；桌面保留首个可交互元素的自动聚焦。关闭后恢复打开前焦点。更改 `onOpenChange` 回调不会改变弹层顺序。默认关闭文案来自 `LocaleProvider`，`closeLabel` 可覆盖。
+
 ## 使用约束
 
 - 业务状态、请求、权限和路由由应用层维护，通过 Props 和回调传入。
@@ -57,9 +63,11 @@ export declare function Modal({
   children,
   footer,
   closeOnBackdrop,
+  dismissible,
+  pending,
   fullScreenOnMobile,
   showCloseButton,
-  closeLabel,
+  closeLabel: closeLabelProp,
   ariaLabel,
   instant,
   className,
@@ -74,6 +82,9 @@ export declare interface ModalProps {
   children: ReactNode;
   footer?: ReactNode;
   closeOnBackdrop?: boolean;
+  /** Blocks every user dismissal, including host Back. */
+  dismissible?: boolean;
+  pending?: boolean;
   fullScreenOnMobile?: boolean;
   showCloseButton?: boolean;
   closeLabel?: string;

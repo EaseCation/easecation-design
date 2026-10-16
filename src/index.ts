@@ -61,3 +61,6 @@ export * from './components/ThemeModeMenuItems';
 export * from './components/Spinner';
 export * from './components/PageSkeleton';
 export * from './components/PageTransition';
+export * from './locale/LocaleProvider';
+export * from './hooks/useReducedMotion';
+export * from './components/ConfirmDialog';

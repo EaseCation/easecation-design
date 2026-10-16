@@ -26,6 +26,14 @@ data；columns；getRowId；isLoading；mobileCard；layout；empty/error 文案
 - **可访问性**：native-table, mobile-card-fallback, loading-empty-error-states
 - **主要 Token**：`--ec-color-surface-raised`, `--ec-color-border`
 
+## 请求状态
+
+优先传 `isError` 表示失败，可以不提供错误描述。未传 `isError` 时，仅非空 `errorDescription` 触发失败态，保持旧调用的行为；静态配置的 `errorTitle` 不会隐藏正常数据。显式 `isError={false}` 可覆盖保留的旧错误描述。
+
+首次加载使用 `isLoading` 显示带 `role="status"` 和 `aria-busy` 的骨架，`loadingLabel` 可自定义播报。后台刷新使用 `isRefreshing`，已有行保留，并以 `aria-busy` 标记刷新过程。请求、缓存和响应顺序由应用管理。
+
+默认加载、空数据、失败和重试文案来自 `LocaleProvider`；业务相关的描述由应用传入。
+
 ## 使用约束
 
 - 业务状态、请求、权限和路由由应用层维护，通过 Props 和回调传入。
@@ -50,6 +58,9 @@ export declare function QueryDataTable<T>({
   columns,
   getRowId,
   isLoading,
+  isError,
+  isRefreshing,
+  loadingLabel: loadingLabelProp,
   mobileCard,
   layout,
   renderTableRow,
@@ -58,11 +69,11 @@ export declare function QueryDataTable<T>({
   panelClassName,
   tableClassName,
   tableRowClassName,
-  emptyTitle,
+  emptyTitle: emptyTitleProp,
   emptyDescription,
-  errorTitle,
+  errorTitle: errorTitleProp,
   errorDescription,
-  retryLabel,
+  retryLabel: retryLabelProp,
   onRetry,
 }: QueryDataTableProps<T>): JSX.Element;
 
@@ -71,6 +82,10 @@ export declare interface QueryDataTableProps<T> {
   columns: ColumnDef<T, any>[];
   getRowId?: (row: T, index: number) => string;
   isLoading?: boolean;
+  isError?: boolean;
+  /** Retain existing rows while a background request runs. */
+  isRefreshing?: boolean;
+  loadingLabel?: string;
   mobileCard?: (row: T) => ReactNode;
   layout?: 'auto' | 'table';
   renderTableRow?: (props: QueryDataTableRowRenderProps<T>) => ReactNode;

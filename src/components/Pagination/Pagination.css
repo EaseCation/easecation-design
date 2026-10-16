@@ -1,0 +1,17 @@
+.ec-pagination {
+  flex-wrap: wrap;
+}
+.ec-pagination__options,
+.ec-pagination__jump {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--ec-space-2);
+}
+.ec-pagination__jump .ec-input-shell {
+  width: 5rem;
+}
+.ec-pagination__position {
+  color: var(--ec-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}

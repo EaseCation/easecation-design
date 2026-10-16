@@ -63,6 +63,7 @@ export declare function FilterBar({
   variant,
   align,
   onSearch,
+  onKeyDown,
   ...props
 }: FilterBarProps): JSX.Element;
 

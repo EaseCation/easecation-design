@@ -165,12 +165,18 @@ export const publicTokenDefaults = {
   '--ec-color-border': 'var(--border)',
   '--ec-color-border-strong': 'var(--input)',
   '--ec-color-focus': 'var(--ring)',
+  '--ec-color-text-success':
+    'color-mix(in srgb, var(--ec-color-success) 55%, var(--ec-color-text))',
   '--ec-color-success': 'var(--success)',
   '--ec-color-on-success': 'var(--success-foreground)',
+  '--ec-color-text-warning':
+    'color-mix(in srgb, var(--ec-color-warning) 55%, var(--ec-color-text))',
   '--ec-color-warning': 'var(--warning)',
   '--ec-color-on-warning': 'var(--warning-foreground)',
+  '--ec-color-text-danger': 'color-mix(in srgb, var(--ec-color-danger) 55%, var(--ec-color-text))',
   '--ec-color-danger': 'var(--danger)',
   '--ec-color-on-danger': 'var(--danger-foreground)',
+  '--ec-color-text-info': 'color-mix(in srgb, var(--ec-color-info) 55%, var(--ec-color-text))',
   '--ec-color-info': 'var(--info)',
   '--ec-color-on-info': 'var(--info-foreground)',
   '--ec-color-overlay': 'oklch(0.12 0.02 260 / 0.48)',

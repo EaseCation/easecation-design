@@ -1,4 +1,5 @@
-import { AlertTriangleIcon, InboxIcon } from 'lucide-react';
+import { useLocale } from '../../locale/LocaleProvider';
+import { AlertTriangleIcon, InboxIcon, ShieldOffIcon } from 'lucide-react';
 import type { ComponentProps, ReactNode } from 'react';
 import { Button } from '../Button';
 export interface EmptyStateProps extends ComponentProps<'div'> {
@@ -17,6 +18,7 @@ export function EmptyState({
   className,
   ...props
 }: EmptyStateProps) {
+  const { messages } = useLocale();
   return (
     <div
       className={['ec-empty-state', embedded && 'is-embedded', className].filter(Boolean).join(' ')}
@@ -24,7 +26,7 @@ export function EmptyState({
     >
       <div className="ec-state-icon">{icon ?? <InboxIcon />}</div>
       <div className="ec-state-copy">
-        <h3>{title}</h3>
+        <h3>{title ?? messages.loadFailed}</h3>
         {description ? <p>{description}</p> : null}
       </div>
       {action}
@@ -40,11 +42,12 @@ export interface ErrorStateProps extends ComponentProps<'div'> {
 export function ErrorState({
   title,
   description,
-  actionLabel = 'Retry',
+  actionLabel,
   onRetry,
   className,
   ...props
 }: ErrorStateProps) {
+  const { messages } = useLocale();
   return (
     <div
       className={['ec-empty-state', 'ec-error-state', className].filter(Boolean).join(' ')}
@@ -54,12 +57,12 @@ export function ErrorState({
         <AlertTriangleIcon />
       </div>
       <div className="ec-state-copy">
-        <h3>{title}</h3>
+        <h3>{title ?? messages.loadFailed}</h3>
         {description ? <p>{description}</p> : null}
       </div>
       {onRetry ? (
         <Button variant="outline" onClick={onRetry}>
-          {actionLabel}
+          {actionLabel ?? messages.retry}
         </Button>
       ) : null}
     </div>
@@ -73,14 +76,15 @@ export interface InlineQueryErrorProps extends ComponentProps<'div'> {
   embedded?: boolean;
 }
 export function InlineQueryError({
-  title = 'Unable to load',
+  title,
   description,
-  actionLabel = 'Retry',
+  actionLabel,
   onRetry,
   embedded = false,
   className,
   ...props
 }: InlineQueryErrorProps) {
+  const { messages } = useLocale();
   return (
     <div
       role="alert"
@@ -91,14 +95,30 @@ export function InlineQueryError({
     >
       <div className="ec-inline-error__title">
         <AlertTriangleIcon />
-        <h3>{title}</h3>
+        <h3>{title ?? messages.loadFailed}</h3>
       </div>
       {description ? <p>{description}</p> : null}
       {onRetry ? (
         <Button variant="outline" size="sm" onClick={onRetry}>
-          {actionLabel}
+          {actionLabel ?? messages.retry}
         </Button>
       ) : null}
     </div>
+  );
+}
+
+export interface AccessDeniedStateProps extends Omit<EmptyStateProps, 'title' | 'icon'> {
+  title?: string;
+}
+/** Permission presentation only; authorization and navigation belong to the host. */
+export function AccessDeniedState({ title, description, ...props }: AccessDeniedStateProps) {
+  const { messages } = useLocale();
+  return (
+    <EmptyState
+      title={title ?? messages.accessDenied}
+      description={description ?? messages.accessDeniedDescription}
+      icon={<ShieldOffIcon aria-hidden="true" />}
+      {...props}
+    />
   );
 }

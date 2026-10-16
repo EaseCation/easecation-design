@@ -1,7 +1,7 @@
-﻿import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { useEffect } from 'react';
 import { describe, expect, it } from 'vitest';
-import { ToastProvider, useToast } from '../src';
+import { ToastProvider, useToast, LocaleProvider } from '../src';
 
 function Trigger() {
   const toast = useToast();
@@ -22,4 +22,15 @@ describe('ToastProvider', () => {
     view.unmount();
     expect(screen.queryByText('Saved')).not.toBeInTheDocument();
   });
+});
+
+it('provides a localized close action by default', async () => {
+  render(
+    <LocaleProvider locale="zh-CN">
+      <ToastProvider>
+        <Trigger />
+      </ToastProvider>
+    </LocaleProvider>,
+  );
+  expect(await screen.findByRole('button', { name: '关闭' })).toBeInTheDocument();
 });

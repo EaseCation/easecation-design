@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Accordion, Combobox, MultiSelect } from '../src';
+import { Accordion, Button, Combobox, Modal, MultiSelect } from '../src';
 
 const regions = [
   { value: 'east', label: 'East region', keywords: ['primary'] },
@@ -261,4 +261,91 @@ it('supports controlled multiple expansion and disabled items', async () => {
   );
   expect(first).toHaveAttribute('data-state', 'open');
   expect(screen.getByText('First panel')).toBeVisible();
+});
+
+it('preserves a controlled selection when a cancelled confirmation restores combobox focus', async () => {
+  const user = userEvent.setup();
+  const focus = vi.fn();
+  function Harness() {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <Combobox
+          label="Confirmed region"
+          options={regions}
+          value="east"
+          onFocus={focus}
+          onValueChange={() => setOpen(true)}
+        />
+        <Modal open={open} onOpenChange={setOpen} title="Confirm region">
+          <Button onClick={() => setOpen(false)}>Cancel change</Button>
+        </Modal>
+      </>
+    );
+  }
+  render(<Harness />);
+  const input = screen.getByRole('combobox', { name: 'Confirmed region' });
+  await user.click(input);
+  await user.click(screen.getByRole('option', { name: 'West region' }));
+  expect(screen.getByRole('dialog', { name: 'Confirm region' })).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Cancel change' }));
+  await waitFor(() => expect(input).toHaveFocus());
+  expect(input).toHaveValue('East region');
+  expect(input).toHaveAttribute('aria-expanded', 'false');
+  expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  expect(focus.mock.calls.length).toBeGreaterThanOrEqual(2);
+  await user.keyboard('{ArrowDown}');
+  expect(input).toHaveAttribute('aria-expanded', 'true');
+  expect(screen.getByRole('option', { name: 'West region' })).toBeInTheDocument();
+});
+
+it('keeps keyboard focus passive and still opens options when typing', async () => {
+  const user = userEvent.setup();
+  const focus = vi.fn();
+  render(<Combobox label="Passive focus" options={regions} defaultValue="east" onFocus={focus} />);
+  const input = screen.getByRole('combobox', { name: 'Passive focus' });
+  await user.tab();
+  expect(input).toHaveFocus();
+  expect(input).toHaveValue('East region');
+  expect(input).toHaveAttribute('aria-expanded', 'false');
+  expect(focus).toHaveBeenCalledTimes(1);
+  await user.keyboard('{Control>}a{/Control}west');
+  expect(input).toHaveAttribute('aria-expanded', 'true');
+  expect(screen.getByRole('option', { name: 'West region' })).toBeInTheDocument();
+});
+
+it('does not reopen a multi-select when a dialog restores focus', async () => {
+  const user = userEvent.setup();
+  const focus = vi.fn();
+  function Harness() {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <MultiSelect
+          label="Restored tags"
+          options={regions}
+          onFocus={focus}
+          onKeyDown={(event) => {
+            if (event.key === 'F2') setOpen(true);
+          }}
+        />
+        <Modal open={open} onOpenChange={setOpen} title="Review tags">
+          <Button onClick={() => setOpen(false)}>Cancel review</Button>
+        </Modal>
+      </>
+    );
+  }
+  render(<Harness />);
+  const input = screen.getByRole('combobox', { name: 'Restored tags' });
+  await user.tab();
+  expect(input).toHaveFocus();
+  expect(input).toHaveAttribute('aria-expanded', 'false');
+  await user.keyboard('{F2}');
+  await user.click(screen.getByRole('button', { name: 'Cancel review' }));
+  await waitFor(() => expect(input).toHaveFocus());
+  expect(input).toHaveAttribute('aria-expanded', 'false');
+  expect(focus.mock.calls.length).toBeGreaterThanOrEqual(2);
+  await user.click(input);
+  expect(input).toHaveAttribute('aria-expanded', 'true');
+  expect(screen.getByRole('option', { name: 'East region' })).toBeInTheDocument();
 });

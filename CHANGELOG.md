@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.17.0
+
+### Minor Changes
+
+- Share cancellable Button/Card press feedback and expose live useReducedMotion. Prevent disabled slotted button activation, respect IME composition in filter search, preserve toast base styling when merging options, and add native calendar date bounds and disabled/read-only constraints.
+- Add LocaleProvider for shared UI messages with English, Chinese, nested inheritance and explicit overrides.
+- Add ConfirmDialog with pending dismissal protection, duplicate-submit prevention, safe error feedback and explicit retry. Unify Modal, Drawer and ResponsiveDialog focus restoration and stable host-back stacking; add dismissible and pending controls. QueryDataTable gains explicit error and refreshing states with accessible loading feedback.
+- Unify pagination controls, locale labels, page-size selection and IME-safe page jumps. Support unknown totals and authoritative page counts without inventing result counts. Preserve compact navigation and pending-state locks.
+- Add localized AccessDeniedState; standardize notification close controls, duration and accessible labels.
+
+### Patch Changes
+
+- Use the theme primary color directly for hovered and selected ActionCard borders, avoiding hue shifts when mixing with achromatic borders in dark mode.
+- Keep Combobox selection labels intact when dialogs restore focus, and prevent MultiSelect reopening on passive focus. Opening now requires an explicit click, text input or arrow-key action; passive focus still invokes the consumer onFocus callback.
+- Keep common interaction controls independent of advanced controls in the published ESM output. Applications can defer table, picker and other advanced-component documentation without loading them on every route. Preserve the public entry points, declaration files and single CSS import; enforce compressed budgets across all emitted chunks.
+- Fix segmented overflow icons being squeezed by size-specific horizontal padding. Keep icons square, scale large controls to a 24px icon, and preserve 44px touch targets for every size.
+- Add theme-aware semantic text colors for warning, success, info, and danger. Consumers can use these for small status text without reusing bright fill colors.
+- Allow Field to retain a supplied stable control ID while sharing labels, help, invalid state and error announcements across application forms.
+
+  Forward FilterSelect control IDs, accessibility attributes and focus refs to its Select trigger, so shared validation and first-error focus also work for filtered choices.
+
 ## 0.16.0
 
 ### Minor Changes

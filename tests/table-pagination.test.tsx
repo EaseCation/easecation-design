@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   Pagination,
+  LocaleProvider,
   Table,
   TableBody,
   TableCell,
@@ -77,4 +78,69 @@ it('navigates pages and exposes current page', async () => {
   expect(screen.getByRole('button', { name: 'Page 2' })).toHaveAttribute('aria-current', 'page');
   await user.click(screen.getByRole('button', { name: 'Next page' }));
   expect(page).toBe(3);
+});
+
+it('keeps unknown totals honest and locks navigation while pending', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  const { rerender } = render(<Pagination page={4} hasNextPage onPageChange={change} />);
+  expect(screen.queryByText(/items/)).not.toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Next page' }));
+  expect(change).toHaveBeenCalledWith(5);
+  rerender(<Pagination page={4} hasNextPage disabled onPageChange={change} />);
+  expect(screen.getByRole('button', { name: 'Next page' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled();
+  rerender(<Pagination page={4} onPageChange={change} />);
+  expect(screen.getByRole('button', { name: 'Next page' })).toBeDisabled();
+});
+
+it('validates jump input, respects IME and handles keyboard submit', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  render(<Pagination page={1} total={100} showPageJump onPageChange={change} />);
+  const input = screen.getByRole('spinbutton', { name: 'Go to page' });
+  await user.type(input, '11{Enter}');
+  expect(change).not.toHaveBeenCalled();
+  await user.clear(input);
+  await user.type(input, '2.5{Enter}');
+  expect(change).not.toHaveBeenCalled();
+  await user.clear(input);
+  await user.type(input, '4');
+  fireEvent.keyDown(input, { key: 'Enter', isComposing: true });
+  expect(change).not.toHaveBeenCalled();
+  await user.keyboard('{Enter}');
+  expect(change).toHaveBeenCalledWith(4);
+});
+
+it('uses authoritative page counts without inventing item totals', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  render(<Pagination page={2} totalPages={3} compact onPageChange={change} />);
+  expect(screen.getByText('2 / 3')).toBeInTheDocument();
+  expect(screen.queryByText(/items/)).not.toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Next page' }));
+  expect(change).toHaveBeenCalledWith(3);
+});
+
+it('localizes controls and changes page size without assuming application state', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  const sizeChange = vi.fn();
+  render(
+    <LocaleProvider locale="zh-CN">
+      <Pagination
+        page={2}
+        total={140}
+        pageSize={20}
+        onPageChange={change}
+        onPageSizeChange={sizeChange}
+      />
+    </LocaleProvider>,
+  );
+  expect(screen.getByRole('navigation', { name: '分页' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: '下一页' })).toBeEnabled();
+  await user.click(screen.getByRole('combobox', { name: '每页条数' }));
+  await user.click(screen.getByRole('option', { name: '50 条/页' }));
+  expect(sizeChange).toHaveBeenCalledWith(50);
+  expect(change).not.toHaveBeenCalled();
 });

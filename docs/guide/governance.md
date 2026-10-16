@@ -92,3 +92,34 @@ preview must record its source and removal condition; it is not the final shared
 A local exception must state its product-specific boundary, or explain the temporary API gap and
 planned replacement. Record this in the relevant code or change description. Do not introduce
 blanket lint exemptions or require extra user approval for routine implementation choices.
+
+## Semantic text colors
+
+Use `--ec-color-text-warning`, `--ec-color-text-success`, `--ec-color-text-info`, and
+`--ec-color-text-danger` for standalone status text. The matching `--ec-color-warning`,
+`--ec-color-success`, `--ec-color-info`, and `--ec-color-danger` tokens are fill colors,
+not small-text colors. Text tokens follow the active palette and foreground overrides.
+Use `StatusBadge` for labeled states and `Alert` for notices instead of custom color pairs.
+
+## Package size budget
+
+`pnpm pack:check` measures gzip (level 9) and Brotli (quality 11) bytes against
+`scripts/package-size-baseline.json`. These deterministic measurements approximate
+compressed delivery size, not an application's final tree-shaken bundle.
+The named entry files and the sum of all runtime JS/CSS files are checked; shared
+chunks are included in the total. Source maps and declarations are not runtime assets.
+
+Growth above the larger of 256 bytes or 2% warns. Growth above the larger of 2 KiB
+or 10% fails. Smaller changes and reductions pass. Both encodings are checked.
+Package-content checks and broad archive/unpacked safety limits remain enforced.
+
+The initial baseline comes from the released 0.16.0 archive. Normal checks never
+rewrite it. For an accepted feature increase, include measured old/new sizes and
+the reason in the review, then update the affected baseline values explicitly.
+Do not rebaseline automatically on every build: incremental growth must accumulate.
+
+## Loading feedback
+
+Use shared skeletons or spinners without redundant visible “Loading” text. Keep loading labels in
+accessible names (`label` / `aria-label`). Buttons retain their action name while `loading` shows
+the shared spinner. Preserve meaningful progress, error messages, and domain statuses.

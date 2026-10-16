@@ -28,6 +28,8 @@ export function Form({
   );
 }
 export interface FieldProps {
+  /** Optional stable control ID; generated when omitted. */
+  id?: string;
   label?: ReactNode;
   required?: boolean;
   help?: ReactNode;
@@ -43,9 +45,18 @@ export interface FieldControlProps {
   required?: boolean;
   disabled?: boolean;
 }
-export function Field({ label, required, help, error, children, className }: FieldProps) {
+export function Field({
+  id: controlId,
+  label,
+  required,
+  help,
+  error,
+  children,
+  className,
+}: FieldProps) {
   const { disabled } = useContext(FormContext);
-  const id = useId();
+  const generatedId = useId();
+  const id = controlId ?? generatedId;
   const messageId = `${id}-message`;
   return (
     <div className={['ec-form-field', className].filter(Boolean).join(' ')}>
