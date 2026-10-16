@@ -3,6 +3,12 @@
 Public package: `@easecation/design`
 Runtime has no Tailwind, Router, Capacitor or business API dependency.
 
+## Development context
+- Admission and ownership: docs/guide/governance.md
+- Architecture: docs/ai/architecture.md
+- Component development: docs/ai/component-development.md
+- Consumer usage: docs/ai/usage.md
+
 ## Components
 - ThemeProvider [beta/foundation]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - Button [beta/foundation]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -24,9 +30,55 @@ Runtime has no Tailwind, Router, Capacitor or business API dependency.
 - Badge [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - Skeleton [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - Avatar [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- DropdownMenu [beta/navigation]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- ScrollArea [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Separator [beta/foundation]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Label [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- EmptyState [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- ErrorState [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- InlineQueryError [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- SectionCard [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- StatCard [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Calendar [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- DateTimePicker [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- DateRangePicker [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- FilterBar [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- FilterField [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- FilterSelect [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- FilterPicker [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- AppShell [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- PageScaffold [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- ActionBar [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- DetailWorkbench [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- FormWorkbench [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- QueryDataTable [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- DataPanel [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- ResponsiveOverlay [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- ResponsiveDialog [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- AccessGate [stable/navigation]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Combobox [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- MultiSelect [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Accordion [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Navbar [beta/navigation]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- ActionCard [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- StatusBadge [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- Alert [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- SegmentedControl [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- DescriptionList [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- TreeView [beta/navigation]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- FileButton [beta/input]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- SidebarCollapseButton [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- SidebarAccountButton [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- SidebarNavItem [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- SidebarPanel [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- ThemeModeMenuItems [stable/navigation]: @easecation/design; platforms: web, ssr
+- Spinner [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- PageSkeleton [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- PageTransition [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 
 ## Rules
 - Reuse registered components before creating new UI.
+- Follow docs/guide/governance.md for UI ownership, reuse and migration rules.
 - Keep APIs domain-neutral and SSR-safe.
 - Do not import EaseCation private APIs, URLs, logos or restricted assets.
-- Run `pnpm ai:validate` before review.
+- Use `pnpm ai:validate` for fast validation; run required full library and consumer checks before delivery.
