@@ -224,6 +224,9 @@ try {
       await page.keyboard.press('Escape');
       assert.equal(await input.getAttribute('aria-expanded'), 'false');
       assert.equal(await dialog.count(), 1, 'Escape closes the menu first');
+      // The menu now has an exit animation. Wait for its layer to leave before
+      // sending Escape to the containing modal.
+      await page.getByRole('listbox', { name, exact: true }).waitFor({ state: 'detached' });
     }
     await page.screenshot({
       path: path.join(root, `output/playwright/theme-composition-${viewport.width}.png`),

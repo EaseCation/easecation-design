@@ -49,6 +49,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     type = 'button',
     style,
     onClick,
+    onBlur,
     onPointerDown,
     onPointerUp,
     onPointerLeave,
@@ -66,7 +67,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     end: endPress,
     release: releasePress,
     cancelHeld,
-  } = usePressFeedback(pressable && !disabled && !loading, 15);
+    activate,
+  } = usePressFeedback(pressable && !disabled && !loading, 8);
   useImperativeHandle(ref, () => innerRef.current as HTMLButtonElement);
   const start = (event: PointerEvent<HTMLButtonElement>) => {
     onPointerDown?.(event);
@@ -86,6 +88,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   };
   const lostCapture = (event: PointerEvent<HTMLButtonElement>) => {
     onLostPointerCapture?.(event);
+    cancelHeld();
+  };
+  const click = (event: ReactMouseEvent<HTMLButtonElement>) => {
+    if (disabled || loading) {
+      event.preventDefault();
+      return;
+    }
+    if (event.defaultPrevented) return;
+    onClick?.(event);
+    if (!event.defaultPrevented && event.detail === 0) activate(event.currentTarget);
+  };
+  const blur: NonNullable<ButtonProps['onBlur']> = (event) => {
+    onBlur?.(event);
     cancelHeld();
   };
   const buttonClassName = [
@@ -150,14 +165,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
         style={{ ...style, ...pressStyle }}
         aria-disabled={disabled || loading || undefined}
         aria-busy={loading || undefined}
-        onClick={(event) => {
-          if (disabled || loading) {
-            event.preventDefault();
-            return;
-          }
-          if (event.defaultPrevented) return;
-          onClick?.(event as ReactMouseEvent<HTMLButtonElement>);
-        }}
+        onClick={click}
+        onBlur={blur}
         onPointerDown={start}
         onPointerUp={end}
         onPointerLeave={leave}
@@ -178,7 +187,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       style={{ ...style, ...pressStyle }}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
-      onClick={onClick}
+      onClick={click}
+      onBlur={blur}
       onPointerDown={start}
       onPointerUp={end}
       onPointerLeave={leave}
