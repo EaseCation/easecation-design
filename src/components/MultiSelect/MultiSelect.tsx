@@ -255,7 +255,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(functi
             ]
               .filter(Boolean)
               .join(' ')}
-            onClick={() => inputRef.current?.focus()}
+            onClick={(event) => {
+              if (disabled || event.defaultPrevented) return;
+              inputRef.current?.focus();
+              setOpen(true);
+            }}
           >
             {selected.map((item) => {
               const option = optionByValue.get(item);
@@ -294,10 +298,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(functi
               disabled={disabled}
               placeholder={selected.length ? searchPlaceholder : placeholder}
               value={query}
-              onFocus={(event) => {
-                inputProps.onFocus?.(event);
-                if (!event.defaultPrevented) setOpen(true);
-              }}
+              onFocus={inputProps.onFocus}
               onChange={handleChange}
               onKeyDown={(event) => {
                 inputProps.onKeyDown?.(event);

@@ -2,6 +2,7 @@ import { execSync } from 'node:child_process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { compressedSizes, sizeGrowth } from './lib/package-size.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const packageJson = JSON.parse(await fs.readFile(path.join(root, 'package.json'), 'utf8'));
@@ -66,19 +67,36 @@ for (const target of collectExportTargets(packageJson.exports)) {
   }
 }
 
-const fileSizeLimits = {
-  'dist/index.js': 83_000,
-  'dist/compat.js': 110_000,
-  'dist/antd-compat.js': 75_000,
-  'dist/tokens.js': 15_000,
-  'dist/style.css': 130_000,
-};
-
-for (const [file, limit] of Object.entries(fileSizeLimits)) {
-  const size = packedFiles.get(file).size;
-  if (size > limit) {
-    throw new Error(`${file} is ${size} bytes; the limit is ${limit} bytes.`);
+const baseline = JSON.parse(
+  await fs.readFile(path.join(root, 'scripts/package-size-baseline.json'), 'utf8'),
+);
+const measurements = new Map();
+const total = { gzip: 0, brotli: 0 };
+for (const file of packedFiles.keys()) {
+  if (!file.startsWith('dist/') || !/\.(js|css)$/.test(file)) continue;
+  const sizes = compressedSizes(await fs.readFile(path.join(root, file)));
+  measurements.set(file, sizes);
+  for (const encoding of Object.keys(total)) total[encoding] += sizes[encoding];
+}
+const regressions = [];
+for (const [file, previous] of [
+  ...Object.entries(baseline.files),
+  ['all runtime JS/CSS', baseline.total],
+]) {
+  const current = file === 'all runtime JS/CSS' ? total : measurements.get(file);
+  if (!current) throw new Error(`Missing size-budget entry: ${file}`);
+  for (const encoding of ['gzip', 'brotli']) {
+    const { delta, level } = sizeGrowth(current[encoding], previous[encoding], baseline.policy);
+    const message = `${file} ${encoding}: ${current[encoding]} B (${delta >= 0 ? '+' : ''}${delta} B from baseline)`;
+    console.log(message);
+    if (level === 'warning') console.warn(`Size warning: ${message}`);
+    if (level === 'error') regressions.push(message);
   }
+}
+if (regressions.length) {
+  throw new Error(
+    `Compressed size growth exceeds the budget:\n${regressions.join('\n')}\nReview the cause and update the baseline only for an accepted feature increase.`,
+  );
 }
 
 const publicApi = await import(pathToFileURL(path.join(root, 'dist', 'index.js')));

@@ -94,7 +94,7 @@ export function AppShell({
         showCloseButton={false}
       >
         <div
-          className={phase ? `sidebar-tail-phase-${phase}` : undefined}
+          className={phase ? `ec-sidebar-tail-phase-${phase}` : undefined}
           onClick={(e) => {
             if ((e.target as HTMLElement).closest('a[href]')) change(false);
           }}
@@ -107,6 +107,7 @@ export function AppShell({
 }
 export interface PageScaffoldProps extends Omit<ComponentProps<'section'>, 'title'> {
   title: ReactNode;
+  /** Decorative title icon. PageScaffold owns its size and theme color. */
   titleIcon?: ReactNode;
   eyebrow?: ReactNode;
   actions?: ReactNode;
@@ -127,7 +128,11 @@ export function PageScaffold({
           <div>
             {eyebrow ? <p>{eyebrow}</p> : null}
             <h1>
-              {titleIcon}
+              {titleIcon ? (
+                <span className="ec-page-scaffold__icon" aria-hidden="true">
+                  {titleIcon}
+                </span>
+              ) : null}
               {title}
             </h1>
           </div>

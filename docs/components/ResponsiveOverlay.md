@@ -51,8 +51,12 @@ export declare function ResponsiveOverlay({
   open,
   onOpenChange,
   children,
+  dismissible,
+  pending,
 }: {
   open?: boolean;
+  dismissible?: boolean;
+  pending?: boolean;
   onOpenChange?: (open: boolean) => void;
   children: ReactNode;
 }): JSX.Element;
@@ -75,7 +79,7 @@ export declare function ResponsiveOverlayContent({
   desktopSize,
   layer,
   showCloseButton,
-  closeLabel,
+  closeLabel: closeLabelProp,
   instant,
   forceMount,
   style,

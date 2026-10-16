@@ -1,8 +1,17 @@
-﻿import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from '@tanstack/react-table';
+import { useLocale } from '../../locale/LocaleProvider';
+import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from '@tanstack/react-table';
 import { XIcon } from 'lucide-react';
-import { createContext, useContext, type ComponentProps, type ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useImperativeHandle,
+  useState,
+  type ComponentProps,
+  type ReactNode,
+} from 'react';
 import { Dialog as Primitive } from 'radix-ui';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { useOverlayBehavior, useOverlayFocus } from '../../platform/useOverlayBehavior';
 import { useOverlayViewportStyle } from '../../platform/useOverlayViewport';
 import { IconButton } from '../Button';
 import { EmptyState, InlineQueryError } from '../State';
@@ -46,6 +55,10 @@ export interface QueryDataTableProps<T> {
   columns: ColumnDef<T, any>[];
   getRowId?: (row: T, index: number) => string;
   isLoading?: boolean;
+  isError?: boolean;
+  /** Retain existing rows while a background request runs. */
+  isRefreshing?: boolean;
+  loadingLabel?: string;
   mobileCard?: (row: T) => ReactNode;
   layout?: 'auto' | 'table';
   renderTableRow?: (props: QueryDataTableRowRenderProps<T>) => ReactNode;
@@ -66,6 +79,9 @@ export function QueryDataTable<T>({
   columns,
   getRowId,
   isLoading = false,
+  isError,
+  isRefreshing = false,
+  loadingLabel: loadingLabelProp,
   mobileCard,
   layout = 'auto',
   renderTableRow,
@@ -74,13 +90,18 @@ export function QueryDataTable<T>({
   panelClassName,
   tableClassName,
   tableRowClassName,
-  emptyTitle = 'No data',
-  emptyDescription = 'Adjust the filters and try again.',
-  errorTitle,
+  emptyTitle: emptyTitleProp,
+  emptyDescription,
+  errorTitle: errorTitleProp,
   errorDescription,
-  retryLabel,
+  retryLabel: retryLabelProp,
   onRetry,
 }: QueryDataTableProps<T>) {
+  const { messages } = useLocale();
+  const loadingLabel = loadingLabelProp ?? messages.loading;
+  const emptyTitle = emptyTitleProp ?? messages.noData;
+  const errorTitle = errorTitleProp ?? messages.loadFailed;
+  const retryLabel = retryLabelProp ?? messages.retry;
   const mobile = useMediaQuery('(max-width: 767px)');
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel(), getRowId });
@@ -90,15 +111,20 @@ export function QueryDataTable<T>({
     embeddedShellClassName,
     panelClassName,
   );
-  if (isLoading)
+  if (isLoading && !isRefreshing)
     return (
-      <div className={cn('ec-query-loading', embedded && 'is-embedded')}>
+      <div
+        role="status"
+        aria-label={loadingLabel}
+        aria-busy="true"
+        className={cn('ec-query-loading', embedded && 'is-embedded')}
+      >
         {Array.from({ length: mobile && layout !== 'table' ? 4 : 6 }, (_, i) => (
           <Skeleton key={i} style={{ height: '5rem' }} />
         ))}
       </div>
     );
-  if (errorDescription)
+  if (isError ?? Boolean(errorDescription))
     return (
       <InlineQueryError
         title={errorTitle}
@@ -120,10 +146,15 @@ export function QueryDataTable<T>({
     );
   if (mobile && layout !== 'table' && mobileCard)
     return (
-      <div className={cn('ec-query-cards', embedded && 'is-embedded')}>{data.map(mobileCard)}</div>
+      <div
+        aria-busy={isRefreshing || undefined}
+        className={cn('ec-query-cards', embedded && 'is-embedded')}
+      >
+        {data.map(mobileCard)}
+      </div>
     );
   return (
-    <div className={shell}>
+    <div className={shell} aria-busy={isRefreshing || undefined}>
       <div className="ec-query-table__scroll">
         <table className={tableClassName}>
           <thead>
@@ -178,21 +209,35 @@ export function QueryDataTable<T>({
     </div>
   );
 }
-const OverlayContext = createContext({ mobile: false });
+const OverlayContext = createContext({ mobile: false, canDismiss: true, pending: false });
 export type ResponsiveOverlayDesktopSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 export function ResponsiveOverlay({
   open,
   onOpenChange,
   children,
+  dismissible = true,
+  pending = false,
 }: {
   open?: boolean;
+  dismissible?: boolean;
+  pending?: boolean;
   onOpenChange?: (open: boolean) => void;
   children: ReactNode;
 }) {
   const mobile = useMediaQuery('(max-width: 767px)');
+  const [internalOpen, setInternalOpen] = useState(false);
+  const canDismiss = dismissible && !pending;
+  const changeOpen = useOverlayBehavior(
+    open ?? internalOpen,
+    (next) => {
+      setInternalOpen(next);
+      onOpenChange?.(next);
+    },
+    canDismiss,
+  );
   return (
-    <OverlayContext.Provider value={{ mobile }}>
-      <Primitive.Root open={open} onOpenChange={onOpenChange}>
+    <OverlayContext.Provider value={{ mobile, canDismiss, pending }}>
+      <Primitive.Root open={open ?? internalOpen} onOpenChange={changeOpen}>
         {children}
       </Primitive.Root>
     </OverlayContext.Provider>
@@ -217,13 +262,17 @@ export function ResponsiveOverlayContent({
   desktopSize = 'lg',
   layer = 'default',
   showCloseButton = true,
-  closeLabel = 'Close',
+  closeLabel: closeLabelProp,
   instant = false,
   forceMount,
   style,
   ...props
 }: ResponsiveOverlayContentProps) {
-  const { mobile } = useContext(OverlayContext);
+  const { messages } = useLocale();
+  const closeLabel = closeLabelProp ?? messages.close;
+  const { mobile, canDismiss, pending } = useContext(OverlayContext);
+  const { ref: contentRef, onOpenAutoFocus, onCloseAutoFocus } = useOverlayFocus();
+  useImperativeHandle(props.ref, () => contentRef.current!);
   const { portalContainer } = useTheme();
   const viewportStyle = useOverlayViewportStyle(style);
   return (
@@ -244,6 +293,25 @@ export function ResponsiveOverlayContent({
         )}
         style={viewportStyle}
         {...props}
+        ref={contentRef}
+        tabIndex={-1}
+        aria-busy={pending || undefined}
+        onOpenAutoFocus={(event) => {
+          props.onOpenAutoFocus?.(event);
+          onOpenAutoFocus(event);
+        }}
+        onCloseAutoFocus={(event) => {
+          props.onCloseAutoFocus?.(event);
+          onCloseAutoFocus(event);
+        }}
+        onEscapeKeyDown={(event) => {
+          props.onEscapeKeyDown?.(event);
+          if (!canDismiss) event.preventDefault();
+        }}
+        onInteractOutside={(event) => {
+          props.onInteractOutside?.(event);
+          if (!canDismiss) event.preventDefault();
+        }}
       >
         {children}
         {showCloseButton ? (
@@ -252,6 +320,7 @@ export function ResponsiveOverlayContent({
               className="ec-overlay-close"
               size="sm"
               label={closeLabel}
+              disabled={!canDismiss}
               icon={<XIcon />}
             />
           </Primitive.Close>
@@ -295,6 +364,8 @@ export function ResponsiveOverlayBody({
   );
 }
 export interface ResponsiveDialogProps {
+  dismissible?: boolean;
+  pending?: boolean;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: ReactNode;
@@ -313,6 +384,8 @@ export interface ResponsiveDialogProps {
   forceMount?: true;
 }
 export function ResponsiveDialog({
+  dismissible,
+  pending,
   open,
   onOpenChange,
   title,
@@ -331,7 +404,12 @@ export function ResponsiveDialog({
   forceMount,
 }: ResponsiveDialogProps) {
   return (
-    <ResponsiveOverlay open={open} onOpenChange={onOpenChange}>
+    <ResponsiveOverlay
+      open={open}
+      onOpenChange={onOpenChange}
+      dismissible={dismissible}
+      pending={pending}
+    >
       <ResponsiveOverlayContent
         className={desktopContentClassName}
         mobileClassName={mobileContentClassName}

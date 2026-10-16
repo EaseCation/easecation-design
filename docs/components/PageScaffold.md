@@ -23,6 +23,8 @@ import '@easecation/design/style.css';
 
 title；titleIcon；eyebrow；actions；children。
 
+`titleIcon` 只传图标，例如 `titleIcon={<LayoutDashboardIcon />}`。组件统一使用 24px 尺寸（`--ec-space-6`）和主题主色（`--ec-color-primary`），并将装饰图标从可访问标题中排除。业务页面不再给标题图标设置尺寸或颜色。
+
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **可访问性**：semantic-section, semantic-heading
@@ -59,6 +61,7 @@ export declare function PageScaffold({
 
 export declare interface PageScaffoldProps extends Omit<ComponentProps<'section'>, 'title'> {
   title: ReactNode;
+  /** Decorative title icon. PageScaffold owns its size and theme color. */
   titleIcon?: ReactNode;
   eyebrow?: ReactNode;
   actions?: ReactNode;

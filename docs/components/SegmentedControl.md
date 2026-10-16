@@ -37,6 +37,7 @@ inherit from `div`.
   to the first and last enabled options.
 - Horizontal overflow is handled by the built-in trailing menu. The selected option is kept visible
   when space permits; applications must not add horizontal scrolling to the control.
+- Overflow icons remain square (20px, or 24px for `lg`). On touch pointers, option heights and overflow button widths are at least the 44px touch-target token.
 - Keep visible labels concise. Icons are supporting decoration and do not replace labels.
 - Do not override the selected surface, focus ring, radius, or control height with `className`.
 

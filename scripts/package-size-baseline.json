@@ -1,0 +1,35 @@
+{
+  "source": "Released 0.16.0 archive committed in Console vendor; before semantic text colors",
+  "policy": {
+    "warningBytes": 256,
+    "warningRatio": 0.02,
+    "failureBytes": 2048,
+    "failureRatio": 0.1
+  },
+  "files": {
+    "dist/index.js": {
+      "gzip": 19670,
+      "brotli": 16991
+    },
+    "dist/compat.js": {
+      "gzip": 15962,
+      "brotli": 13856
+    },
+    "dist/antd-compat.js": {
+      "gzip": 15677,
+      "brotli": 13432
+    },
+    "dist/tokens.js": {
+      "gzip": 3220,
+      "brotli": 2702
+    },
+    "dist/style.css": {
+      "gzip": 21125,
+      "brotli": 17852
+    }
+  },
+  "total": {
+    "gzip": 84553,
+    "brotli": 72587
+  }
+}

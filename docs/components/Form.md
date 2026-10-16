@@ -65,6 +65,7 @@ export declare interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
 export declare type FormLayout = 'vertical' | 'horizontal' | 'inline';
 
 export declare function Field({
+  id: controlId,
   label,
   required,
   help,
@@ -74,6 +75,8 @@ export declare function Field({
 }: FieldProps): JSX.Element;
 
 export declare interface FieldProps {
+  /** Optional stable control ID; generated when omitted. */
+  id?: string;
   label?: ReactNode;
   required?: boolean;
   help?: ReactNode;

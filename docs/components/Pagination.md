@@ -1,6 +1,6 @@
 # Pagination
 
-导航或访问边界组件。路由和服务端权限仍由应用负责。
+共享页码导航、每页条数和跳页行为。数据请求、游标历史与分页状态由应用负责。
 
 ## 导入
 
@@ -14,12 +14,26 @@ import '@easecation/design/style.css';
 ## 基础示例
 
 ```tsx
-<Pagination page={page} pageCount={pageCount} onPageChange={setPage} />
+<Pagination
+  page={page}
+  total={total}
+  pageSize={pageSize}
+  onPageChange={setPage}
+  onPageSizeChange={(size) => {
+    setPageSize(size);
+    setPage(1);
+  }}
+  showPageJump
+/>
 ```
 
 ## API
 
-page；pageCount；onPageChange；siblingCount；disabled。
+`page` 与 `onPageChange` 为受控页码。`total` 是条数，`pageSize` 默认 10；API 返回权威页数时可传 `totalPages`。未知总数省略 `total`，用 `hasNextPage` 控制后翻，不编造条数或末页。
+
+`onPageSizeChange` 显示共享条数选择器；允许范围用 `pageSizeOptions` 指定。应用接收回调后重置页码/游标并查询。`showPageJump` 仅在已知页数时展示跳页，拒绝小数和越界输入，Enter 避开输入法合成。
+
+`disabled` 在查询中统一锁定所有控件。`compact` 用于窄弹窗，只展示前后翻页和页码。手机自动折叠远端页码；保持已选页与前后按钮。共享标签继承 LocaleProvider，可用原有 label Props 覆盖。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -48,6 +62,12 @@ page；pageCount；onPageChange；siblingCount；disabled。
 export declare function Pagination({
   page,
   total,
+  hasNextPage,
+  totalPages,
+  compact,
+  onPageSizeChange,
+  pageSizeOptions,
+  showPageJump,
   pageSize,
   onPageChange,
   siblingCount,
@@ -63,7 +83,15 @@ export declare function Pagination({
 
 export declare interface PaginationProps {
   page: number;
-  total: number;
+  /** Omit for cursor/unknown-total navigation; supply hasNextPage instead. */
+  total?: number;
+  hasNextPage?: boolean;
+  /** Authoritative page count when supplied by the API. */
+  totalPages?: number;
+  compact?: boolean;
+  onPageSizeChange?: (pageSize: number) => void;
+  pageSizeOptions?: readonly number[];
+  showPageJump?: boolean;
   pageSize?: number;
   onPageChange: (page: number) => void;
   siblingCount?: number;

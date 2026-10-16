@@ -28,3 +28,7 @@ Run `pnpm registry:check`, `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm bui
 - Keep Capacitor and native capabilities behind optional adapters.
 - Use Design Tokens instead of adding scattered magic values.
 - AI-generated changes must pass deterministic checks and human review before release.
+
+## Design
+
+For UI, interaction, and shared capability decisions, follow [UI governance](docs/guide/governance.md).

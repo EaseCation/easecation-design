@@ -2,11 +2,10 @@ import {
   forwardRef,
   useImperativeHandle,
   useRef,
-  useState,
-  type CSSProperties,
   type HTMLAttributes,
   type PointerEvent,
 } from 'react';
+import { usePressFeedback } from '../../hooks/usePressFeedback';
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   size?: 'sm' | 'md';
   pressable?: boolean;
@@ -20,38 +19,35 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
     onPointerDown,
     onPointerUp,
     onPointerLeave,
+    onPointerCancel,
+    onLostPointerCapture,
     children,
     ...props
   },
   ref,
 ) {
   const inner = useRef<HTMLDivElement>(null);
-  const [pressing, setPressing] = useState(false);
-  const [pressStyle, setPressStyle] = useState<CSSProperties>({});
+  const { pressing, pressStyle, start: startPress, end: endPress } = usePressFeedback(pressable, 8);
   useImperativeHandle(ref, () => inner.current as HTMLDivElement);
   const start = (event: PointerEvent<HTMLDivElement>) => {
     onPointerDown?.(event);
-    if (!pressable || !inner.current) return;
-    const rect = inner.current.getBoundingClientRect();
-    const x = event.clientX - rect.left,
-      y = event.clientY - rect.top;
-    const offsetX = ((x - rect.width / 2) / (rect.width / 2 || 1)) * 8,
-      offsetY = ((y - rect.height / 2) / (rect.height / 2 || 1)) * 8;
-    setPressStyle({
-      '--press-x': `${x}px`,
-      '--press-y': `${y}px`,
-      '--rotate-x': `${-offsetY}deg`,
-      '--rotate-y': `${offsetX}deg`,
-    } as CSSProperties);
-    setPressing(true);
+    startPress(event);
   };
   const end = (event: PointerEvent<HTMLDivElement>) => {
     onPointerUp?.(event);
-    setPressing(false);
+    endPress();
   };
   const leave = (event: PointerEvent<HTMLDivElement>) => {
     onPointerLeave?.(event);
-    setPressing(false);
+    endPress();
+  };
+  const cancel = (event: PointerEvent<HTMLDivElement>) => {
+    onPointerCancel?.(event);
+    endPress();
+  };
+  const lostCapture = (event: PointerEvent<HTMLDivElement>) => {
+    onLostPointerCapture?.(event);
+    endPress();
   };
   return (
     <div
@@ -69,6 +65,8 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
       onPointerDown={start}
       onPointerUp={end}
       onPointerLeave={leave}
+      onPointerCancel={cancel}
+      onLostPointerCapture={lostCapture}
       {...props}
     >
       <div className="ec-card__content-layer">{children}</div>

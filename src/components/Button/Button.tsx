@@ -2,14 +2,19 @@ import {
   forwardRef,
   useImperativeHandle,
   useRef,
-  useState,
+  cloneElement,
+  isValidElement,
   type ButtonHTMLAttributes,
-  type CSSProperties,
+  type HTMLAttributes,
+  type ReactElement,
+  type SyntheticEvent,
   type PointerEvent,
   type MouseEvent as ReactMouseEvent,
   type ReactNode,
 } from 'react';
 import { Slot } from 'radix-ui';
+import { Spinner } from '../Spinner';
+import { usePressFeedback } from '../../hooks/usePressFeedback';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link';
 export type ButtonTone = 'default' | 'accent' | 'danger' | 'muted';
@@ -47,37 +52,39 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     onPointerDown,
     onPointerUp,
     onPointerLeave,
+    onPointerCancel,
+    onLostPointerCapture,
     ...props
   },
   ref,
 ) {
   const innerRef = useRef<HTMLButtonElement>(null);
-  const [pressing, setPressing] = useState(false);
-  const [pressStyle, setPressStyle] = useState<CSSProperties>({});
+  const {
+    pressing,
+    pressStyle,
+    start: startPress,
+    end: endPress,
+  } = usePressFeedback(pressable && !disabled && !loading, 15);
   useImperativeHandle(ref, () => innerRef.current as HTMLButtonElement);
   const start = (event: PointerEvent<HTMLButtonElement>) => {
     onPointerDown?.(event);
-    if (!pressable || disabled || loading || event.defaultPrevented || !innerRef.current) return;
-    const rect = innerRef.current.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    const offsetX = ((x - rect.width / 2) / (rect.width / 2 || 1)) * 15;
-    const offsetY = ((y - rect.height / 2) / (rect.height / 2 || 1)) * 15;
-    setPressStyle({
-      '--press-x': `${x}px`,
-      '--press-y': `${y}px`,
-      '--rotate-x': `${-offsetY}deg`,
-      '--rotate-y': `${offsetX}deg`,
-    } as CSSProperties);
-    setPressing(true);
+    startPress(event);
   };
   const end = (event: PointerEvent<HTMLButtonElement>) => {
     onPointerUp?.(event);
-    if (pressable) setPressing(false);
+    endPress();
   };
   const leave = (event: PointerEvent<HTMLButtonElement>) => {
     onPointerLeave?.(event);
-    if (pressable) setPressing(false);
+    endPress();
+  };
+  const cancel = (event: PointerEvent<HTMLButtonElement>) => {
+    onPointerCancel?.(event);
+    endPress();
+  };
+  const lostCapture = (event: PointerEvent<HTMLButtonElement>) => {
+    onLostPointerCapture?.(event);
+    endPress();
   };
   const buttonClassName = [
     'ec-button',
@@ -94,8 +101,47 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     .join(' ');
 
   if (asChild) {
+    // Slot runs child handlers first: intercept on the child itself before composing.
+    const block = (event: SyntheticEvent) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    const slottedChild =
+      (disabled || loading) && isValidElement(children)
+        ? cloneElement(children as ReactElement<HTMLAttributes<HTMLElement>>, {
+            onClick: block,
+            onClickCapture: block,
+            onKeyDown: (event) => {
+              if (event.key === 'Enter' || event.key === ' ') block(event);
+            },
+            onKeyDownCapture: (event) => {
+              if (event.key === 'Enter' || event.key === ' ') block(event);
+            },
+            onKeyUp: (event) => {
+              if (event.key === 'Enter' || event.key === ' ') block(event);
+            },
+            tabIndex: -1,
+            'aria-disabled': true,
+          })
+        : children;
     return (
       <Slot.Root
+        {...props}
+        onClickCapture={disabled || loading ? block : props.onClickCapture}
+        onKeyDownCapture={
+          disabled || loading
+            ? (event) => {
+                if (event.key === 'Enter' || event.key === ' ') block(event);
+              }
+            : props.onKeyDownCapture
+        }
+        onKeyUpCapture={
+          disabled || loading
+            ? (event) => {
+                if (event.key === 'Enter' || event.key === ' ') block(event);
+              }
+            : props.onKeyUpCapture
+        }
         ref={innerRef}
         data-size={size}
         className={buttonClassName}
@@ -107,14 +153,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             event.preventDefault();
             return;
           }
+          if (event.defaultPrevented) return;
           onClick?.(event as ReactMouseEvent<HTMLButtonElement>);
         }}
         onPointerDown={start}
         onPointerUp={end}
         onPointerLeave={leave}
-        {...props}
+        onPointerCancel={cancel}
+        onLostPointerCapture={lostCapture}
       >
-        {children}
+        {slottedChild}
       </Slot.Root>
     );
   }
@@ -132,11 +180,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       onPointerDown={start}
       onPointerUp={end}
       onPointerLeave={leave}
+      onPointerCancel={cancel}
+      onLostPointerCapture={lostCapture}
       {...props}
     >
       <span className="ec-button__content">
         {loading ? (
-          <span className="ec-spinner" aria-hidden="true" />
+          <Spinner />
         ) : leadingIcon ? (
           <span className="ec-button__icon">{leadingIcon}</span>
         ) : null}

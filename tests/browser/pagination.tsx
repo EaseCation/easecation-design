@@ -1,0 +1,91 @@
+import { useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import {
+  Button,
+  LocaleProvider,
+  Pagination,
+  ThemeProvider,
+  TableRoot,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  QueryDataTable,
+  SectionCard,
+} from '../../src';
+function Fixture() {
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(20);
+  const [cursor, setCursor] = useState(1);
+  const [pending, setPending] = useState(false);
+  return (
+    <ThemeProvider
+      mode={new URLSearchParams(location.search).get('theme') === 'dark' ? 'dark' : 'light'}
+    >
+      <LocaleProvider locale="zh-CN">
+        <main style={{ padding: 16, display: 'grid', gap: 16, minWidth: 0 }}>
+          <section data-testid="known">
+            <Pagination
+              page={page}
+              total={600}
+              pageSize={size}
+              onPageChange={setPage}
+              onPageSizeChange={(size) => {
+                setSize(size);
+                setPage(1);
+              }}
+              showPageJump
+            />
+          </section>
+          <section data-testid="cursor">
+            <Pagination
+              page={cursor}
+              hasNextPage={cursor < 3}
+              disabled={pending}
+              onPageChange={setCursor}
+            />
+          </section>
+          <Button onClick={() => setPending(!pending)}>Toggle pending</Button>
+          <section data-testid="query-cards" style={{ minWidth: 0 }}>
+            <QueryDataTable
+              data={[{ id: 'key', value: 'LongConfigValue'.repeat(30) }]}
+              columns={[{ accessorKey: 'value', header: 'Value' }]}
+              getRowId={(row) => row.id}
+              mobileCard={(row) => (
+                <SectionCard key={row.id} title={row.value} className="long-card">
+                  <p>{row.value}</p>
+                  <Button>Edit</Button>
+                </SectionCard>
+              )}
+            />
+          </section>
+          <style>{'.long-card { overflow-wrap: anywhere; }'}</style>
+          <TableRoot mobile="cards" aria-label="Records">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Title</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell data-label="Title">
+                  <div style={{ maxWidth: '24rem', overflowWrap: 'anywhere', minWidth: 0 }}>
+                    {'AnnouncementLongIdentifier'.repeat(8)}
+                  </div>
+                </TableCell>
+                <TableCell data-label="Status">Enabled</TableCell>
+                <TableCell data-label="Actions">
+                  <Button variant="outline">Edit</Button>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </TableRoot>
+        </main>
+      </LocaleProvider>
+    </ThemeProvider>
+  );
+}
+createRoot(document.getElementById('root')!).render(<Fixture />);

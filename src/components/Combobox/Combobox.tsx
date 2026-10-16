@@ -246,10 +246,9 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
               disabled={disabled}
               placeholder={open ? (searchPlaceholder ?? placeholder) : placeholder}
               value={query}
-              onFocus={(event) => {
-                inputProps.onFocus?.(event);
-                if (!event.defaultPrevented) openOptions();
-              }}
+              // Restoring focus after a dialog must preserve the selection and stay closed.
+              // Click, typing and arrow keys are explicit requests to open options.
+              onFocus={inputProps.onFocus}
               onClick={(event) => {
                 inputProps.onClick?.(event);
                 if (!event.defaultPrevented) openOptions();

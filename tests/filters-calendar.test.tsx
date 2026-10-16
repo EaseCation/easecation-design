@@ -1,4 +1,4 @@
-﻿import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   Calendar,
@@ -124,7 +124,7 @@ it('focuses the date field without scrolling when opened', async () => {
   expect(focus).toHaveBeenCalledWith({ preventScroll: true });
   focus.mockRestore();
 });
-it('keeps trigger focus when opened with a coarse pointer', async () => {
+it('focuses the popover without opening the keyboard on coarse pointers', async () => {
   const user = userEvent.setup();
   const matchMedia = vi.spyOn(window, 'matchMedia').mockReturnValue({
     matches: true,
@@ -134,7 +134,7 @@ it('keeps trigger focus when opened with a coarse pointer', async () => {
 
   await user.click(trigger);
 
-  expect(trigger).toHaveFocus();
+  expect(screen.getByRole('dialog')).toHaveFocus();
   expect(screen.getByLabelText('Date')).not.toHaveFocus();
   matchMedia.mockRestore();
 });
@@ -275,7 +275,7 @@ it('keeps a disabled date range picker closed', async () => {
   expect(screen.queryByText('Apply')).not.toBeInTheDocument();
 });
 
-it('focuses the range start on desktop and keeps trigger focus on coarse pointers', async () => {
+it('focuses the range start on desktop and popover container on coarse pointers', async () => {
   const user = userEvent.setup();
   const { unmount } = render(
     <DateRangePicker value={{ start: '', end: '' }} onChange={vi.fn()} startLabel="Range start" />,
@@ -292,7 +292,7 @@ it('focuses the range start on desktop and keeps trigger focus on coarse pointer
   );
   const trigger = screen.getByRole('button', { name: 'Select date range' });
   await user.click(trigger);
-  expect(trigger).toHaveFocus();
+  expect(screen.getByRole('dialog')).toHaveFocus();
   expect(screen.getByLabelText('Range start')).not.toHaveFocus();
   matchMedia.mockRestore();
 });

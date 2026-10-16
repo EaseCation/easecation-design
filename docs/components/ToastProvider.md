@@ -72,6 +72,7 @@ export declare function Toaster({
   position,
   mobileOffset,
   swipeDirections,
+  toastOptions,
   ...props
 }: ToasterProps): JSX.Element;
 ```

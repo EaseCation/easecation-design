@@ -5,6 +5,7 @@ import '@fontsource-variable/outfit';
 import '@fontsource-variable/geist';
 import '../src/styles/index.css';
 import './preview.css';
+import './patterns.css';
 
 const preview: Preview = {
   globalTypes: {

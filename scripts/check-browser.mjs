@@ -45,6 +45,57 @@ try {
         overflow: style.overflow,
       };
     });
+  // Check text colors on real browser-rendered surfaces in both themes.
+  const semanticContrast = await page.evaluate(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 1;
+    const context = canvas.getContext('2d');
+    const rgb = (color) => {
+      context.clearRect(0, 0, 1, 1);
+      context.fillStyle = color;
+      context.fillRect(0, 0, 1, 1);
+      return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
+    };
+    const luminance = (color) =>
+      rgb(color).reduce((sum, value, index) => {
+        const channel = value / 255;
+        return (
+          sum +
+          (channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4) *
+            [0.2126, 0.7152, 0.0722][index]
+        );
+      }, 0);
+    const results = [];
+    for (const theme of ['light', 'dark']) {
+      const root = document.createElement('div');
+      root.className = 'ec-root';
+      root.dataset.ecTheme = theme;
+      document.body.append(root);
+      for (const surface of ['bg', 'panel', 'surface-muted']) {
+        root.style.backgroundColor = `var(--ec-color-${surface})`;
+        for (const tone of ['warning', 'success', 'info', 'danger']) {
+          const text = document.createElement('span');
+          text.style.color = `var(--ec-color-text-${tone})`;
+          root.append(text);
+          const foreground = luminance(getComputedStyle(text).color);
+          const background = luminance(getComputedStyle(root).backgroundColor);
+          results.push({
+            theme,
+            surface,
+            tone,
+            ratio:
+              (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05),
+          });
+          text.remove();
+        }
+      }
+      root.remove();
+    }
+    return results;
+  });
+  for (const { theme, surface, tone, ratio } of semanticContrast) {
+    assert.ok(ratio >= 4.5, `${theme} ${tone} text on ${surface}: ${ratio.toFixed(2)}:1`);
+  }
   const controlSelectors = [
     '.ec-button',
     '.ec-input-shell',

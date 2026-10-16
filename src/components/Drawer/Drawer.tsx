@@ -1,20 +1,12 @@
-﻿import { useEffect, useId, type ReactNode } from 'react';
+import { useLocale } from '../../locale/LocaleProvider';
+import { useId, type ReactNode } from 'react';
 import { XIcon } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import { Dialog as DialogPrimitive } from 'radix-ui';
-import { registerOverlay } from '../../platform/overlayStack';
+import { useOverlayBehavior, useOverlayFocus } from '../../platform/useOverlayBehavior';
 import { useOverlayViewportStyle } from '../../platform/useOverlayViewport';
 import { IconButton } from '../Button';
 import { useTheme } from '../../theme/ThemeProvider';
-
-function isTouchDevice() {
-  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
-  return (
-    'ontouchstart' in window ||
-    navigator.maxTouchPoints > 0 ||
-    window.matchMedia?.('(pointer: coarse)').matches
-  );
-}
 
 export interface DrawerProps {
   open: boolean;
@@ -26,6 +18,9 @@ export interface DrawerProps {
   placement?: 'left' | 'right' | 'top' | 'bottom';
   size?: string;
   closeOnBackdrop?: boolean;
+  /** Blocks every user dismissal, including host Back. */
+  dismissible?: boolean;
+  pending?: boolean;
   showCloseButton?: boolean;
   closeLabel?: string;
   ariaLabel?: string;
@@ -44,45 +39,51 @@ export function Drawer({
   placement = 'right',
   size,
   closeOnBackdrop = true,
+  dismissible = true,
+  pending = false,
   showCloseButton = true,
-  closeLabel = 'Close',
+  closeLabel: closeLabelProp,
   ariaLabel,
   instant = false,
   className,
   style,
 }: DrawerProps) {
+  const { messages } = useLocale();
+  const closeLabel = closeLabelProp ?? messages.close;
   const id = useId();
   const { portalContainer } = useTheme();
-  useEffect(() => {
-    if (!open) return;
-    return registerOverlay({ id, close: () => onOpenChange(false) });
-  }, [id, onOpenChange, open]);
+  const canDismiss = dismissible && !pending;
+  const changeOpen = useOverlayBehavior(open, onOpenChange, canDismiss);
+  const focus = useOverlayFocus();
 
   const viewportStyle = useOverlayViewportStyle({
     ...style,
     ...(placement === 'top' || placement === 'bottom' ? { height: size } : { width: size }),
   });
   return (
-    <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
+    <DialogPrimitive.Root open={open} onOpenChange={changeOpen}>
       <DialogPrimitive.Portal container={portalContainer ?? undefined}>
         <DialogPrimitive.Overlay
           className={['ec-dialog-overlay', instant && 'is-instant'].filter(Boolean).join(' ')}
         />
         <DialogPrimitive.Content
+          {...focus}
+          tabIndex={-1}
+          aria-busy={pending || undefined}
           data-side={placement}
 
           className={['ec-drawer', instant && 'is-instant', className].filter(Boolean).join(' ')}
           style={viewportStyle}
           aria-label={title ? undefined : (ariaLabel ?? closeLabel)}
           aria-describedby={description ? `${id}-description` : undefined}
-          onOpenAutoFocus={(event) => {
-            if (isTouchDevice()) event.preventDefault();
+          onEscapeKeyDown={(event) => {
+            if (!canDismiss) event.preventDefault();
           }}
           onPointerDownOutside={(event) => {
-            if (!closeOnBackdrop) event.preventDefault();
+            if (!closeOnBackdrop || !canDismiss) event.preventDefault();
           }}
           onInteractOutside={(event) => {
-            if (!closeOnBackdrop) event.preventDefault();
+            if (!closeOnBackdrop || !canDismiss) event.preventDefault();
           }}
         >
           {title || description ? (
@@ -103,6 +104,7 @@ export function Drawer({
                 className="ec-overlay-close"
                 size="sm"
                 label={closeLabel}
+                disabled={!canDismiss}
                 icon={<XIcon />}
               />
             </DialogPrimitive.Close>
