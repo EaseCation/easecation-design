@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.17.2
+
+### Patch Changes
+
+- aa43a1a: Unify floating-surface entrance/exit timing and placement-aware motion, animate Select chevrons,
+  and use shared overlay timing. Add centered keyboard button feedback and constrain pointer tilt.
+
 ## 0.17.1
 
 ### Patch Changes
