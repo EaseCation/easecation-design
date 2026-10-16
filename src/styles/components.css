@@ -1875,6 +1875,15 @@
   color: var(--ec-color-on-surface-raised);
   box-shadow: none;
 }
+/* Card records own their surfaces. A second raised surface hides the gaps. */
+.ec-data-panel:has(> .ec-data-panel__content > .ec-query-cards) {
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+}
+.ec-data-panel:has(> .ec-data-panel__content > .ec-query-cards) > .ec-data-panel__footer {
+  background: transparent;
+}
 .ec-data-panel > * {
   min-width: 0;
 }
@@ -2732,6 +2741,7 @@
   gap: 0.125rem;
 }
 .ec-section-card h2 {
+  overflow-wrap: anywhere;
   margin: 0;
   font-size: 0.9375rem;
   line-height: 1.5;
@@ -2739,6 +2749,7 @@
   letter-spacing: -0.01em;
 }
 .ec-section-card header p {
+  overflow-wrap: anywhere;
   margin: 0;
   color: var(--ec-color-text-muted);
   font-size: 0.8125rem;
@@ -3657,6 +3668,9 @@
   min-width: 0;
   gap: 0.75rem;
   padding: 0.75rem;
+}
+.ec-query-cards > * {
+  min-width: 0;
 }
 .ec-query-loading.is-embedded,
 .ec-query-cards.is-embedded {
