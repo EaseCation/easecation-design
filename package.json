@@ -78,7 +78,7 @@
     "ai:context": "node scripts/generate-ai-context.mjs",
     "ai:validate": "pnpm registry:check && pnpm typecheck && pnpm test",
     "pack:check": "node --test scripts/package-size.test.mjs && node scripts/check-package.mjs",
-    "check": "pnpm check:deps-risk && pnpm format:check && pnpm tokens:check && pnpm registry:check && pnpm visual:migration:check && pnpm check:open-source && pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm test:browser && pnpm docs:check && pnpm build:storybook && pnpm pack:check && pnpm build:example && pnpm test:interactions && pnpm test:pagination",
+    "check": "pnpm check:deps-risk && pnpm format:check && pnpm tokens:check && pnpm registry:check && pnpm visual:migration:check && pnpm check:open-source && pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm test:browser && pnpm docs:check && pnpm build:storybook && pnpm pack:check && pnpm build:example && pnpm test:interactions && pnpm test:pagination && pnpm test:motion",
     "check:deps-risk": "pnpm audit --audit-level high",
     "build:example": "pnpm --filter @easecation-design/example-generic-dashboard build",
     "check:open-source": "node scripts/check-open-source.mjs",
@@ -87,7 +87,8 @@
     "visual:fixtures:install": "node scripts/visual/manage-console-fixtures.mjs install",
     "visual:fixtures:cleanup": "node scripts/visual/manage-console-fixtures.mjs cleanup",
     "test:interactions": "node scripts/check-interactions.mjs",
-    "test:pagination": "node scripts/check-pagination.mjs"
+    "test:pagination": "node scripts/check-pagination.mjs",
+    "test:motion": "node scripts/check-motion.mjs"
   },
   "peerDependencies": {
     "react": ">=18.3.0 <20",

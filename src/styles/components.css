@@ -554,6 +554,10 @@
   color: var(--ec-color-text-muted);
   opacity: 0.65;
   stroke-width: 2;
+  transition: transform var(--ec-motion-fast) var(--ec-ease-standard);
+}
+.ec-select__trigger[data-state='open'] .ec-select__chevron {
+  transform: rotate(180deg);
 }
 .ec-select__menu {
   position: relative;
@@ -569,7 +573,6 @@
   box-shadow:
     var(--ec-shadow-lg),
     0 0 0 1px color-mix(in oklch, var(--ec-color-border) 40%, transparent);
-  animation: ec-rise var(--ec-motion-fast) var(--ec-ease-emphasized);
 }
 .ec-select__viewport {
   padding: 0.25rem;
@@ -1059,7 +1062,13 @@
   border-radius: var(--ec-radius-md);
   font-family: var(--ec-font-sans);
   font-weight: 500;
-  transition: all var(--ec-motion-fast) var(--ec-ease-standard);
+  transition:
+    transform var(--ec-motion-fast) var(--ec-ease-standard),
+    background-color var(--ec-motion-fast) var(--ec-ease-standard),
+    color var(--ec-motion-fast) var(--ec-ease-standard),
+    border-color var(--ec-motion-fast) var(--ec-ease-standard),
+    box-shadow var(--ec-motion-fast) var(--ec-ease-standard),
+    opacity var(--ec-motion-fast) var(--ec-ease-standard);
 }
 .ec-button__content {
   position: relative;
@@ -1197,7 +1206,7 @@
   z-index: 0;
   pointer-events: none;
   opacity: 0;
-  transition: all 300ms;
+  transition: opacity var(--ec-motion-base) var(--ec-ease-standard);
 }
 .ec-button__press-shade {
   background:
@@ -1219,7 +1228,7 @@
     rgba(255, 255, 255, 0.15),
     transparent 50%
   );
-  transition-duration: 200ms;
+  transition-duration: var(--ec-motion-fast);
 }
 .ec-button.is-pressing .ec-button__press-shade,
 .ec-button.is-pressing .ec-button__press-light {
@@ -1330,7 +1339,11 @@
 .ec-card--pressable {
   cursor: pointer;
   perspective: 600px;
-  transition: all var(--ec-motion-fast) var(--ec-ease-standard);
+  transition:
+    transform var(--ec-motion-fast) var(--ec-ease-standard),
+    background-color var(--ec-motion-fast) var(--ec-ease-standard),
+    border-color var(--ec-motion-fast) var(--ec-ease-standard),
+    box-shadow var(--ec-motion-fast) var(--ec-ease-standard);
 }
 .ec-card--pressable.is-pressing {
   transform: perspective(600px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) scale(0.97);
@@ -1341,7 +1354,7 @@
   inset: 0;
   pointer-events: none;
   opacity: 0;
-  transition: all 300ms;
+  transition: opacity var(--ec-motion-base) var(--ec-ease-standard);
 }
 .ec-card__press-shade {
   z-index: 0;
@@ -1364,7 +1377,7 @@
     rgba(255, 255, 255, 0.12),
     transparent 50%
   );
-  transition-duration: 200ms;
+  transition-duration: var(--ec-motion-fast);
 }
 .ec-card.is-pressing .ec-card__press-shade,
 .ec-card.is-pressing .ec-card__press-light {
@@ -2044,10 +2057,10 @@
   transform: translate(-50%, -50%);
 }
 .ec-modal[data-state='open'] {
-  animation: ec-dialog-in 350ms var(--ec-ease-emphasized);
+  animation: ec-dialog-in var(--ec-motion-base) var(--ec-ease-emphasized);
 }
 .ec-modal[data-state='closed'] {
-  animation: ec-dialog-out 200ms var(--ec-ease-standard);
+  animation: ec-dialog-out var(--ec-motion-fast) var(--ec-ease-standard);
 }
 .ec-modal.is-instant[data-state='closed'] {
   display: none;
@@ -2152,11 +2165,11 @@
   outline: 0;
 }
 .ec-drawer[data-state='open'] {
-  animation-duration: 350ms;
+  animation-duration: var(--ec-motion-base);
   animation-timing-function: var(--ec-ease-emphasized);
 }
 .ec-drawer[data-state='closed'] {
-  animation-duration: 250ms;
+  animation-duration: var(--ec-motion-fast);
   animation-timing-function: var(--ec-ease-standard);
 }
 .ec-drawer.is-instant[data-state='closed'] {
@@ -2364,11 +2377,11 @@
   }
 
   .ec-modal:not(.ec-modal--responsive)[data-state='open'] {
-    animation: ec-mobile-modal-sheet-in 280ms var(--ec-ease-emphasized);
+    animation: ec-mobile-modal-sheet-in var(--ec-motion-base) var(--ec-ease-emphasized);
   }
 
   .ec-modal:not(.ec-modal--responsive)[data-state='closed'] {
-    animation: ec-mobile-modal-sheet-out 180ms var(--ec-ease-standard);
+    animation: ec-mobile-modal-sheet-out var(--ec-motion-fast) var(--ec-ease-standard);
   }
 
   .ec-modal__footer {
@@ -2406,7 +2419,7 @@
     border-radius: 0;
   }
   .ec-modal--responsive[data-state='open'] {
-    animation: ec-sheet-bottom-in 350ms var(--ec-ease-emphasized);
+    animation: ec-sheet-bottom-in var(--ec-motion-base) var(--ec-ease-emphasized);
   }
 }
 
@@ -2450,32 +2463,6 @@
     var(--ec-shadow-lg),
     0 0 0 1px color-mix(in oklch, var(--ec-color-border) 40%, transparent);
   transform-origin: var(--radix-dropdown-menu-content-transform-origin);
-}
-.ec-dropdown-content[data-state='open'] {
-  animation: ec-menu-in 250ms var(--ec-ease-emphasized);
-}
-.ec-dropdown-content[data-state='closed'] {
-  animation: ec-menu-out 180ms var(--ec-ease-standard);
-}
-@keyframes ec-menu-in {
-  from {
-    opacity: 0;
-    transform: scale(0.97) translateY(-0.25rem);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-@keyframes ec-menu-out {
-  from {
-    opacity: 1;
-    transform: none;
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.97);
-  }
 }
 .ec-dropdown-item {
   position: relative;
@@ -3721,10 +3708,10 @@
   z-index: calc(var(--ec-z-overlay) + 11);
 }
 .ec-responsive-overlay[data-state='open'] {
-  animation: ec-dialog-in 350ms var(--ec-ease-emphasized);
+  animation: ec-dialog-in var(--ec-motion-base) var(--ec-ease-emphasized);
 }
 .ec-responsive-overlay[data-state='closed'] {
-  animation: ec-dialog-out 200ms var(--ec-ease-standard);
+  animation: ec-dialog-out var(--ec-motion-fast) var(--ec-ease-standard);
 }
 .ec-responsive-overlay.is-instant[data-state='closed'] {
   display: none;
@@ -3796,10 +3783,10 @@
   transform: none;
 }
 .ec-responsive-overlay[data-mobile='true'][data-side='bottom'][data-state='open'] {
-  animation: ec-sheet-bottom-in 350ms var(--ec-ease-emphasized);
+  animation: ec-sheet-bottom-in var(--ec-motion-base) var(--ec-ease-emphasized);
 }
 .ec-responsive-overlay[data-mobile='true'][data-side='bottom'][data-state='closed'] {
-  animation: ec-sheet-bottom-out 220ms var(--ec-ease-standard);
+  animation: ec-sheet-bottom-out var(--ec-motion-fast) var(--ec-ease-standard);
 }
 .ec-responsive-overlay[data-mobile='true'][data-side='top'] {
   top: var(--ec-overlay-viewport-offset-top, 0px);
@@ -3812,10 +3799,10 @@
   border-radius: 0 0 var(--ec-radius-xl) var(--ec-radius-xl);
 }
 .ec-responsive-overlay[data-mobile='true'][data-side='top'][data-state='open'] {
-  animation: ec-sheet-top-in 350ms var(--ec-ease-emphasized);
+  animation: ec-sheet-top-in var(--ec-motion-base) var(--ec-ease-emphasized);
 }
 .ec-responsive-overlay[data-mobile='true'][data-side='top'][data-state='closed'] {
-  animation: ec-sheet-top-out 220ms var(--ec-ease-standard);
+  animation: ec-sheet-top-out var(--ec-motion-fast) var(--ec-ease-standard);
 }
 .ec-responsive-overlay[data-mobile='true'][data-side='left'],
 .ec-responsive-overlay[data-mobile='true'][data-side='right'] {
@@ -3838,16 +3825,16 @@
   transform: none;
 }
 .ec-responsive-overlay[data-mobile='true'][data-side='left'][data-state='open'] {
-  animation: ec-sheet-left-in 350ms var(--ec-ease-emphasized);
+  animation: ec-sheet-left-in var(--ec-motion-base) var(--ec-ease-emphasized);
 }
 .ec-responsive-overlay[data-mobile='true'][data-side='left'][data-state='closed'] {
-  animation: ec-sheet-left-out 220ms var(--ec-ease-standard);
+  animation: ec-sheet-left-out var(--ec-motion-fast) var(--ec-ease-standard);
 }
 .ec-responsive-overlay[data-mobile='true'][data-side='right'][data-state='open'] {
-  animation: ec-sheet-right-in 350ms var(--ec-ease-emphasized);
+  animation: ec-sheet-right-in var(--ec-motion-base) var(--ec-ease-emphasized);
 }
 .ec-responsive-overlay[data-mobile='true'][data-side='right'][data-state='closed'] {
-  animation: ec-sheet-right-out 220ms var(--ec-ease-standard);
+  animation: ec-sheet-right-out var(--ec-motion-fast) var(--ec-ease-standard);
 }
 @media (min-width: 640px) {
   .ec-query-table.is-embedded,
@@ -3864,6 +3851,112 @@
   }
   .ec-action-bar .ec-button {
     align-self: center;
+  }
+}
+
+/* Floating surfaces follow the resolved placement, including collision flips. */
+.ec-select__menu {
+  transform-origin: var(--radix-select-content-transform-origin);
+}
+.ec-popover-content,
+.ec-combobox__menu,
+.ec-multi-select__menu {
+  transform-origin: var(--radix-popover-content-transform-origin);
+}
+.ec-tooltip-content {
+  transform-origin: var(--radix-tooltip-content-transform-origin);
+}
+:is(
+  .ec-select__menu,
+  .ec-dropdown-content,
+  .ec-popover-content,
+  .ec-tooltip-content,
+  .ec-combobox__menu,
+  .ec-multi-select__menu
+) {
+  --ec-float-x: 0px;
+  --ec-float-y: 0px;
+}
+:is(
+  .ec-select__menu,
+  .ec-dropdown-content,
+  .ec-popover-content,
+  .ec-tooltip-content,
+  .ec-combobox__menu,
+  .ec-multi-select__menu
+)[data-side='bottom'] {
+  --ec-float-y: calc(-1 * var(--ec-space-1));
+}
+:is(
+  .ec-select__menu,
+  .ec-dropdown-content,
+  .ec-popover-content,
+  .ec-tooltip-content,
+  .ec-combobox__menu,
+  .ec-multi-select__menu
+)[data-side='top'] {
+  --ec-float-y: var(--ec-space-1);
+}
+:is(
+  .ec-select__menu,
+  .ec-dropdown-content,
+  .ec-popover-content,
+  .ec-tooltip-content,
+  .ec-combobox__menu,
+  .ec-multi-select__menu
+)[data-side='right'] {
+  --ec-float-x: calc(-1 * var(--ec-space-1));
+}
+:is(
+  .ec-select__menu,
+  .ec-dropdown-content,
+  .ec-popover-content,
+  .ec-tooltip-content,
+  .ec-combobox__menu,
+  .ec-multi-select__menu
+)[data-side='left'] {
+  --ec-float-x: var(--ec-space-1);
+}
+:is(
+  .ec-select__menu,
+  .ec-dropdown-content,
+  .ec-popover-content,
+  .ec-tooltip-content,
+  .ec-combobox__menu,
+  .ec-multi-select__menu
+):is([data-state='open'], [data-state='delayed-open'], [data-state='instant-open']) {
+  animation: ec-float-in var(--ec-motion-fast) var(--ec-ease-emphasized) both;
+}
+:is(
+  .ec-select__menu,
+  .ec-dropdown-content,
+  .ec-popover-content,
+  .ec-tooltip-content,
+  .ec-combobox__menu,
+  .ec-multi-select__menu
+)[data-state='closed'] {
+  animation: ec-float-out calc(var(--ec-motion-fast) * 0.75) var(--ec-ease-standard) both;
+  /* Radix DismissableLayer sets pointer-events inline while the exit is mounted. */
+  pointer-events: none !important;
+}
+@keyframes ec-float-in {
+  from {
+    opacity: 0;
+    transform: translate(var(--ec-float-x), var(--ec-float-y)) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ec-float-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--ec-float-x), var(--ec-float-y)) scale(0.98);
   }
 }
 
@@ -3885,13 +3978,6 @@
   overflow-wrap: anywhere;
   word-break: break-word;
   box-shadow: var(--ec-shadow-md);
-}
-.ec-tooltip-content[data-state='delayed-open'],
-.ec-tooltip-content[data-state='instant-open'] {
-  animation: ec-menu-in 180ms var(--ec-ease-emphasized);
-}
-.ec-tooltip-content[data-state='closed'] {
-  animation: ec-menu-out 140ms var(--ec-ease-standard);
 }
 .ec-tooltip-arrow {
   width: 0.625rem;
@@ -3915,12 +4001,6 @@
     var(--ec-shadow-lg),
     0 0 0 1px color-mix(in oklch, var(--ec-color-border) 40%, transparent);
   outline: none;
-}
-.ec-popover-content[data-state='open'] {
-  animation: ec-menu-in 220ms var(--ec-ease-emphasized);
-}
-.ec-popover-content[data-state='closed'] {
-  animation: ec-menu-out 160ms var(--ec-ease-standard);
 }
 .ec-popover-content header {
   margin: 0 0 var(--ec-space-3);
@@ -5362,7 +5442,6 @@
   border-radius: var(--ec-radius-lg);
   background: var(--ec-color-surface-raised);
   box-shadow: var(--ec-shadow-lg);
-  animation: ec-choice-menu-in var(--ec-motion-fast) var(--ec-ease-emphasized) both;
 }
 .ec-combobox__option,
 .ec-multi-select__option {
@@ -5566,16 +5645,6 @@
 }
 .ec-accordion__content-inner {
   padding: 1rem;
-}
-@keyframes ec-choice-menu-in {
-  from {
-    transform: translateY(-0.25rem) scale(0.985);
-    opacity: 0;
-  }
-  to {
-    transform: none;
-    opacity: 1;
-  }
 }
 @keyframes ec-accordion-down {
   from {
