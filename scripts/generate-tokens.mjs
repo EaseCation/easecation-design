@@ -38,7 +38,7 @@ const css = await format(
     ),
     block("[data-ec-density='comfortable']", { '--ec-density-scale': '1' }),
     block("[data-ec-density='compact']", { '--ec-density-scale': '0.875' }),
-    '@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; } }',
+    '@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; animation-delay: 0ms !important; transition: none !important; scroll-behavior: auto !important; } }',
   ].join('\n'),
   'css',
 );

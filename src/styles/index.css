@@ -1,5 +1,6 @@
 @import './tokens.css';
 @import './components.css';
+@import './sidebar.css';
 
 *,
 *::before,
@@ -138,7 +139,7 @@ body,
   }
 }
 .ec-route-transition-enter {
-  animation: ec-route-transition-enter 400ms var(--ec-ease-emphasized) both;
+  animation: ec-route-transition-enter var(--ec-motion-base) var(--ec-ease-emphasized) both;
   will-change: transform, opacity;
 }
 html.capacitor-native [data-native-safe-top],

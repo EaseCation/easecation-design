@@ -37,9 +37,8 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
       size={size}
       pressable={pressable}
       className={['ec-icon-button', className].filter(Boolean).join(' ')}
+      leadingIcon={icon}
       {...props}
-    >
-      {icon}
-    </Button>
+    />
   );
 });

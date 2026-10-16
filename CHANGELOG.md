@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.16.0
+
+### Minor Changes
+
+- Share content loading through PageSkeleton, inline loading through Spinner and router-independent page entry through PageTransition. Button and IconButton use the same spinner without duplicating their idle icon.
+
+  Use the shared base motion duration for page entry, connect AppShell mobile rows to the shared sidebar animation, and centralize reduced motion without color transitions or stagger delays.
+
+- Add shared sidebar frame, primary/secondary navigation items, account menu trigger and collapse control with consistent desktop, touch and collapsed layouts.
+
+  Share account-menu display mode options through ThemeModeMenuItems, using the existing accessible radio-menu controls.
+
+  Keep example-only layout styles in Storybook and remove unused legacy toast styles from the public stylesheet.
+
+  Switch desktop sidebar width together with its controlled content to prevent icon jumps during collapse and expansion.
+
+  Support account avatar images with a shared loading and error fallback.
+
+### Patch Changes
+
+- Unify PageScaffold title icons at 24px using the current theme primary color and decorative accessibility semantics.
+
 ## 0.15.1
 
 ### Patch Changes

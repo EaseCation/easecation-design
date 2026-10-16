@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from 'react';
 import { Slot } from 'radix-ui';
+import { Spinner } from '../Spinner';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link';
 export type ButtonTone = 'default' | 'accent' | 'danger' | 'muted';
@@ -136,7 +137,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     >
       <span className="ec-button__content">
         {loading ? (
-          <span className="ec-spinner" aria-hidden="true" />
+          <Spinner />
         ) : leadingIcon ? (
           <span className="ec-button__icon">{leadingIcon}</span>
         ) : null}

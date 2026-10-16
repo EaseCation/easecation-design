@@ -679,6 +679,112 @@
       "tokens": ["--ec-color-primary", "--ec-color-focus", "--ec-touch-target"],
       "stories": ["components-file-button--states"],
       "deprecated": false
+    },
+    {
+      "name": "SidebarCollapseButton",
+      "importPath": "@easecation/design",
+      "category": "layout",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["keyboard-navigation", "accessible-name", "focus-visible"],
+      "tokens": ["--ec-control-lg", "--ec-control-xl", "--ec-touch-target"],
+      "stories": [
+        "layout-sidebar--standard",
+        "layout-sidebar--collapsed",
+        "layout-sidebar--long-content"
+      ],
+      "deprecated": false
+    },
+    {
+      "name": "SidebarAccountButton",
+      "importPath": "@easecation/design",
+      "category": "layout",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["keyboard-navigation", "accessible-name", "focus-visible"],
+      "tokens": ["--ec-control-lg", "--ec-control-xl", "--ec-touch-target"],
+      "stories": [
+        "layout-sidebar--standard",
+        "layout-sidebar--collapsed",
+        "layout-sidebar--long-content"
+      ],
+      "deprecated": false
+    },
+    {
+      "name": "SidebarNavItem",
+      "importPath": "@easecation/design",
+      "category": "layout",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["keyboard-navigation", "accessible-name", "focus-visible"],
+      "tokens": ["--ec-control-lg", "--ec-control-xl", "--ec-touch-target"],
+      "stories": [
+        "layout-sidebar--standard",
+        "layout-sidebar--collapsed",
+        "layout-sidebar--long-content"
+      ],
+      "deprecated": false
+    },
+    {
+      "name": "SidebarPanel",
+      "importPath": "@easecation/design",
+      "category": "layout",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["keyboard-navigation", "accessible-name", "focus-visible"],
+      "tokens": ["--ec-control-lg", "--ec-control-xl", "--ec-touch-target"],
+      "stories": [
+        "layout-sidebar--standard",
+        "layout-sidebar--collapsed",
+        "layout-sidebar--long-content"
+      ],
+      "deprecated": false
+    },
+    {
+      "name": "ThemeModeMenuItems",
+      "importPath": "@easecation/design",
+      "category": "navigation",
+      "maturity": "stable",
+      "platforms": ["web", "ssr"],
+      "accessibility": [
+        "Radio menu semantics, keyboard navigation, and current selection indicator"
+      ],
+      "tokens": [],
+      "stories": ["navigation-thememodemenuitems--default"],
+      "deprecated": false
+    },
+    {
+      "name": "Spinner",
+      "importPath": "@easecation/design",
+      "category": "feedback",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["reduced-motion", "status"],
+      "tokens": ["--ec-font-size-md"],
+      "stories": ["feedback-spinner--default"],
+      "deprecated": false
+    },
+    {
+      "name": "PageSkeleton",
+      "importPath": "@easecation/design",
+      "category": "feedback",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["reduced-motion", "status"],
+      "tokens": ["--ec-space-4", "--ec-control-md"],
+      "stories": ["feedback-pageskeleton--default"],
+      "deprecated": false
+    },
+    {
+      "name": "PageTransition",
+      "importPath": "@easecation/design",
+      "category": "layout",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["reduced-motion"],
+      "tokens": ["--ec-motion-base"],
+      "stories": ["layout-pagetransition--default"],
+      "deprecated": false
     }
   ]
 }
