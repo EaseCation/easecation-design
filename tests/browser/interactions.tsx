@@ -33,6 +33,11 @@ function Interactions() {
       <output data-testid="actions">{actions}</output>
       <output data-testid="searches">{searches}</output>
       <Button data-testid="press-button">Press button</Button>
+      <Button asChild>
+        <a href="#press-link" onClick={(event) => event.preventDefault()} data-testid="press-link">
+          Press link
+        </a>
+      </Button>
       <Card pressable data-testid="press-card">
         Press card
       </Card>

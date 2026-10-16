@@ -1,6 +1,8 @@
 # Motion
 
-Button and pressable Card share physical press feedback. Pointer cancellation, lost capture,
+Button and pressable Card share physical press feedback. Quick taps retain their visual press
+for at least `--ec-motion-fast` from pointerdown, without delaying the click action. Normal touch
+release does not cancel this feedback; interrupted gestures still clear immediately. Pointer cancellation, lost capture,
 leaving the surface and disabling the interaction clear the effect. Calling preventDefault
 in onPointerDown cancels feedback for that gesture. Reduced motion disables the tilt and
 responds to preference changes without a reload.

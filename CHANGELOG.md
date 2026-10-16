@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.17.1
+
+### Patch Changes
+
+- Keep quick button and card taps visibly pressed for the shared motion duration without delaying activation. Cancel interrupted gestures and clear pending feedback when disabled, unmounted or reduced motion is enabled.
+- c7030c2: Keep mobile SectionCard records visually separate inside DataPanel and wrap long record headings and descriptions.
+
 ## 0.17.0
 
 ### Minor Changes

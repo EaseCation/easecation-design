@@ -64,6 +64,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     pressStyle,
     start: startPress,
     end: endPress,
+    release: releasePress,
+    cancelHeld,
   } = usePressFeedback(pressable && !disabled && !loading, 15);
   useImperativeHandle(ref, () => innerRef.current as HTMLButtonElement);
   const start = (event: PointerEvent<HTMLButtonElement>) => {
@@ -72,11 +74,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   };
   const end = (event: PointerEvent<HTMLButtonElement>) => {
     onPointerUp?.(event);
-    endPress();
+    releasePress();
   };
   const leave = (event: PointerEvent<HTMLButtonElement>) => {
     onPointerLeave?.(event);
-    endPress();
+    cancelHeld();
   };
   const cancel = (event: PointerEvent<HTMLButtonElement>) => {
     onPointerCancel?.(event);
@@ -84,7 +86,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   };
   const lostCapture = (event: PointerEvent<HTMLButtonElement>) => {
     onLostPointerCapture?.(event);
-    endPress();
+    cancelHeld();
   };
   const buttonClassName = [
     'ec-button',
