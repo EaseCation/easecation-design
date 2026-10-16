@@ -1,6 +1,6 @@
 {
   "source": "packages/tokens/src/theme.css",
-  "sha256": "2c0a866de374068dda18566db0bb8f5974cf60a2d4b0c67ac0f60f37011cb884",
+  "sha256": "fc6ae16dcd7f30d4492e67f28a0725c93922c8b9ad8615e25bf48570c4c4d842",
   "light": {
     "--background": "oklch(0.985 0.005 255)",
     "--foreground": "oklch(0.18 0.025 264)",
