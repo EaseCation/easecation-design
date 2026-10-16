@@ -1,4 +1,4 @@
-/* global document, getComputedStyle */
+/* global document, getComputedStyle, DOMMatrix */
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -54,6 +54,24 @@ try {
           ),
           `No horizontal overflow at ${width}/${theme}`,
         );
+
+        // Sample actual rendered feedback after a quick native click/tap. Class-only
+        // checks miss presses that start and end before the browser paints a frame.
+        for (const id of ['press-button', 'press-card', 'press-link']) {
+          const surface = page.getByTestId(id);
+          if (touch) await surface.tap();
+          else await surface.click();
+          await page.waitForFunction((id) => {
+            const node = document.querySelector(`[data-testid="${id}"]`);
+            return new DOMMatrix(getComputedStyle(node).transform).a < 0.99;
+          }, id);
+          await page.waitForFunction((id) => {
+            const node = document.querySelector(`[data-testid="${id}"]`);
+            return (
+              !node.classList.contains('is-pressing') && getComputedStyle(node).transform === 'none'
+            );
+          }, id);
+        }
 
         for (const id of ['press-button', 'press-card']) {
           const surface = page.getByTestId(id);

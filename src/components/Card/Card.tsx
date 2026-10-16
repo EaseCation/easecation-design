@@ -27,7 +27,14 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   ref,
 ) {
   const inner = useRef<HTMLDivElement>(null);
-  const { pressing, pressStyle, start: startPress, end: endPress } = usePressFeedback(pressable, 8);
+  const {
+    pressing,
+    pressStyle,
+    start: startPress,
+    end: endPress,
+    release: releasePress,
+    cancelHeld,
+  } = usePressFeedback(pressable, 8);
   useImperativeHandle(ref, () => inner.current as HTMLDivElement);
   const start = (event: PointerEvent<HTMLDivElement>) => {
     onPointerDown?.(event);
@@ -35,11 +42,11 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   };
   const end = (event: PointerEvent<HTMLDivElement>) => {
     onPointerUp?.(event);
-    endPress();
+    releasePress();
   };
   const leave = (event: PointerEvent<HTMLDivElement>) => {
     onPointerLeave?.(event);
-    endPress();
+    cancelHeld();
   };
   const cancel = (event: PointerEvent<HTMLDivElement>) => {
     onPointerCancel?.(event);
@@ -47,7 +54,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   };
   const lostCapture = (event: PointerEvent<HTMLDivElement>) => {
     onLostPointerCapture?.(event);
-    endPress();
+    cancelHeld();
   };
   return (
     <div

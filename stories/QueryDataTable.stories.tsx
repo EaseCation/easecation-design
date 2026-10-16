@@ -1,7 +1,14 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button, QueryDataTable, ResponsiveDialog, ThemeProvider } from '../src';
+import {
+  Button,
+  DataPanel,
+  SectionCard,
+  QueryDataTable,
+  ResponsiveDialog,
+  ThemeProvider,
+} from '../src';
 import { useStoryTranslations } from '../.storybook/story-locale';
 
 const helper = createColumnHelper<{ id: string; name: string; status: string }>();
@@ -34,7 +41,7 @@ const translations = {
   },
 } as const;
 
-function Demo() {
+function Demo({ embedded = false }: { embedded?: boolean }) {
   const [open, setOpen] = useState(false);
   const copy = useStoryTranslations(translations);
   const columns = [
@@ -54,23 +61,32 @@ function Demo() {
       >
         <div style={{ display: 'grid', gap: '1rem' }}>
           <Button onClick={() => setOpen(true)}>{copy.open}</Button>
-          <QueryDataTable
-            data={[...copy.rows]}
-            columns={columns}
-            getRowId={(row) => row.id}
-            mobileCard={(row) => (
-              <div
-                key={row.id}
-                style={{
-                  padding: '1rem',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--radius-xl)',
-                }}
-              >
-                {row.name} ? {row.status}
-              </div>
-            )}
-          />
+          {embedded ? (
+            <DataPanel toolbar={<Button onClick={() => setOpen(true)}>{copy.title}</Button>}>
+              <QueryDataTable
+                embedded
+                data={[...copy.rows]}
+                columns={columns}
+                getRowId={(row) => row.id}
+                mobileCard={(row) => (
+                  <SectionCard key={row.id} title={row.name} description={row.status}>
+                    <Button>{copy.apply}</Button>
+                  </SectionCard>
+                )}
+              />
+            </DataPanel>
+          ) : (
+            <QueryDataTable
+              data={[...copy.rows]}
+              columns={columns}
+              getRowId={(row) => row.id}
+              mobileCard={(row) => (
+                <SectionCard key={row.id} title={row.name} description={row.status}>
+                  <Button>{copy.apply}</Button>
+                </SectionCard>
+              )}
+            />
+          )}
           <ResponsiveDialog
             open={open}
             onOpenChange={setOpen}
@@ -95,3 +111,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 export const Table: Story = { args: { data: [], columns: [] }, render: () => <Demo /> };
 export const Overlay: Story = Table;
+
+export const EmbeddedCards: Story = {
+  args: { data: [], columns: [] },
+  render: () => <Demo embedded />,
+  globals: { viewport: { value: 'mobile1', isRotated: false } },
+};

@@ -46,6 +46,10 @@ data；columns；getRowId；isLoading；mobileCard；layout；empty/error 文案
 
 从其他 UI 实现替换到该组件时，不要只修改组件名称。应同时核对 Props 模型、受控状态、Compound API、移动端布局、空/错/加载状态和可访问性语义。
 
+## Mobile records inside a DataPanel
+
+Use `SectionCard` in `mobileCard` for individually grouped records. `DataPanel` automatically becomes a transparent layout when its direct content is a mobile card list, so gaps reveal the page canvas just as in a standalone list. Toolbar and pagination remain outside record cards. Desktop tables retain the panel surface. Long card headings and descriptions wrap without consumer CSS overrides.
+
 ## TypeScript 公开声明
 
 以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。

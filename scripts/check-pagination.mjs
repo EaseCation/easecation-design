@@ -19,7 +19,7 @@ const results = [];
 try {
   await server.listen();
   browser = await chromium.launch();
-  for (const width of [320, 390, 1280])
+  for (const width of [320, 390, 768, 1280])
     for (const theme of ['light', 'dark']) {
       const context = await browser.newContext({
         viewport: { width, height: 900 },
@@ -71,6 +71,31 @@ try {
           await page.getByTestId('query-cards').locator('.ec-section-card').count(),
           width < 768 ? 1 : 0,
         );
+        const panel = page.getByTestId('embedded-cards');
+        const background = await panel.evaluate((el) => getComputedStyle(el).backgroundColor);
+        assert.equal(
+          background === 'rgba(0, 0, 0, 0)',
+          width < 768,
+          `panel surface ${width}/${theme}`,
+        );
+        if (width < 768) {
+          const cards = panel.locator('.ec-section-card');
+          assert.equal(await cards.count(), 2);
+          const first = await cards.nth(0).boundingBox();
+          const second = await cards.nth(1).boundingBox();
+          assert.ok(second.y - first.y - first.height >= 12, 'record cards need a visible gap');
+          assert.notEqual(
+            await cards.nth(0).evaluate((el) => getComputedStyle(el).backgroundColor),
+            background,
+          );
+          assert.ok(
+            await cards
+              .nth(0)
+              .locator('h2')
+              .evaluate((el) => el.scrollWidth <= el.clientWidth),
+            'long card title must wrap',
+          );
+        }
         assert.deepEqual(errors, []);
         results.push({ width, theme, passed: true });
       } finally {

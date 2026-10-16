@@ -12,6 +12,7 @@ import {
   TableHead,
   TableCell,
   QueryDataTable,
+  DataPanel,
   SectionCard,
 } from '../../src';
 function Fixture() {
@@ -53,14 +54,37 @@ function Fixture() {
               columns={[{ accessorKey: 'value', header: 'Value' }]}
               getRowId={(row) => row.id}
               mobileCard={(row) => (
-                <SectionCard key={row.id} title={row.value} className="long-card">
+                <SectionCard key={row.id} title={row.value}>
                   <p>{row.value}</p>
                   <Button>Edit</Button>
                 </SectionCard>
               )}
             />
           </section>
-          <style>{'.long-card { overflow-wrap: anywhere; }'}</style>
+          <DataPanel
+            data-testid="embedded-cards"
+            toolbar={<Button>Filter records</Button>}
+            footer={<Button>Next records</Button>}
+          >
+            <QueryDataTable
+              embedded
+              data={[
+                { id: 'one', value: 'LongRecordName'.repeat(12) },
+                { id: 'two', value: 'Second record' },
+              ]}
+              columns={[{ accessorKey: 'value', header: 'Value' }]}
+              getRowId={(row) => row.id}
+              mobileCard={(row) => (
+                <SectionCard
+                  key={row.id}
+                  title={row.value}
+                  description={'LongDescription'.repeat(10)}
+                >
+                  <Button>Edit record</Button>
+                </SectionCard>
+              )}
+            />
+          </DataPanel>
           <TableRoot mobile="cards" aria-label="Records">
             <TableHeader>
               <TableRow>
