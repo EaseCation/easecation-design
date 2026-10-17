@@ -75,6 +75,12 @@ Runtime has no Tailwind, Router, Capacitor or business API dependency.
 - Spinner [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - PageSkeleton [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - PageTransition [beta/layout]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- LocaleProvider [beta/foundation]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- ConfirmDialog [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- AccessDeniedState [beta/feedback]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- WorkbenchWelcome [beta/navigation]: @easecation/design; platforms: web, ssr, pwa, android-webview, ios-wkwebview
+- WorkbenchSection [beta/navigation]: @easecation/design; platforms: web, ssr, pwa, android-webview, ios-wkwebview
+- WorkbenchEntry [beta/navigation]: @easecation/design; platforms: web, ssr, pwa, android-webview, ios-wkwebview
 
 ## Rules
 - Reuse registered components before creating new UI.
@@ -82,3 +88,5 @@ Runtime has no Tailwind, Router, Capacitor or business API dependency.
 - Keep APIs domain-neutral and SSR-safe.
 - Do not import EaseCation private APIs, URLs, logos or restricted assets.
 - Use `pnpm ai:validate` for fast validation; run required full library and consumer checks before delivery.
+
+- ExpandableText: line-limited plain text with accessible expansion; see docs/components/ExpandableText.md.

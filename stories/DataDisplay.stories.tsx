@@ -150,3 +150,35 @@ export const WorkspaceTable: Story = {
   },
   render: () => <WorkspaceTableExample />,
 };
+
+export const InteractiveRecords: Story = {
+  args: { columns: [], data: [], rowKey: () => '' },
+  render: () => (
+    <Table
+      rowKey="id"
+      pagination={{ defaultPageSize: 5, allowPageSizeChange: true, showPageJump: true }}
+      minWidth={600}
+      renderExpandedRow={(row) => <p>{row.name} · Record details</p>}
+      data={Array.from({ length: 12 }, (_, i) => ({
+        id: i + 1,
+        name: `Workspace ${i + 1}`,
+        members: 12 - i,
+        active: i % 2 === 0,
+      }))}
+      columns={[
+        { title: 'Workspace', dataIndex: 'name', pinned: 'left', width: 200 },
+        { title: 'Members', dataIndex: 'members', compare: (a, b) => a.members - b.members },
+        {
+          title: 'Status',
+          dataIndex: 'active',
+          render: (value) => (value ? 'Active' : 'Archived'),
+          filterOptions: [
+            { label: 'Active', value: true },
+            { label: 'Archived', value: false },
+          ],
+          filter: (value, row) => row.active === value,
+        },
+      ]}
+    />
+  ),
+};

@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.19.0
+
+### Minor Changes
+
+- Add ExpandableText for line-limited plain text with localized keyboard and touch expansion, width-aware overflow detection, and reset on content changes. Add Input character count feedback.
+- Add the text-primary semantic token for readable brand foregrounds independently of bright primary fills. Existing themes retain their current appearance by default.
+- Extend QueryDataTable with controlled or internal tree expansion, accessible keyboard controls, explicit column widths and alignment, and a scrollable minimum width. Supports hierarchical reporting without a second table implementation.
+
+  Allow wrapping long cells and provide consistent vertical padding. Text-only StatCards no longer reserve an empty icon column, avoiding cramped labels on narrow screens.
+
+- Implement Textarea autoResize with row bounds and width-aware resizing. Add an accessible character counter that preserves existing help and validation associations.
+- Extend Table with shared pagination, local sorting and multi-value column filters, controlled row selection, detail expansion and pinned columns. Server pagination is explicit and does not slice API pages. Loading uses an accessible skeleton without a visible loading label.
+- Share Console's welcome banner and compact navigation sections through WorkbenchWelcome,
+  WorkbenchSection and WorkbenchEntry. Keep routing, artwork, identity requests and business data
+  in consumers; centralize avatar fallback, responsive spacing, focus and reduced-motion behavior.
+
+  Add ResponsiveGrid.mobileColumns so consumers can express narrow layouts without CSS priority overrides.
+
+  Scope PageScaffold eyebrow styling to its own header so nested card descriptions do not inherit uppercase and letter-spacing.
+
+### Patch Changes
+
+- Use public semantic tokens for sidebar navigation, workbench surfaces and elevated foregrounds so ThemeProvider overrides propagate consistently, including nested themes and portals.
+
 ## 0.18.0
 
 ### Minor Changes

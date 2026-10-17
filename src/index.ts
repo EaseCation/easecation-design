@@ -64,3 +64,9 @@ export * from './components/PageTransition';
 export * from './locale/LocaleProvider';
 export * from './hooks/useReducedMotion';
 export * from './components/ConfirmDialog';
+
+export * from './components/WorkbenchWelcome';
+export * from './components/WorkbenchSection';
+export * from './components/WorkbenchEntry';
+
+export * from './components/ExpandableText';

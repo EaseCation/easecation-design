@@ -31,7 +31,10 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["aria-invalid", "focus-visible", "label-compatible"],
       "tokens": ["--ec-color-border", "--ec-color-focus", "--ec-control-md"],
-      "stories": ["foundation-tokens-and-theme--generic-dashboard"],
+      "stories": [
+        "foundation-tokens-and-theme--generic-dashboard",
+        "components-form-controls-textarea--resizing-and-count"
+      ],
       "deprecated": false
     },
     {
@@ -833,6 +836,53 @@
       "accessibility": ["semantic-heading", "custom-action"],
       "tokens": ["--ec-color-surface-raised", "--ec-color-muted"],
       "stories": ["feedback-accessdeniedstate--default"],
+      "deprecated": false
+    },
+    {
+      "name": "WorkbenchWelcome",
+      "importPath": "@easecation/design",
+      "category": "navigation",
+      "maturity": "beta",
+      "platforms": ["web", "ssr", "pwa", "android-webview", "ios-wkwebview"],
+      "accessibility": ["keyboard", "focus-visible", "reduced-motion", "semantic-headings"],
+      "tokens": ["--ec-space-3", "--ec-color-text-muted", "--ec-motion-fast"],
+      "stories": ["patterns-workbench--overview", "patterns-workbench--narrow-dark"],
+      "deprecated": false
+    },
+    {
+      "name": "WorkbenchSection",
+      "importPath": "@easecation/design",
+      "category": "navigation",
+      "maturity": "beta",
+      "platforms": ["web", "ssr", "pwa", "android-webview", "ios-wkwebview"],
+      "accessibility": ["keyboard", "focus-visible", "reduced-motion", "semantic-headings"],
+      "tokens": ["--ec-space-3", "--ec-color-text-muted", "--ec-motion-fast"],
+      "stories": ["patterns-workbench--overview", "patterns-workbench--narrow-dark"],
+      "deprecated": false
+    },
+    {
+      "name": "WorkbenchEntry",
+      "importPath": "@easecation/design",
+      "category": "navigation",
+      "maturity": "beta",
+      "platforms": ["web", "ssr", "pwa", "android-webview", "ios-wkwebview"],
+      "accessibility": ["keyboard", "focus-visible", "reduced-motion", "semantic-headings"],
+      "tokens": ["--ec-space-3", "--ec-color-text-muted", "--ec-motion-fast"],
+      "stories": ["patterns-workbench--overview", "patterns-workbench--narrow-dark"],
+      "deprecated": false
+    },
+    {
+      "name": "ExpandableText",
+      "importPath": "@easecation/design",
+      "category": "display",
+      "maturity": "beta",
+      "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
+      "accessibility": ["aria-expanded", "aria-controls", "keyboard", "focus-visible"],
+      "tokens": ["--ec-color-text", "--ec-space-1"],
+      "stories": [
+        "components-data-display-expandabletext--long-text",
+        "components-data-display-expandabletext--short-text"
+      ],
       "deprecated": false
     }
   ]

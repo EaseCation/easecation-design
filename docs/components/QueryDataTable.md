@@ -65,6 +65,11 @@ export declare function QueryDataTable<T>({
   data,
   columns,
   getRowId,
+  getSubRows,
+  expanded,
+  onExpandedChange,
+  getRowLabel,
+  minWidth,
   isLoading,
   isError,
   isRefreshing,
@@ -89,6 +94,12 @@ export declare interface QueryDataTableProps<T> {
   data: T[];
   columns: ColumnDef<T, any>[];
   getRowId?: (row: T, index: number) => string;
+  /** Hierarchical records; expansion never changes host data. */
+  getSubRows?: (row: T) => T[] | undefined;
+  expanded?: ExpandedState;
+  onExpandedChange?: (expanded: ExpandedState) => void;
+  getRowLabel?: (row: T) => string;
+  minWidth?: number | string;
   isLoading?: boolean;
   isError?: boolean;
   /** Retain existing rows while a background request runs. */
@@ -116,6 +127,10 @@ export declare type QueryDataTableRowRenderProps<T> = {
   className?: string;
   children: ReactNode;
 };
+
+export declare type QueryDataTableColumn<T> = ColumnDef<T, any>;
+
+export declare type QueryDataTableExpandedState = ExpandedState;
 ```
 
 <!-- generated-api:end -->

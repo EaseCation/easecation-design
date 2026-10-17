@@ -25,6 +25,8 @@ export const localeMessages = {
     actionFailed: 'Unable to complete this action. Please try again.',
     apply: 'Apply',
     clear: 'Clear',
+    expandText: 'Read more',
+    collapseText: 'Read less',
   },
   'zh-CN': {
     pagination: '分页',
@@ -50,6 +52,8 @@ export const localeMessages = {
     actionFailed: '操作未完成，请重试。',
     apply: '应用',
     clear: '清除',
+    expandText: '展开全文',
+    collapseText: '收起',
   },
 } as const;
 export type DesignLocale = keyof typeof localeMessages;

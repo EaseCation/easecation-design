@@ -32,3 +32,23 @@ it('keeps shell and native input class names separate', () => {
   expect(input).not.toHaveClass('shell-layout');
   expect(input.parentElement).toHaveClass('shell-layout');
 });
+
+it('updates and resets a controlled counter without replacing existing help', () => {
+  const { rerender } = render(
+    <Input
+      aria-label="Title"
+      aria-describedby="help"
+      value="Draft"
+      showCount
+      maxLength={120}
+      readOnly
+    />,
+  );
+  const input = screen.getByRole('textbox');
+  const count = screen.getByText('5 / 120');
+  expect(input.getAttribute('aria-describedby')).toContain('help');
+  expect(input.getAttribute('aria-describedby')).toContain(count.id);
+  rerender(<Input aria-label="Title" value="" showCount maxLength={120} readOnly />);
+  expect(screen.getByText('0 / 120')).toBeInTheDocument();
+  expect(input).not.toHaveAttribute('showCount');
+});

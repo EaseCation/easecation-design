@@ -29,6 +29,8 @@ export default defineConfig({
           (packageName) => id === packageName || id.startsWith(`${packageName}/`),
         ),
       output: {
+        // Keep mappings while avoiding a second copy of every source file in the package.
+        sourcemapExcludeSources: true,
         // Keep the common interaction primitives independent of advanced controls.
         // Few semantic chunks avoid per-module compression overhead while allowing
         // consumer routes to defer tables, pickers and other documentation examples.
