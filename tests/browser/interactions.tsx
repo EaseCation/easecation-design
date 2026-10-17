@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
+  Alert,
   Button,
+  CardContent,
+  Table,
   Card,
   FilterBar,
   Input,
@@ -28,7 +31,7 @@ function Interactions() {
     return () => document.removeEventListener('keydown', back);
   }, []);
   return (
-    <main style={{ padding: 16, display: 'grid', gap: 16 }}>
+    <main style={{ padding: 16, display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: 16 }}>
       <output data-testid="motion">{reducedMotion ? 'reduced' : 'normal'}</output>
       <output data-testid="actions">{actions}</output>
       <output data-testid="searches">{searches}</output>
@@ -76,12 +79,42 @@ function Interactions() {
           </Button>
         </ResponsiveDialog>
       </Modal>
+      <section data-testid="alert-tones" style={{ display: 'grid', gap: 12 }}>
+        {(['neutral', 'info', 'success', 'warning', 'danger'] as const).map((tone) => (
+          <Alert key={tone} tone={tone} title={`${tone} notice`}>
+            Contact your administrator for help.
+          </Alert>
+        ))}
+      </section>
+      <Card>
+        <CardContent>
+          <Table
+            caption="Scrollable records"
+            minWidth={1800}
+            columns={[
+              { title: 'Record', dataIndex: 'name' },
+              { title: 'Actions', dataIndex: 'action', pinned: 'right', width: 100 },
+            ]}
+            data={Array.from({ length: 24 }, (_, id) => ({
+              id,
+              name: `Record ${id}`,
+              action: 'View',
+            }))}
+            rowKey="id"
+          />
+        </CardContent>
+      </Card>
+      <div aria-hidden="true" style={{ height: 900 }} />
     </main>
   );
 }
-const theme = new URLSearchParams(location.search).get('theme') === 'dark' ? 'dark' : 'light';
+const requestedTheme = new URLSearchParams(location.search).get('theme');
+const theme = requestedTheme === 'dark' || requestedTheme === 'black-gold' ? 'dark' : 'light';
 createRoot(document.getElementById('root')!).render(
-  <ThemeProvider mode={theme}>
+  <ThemeProvider
+    mode={theme}
+    colorTheme={requestedTheme === 'black-gold' ? 'black-gold' : 'default'}
+  >
     <Interactions />
   </ThemeProvider>,
 );

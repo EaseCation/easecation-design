@@ -1,4 +1,4 @@
-/* global document, getComputedStyle, DOMMatrix */
+/* global document, window, getComputedStyle, DOMMatrix */
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -24,13 +24,13 @@ try {
   await server.listen();
   browser = await chromium.launch();
   for (const width of [320, 390, 768, 1280]) {
-    for (const theme of ['light', 'dark']) {
+    for (const theme of ['light', 'dark', 'black-gold']) {
       const touch = width <= 768;
       const context = await browser.newContext({
         viewport: { width, height: 900 },
         hasTouch: touch,
         reducedMotion: 'no-preference',
-        colorScheme: theme,
+        colorScheme: theme === 'black-gold' ? 'dark' : theme,
       });
       try {
         const page = await context.newPage();
@@ -46,7 +46,7 @@ try {
         );
         assert.equal(
           await page.locator('[data-ec-theme]').first().getAttribute('data-ec-theme'),
-          theme,
+          theme === 'black-gold' ? 'dark' : theme,
         );
         assert.ok(
           await page.evaluate(
@@ -210,6 +210,73 @@ try {
           true,
           'Focus returns to launcher',
         );
+        const alertColors = await page.locator('.ec-alert').evaluateAll((alerts) => {
+          const canvas = document.createElement('canvas');
+          canvas.width = canvas.height = 1;
+          const context = canvas.getContext('2d');
+          const rgb = (color) => {
+            context.clearRect(0, 0, 1, 1);
+            context.fillStyle = color;
+            context.fillRect(0, 0, 1, 1);
+            return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
+          };
+          const luminance = (channels) =>
+            channels.reduce((sum, value, index) => {
+              const channel = value / 255;
+              return (
+                sum +
+                (channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4) *
+                  [0.2126, 0.7152, 0.0722][index]
+              );
+            }, 0);
+          const contrast = (a, b) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+          return alerts.map((alert) => {
+            const probe = document.createElement('span');
+            alert.append(probe);
+            // Let the browser mix before gamut mapping. Clamping each endpoint to
+            // canvas sRGB first gives an incorrect reference for vivid OKLCH tokens.
+            probe.style.color =
+              'color-mix(in srgb, var(--ec-alert-color) 7%, var(--ec-color-panel))';
+            const expected = rgb(getComputedStyle(probe).color);
+            const background = rgb(getComputedStyle(alert).backgroundColor);
+            const foreground = rgb(
+              getComputedStyle(alert.querySelector('.ec-alert-description')).color,
+            );
+            const icon = rgb(getComputedStyle(alert.querySelector('.ec-alert__icon')).color);
+            probe.remove();
+            return {
+              tone: alert.dataset.tone,
+              delta: Math.max(
+                ...background.map((value, index) => Math.abs(value - expected[index])),
+              ),
+              textContrast: contrast(luminance(foreground), luminance(background)),
+              iconContrast: contrast(luminance(icon), luminance(background)),
+            };
+          });
+        });
+        for (const result of alertColors) {
+          assert.ok(result.delta <= 2, `${theme}/${result.tone} keeps its sRGB tint`);
+          assert.ok(
+            result.textContrast >= 4.5,
+            `${theme}/${result.tone} readable body text: ${result.textContrast}`,
+          );
+          assert.ok(
+            result.iconContrast >= 3,
+            `${theme}/${result.tone} readable icon: ${result.iconContrast}`,
+          );
+        }
+        // Horizontal table gestures must not trap vertical page scrolling.
+        const scroller = page.locator('.ec-data-table-scroll');
+        const record = scroller.getByText('Record 4', { exact: true });
+        await record.scrollIntoViewIfNeeded();
+        await record.hover();
+        await page.mouse.wheel(180, 0);
+        await page.waitForFunction(
+          () => document.querySelector('.ec-data-table-scroll').scrollLeft > 0,
+        );
+        const beforeScroll = await page.evaluate(() => window.scrollY);
+        await page.mouse.wheel(0, 180);
+        await page.waitForFunction((previous) => window.scrollY > previous, beforeScroll);
         assert.deepEqual(errors, []);
         results.push({ width, theme, touch, status: 'passed' });
         console.log(
