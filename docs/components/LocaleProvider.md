@@ -35,6 +35,19 @@ export declare type DesignLocale = keyof typeof localeMessages;
 
 export declare const localeMessages: {
   readonly en: {
+    readonly resetView: 'Reset view';
+    readonly flipVertical: 'Flip vertically';
+    readonly flipHorizontal: 'Flip horizontally';
+    readonly rotateRight: 'Rotate right';
+    readonly rotateLeft: 'Rotate left';
+    readonly zoomLevel: 'Zoom level';
+    readonly zoomIn: 'Zoom in';
+    readonly zoomOut: 'Zoom out';
+    readonly nextImage: 'Next image';
+    readonly previousImage: 'Previous image';
+    readonly imageControls: 'Image controls';
+    readonly imagePreview: 'Image preview';
+    readonly chooseOrDropFiles: 'Choose or drop files';
     readonly pagination: 'Pagination';
     readonly previousPage: 'Previous page';
     readonly nextPage: 'Next page';
@@ -62,6 +75,19 @@ export declare const localeMessages: {
     readonly collapseText: 'Read less';
   };
   readonly 'zh-CN': {
+    readonly resetView: '重置视图';
+    readonly flipVertical: '垂直翻转';
+    readonly flipHorizontal: '水平翻转';
+    readonly rotateRight: '向右旋转';
+    readonly rotateLeft: '向左旋转';
+    readonly zoomLevel: '缩放比例';
+    readonly zoomIn: '放大';
+    readonly zoomOut: '缩小';
+    readonly nextImage: '下一张';
+    readonly previousImage: '上一张';
+    readonly imageControls: '图片操作';
+    readonly imagePreview: '图片预览';
+    readonly chooseOrDropFiles: '选择或拖入文件';
     readonly pagination: '分页';
     readonly previousPage: '上一页';
     readonly nextPage: '下一页';

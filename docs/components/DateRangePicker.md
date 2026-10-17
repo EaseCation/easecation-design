@@ -1,6 +1,6 @@
 # DateRangePicker
 
-统一的日期范围选择组件。通过 `date` 和 `datetime` 两种模式覆盖按天筛选与精确到分钟的时间范围筛选。
+统一的日期范围选择组件。通过 `date` 和 `datetime` 两种模式覆盖按天筛选与精确到分钟或秒的时间范围筛选。
 
 ## 导入
 
@@ -47,6 +47,8 @@ value；onChange；mode: date | datetime；presets；placeholder；startLabel；
 - 起止值必须完整且结束不早于开始。业务层仍负责接口约束和服务端错误。
 - 组件会在窄屏切换为单列，并限制浮层不超过视口宽度。
 
+`mode="datetime" timePrecision="second"` 保留秒数，按秒校验起止顺序；修改日期保留时间，清空时间分别回到 `00:00:00` / `23:59:59`。分钟输入在秒模式归一为 `:00`，默认 `minute` 行为保持。值不包含时区，时区与业务边界由应用负责。
+
 ## TypeScript 公开声明
 
 以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
@@ -58,6 +60,7 @@ export declare function DateRangePicker({
   value,
   onChange,
   mode,
+  timePrecision,
   presets,
   placeholder,
   startLabel,
@@ -79,6 +82,7 @@ export declare interface DateRangePickerProps {
   value: DateRangePickerValue;
   onChange: (value: DateRangePickerValue) => void;
   mode?: DateRangePickerMode;
+  timePrecision?: TimePrecision;
   presets?: readonly DateRangePickerPreset[];
   placeholder?: string;
   startLabel?: string;
@@ -103,6 +107,8 @@ export declare interface DateRangePickerValue {
 }
 
 export declare type DateRangePickerMode = 'date' | 'datetime';
+
+export declare type TimePrecision = 'minute' | 'second';
 
 export declare interface DateRangePickerPreset {
   label: ReactNode;

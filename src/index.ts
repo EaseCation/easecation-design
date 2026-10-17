@@ -70,3 +70,9 @@ export * from './components/WorkbenchSection';
 export * from './components/WorkbenchEntry';
 
 export * from './components/ExpandableText';
+export * from './components/NumberInput';
+export * from './components/Progress';
+
+export * from './components/FileDropzone';
+export * from './components/ImageViewer';
+export * from './components/Watermark';

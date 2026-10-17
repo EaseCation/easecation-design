@@ -201,7 +201,7 @@ function SheetScene() {
         description={copy.refineRecords}
         footer={<Button>{copy.applyFilters}</Button>}
       >
-        <div style={{ padding: '1rem', fontSize: '.875rem' }}>{copy.filterContent}</div>
+        <div style={{ fontSize: '.875rem' }}>{copy.filterContent}</div>
       </Drawer>
     </Frame>
   );

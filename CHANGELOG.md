@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.20.0
+
+### Minor Changes
+
+- Add FileDropzone for accessible native file selection and drag acquisition, and ImageViewer for responsive galleries with zoom, rotation, flips, keyboard navigation, wheel, pan, pinch and swipe. Upload validation, persistence and image authorization remain application responsibilities.
+
+  Add a neutral repeating SVG Watermark with mutation restoration and SSR-safe rendering.
+
+- Add custom MultiSelect option matching and second precision for date/time pickers. Native time inputs preserve seconds across date changes; datetime ranges validate within a minute and use complete day boundaries when cleared.
+- Add NumberInput with decimal draft preservation, precision, bounds, keyboard stepping and optional string precision, using an independent unstyled numeric engine and shared Input tokens.
+- Add accessible Progress percentages with semantic tones, compact size and unknown-total support.
+
+### Patch Changes
+
+- Keep Drawer headers and action footers fixed in the flex layout, and give scrollable body content consistent spacing. AppShell navigation keeps its existing body layout.
+- Keep native file inputs uncontrolled so selecting attachments never attempts to assign a forbidden file value. Style the file selection button with shared tokens and preserve native form reset behavior.
+
 ## 0.19.1
 
 ### Patch Changes

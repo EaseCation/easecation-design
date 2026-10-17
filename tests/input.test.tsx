@@ -52,3 +52,19 @@ it('updates and resets a controlled counter without replacing existing help', ()
   expect(screen.getByText('0 / 120')).toBeInTheDocument();
   expect(input).not.toHaveAttribute('showCount');
 });
+
+it('preserves native file selection through re-renders without assigning a forbidden file value', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  const { rerender } = render(
+    <Input aria-label="Attachment" type="file" accept=".csv" onChange={change} />,
+  );
+  const file = new File(['name,value\na,1'], 'sample.csv', { type: 'text/csv' });
+  const input = screen.getByLabelText<HTMLInputElement>('Attachment');
+  await user.upload(input, file);
+  expect(change).toHaveBeenCalledTimes(1);
+  expect(input.files?.[0]).toBe(file);
+  rerender(<Input aria-label="Attachment" type="file" accept=".csv" disabled onChange={change} />);
+  expect(input.files?.[0]).toBe(file);
+  expect(input).toBeDisabled();
+});

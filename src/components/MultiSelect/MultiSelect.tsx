@@ -32,6 +32,8 @@ export interface MultiSelectProps extends Omit<
   'size' | 'value' | 'defaultValue' | 'onChange' | 'children'
 > {
   options: MultiSelectOption[];
+  /** Override matching without changing selected values or custom-value creation. */
+  filterOption?: (query: string, option: MultiSelectOption) => boolean;
   value?: string[];
   defaultValue?: string[];
   onValueChange?: (value: string[]) => void;
@@ -76,6 +78,7 @@ function lastEnabledIndex(options: MultiSelectOption[]) {
 export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(function MultiSelect(
   {
     options,
+    filterOption,
     value,
     defaultValue = [],
     onValueChange,
@@ -114,6 +117,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(functi
     [options],
   );
   const filteredOptions = useMemo(() => {
+    if (filterOption) return options.filter((option) => filterOption(query, option));
     const needle = query.trim().toLocaleLowerCase();
     if (!needle) return options;
     return options.filter((option) =>
@@ -122,7 +126,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(functi
         .toLocaleLowerCase()
         .includes(needle),
     );
-  }, [options, query]);
+  }, [filterOption, options, query]);
   const customValue = query.trim();
   const canCreate =
     creatable &&

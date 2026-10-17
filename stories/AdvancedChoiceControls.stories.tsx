@@ -103,3 +103,19 @@ export const LongSearchableCatalog: Story = {
     />
   ),
 };
+
+export const ExactIdentifiers: Story = {
+  args: { options: [] },
+  render: () => (
+    <MultiSelect
+      label="Identifiers"
+      creatable
+      options={[
+        { value: '12', label: 'Record 12' },
+        { value: '312', label: 'Record 312' },
+      ]}
+      filterOption={(query, option) => !query.trim() || option.value === query.trim()}
+      placeholder="Type a complete identifier"
+    />
+  ),
+};

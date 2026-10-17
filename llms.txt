@@ -81,6 +81,12 @@ Runtime has no Tailwind, Router, Capacitor or business API dependency.
 - WorkbenchWelcome [beta/navigation]: @easecation/design; platforms: web, ssr, pwa, android-webview, ios-wkwebview
 - WorkbenchSection [beta/navigation]: @easecation/design; platforms: web, ssr, pwa, android-webview, ios-wkwebview
 - WorkbenchEntry [beta/navigation]: @easecation/design; platforms: web, ssr, pwa, android-webview, ios-wkwebview
+- ExpandableText [beta/display]: @easecation/design; platforms: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
+- NumberInput [beta/input]: @easecation/design; platforms: web, ssr
+- Progress [beta/display]: @easecation/design; platforms: web, ssr
+- FileDropzone [beta/input]: @easecation/design; platforms: web, ssr, pwa, android-webview, ios-wkwebview, windows-webview2
+- ImageViewer [beta/feedback]: @easecation/design; platforms: web, ssr, pwa, android-webview, ios-wkwebview, windows-webview2
+- Watermark [beta/display]: @easecation/design; platforms: web, ssr
 
 ## Rules
 - Reuse registered components before creating new UI.
@@ -88,5 +94,3 @@ Runtime has no Tailwind, Router, Capacitor or business API dependency.
 - Keep APIs domain-neutral and SSR-safe.
 - Do not import EaseCation private APIs, URLs, logos or restricted assets.
 - Use `pnpm ai:validate` for fast validation; run required full library and consumer checks before delivery.
-
-- ExpandableText: line-limited plain text with accessible expansion; see docs/components/ExpandableText.md.

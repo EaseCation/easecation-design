@@ -216,9 +216,16 @@ export function FilterPicker(props: FilterPickerProps) {
     </DropdownMenu>
   );
 }
-const parse = (value: string) => {
+export type TimePrecision = 'minute' | 'second';
+const normalizeTime = (value: string, precision: TimePrecision) =>
+  precision === 'second'
+    ? value.length === 5
+      ? `${value}:00`
+      : value.slice(0, 8)
+    : value.slice(0, 5);
+const parse = (value: string, precision: TimePrecision) => {
   const [date, time = ''] = value.split('T');
-  return { date: date ?? '', time: time.slice(0, 5) };
+  return { date: date ?? '', time: normalizeTime(time, precision) };
 };
 export interface DateTimePickerProps {
   value: string;
@@ -226,6 +233,7 @@ export interface DateTimePickerProps {
   placeholder?: string;
   dateLabel?: string;
   timeLabel?: string;
+  timePrecision?: TimePrecision;
   className?: string;
   size?: ComponentSize;
   disabled?: boolean;
@@ -237,6 +245,7 @@ export function DateTimePicker({
   placeholder = 'Select date and time',
   dateLabel = 'Date',
   timeLabel = 'Time',
+  timePrecision = 'minute',
   className,
   size = 'lg',
   disabled = false,
@@ -246,7 +255,8 @@ export function DateTimePicker({
   const dateId = `${id}-date`;
   const timeId = `${id}-time`;
   const dateInputRef = useRef<HTMLInputElement>(null);
-  const part = parse(value);
+  const part = parse(value, timePrecision);
+  const defaultTime = timePrecision === 'second' ? '00:00:00' : '00:00';
   const content = useMemo(
     () => (
       <div className="ec-datetime-fields">
@@ -258,20 +268,38 @@ export function DateTimePicker({
           value={part.date}
           disabled={disabled}
           onChange={(e) =>
-            onChange(e.target.value ? `${e.target.value}T${part.time || '00:00'}` : '')
+            onChange(e.target.value ? `${e.target.value}T${part.time || defaultTime}` : '')
           }
         />
         <Label htmlFor={timeId}>{timeLabel}</Label>
         <Input
           id={timeId}
           type="time"
+          step={timePrecision === 'second' ? 1 : 60}
           value={part.time}
           disabled={disabled}
-          onChange={(e) => onChange(part.date ? `${part.date}T${e.target.value || '00:00'}` : '')}
+          onChange={(e) =>
+            onChange(
+              part.date
+                ? `${part.date}T${normalizeTime(e.target.value, timePrecision) || defaultTime}`
+                : '',
+            )
+          }
         />
       </div>
     ),
-    [dateId, dateLabel, disabled, onChange, part.date, part.time, timeId, timeLabel],
+    [
+      dateId,
+      dateLabel,
+      defaultTime,
+      disabled,
+      onChange,
+      part.date,
+      part.time,
+      timeId,
+      timeLabel,
+      timePrecision,
+    ],
   );
   return (
     <Popover>
@@ -323,6 +351,7 @@ export interface DateRangePickerProps {
   value: DateRangePickerValue;
   onChange: (value: DateRangePickerValue) => void;
   mode?: DateRangePickerMode;
+  timePrecision?: TimePrecision;
   presets?: readonly DateRangePickerPreset[];
   placeholder?: string;
   startLabel?: string;
@@ -342,7 +371,8 @@ export interface DateRangePickerProps {
 }
 
 const datePart = (value: string) => value.split('T')[0] ?? '';
-const timePart = (value: string, fallback: string) => value.split('T')[1]?.slice(0, 5) || fallback;
+const timePart = (value: string, fallback: string, precision: TimePrecision) =>
+  normalizeTime(value.split('T')[1] || fallback, precision);
 
 function dateToInputValue(date?: Date) {
   if (!date) return '';
@@ -371,9 +401,10 @@ function combineDateAndTime(
   currentValue: string,
   fallbackTime: string,
   mode: DateRangePickerMode,
+  precision: TimePrecision,
 ) {
   if (!date) return '';
-  return mode === 'date' ? date : `${date}T${timePart(currentValue, fallbackTime)}`;
+  return mode === 'date' ? date : `${date}T${timePart(currentValue, fallbackTime, precision)}`;
 }
 
 function formatRangeValue(value: DateRangePickerValue) {
@@ -388,6 +419,7 @@ export function DateRangePicker({
   value,
   onChange,
   mode = 'date',
+  timePrecision = 'minute',
   presets = [],
   placeholder = 'Select date range',
   startLabel = 'Start date',
@@ -406,7 +438,28 @@ export function DateRangePicker({
 }: DateRangePickerProps) {
   const { messages } = useLocale();
   const [open, setOpen] = useState(false);
-  const [draft, setDraft] = useState(value);
+  const defaultStartTime = timePrecision === 'second' ? '00:00:00' : '00:00';
+  const defaultEndTime = timePrecision === 'second' ? '23:59:59' : '23:59';
+  const normalizeRange = (range: DateRangePickerValue): DateRangePickerValue =>
+    mode === 'datetime' && timePrecision === 'second'
+      ? {
+          start: combineDateAndTime(
+            datePart(range.start),
+            range.start,
+            defaultStartTime,
+            mode,
+            timePrecision,
+          ),
+          end: combineDateAndTime(
+            datePart(range.end),
+            range.end,
+            defaultEndTime,
+            mode,
+            timePrecision,
+          ),
+        }
+      : range;
+  const [draft, setDraft] = useState(() => normalizeRange(value));
 
   const calendarValue: DateRange = {
     from: inputValueToDate(datePart(draft.start)),
@@ -417,18 +470,31 @@ export function DateRangePicker({
   const invalid = complete && draft.start > draft.end;
 
   const handleOpenChange = (nextOpen: boolean) => {
-    if (nextOpen) setDraft(value);
+    if (nextOpen) setDraft(normalizeRange(value));
     setOpen(nextOpen);
   };
 
   const handleCalendarChange = (next: DateRange) => {
     setDraft((current) => ({
-      start: combineDateAndTime(dateToInputValue(next.from), current.start, '00:00', mode),
-      end: combineDateAndTime(dateToInputValue(next.to), current.end, '23:59', mode),
+      start: combineDateAndTime(
+        dateToInputValue(next.from),
+        current.start,
+        defaultStartTime,
+        mode,
+        timePrecision,
+      ),
+      end: combineDateAndTime(
+        dateToInputValue(next.to),
+        current.end,
+        defaultEndTime,
+        mode,
+        timePrecision,
+      ),
     }));
   };
 
-  const commit = (next: DateRangePickerValue) => {
+  const commit = (range: DateRangePickerValue) => {
+    const next = normalizeRange(range);
     const nextComplete = next.start && next.end;
     if ((!allowOpenRange && !nextComplete) || !(next.start || next.end)) return;
     if (nextComplete && next.start > next.end) return;
@@ -498,12 +564,13 @@ export function DateRangePicker({
               {startTimeLabel}
               <Input
                 type="time"
-                value={timePart(draft.start, '')}
+                step={timePrecision === 'second' ? 1 : 60}
+                value={timePart(draft.start, '', timePrecision)}
                 disabled={!draft.start}
                 onChange={(event) =>
                   setDraft((current) => ({
                     ...current,
-                    start: `${datePart(current.start)}T${event.target.value || '00:00'}`,
+                    start: `${datePart(current.start)}T${normalizeTime(event.target.value, timePrecision) || defaultStartTime}`,
                   }))
                 }
               />
@@ -512,12 +579,13 @@ export function DateRangePicker({
               {endTimeLabel}
               <Input
                 type="time"
-                value={timePart(draft.end, '')}
+                step={timePrecision === 'second' ? 1 : 60}
+                value={timePart(draft.end, '', timePrecision)}
                 disabled={!draft.end}
                 onChange={(event) =>
                   setDraft((current) => ({
                     ...current,
-                    end: `${datePart(current.end)}T${event.target.value || '23:59'}`,
+                    end: `${datePart(current.end)}T${normalizeTime(event.target.value, timePrecision) || defaultEndTime}`,
                   }))
                 }
               />
