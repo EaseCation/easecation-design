@@ -20,12 +20,14 @@ import '@easecation/design/style.css';
 
 ## API
 
-`tone`: `neutral | info | success | warning | danger`; `appearance`: `soft | solid | outline`;
+`tone`: `neutral | primary | info | success | warning | danger`; `appearance`: `soft | solid | outline`;
 `icon`; `showDot`; `children`; remaining props inherit from `span`.
 
 ## Usage
 
 - Always include a text label. Color and icons are supporting signals, not the only status cue.
+- Use `primary` for brand-colored states such as enabled options. It follows the active primary
+  palette and readable text token; `info` retains its informational meaning and color.
 - Use `soft` in dense tables and lists, `outline` for low-emphasis metadata, and `solid` only when
   stronger emphasis is necessary.
 - Do not override status colors, borders, radius, or padding with `className`. Request a new tone or
@@ -34,7 +36,7 @@ import '@easecation/design/style.css';
 - **Maturity**: beta
 - **Platforms**: web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **Accessibility**: text-status, non-color-label, decorative-icon-hidden
-- **Tokens**: `--ec-color-success`, `--ec-color-warning`, `--ec-color-danger`, `--ec-color-info`
+- **Tokens**: `--ec-color-primary`, `--ec-color-text-primary`, `--ec-color-success`, `--ec-color-text-success`, `--ec-color-warning`, `--ec-color-text-warning`, `--ec-color-danger`, `--ec-color-text-danger`, `--ec-color-info`, `--ec-color-text-info`
 
 ## TypeScript 公开声明
 
@@ -54,7 +56,8 @@ export declare interface StatusBadgeProps extends HTMLAttributes<HTMLSpanElement
   showDot?: boolean;
 }
 
-export declare type StatusBadgeTone = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
+export declare type StatusBadgeTone =
+  'neutral' | 'primary' | 'info' | 'success' | 'warning' | 'danger';
 
 export declare type StatusBadgeAppearance = 'soft' | 'solid' | 'outline';
 ```

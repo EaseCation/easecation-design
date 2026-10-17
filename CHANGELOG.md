@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.21.0
+
+### Minor Changes
+
+- Keep QueryDataTable headers and cells wrapped within their columns by default, including long unbroken text. Preserve explicit `meta.wrap: false` with single-line ellipsis. Constrain long StatusBadge labels and add a primary tone that follows the active brand palette, using semantic text tokens for readable soft and outline appearances.
+
 ## 0.20.1
 
 ### Patch Changes

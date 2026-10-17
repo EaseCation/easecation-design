@@ -25,6 +25,9 @@ export const Tones: Story = {
       <StatusBadge tone="neutral" showDot>
         Queued
       </StatusBadge>
+      <StatusBadge tone="primary" appearance="outline">
+        Enabled
+      </StatusBadge>
       <StatusBadge tone="info" icon={<ClockIcon />}>
         Processing
       </StatusBadge>
@@ -50,7 +53,7 @@ export const Appearances: Story = {
         gap: '0.75rem',
       }}
     >
-      {(['neutral', 'info', 'success', 'warning', 'danger'] as const).flatMap((tone) =>
+      {(['neutral', 'primary', 'info', 'success', 'warning', 'danger'] as const).flatMap((tone) =>
         (['soft', 'solid', 'outline'] as const).map((appearance) => (
           <StatusBadge key={`${tone}-${appearance}`} tone={tone} appearance={appearance}>
             {tone} {appearance}

@@ -34,6 +34,12 @@ data；columns；getRowId；isLoading；mobileCard；layout；empty/error 文案
 
 默认加载、空数据、失败和重试文案来自 `LocaleProvider`；业务相关的描述由应用传入。
 
+## 长内容与列宽
+
+表头和单元格默认换行，连续标识符和无空格长文本也会在列内断行。列的 `size` 设置期望宽度与最小宽度；使用 `minWidth` 为密集表格保留可读宽度，窄容器只在表格内部横向滚动。`layout="table"` 表示手机端继续显示表格，不代表 CSS 的固定列宽布局。
+
+列 `meta.wrap: false` 显式选择单行显示；受限列宽下超长纯文本会省略。自定义单元格若使用不换行文本，也应在自己的布局容器上限制宽度并设置截断，例如地址使用带完整 `title` 的 `overflow: hidden; text-overflow: ellipsis; white-space: nowrap`。不要依赖相邻列遮住溢出的内容。
+
 ## 使用约束
 
 - 业务状态、请求、权限和路由由应用层维护，通过 Props 和回调传入。

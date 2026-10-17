@@ -1,5 +1,5 @@
 {
-  "source": "0.16.0 named entries; total updated for shared Table sorting, filters, selection and detail expansion (2026-10-17). See docs/guide/table-migration-size.md.",
+  "source": "0.16.0 named entries except CSS, measured at main 7e0d25f before the table-content fix; total updated for shared Table interactions. See docs/guide/table-migration-size.md and docs/guide/table-content-size.md.",
   "policy": {
     "warningBytes": 256,
     "warningRatio": 0.02,
@@ -24,8 +24,8 @@
       "brotli": 2702
     },
     "dist/style.css": {
-      "gzip": 21125,
-      "brotli": 17852
+      "gzip": 23230,
+      "brotli": 19463
     }
   },
   "total": {

@@ -1,6 +1,6 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 
-export type StatusBadgeTone = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
+export type StatusBadgeTone = 'neutral' | 'primary' | 'info' | 'success' | 'warning' | 'danger';
 export type StatusBadgeAppearance = 'soft' | 'solid' | 'outline';
 
 export interface StatusBadgeProps extends HTMLAttributes<HTMLSpanElement> {

@@ -50,14 +50,16 @@ try {
     const canvas = document.createElement('canvas');
     canvas.width = canvas.height = 1;
     const context = canvas.getContext('2d');
-    const rgb = (color) => {
+    const rgb = (color, under = 'transparent') => {
       context.clearRect(0, 0, 1, 1);
+      context.fillStyle = under;
+      context.fillRect(0, 0, 1, 1);
       context.fillStyle = color;
       context.fillRect(0, 0, 1, 1);
       return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
     };
-    const luminance = (color) =>
-      rgb(color).reduce((sum, value, index) => {
+    const luminance = (color, under) =>
+      rgb(color, under).reduce((sum, value, index) => {
         const channel = value / 255;
         return (
           sum +
@@ -73,7 +75,7 @@ try {
       document.body.append(root);
       for (const surface of ['bg', 'panel', 'surface-muted']) {
         root.style.backgroundColor = `var(--ec-color-${surface})`;
-        for (const tone of ['warning', 'success', 'info', 'danger']) {
+        for (const tone of ['primary', 'warning', 'success', 'info', 'danger']) {
           const text = document.createElement('span');
           text.style.color = `var(--ec-color-text-${tone})`;
           root.append(text);
@@ -87,15 +89,157 @@ try {
               (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05),
           });
           text.remove();
+          for (const appearance of ['outline', 'soft']) {
+            const badge = document.createElement('span');
+            badge.className = 'ec-status-badge';
+            badge.dataset.tone = tone;
+            badge.dataset.appearance = appearance;
+            badge.textContent = 'Status';
+            root.append(badge);
+            const style = getComputedStyle(badge);
+            const foreground = luminance(style.color);
+            const background = luminance(
+              style.backgroundColor,
+              getComputedStyle(root).backgroundColor,
+            );
+            results.push({
+              theme,
+              surface,
+              tone: `${tone} ${appearance}`,
+              ratio:
+                (Math.max(foreground, background) + 0.05) /
+                (Math.min(foreground, background) + 0.05),
+            });
+            badge.remove();
+          }
         }
       }
       root.remove();
     }
     return results;
   });
-  for (const { theme, surface, tone, ratio } of semanticContrast) {
-    assert.ok(ratio >= 4.5, `${theme} ${tone} text on ${surface}: ${ratio.toFixed(2)}:1`);
+  assert.deepEqual(
+    semanticContrast.filter(({ ratio }) => ratio < 4.5),
+    [],
+    'Status text and badges must meet 4.5:1 contrast on their rendered surfaces',
+  );
+  // Check painted text, not only element boxes: nowrap text can escape a correctly sized span.
+  for (const width of [1440, 768, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const theme of ['light', 'dark']) {
+      const section = page.locator(`#table-${theme}`);
+      assert.equal(
+        await section.locator('[data-ec-theme]').first().getAttribute('data-ec-theme'),
+        theme,
+      );
+      if (width >= 768) {
+        for (const layout of ['auto', 'fixed']) {
+          await section.locator('table').evaluate((table, layout) => {
+            table.style.tableLayout = layout;
+          }, layout);
+          const escaped = await section.locator('table').evaluate((table) => {
+            const failures = [];
+            for (const cell of table.querySelectorAll('th, td')) {
+              const bounds = cell.getBoundingClientRect();
+              for (const control of cell.querySelectorAll('.ec-status-badge, button')) {
+                const rect = control.getBoundingClientRect();
+                if (rect.left < bounds.left - 1 || rect.right > bounds.right + 1) {
+                  failures.push(control.textContent.slice(0, 40));
+                }
+              }
+              const walker = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT);
+              while (walker.nextNode()) {
+                const text = walker.currentNode;
+                // Truncation is allowed only when an ancestor actually clips the text.
+                let clipped = false;
+                for (let el = text.parentElement; el && el !== cell; el = el.parentElement) {
+                  if (['hidden', 'clip'].includes(getComputedStyle(el).overflowX)) clipped = true;
+                }
+                if (clipped || getComputedStyle(cell).overflowX === 'hidden') continue;
+                const range = document.createRange();
+                range.selectNodeContents(text);
+                for (const rect of range.getClientRects()) {
+                  if (rect.left < bounds.left - 1 || rect.right > bounds.right + 1) {
+                    failures.push(text.textContent.slice(0, 40));
+                  }
+                }
+              }
+            }
+            return failures;
+          });
+          assert.deepEqual(
+            escaped,
+            [],
+            `${theme} ${width} ${layout}: text must stay in its column`,
+          );
+          const address = section.locator('tbody tr').first().locator('td').nth(2).locator('span');
+          assert.equal(await address.getAttribute('title'), await address.textContent());
+          assert.ok(await address.evaluate((el) => el.scrollWidth > el.clientWidth));
+        }
+        // Force horizontal scrolling and verify pinned actions remain visible and operable.
+        await section.locator('table').evaluate((table) => {
+          table.style.tableLayout = 'auto';
+          table.style.minWidth = '1400px';
+        });
+        await section.scrollIntoViewIfNeeded();
+        for (const end of [false, true]) {
+          await section.locator('.ec-query-table__scroll').evaluate((el, end) => {
+            el.scrollLeft = end ? el.scrollWidth : 0;
+          }, end);
+          const edit = section.getByRole('button', { name: 'Edit', exact: true }).first();
+          await edit.click({ trial: true });
+          await edit.focus();
+          assert.equal(await edit.evaluate((el) => el === document.activeElement), true);
+        }
+        await section.locator('table').evaluate((table) => {
+          table.style.minWidth = '';
+        });
+      } else {
+        await section.locator('[data-query-layout="cards"]').waitFor();
+        assert.equal(await section.locator('table').count(), 0);
+      }
+      const badge = section.locator('.ec-status-badge[data-tone="primary"]').first();
+      const colors = await badge.evaluate((el) => {
+        const probe = document.createElement('span');
+        probe.style.color = 'var(--ec-color-text-primary)';
+        el.append(probe);
+        const expected = getComputedStyle(probe).color;
+        probe.remove();
+        return {
+          text: getComputedStyle(el).color,
+          expected,
+          background: getComputedStyle(el).backgroundColor,
+        };
+      });
+      assert.equal(colors.text, colors.expected, `${theme}: primary badge uses theme text token`);
+      assert.equal(colors.background, 'rgba(0, 0, 0, 0)');
+      assert.ok(
+        await section
+          .locator('[data-long-status] .ec-status-badge')
+          .evaluate((el) => el.getBoundingClientRect().width <= 80),
+      );
+      await section.screenshot({
+        path: path.join(root, `output/playwright/table-${theme}-${width}.png`),
+      });
+    }
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth > innerWidth),
+      false,
+    );
   }
+  // A live token override must update brand states.
+  // ThemeProvider's root carries the token scope (avoid depending on its element name).
+  const scope = page.locator('#table-light [data-ec-theme]').first();
+  await scope.evaluate((el) => el.style.setProperty('--ec-color-text-primary', 'rgb(120 50 20)'));
+  assert.equal(
+    await page
+      .locator('#table-light .ec-status-badge[data-tone="primary"]')
+      .first()
+      .evaluate((el) => getComputedStyle(el).color),
+    'rgb(120, 50, 20)',
+  );
+  await scope.evaluate((el) => el.style.removeProperty('--ec-color-text-primary'));
+  await page.setViewportSize({ width: 1280, height: 800 });
   const controlSelectors = [
     '.ec-button',
     '.ec-input-shell',
@@ -242,7 +386,7 @@ try {
   }
   assert.deepEqual(failures, []);
   console.log(
-    'Browser checks passed: tokens, density, nested themes, Field, formal/compat portals, and modal menus at desktop and mobile widths.',
+    'Browser checks passed: tokens, density, nested themes, Field, portals, modal menus, long table content, sticky actions, and brand badges at desktop and mobile widths.',
   );
 } finally {
   await browser?.close();

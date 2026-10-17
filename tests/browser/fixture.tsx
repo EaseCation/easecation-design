@@ -10,8 +10,10 @@ import {
   Modal,
   MultiSelect,
   Select,
+  StatusBadge,
   ThemeProvider,
 } from '../../src';
+import { LongContentTable } from '../../stories/fixtures/LongContentTable';
 import { Dialog, DialogContent, DialogTitle } from '../../src/compat';
 import '../../dist/style.css';
 
@@ -43,6 +45,24 @@ function Fixture() {
           <Controls />
         </ThemeProvider>
       </section>
+      {(['light', 'dark'] as const).map((mode) => (
+        <section id={`table-${mode}`} key={mode}>
+          <ThemeProvider
+            mode={mode}
+            tokens={{
+              '--ec-color-primary': mode === 'light' ? '#DDAE25' : '#E2B83F',
+              '--ec-color-text-primary': mode === 'light' ? '#77560F' : '#F0CA62',
+            }}
+          >
+            <LongContentTable />
+            <div style={{ width: 80 }} data-long-status>
+              <StatusBadge tone="primary" appearance="outline" showDot>
+                {'Long status label '.repeat(12)}
+              </StatusBadge>
+            </div>
+          </ThemeProvider>
+        </section>
+      ))}
       <section id="override">
         <ThemeProvider
           mode="light"
