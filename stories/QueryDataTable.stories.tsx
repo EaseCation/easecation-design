@@ -41,7 +41,13 @@ const translations = {
   },
 } as const;
 
-function Demo({ embedded = false }: { embedded?: boolean }) {
+function Demo({
+  embedded = false,
+  state = 'ready',
+}: {
+  embedded?: boolean;
+  state?: 'ready' | 'loading' | 'empty' | 'error';
+}) {
   const [open, setOpen] = useState(false);
   const copy = useStoryTranslations(translations);
   const columns = [
@@ -65,7 +71,9 @@ function Demo({ embedded = false }: { embedded?: boolean }) {
             <DataPanel toolbar={<Button onClick={() => setOpen(true)}>{copy.title}</Button>}>
               <QueryDataTable
                 embedded
-                data={[...copy.rows]}
+                isLoading={state === 'loading'}
+                isError={state === 'error'}
+                data={state === 'empty' ? [] : [...copy.rows]}
                 columns={columns}
                 getRowId={(row) => row.id}
                 mobileCard={(row) => (
@@ -77,7 +85,9 @@ function Demo({ embedded = false }: { embedded?: boolean }) {
             </DataPanel>
           ) : (
             <QueryDataTable
-              data={[...copy.rows]}
+              isLoading={state === 'loading'}
+              isError={state === 'error'}
+              data={state === 'empty' ? [] : [...copy.rows]}
               columns={columns}
               getRowId={(row) => row.id}
               mobileCard={(row) => (
@@ -116,4 +126,17 @@ export const EmbeddedCards: Story = {
   args: { data: [], columns: [] },
   render: () => <Demo embedded />,
   globals: { viewport: { value: 'mobile1', isRotated: false } },
+};
+
+export const EmbeddedLoading: Story = {
+  ...EmbeddedCards,
+  render: () => <Demo embedded state="loading" />,
+};
+export const EmbeddedEmpty: Story = {
+  ...EmbeddedCards,
+  render: () => <Demo embedded state="empty" />,
+};
+export const EmbeddedError: Story = {
+  ...EmbeddedCards,
+  render: () => <Demo embedded state="error" />,
 };

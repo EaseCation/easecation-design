@@ -1476,6 +1476,48 @@
 .ec-badge--ghost:hover {
   background: color-mix(in oklch, var(--ec-color-muted) 60%, transparent);
 }
+/* Categorical labels share a palette; their category mapping belongs to consumers. */
+.ec-badge[data-color] {
+  background: color-mix(in oklch, var(--ec-badge-category) 14%, transparent);
+  color: color-mix(in oklch, var(--ec-badge-category) 55%, var(--ec-color-text));
+  border-color: transparent;
+}
+.ec-badge[data-color='blue'] {
+  --ec-badge-category: var(--ec-color-category-blue);
+}
+.ec-badge[data-color='cyan'] {
+  --ec-badge-category: var(--ec-color-category-cyan);
+}
+.ec-badge[data-color='teal'] {
+  --ec-badge-category: var(--ec-color-category-teal);
+}
+.ec-badge[data-color='green'] {
+  --ec-badge-category: var(--ec-color-category-green);
+}
+.ec-badge[data-color='lime'] {
+  --ec-badge-category: var(--ec-color-category-lime);
+}
+.ec-badge[data-color='amber'] {
+  --ec-badge-category: var(--ec-color-category-amber);
+}
+.ec-badge[data-color='orange'] {
+  --ec-badge-category: var(--ec-color-category-orange);
+}
+.ec-badge[data-color='red'] {
+  --ec-badge-category: var(--ec-color-category-red);
+}
+.ec-badge[data-color='rose'] {
+  --ec-badge-category: var(--ec-color-category-rose);
+}
+.ec-badge[data-color='pink'] {
+  --ec-badge-category: var(--ec-color-category-pink);
+}
+.ec-badge[data-color='purple'] {
+  --ec-badge-category: var(--ec-color-category-purple);
+}
+.ec-badge[data-color='indigo'] {
+  --ec-badge-category: var(--ec-color-category-indigo);
+}
 .ec-status-badge {
   --ec-status-color: var(--ec-color-text-muted);
   --ec-status-solid-bg: var(--ec-color-muted);
@@ -1889,12 +1931,18 @@
   box-shadow: none;
 }
 /* Card records own their surfaces. A second raised surface hides the gaps. */
-.ec-data-panel:has(> .ec-data-panel__content > .ec-query-cards) {
+.ec-data-panel:has(> .ec-data-panel__content > [data-query-layout='cards']) {
   overflow: visible;
   border-radius: 0;
   background: transparent;
 }
-.ec-data-panel:has(> .ec-data-panel__content > .ec-query-cards) > .ec-data-panel__footer {
+.ec-data-panel:has(> .ec-data-panel__content > [data-query-layout='cards'])
+  > .ec-data-panel__toolbar {
+  padding: 0 0 var(--ec-space-3);
+}
+.ec-data-panel:has(> .ec-data-panel__content > [data-query-layout='cards'])
+  > .ec-data-panel__footer {
+  padding: var(--ec-space-3) 0 0;
   background: transparent;
 }
 .ec-data-panel > * {
@@ -3387,8 +3435,12 @@
   line-height: 1.25rem;
 }
 .ec-app-shell__drawer {
-  width: min(88vw, 24rem) !important;
-  max-width: min(88vw, 24rem) !important;
+  --ec-app-shell-mobile-sidebar-width: 15rem;
+  width: min(var(--ec-app-shell-mobile-sidebar-width), calc(100vw - var(--ec-space-12))) !important;
+  max-width: min(
+    var(--ec-app-shell-mobile-sidebar-width),
+    calc(100vw - var(--ec-space-12))
+  ) !important;
   gap: 0;
   padding: 0;
 }
@@ -3653,8 +3705,15 @@
 .ec-query-cards {
   display: grid;
   min-width: 0;
-  gap: 0.75rem;
-  padding: 0.75rem;
+  gap: var(--ec-space-3);
+}
+.ec-query-loading {
+  padding: var(--ec-space-3);
+}
+/* The page owns outer spacing; each record owns its internal padding. */
+.ec-query-cards,
+.ec-query-loading[data-query-layout='cards'] {
+  padding: 0;
 }
 .ec-query-cards > * {
   min-width: 0;
@@ -3838,8 +3897,7 @@
 }
 @media (min-width: 640px) {
   .ec-query-table.is-embedded,
-  .ec-query-loading.is-embedded,
-  .ec-query-cards.is-embedded {
+  .ec-query-loading.is-embedded:not([data-query-layout='cards']) {
     margin-inline: 1rem;
   }
 }

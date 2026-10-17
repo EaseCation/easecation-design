@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.18.0
+
+### Minor Changes
+
+- Add twelve stable categorical colors to Badge and BadgeButton, backed by shared palette tokens and theme-aware text contrast.
+
+### Patch Changes
+
+- Align mobile QueryDataTable cards with their page container and DataPanel toolbar/footer. Keep the same gutters through loading, empty and error states, including the 640–767px breakpoint range, while preserving forced table layouts and card internal spacing.
+- Limit AppShell mobile navigation to 15rem and preserve at least 3rem of dismissible backdrop on narrow screens.
+
 ## 0.17.2
 
 ### Patch Changes

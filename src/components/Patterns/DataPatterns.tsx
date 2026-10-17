@@ -103,6 +103,8 @@ export function QueryDataTable<T>({
   const errorTitle = errorTitleProp ?? messages.loadFailed;
   const retryLabel = retryLabelProp ?? messages.retry;
   const mobile = useMediaQuery('(max-width: 767px)');
+  const cardLayout = mobile && layout !== 'table' && Boolean(mobileCard);
+  const queryLayout = cardLayout ? 'cards' : undefined;
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel(), getRowId });
   const shell = cn(
@@ -117,9 +119,10 @@ export function QueryDataTable<T>({
         role="status"
         aria-label={loadingLabel}
         aria-busy="true"
+        data-query-layout={queryLayout}
         className={cn('ec-query-loading', embedded && 'is-embedded')}
       >
-        {Array.from({ length: mobile && layout !== 'table' ? 4 : 6 }, (_, i) => (
+        {Array.from({ length: cardLayout ? 4 : 6 }, (_, i) => (
           <Skeleton key={i} style={{ height: '5rem' }} />
         ))}
       </div>
@@ -131,7 +134,8 @@ export function QueryDataTable<T>({
         description={errorDescription}
         actionLabel={retryLabel}
         onRetry={onRetry}
-        embedded={embedded}
+        embedded={embedded && !cardLayout}
+        data-query-layout={queryLayout}
         className={embeddedShellClassName}
       />
     );
@@ -140,14 +144,16 @@ export function QueryDataTable<T>({
       <EmptyState
         title={emptyTitle}
         description={emptyDescription}
-        embedded={embedded}
+        embedded={embedded && !cardLayout}
+        data-query-layout={queryLayout}
         className={embeddedShellClassName}
       />
     );
-  if (mobile && layout !== 'table' && mobileCard)
+  if (cardLayout && mobileCard)
     return (
       <div
         aria-busy={isRefreshing || undefined}
+        data-query-layout="cards"
         className={cn('ec-query-cards', embedded && 'is-embedded')}
       >
         {data.map(mobileCard)}

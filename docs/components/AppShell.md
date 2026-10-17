@@ -19,6 +19,8 @@ import '@easecation/design/style.css';
 </AppShell>
 ```
 
+手机导航侧栏默认最多 15rem（240px），并至少保留 3rem 的外部遮罩供点击关闭。菜单点击区域保持原有高度，长文字省略，不随屏幕变宽拉伸侧栏。
+
 ## API
 
 brand；headerTitle；headerActions；sidebar；mobileSidebar；bottomBar；collapsed；onCollapse；sidebarWidth。

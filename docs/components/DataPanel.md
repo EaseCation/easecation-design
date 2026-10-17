@@ -36,6 +36,10 @@ import '@easecation/design/style.css';
 - 页面标题属于 `PageScaffold`；内容分区标题属于 `SectionCard`，不要用 `DataPanel` 模拟页面标题卡片。
 - 业务状态、请求、权限和路由由应用层维护，通过 Props 和回调传入。
 
+## 手机端对齐
+
+卡片列表不额外添加外侧 padding 或 margin，由页面容器统一控制左右留白；卡片内部留白仍由 `SectionCard` 管理。`DataPanel` 的手机卡片模式将筛选栏、卡片和分页对齐到同一左右边界。骨架、空数据和失败状态沿用同一布局，避免请求完成时边缘跳动。`layout="table"` 的表格布局不受影响。
+
 ## TypeScript 公开声明
 
 以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
