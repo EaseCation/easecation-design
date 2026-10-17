@@ -50,6 +50,10 @@ data；columns；getRowId；isLoading；mobileCard；layout；empty/error 文案
 
 Use `SectionCard` in `mobileCard` for individually grouped records. `DataPanel` automatically becomes a transparent layout when its direct content is a mobile card list, so gaps reveal the page canvas just as in a standalone list. Toolbar and pagination remain outside record cards. Desktop tables retain the panel surface. Long card headings and descriptions wrap without consumer CSS overrides.
 
+## 手机端对齐
+
+卡片列表不额外添加外侧 padding 或 margin，由页面容器统一控制左右留白；卡片内部留白仍由 `SectionCard` 管理。`DataPanel` 的手机卡片模式将筛选栏、卡片和分页对齐到同一左右边界。骨架、空数据和失败状态沿用同一布局，避免请求完成时边缘跳动。`layout="table"` 的表格布局不受影响。
+
 ## TypeScript 公开声明
 
 以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。

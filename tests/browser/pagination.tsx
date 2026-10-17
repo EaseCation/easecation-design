@@ -20,6 +20,7 @@ function Fixture() {
   const [size, setSize] = useState(20);
   const [cursor, setCursor] = useState(1);
   const [pending, setPending] = useState(false);
+  const [queryState, setQueryState] = useState('ready');
   return (
     <ThemeProvider
       mode={new URLSearchParams(location.search).get('theme') === 'dark' ? 'dark' : 'light'}
@@ -48,9 +49,20 @@ function Fixture() {
             />
           </section>
           <Button onClick={() => setPending(!pending)}>Toggle pending</Button>
+          <div>
+            {['ready', 'loading', 'empty', 'error'].map((state) => (
+              <Button key={state} onClick={() => setQueryState(state)}>
+                Query {state}
+              </Button>
+            ))}
+          </div>
           <section data-testid="query-cards" style={{ minWidth: 0 }}>
             <QueryDataTable
-              data={[{ id: 'key', value: 'LongConfigValue'.repeat(30) }]}
+              isLoading={queryState === 'loading'}
+              isError={queryState === 'error'}
+              data={
+                queryState === 'empty' ? [] : [{ id: 'key', value: 'LongConfigValue'.repeat(30) }]
+              }
               columns={[{ accessorKey: 'value', header: 'Value' }]}
               getRowId={(row) => row.id}
               mobileCard={(row) => (
@@ -68,10 +80,16 @@ function Fixture() {
           >
             <QueryDataTable
               embedded
-              data={[
-                { id: 'one', value: 'LongRecordName'.repeat(12) },
-                { id: 'two', value: 'Second record' },
-              ]}
+              isLoading={queryState === 'loading'}
+              isError={queryState === 'error'}
+              data={
+                queryState === 'empty'
+                  ? []
+                  : [
+                      { id: 'one', value: 'LongRecordName'.repeat(12) },
+                      { id: 'two', value: 'Second record' },
+                    ]
+              }
               columns={[{ accessorKey: 'value', header: 'Value' }]}
               getRowId={(row) => row.id}
               mobileCard={(row) => (
@@ -83,6 +101,16 @@ function Fixture() {
                   <Button>Edit record</Button>
                 </SectionCard>
               )}
+            />
+          </DataPanel>
+          <DataPanel data-testid="forced-table">
+            <QueryDataTable
+              embedded
+              layout="table"
+              isLoading={queryState === 'loading'}
+              data={[{ id: 'table', value: 'Table record' }]}
+              columns={[{ accessorKey: 'value', header: 'Value' }]}
+              mobileCard={(row) => <SectionCard key={row.id} title={row.value} />}
             />
           </DataPanel>
           <TableRoot mobile="cards" aria-label="Records">

@@ -245,6 +245,18 @@ export const publicTokenDefaults = {
   '--ec-sidebar-accent-foreground': 'var(--sidebar-accent-foreground)',
   '--ec-sidebar-border': 'var(--sidebar-border)',
   '--ec-sidebar-ring': 'var(--sidebar-ring)',
+  '--ec-color-category-blue': 'oklch(0.65 0.17 255)',
+  '--ec-color-category-cyan': 'oklch(0.65 0.17 220)',
+  '--ec-color-category-teal': 'oklch(0.65 0.17 185)',
+  '--ec-color-category-green': 'oklch(0.65 0.17 145)',
+  '--ec-color-category-lime': 'oklch(0.65 0.17 115)',
+  '--ec-color-category-amber': 'oklch(0.65 0.17 80)',
+  '--ec-color-category-orange': 'oklch(0.65 0.17 50)',
+  '--ec-color-category-red': 'oklch(0.65 0.17 25)',
+  '--ec-color-category-rose': 'oklch(0.65 0.17 5)',
+  '--ec-color-category-pink': 'oklch(0.65 0.17 340)',
+  '--ec-color-category-purple': 'oklch(0.65 0.17 305)',
+  '--ec-color-category-indigo': 'oklch(0.65 0.17 280)',
 } as const;
 export type DesignTokenName = keyof typeof publicTokenDefaults;
 export const tokenAliases = {

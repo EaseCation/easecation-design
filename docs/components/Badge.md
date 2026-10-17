@@ -20,14 +20,25 @@ import '@easecation/design/style.css';
 
 ## API
 
-`Badge`：variant；children；其余属性继承 span。
+`Badge`：variant；color；children；其余属性继承 span。
 
-`BadgeButton`：variant；children；其余属性继承 button。仅在 Badge 本身触发操作或浮层时使用。
+`BadgeButton`：variant；color；children；其余属性继承 button。仅在 Badge 本身触发操作或浮层时使用。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
 - **可访问性**：text-status, non-color-label
 - **主要 Token**：`--ec-color-primary`, `--ec-color-secondary`, `--ec-color-danger`
+
+## 分类颜色
+
+`color` 提供 blue、cyan、teal、green、lime、amber、orange、red、rose、pink、purple、indigo 十二种固定分类色，以柔和底色呈现，并自动适配主题文字颜色。设置后优先于 `variant` 的外观。`BadgeButton` 使用同一色板。
+
+```tsx
+<Badge color="blue">Design</Badge>
+<Badge color="purple">Engineering</Badge>
+```
+
+分类与颜色的固定映射由应用维护，不能根据列表顺序或当前主题重新分配。标签必须保留文字，不能只靠颜色区分；成功、错误等状态继续使用 `StatusBadge`。
 
 ## 使用约束
 
@@ -52,9 +63,25 @@ export declare const Badge: ForwardRefExoticComponent<BadgeProps & RefAttributes
 
 export declare interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
+  /** Stable categorical color; takes precedence over variant appearance. */
+  color?: BadgeColor;
 }
 
 export declare type BadgeVariant = 'primary' | 'secondary' | 'danger' | 'outline' | 'ghost';
+
+export declare type BadgeColor =
+  | 'blue'
+  | 'cyan'
+  | 'teal'
+  | 'green'
+  | 'lime'
+  | 'amber'
+  | 'orange'
+  | 'red'
+  | 'rose'
+  | 'pink'
+  | 'purple'
+  | 'indigo';
 
 export declare const BadgeButton: ForwardRefExoticComponent<
   BadgeButtonProps & RefAttributes<HTMLButtonElement>
@@ -62,6 +89,8 @@ export declare const BadgeButton: ForwardRefExoticComponent<
 
 export declare interface BadgeButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: BadgeVariant;
+  /** Stable categorical color; takes precedence over variant appearance. */
+  color?: BadgeColor;
 }
 ```
 

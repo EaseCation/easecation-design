@@ -19,7 +19,7 @@ const results = [];
 try {
   await server.listen();
   browser = await chromium.launch();
-  for (const width of [320, 390, 768, 1280])
+  for (const width of [320, 390, 640, 767, 768, 1280])
     for (const theme of ['light', 'dark']) {
       const context = await browser.newContext({
         viewport: { width, height: 900 },
@@ -94,6 +94,57 @@ try {
               .locator('h2')
               .evaluate((el) => el.scrollWidth <= el.clientWidth),
             'long card title must wrap',
+          );
+        }
+        const checkEdges = (actual, expected, label) => {
+          assert.ok(Math.abs(actual.x - expected.x) < 1, `${label}: left edge`);
+          assert.ok(
+            Math.abs(actual.x + actual.width - expected.x - expected.width) < 1,
+            `${label}: right edge`,
+          );
+        };
+        for (const state of ['loading', 'empty', 'error', 'ready']) {
+          await page.getByRole('button', { name: `Query ${state}`, exact: true }).click();
+          if (width < 768) {
+            for (const id of ['query-cards', 'embedded-cards']) {
+              const container = page.getByTestId(id);
+              const expected = await container.boundingBox();
+              const target =
+                state === 'ready'
+                  ? '.ec-section-card'
+                  : state === 'loading'
+                    ? '.ec-skeleton'
+                    : '[data-query-layout="cards"]';
+              checkEdges(
+                await container.locator(target).first().boundingBox(),
+                expected,
+                `${id}/${state}/${width}`,
+              );
+            }
+            const expected = await panel.boundingBox();
+            for (const region of ['toolbar', 'footer']) {
+              const slot = panel.locator(`.ec-data-panel__${region}`);
+              const box = await slot.boundingBox();
+              const padding = await slot.evaluate((el) => ({
+                left: parseFloat(getComputedStyle(el).paddingLeft),
+                right: parseFloat(getComputedStyle(el).paddingRight),
+              }));
+              checkEdges(
+                { x: box.x + padding.left, width: box.width - padding.left - padding.right },
+                expected,
+                `${region}/${state}`,
+              );
+            }
+            assert.equal(
+              await panel.evaluate((el) => getComputedStyle(el).backgroundColor),
+              'rgba(0, 0, 0, 0)',
+            );
+          }
+          const forcedTable = page.getByTestId('forced-table');
+          assert.equal(await forcedTable.locator('[data-query-layout="cards"]').count(), 0);
+          assert.notEqual(
+            await forcedTable.evaluate((el) => getComputedStyle(el).backgroundColor),
+            'rgba(0, 0, 0, 0)',
           );
         }
         assert.deepEqual(errors, []);
