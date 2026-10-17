@@ -2824,7 +2824,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 8.5rem;
   overflow: hidden;
   padding: 1.25rem;
   border: 1px solid color-mix(in oklch, var(--ec-color-border) 45%, transparent);
@@ -2842,7 +2841,6 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
   gap: 1rem;
-  flex: 1;
 }
 .ec-stat-card__top > div:first-child {
   min-width: 0;
@@ -2918,7 +2916,6 @@
   transition: background var(--ec-motion-base);
 }
 .ec-stat-card[data-size='sm'] {
-  min-height: 6.75rem;
   padding: 1rem;
 }
 .ec-stat-card[data-size='sm'] .ec-stat-card__label {
