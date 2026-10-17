@@ -31,6 +31,8 @@ for (const file of await walk(path.join(root, 'src'))) {
 }
 const pkg = JSON.parse(await fs.readFile(path.join(root, 'package.json'), 'utf8'));
 const allowedDependencies = new Set([
+  // MIT-licensed, unstyled decimal engine; NumberInput owns its API and presentation.
+  '@rc-component/input-number',
   '@fontsource-variable/geist',
   '@tanstack/react-table',
   'class-variance-authority',

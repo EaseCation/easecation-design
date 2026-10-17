@@ -19,7 +19,7 @@ import '@easecation/design/style.css';
 
 ## API
 
-value；onChange；placeholder；dateLabel；timeLabel；size；disabled；className；aria-label。默认使用 `lg` 尺寸，与筛选工具栏的 36px 控件高度一致。
+value；onChange；placeholder；dateLabel；timeLabel；timePrecision；size；disabled；className；aria-label。默认使用 `lg` 尺寸，与筛选工具栏的 36px 控件高度一致。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -38,6 +38,8 @@ value；onChange；placeholder；dateLabel；timeLabel；size；disabled；class
 
 从其他 UI 实现替换到该组件时，不要只修改组件名称。应同时核对 Props 模型、受控状态、Compound API、移动端布局、空/错/加载状态和可访问性语义。
 
+`timePrecision` 默认 `minute`，可设为 `second`。秒模式使用原生 `time` 的 `step=1`，输出 `YYYY-MM-DDTHH:mm:ss`，修改日期保留秒数。时间值不含时区，时区解释与提交转换由应用负责。
+
 ## TypeScript 公开声明
 
 以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
@@ -51,6 +53,7 @@ export declare function DateTimePicker({
   placeholder,
   dateLabel,
   timeLabel,
+  timePrecision,
   className,
   size,
   disabled,
@@ -63,11 +66,14 @@ export declare interface DateTimePickerProps {
   placeholder?: string;
   dateLabel?: string;
   timeLabel?: string;
+  timePrecision?: TimePrecision;
   className?: string;
   size?: ComponentSize;
   disabled?: boolean;
   'aria-label'?: string;
 }
+
+export declare type TimePrecision = 'minute' | 'second';
 
 export declare type ComponentSize = 'sm' | 'md' | 'lg';
 ```

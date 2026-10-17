@@ -120,3 +120,19 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Toolbar: Story = { args: {}, render: () => <Demo /> };
+
+function SecondsDemo() {
+  const [date, setDate] = useState('2026-10-17T09:30:37');
+  const [range, setRange] = useState({ start: '2026-10-17T09:30:37', end: '2026-10-17T09:30:38' });
+  return (
+    <FilterBar>
+      <FilterField label="Timestamp">
+        <DateTimePicker timePrecision="second" value={date} onChange={setDate} />
+      </FilterField>
+      <FilterField label="Interval" width="range">
+        <DateRangePicker mode="datetime" timePrecision="second" value={range} onChange={setRange} />
+      </FilterField>
+    </FilterBar>
+  );
+}
+export const Seconds: Story = { args: {}, render: () => <SecondsDemo /> };

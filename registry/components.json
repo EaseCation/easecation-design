@@ -33,7 +33,8 @@
       "tokens": ["--ec-color-border", "--ec-color-focus", "--ec-control-md"],
       "stories": [
         "foundation-tokens-and-theme--generic-dashboard",
-        "components-form-controls-textarea--resizing-and-count"
+        "components-form-controls-textarea--resizing-and-count",
+        "components-form-controls-validation--file-selection"
       ],
       "deprecated": false
     },
@@ -363,7 +364,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["label-association", "keyboard-popover"],
       "tokens": ["--ec-color-border-strong", "--ec-color-popover"],
-      "stories": ["patterns-filter-toolbar--toolbar"],
+      "stories": ["patterns-filter-toolbar--toolbar", "patterns-filter-toolbar--seconds"],
       "deprecated": false
     },
     {
@@ -374,7 +375,11 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["label-association", "keyboard-popover", "responsive-reflow"],
       "tokens": ["--ec-color-border-strong", "--ec-color-popover", "--ec-color-danger"],
-      "stories": ["components-filter-controls--date-range", "patterns-filter-toolbar--toolbar"],
+      "stories": [
+        "components-filter-controls--date-range",
+        "patterns-filter-toolbar--toolbar",
+        "patterns-filter-toolbar--seconds"
+      ],
       "deprecated": false
     },
     {
@@ -554,7 +559,10 @@
         "active-descendant"
       ],
       "tokens": ["--ec-color-border", "--ec-color-focus", "--ec-z-dropdown"],
-      "stories": ["components-form-controls-advanced-choices--complete-example"],
+      "stories": [
+        "components-form-controls-advanced-choices--complete-example",
+        "components-form-controls-advanced-choices--exact-identifiers"
+      ],
       "deprecated": false
     },
     {
@@ -883,6 +891,68 @@
         "components-data-display-expandabletext--long-text",
         "components-data-display-expandabletext--short-text"
       ],
+      "deprecated": false
+    },
+    {
+      "name": "NumberInput",
+      "importPath": "@easecation/design",
+      "category": "input",
+      "maturity": "beta",
+      "platforms": ["web", "ssr"],
+      "accessibility": ["spinbutton", "arrow-keys", "label-compatible", "aria-invalid", "disabled"],
+      "tokens": ["--ec-color-border", "--ec-color-focus", "--ec-control-md"],
+      "stories": [
+        "components-form-controls-numberinput--decimal",
+        "components-form-controls-numberinput--states",
+        "components-form-controls-numberinput--precise-string"
+      ],
+      "deprecated": false
+    },
+    {
+      "name": "Progress",
+      "importPath": "@easecation/design",
+      "category": "display",
+      "maturity": "beta",
+      "platforms": ["web", "ssr"],
+      "accessibility": ["progressbar", "accessible-name", "unknown-total"],
+      "tokens": ["--ec-color-primary", "--ec-color-border"],
+      "stories": ["components-data-display-progress--states"],
+      "deprecated": false
+    },
+    {
+      "name": "FileDropzone",
+      "importPath": "@easecation/design",
+      "category": "input",
+      "maturity": "beta",
+      "platforms": ["web", "ssr", "pwa", "android-webview", "ios-wkwebview", "windows-webview2"],
+      "accessibility": ["keyboard", "focus-visible", "accessible-name", "disabled"],
+      "tokens": ["--ec-color-border", "--ec-color-surface", "--ec-space-3"],
+      "stories": [
+        "components-form-controls-filedropzone--selection",
+        "components-form-controls-filedropzone--disabled"
+      ],
+      "deprecated": false
+    },
+    {
+      "name": "ImageViewer",
+      "importPath": "@easecation/design",
+      "category": "feedback",
+      "maturity": "beta",
+      "platforms": ["web", "ssr", "pwa", "android-webview", "ios-wkwebview", "windows-webview2"],
+      "accessibility": ["keyboard", "focus-trap", "focus-return", "dialog", "touch-gestures"],
+      "tokens": ["--ec-color-border", "--ec-color-surface", "--ec-space-3"],
+      "stories": ["components-overlay-imageviewer--gallery"],
+      "deprecated": false
+    },
+    {
+      "name": "Watermark",
+      "importPath": "@easecation/design",
+      "category": "display",
+      "maturity": "beta",
+      "platforms": ["web", "ssr"],
+      "accessibility": ["aria-hidden", "pointer-events-none"],
+      "tokens": ["--ec-color-text", "--ec-font-size-sm"],
+      "stories": ["components-data-display-watermark--content"],
       "deprecated": false
     }
   ]

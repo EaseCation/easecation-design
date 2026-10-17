@@ -349,3 +349,30 @@ it('does not reopen a multi-select when a dialog restores focus', async () => {
   expect(input).toHaveAttribute('aria-expanded', 'true');
   expect(screen.getByRole('option', { name: 'East region' })).toBeInTheDocument();
 });
+
+it('uses custom exact matching while keeping unknown-value creation and selected tags', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  render(
+    <MultiSelect
+      label="Identifiers"
+      defaultValue={['312']}
+      options={[
+        { value: '12', label: 'Twelve' },
+        { value: '312', label: 'Three twelve' },
+      ]}
+      creatable
+      filterOption={(query, option) => !query.trim() || option.value === query.trim()}
+      onValueChange={change}
+    />,
+  );
+  const input = screen.getByRole('combobox', { name: 'Identifiers' });
+  await user.type(input, '12');
+  expect(screen.getByRole('option', { name: 'Twelve' })).toBeInTheDocument();
+  expect(screen.queryByRole('option', { name: 'Three twelve' })).not.toBeInTheDocument();
+  await user.keyboard('{Enter}');
+  expect(change).toHaveBeenLastCalledWith(['312', '12']);
+  await user.type(input, '99');
+  await user.keyboard('{Enter}');
+  expect(change).toHaveBeenLastCalledWith(['312', '12', '99']);
+});

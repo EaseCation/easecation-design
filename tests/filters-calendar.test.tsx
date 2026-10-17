@@ -296,3 +296,58 @@ it('focuses the range start on desktop and popover container on coarse pointers'
   expect(screen.getByLabelText('Range start')).not.toHaveFocus();
   matchMedia.mockRestore();
 });
+
+it('preserves seconds when changing a date or time in a datetime picker', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  render(<DateTimePicker timePrecision="second" value="2026-07-28T09:30:37" onChange={change} />);
+  await user.click(screen.getByRole('button', { name: /2026-07-28/ }));
+  expect(screen.getByLabelText('Time')).toHaveAttribute('step', '1');
+  expect(screen.getByLabelText('Time')).toHaveValue('09:30:37');
+  fireEvent.change(screen.getByLabelText('Date'), { target: { value: '2026-07-29' } });
+  expect(change).toHaveBeenLastCalledWith('2026-07-29T09:30:37');
+  fireEvent.change(screen.getByLabelText('Time'), { target: { value: '10:00:03' } });
+  expect(change).toHaveBeenLastCalledWith('2026-07-28T10:00:03');
+});
+
+it('validates ranges within the same minute and keeps seconds when a date changes', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  render(
+    <DateRangePicker
+      mode="datetime"
+      timePrecision="second"
+      value={{ start: '2026-07-01T09:30:37', end: '2026-07-01T09:30:38' }}
+      onChange={change}
+    />,
+  );
+  await user.click(screen.getByRole('button', { name: /2026\/07\/01/ }));
+  expect(screen.getByLabelText('Start time')).toHaveValue('09:30:37');
+  expect(screen.getByLabelText('End time')).toHaveAttribute('step', '1');
+  fireEvent.change(screen.getByLabelText('End time'), { target: { value: '09:30:36' } });
+  expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
+  fireEvent.change(screen.getByLabelText('End date'), { target: { value: '2026-07-02' } });
+  expect(screen.getByLabelText('End time')).toHaveValue('09:30:36');
+  await user.click(screen.getByRole('button', { name: 'Apply' }));
+  expect(change).toHaveBeenCalledWith({ start: '2026-07-01T09:30:37', end: '2026-07-02T09:30:36' });
+});
+
+it('normalizes minute values and supplies full-day boundaries in seconds mode', async () => {
+  const user = userEvent.setup();
+  const change = vi.fn();
+  render(
+    <DateRangePicker
+      mode="datetime"
+      timePrecision="second"
+      value={{ start: '2026-07-01T09:30', end: '2026-07-01T09:30' }}
+      onChange={change}
+    />,
+  );
+  await user.click(screen.getByRole('button', { name: /2026\/07\/01/ }));
+  fireEvent.change(screen.getByLabelText('Start time'), { target: { value: '09:30:00' } });
+  expect(screen.getByRole('button', { name: 'Apply' })).toBeEnabled();
+  fireEvent.change(screen.getByLabelText('Start time'), { target: { value: '' } });
+  fireEvent.change(screen.getByLabelText('End time'), { target: { value: '' } });
+  await user.click(screen.getByRole('button', { name: 'Apply' }));
+  expect(change).toHaveBeenCalledWith({ start: '2026-07-01T00:00:00', end: '2026-07-01T23:59:59' });
+});

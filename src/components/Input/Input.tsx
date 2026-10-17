@@ -73,14 +73,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       <input
         ref={innerRef}
         className={['ec-input', inputClassName].filter(Boolean).join(' ')}
-        value={currentValue}
+        value={props.type === 'file' ? undefined : currentValue}
         disabled={disabled}
         aria-invalid={status === 'error' || undefined}
         aria-describedby={
           [describedBy, showCount && countId].filter(Boolean).join(' ') || undefined
         }
         onChange={(event) => {
-          if (!controlled) setUncontrolledValue(event.target.value);
+          if (!controlled && props.type !== 'file') setUncontrolledValue(event.target.value);
           onChange?.(event);
         }}
         {...props}

@@ -57,3 +57,27 @@ const meta = { title: 'Components/Form Controls/Validation', component: Form } s
 >;
 export default meta;
 export const CorrectableErrors: StoryObj<typeof meta> = { render: () => <ValidationExample /> };
+
+export const FileSelection: StoryObj = {
+  render: function FileSelectionExample() {
+    const [filename, setFilename] = useState('');
+    return (
+      <Form onSubmit={(event) => event.preventDefault()} onReset={() => setFilename('')}>
+        <Field label="Attachment" help="Select a CSV file">
+          {(props) => (
+            <Input
+              {...props}
+              type="file"
+              accept=".csv"
+              onChange={(event) => setFilename(event.target.files?.[0]?.name ?? '')}
+            />
+          )}
+        </Field>
+        {filename && <p>Selected: {filename}</p>}
+        <Button type="reset" variant="outline">
+          Clear selection
+        </Button>
+      </Form>
+    );
+  },
+};
