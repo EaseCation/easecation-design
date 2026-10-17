@@ -1,0 +1,74 @@
+name: Deploy registered EaseDesign Storybook
+description: Publish only the public Storybook prefix while preserving the design website
+inputs:
+  role_arn:
+    description: Caller repository OIDC deployment role
+    required: true
+  oidc_provider_arn:
+    description: Caller repository GitHub OIDC provider
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Verify registered Storybook source
+      shell: bash
+      run: |
+        set -euo pipefail
+        test "$GITHUB_REPOSITORY" = EaseCation/easecation-design
+        test "$GITHUB_REF" = refs/heads/main
+        test -s storybook-static/index.html
+        test -s storybook-static/index.json
+
+    - name: Install pinned Aliyun CLI
+      shell: bash
+      run: |
+        set -euo pipefail
+        archive="$RUNNER_TEMP/storybook-aliyun.tgz"
+        curl -fsSL --retry 3 -o "$archive" https://aliyuncli.alicdn.com/aliyun-cli-linux-3.3.12-amd64.tgz
+        echo "88fb94ee39c2c2a61c5a791a41c9a556ce2f61eb5f1fc9124c78349719c85214  $archive" | sha256sum -c -
+        tar -xzf "$archive" -C "$RUNNER_TEMP" aliyun
+        echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
+
+    - name: Assume caller Storybook role
+      uses: aliyun/configure-aliyun-credentials-action@1e5248c8d5d93a8781ac344a68e19a43341e79e6
+      with:
+        role-to-assume: ${{ inputs.role_arn }}
+        oidc-provider-arn: ${{ inputs.oidc_provider_arn }}
+        role-session-name: gh-${{ github.repository_id }}-${{ github.run_id }}
+        role-session-expiration: 1800
+        audience: sts.aliyuncs.com
+
+    - name: Configure isolated Aliyun profile
+      shell: bash
+      run: |
+        set -euo pipefail
+        aliyun configure set --config-path "$RUNNER_TEMP/storybook-aliyun.json" \
+          --mode StsToken --region cn-hangzhou \
+          --access-key-id "$ALIBABA_CLOUD_ACCESS_KEY_ID" \
+          --access-key-secret "$ALIBABA_CLOUD_ACCESS_KEY_SECRET" \
+          --sts-token "$ALIBABA_CLOUD_SECURITY_TOKEN"
+
+    - name: Publish Storybook assets and entry documents
+      shell: bash
+      run: |
+        set -euo pipefail
+        aliyun --config-path "$RUNNER_TEMP/storybook-aliyun.json" ossutil cp \
+          -r storybook-static/ oss://ec-design/storybook/ \
+          --region cn-hangzhou --force --exclude '*.html' --exclude index.json
+        aliyun --config-path "$RUNNER_TEMP/storybook-aliyun.json" ossutil cp \
+          -r storybook-static/ oss://ec-design/storybook/ \
+          --region cn-hangzhou --force --include '*.html' --include index.json
+
+    - name: Refresh Storybook directory
+      shell: bash
+      run: |
+        set -euo pipefail
+        if ! aliyun --config-path "$RUNNER_TEMP/storybook-aliyun.json" cdn RefreshObjectCaches \
+          --ObjectPath https://design.easecation.net/storybook/ --ObjectType Directory --Force true; then
+          echo '::warning::Storybook uploaded, but CDN refresh failed; check CDN quota.'
+        fi
+
+    - name: Remove isolated Storybook credentials
+      if: always()
+      shell: bash
+      run: rm -f "$RUNNER_TEMP/storybook-aliyun.json"
