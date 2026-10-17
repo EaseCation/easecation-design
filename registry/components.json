@@ -489,7 +489,7 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["native-table", "mobile-card-fallback", "loading-empty-error-states"],
       "tokens": ["--ec-color-surface-raised", "--ec-color-border"],
-      "stories": ["patterns-data-workflows--table"],
+      "stories": ["patterns-data-workflows--table", "patterns-query-data-table--long-content"],
       "deprecated": false
     },
     {
@@ -618,10 +618,16 @@
       "platforms": ["web", "pwa", "android-webview", "ios-wkwebview", "windows-webview2", "ssr"],
       "accessibility": ["text-status", "non-color-label", "decorative-icon-hidden"],
       "tokens": [
+        "--ec-color-primary",
+        "--ec-color-text-primary",
         "--ec-color-success",
+        "--ec-color-text-success",
         "--ec-color-warning",
+        "--ec-color-text-warning",
         "--ec-color-danger",
-        "--ec-color-info"
+        "--ec-color-text-danger",
+        "--ec-color-info",
+        "--ec-color-text-info"
       ],
       "stories": ["components-status-badge--tones", "components-status-badge--appearances"],
       "deprecated": false

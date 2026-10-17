@@ -10,6 +10,7 @@ import {
   ThemeProvider,
 } from '../src';
 import { useStoryTranslations } from '../.storybook/story-locale';
+import { LongContentTable } from './fixtures/LongContentTable';
 
 const helper = createColumnHelper<{ id: string; name: string; status: string }>();
 const translations = {
@@ -121,6 +122,17 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 export const Table: Story = { args: { data: [], columns: [] }, render: () => <Demo /> };
 export const Overlay: Story = Table;
+
+export const LongContent: Story = {
+  args: { data: [], columns: [] },
+  render: () => (
+    <ThemeProvider colorTheme="black-gold">
+      <div style={{ padding: 'var(--ec-space-4)' }}>
+        <LongContentTable minWidth={960} />
+      </div>
+    </ThemeProvider>
+  ),
+};
 
 export const EmbeddedCards: Story = {
   args: { data: [], columns: [] },

@@ -21,6 +21,18 @@ A newer Storybook does not establish that an application's dependency has been u
 
 ## Upgrade a consumer
 
+### From 0.20.1 to 0.21
+
+QueryDataTable now wraps headers, prose and unbroken identifiers within their columns by default.
+Use column `size` and table `minWidth` to preserve readable widths; set `meta.wrap: false` only for
+single-line columns. Custom non-wrapping cells still need bounded widths and truncation. Review all
+columns together with long content, including pinned actions and mobile cards.
+
+Use `StatusBadge tone="primary"` for brand-colored states; `info` retains its informational color.
+Soft and outline appearances use semantic text tokens, and outline borders keep the selected hue.
+
+### Verification steps
+
 1. Install the selected published version and commit the manifest and lockfile together. Use that
    repository's pinned package manager and verify a frozen/immutable installation.
 2. Compare public declarations and [generated component docs](../components/Table.md) before

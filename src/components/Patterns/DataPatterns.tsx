@@ -206,6 +206,7 @@ export function QueryDataTable<T>({
                     | {
                         sticky?: 'left' | 'right';
                         align?: 'left' | 'center' | 'right';
+                        wrap?: boolean;
                         headerClassName?: string;
                       }
                     | undefined;
@@ -213,6 +214,7 @@ export function QueryDataTable<T>({
                     <th
                       key={header.id}
                       data-sticky={meta?.sticky}
+                      data-wrap={meta?.wrap}
                       className={meta?.headerClassName}
                       scope="col"
                       style={{
@@ -245,11 +247,10 @@ export function QueryDataTable<T>({
                   <td
                     key={cell.id}
                     data-sticky={meta?.sticky}
+                    data-wrap={meta?.wrap}
                     className={meta?.cellClassName}
                     style={{
                       textAlign: meta?.align,
-                      whiteSpace: meta?.wrap ? 'normal' : undefined,
-                      overflowWrap: meta?.wrap ? 'anywhere' : undefined,
                     }}
                   >
                     {getSubRows && index === 0 ? (
