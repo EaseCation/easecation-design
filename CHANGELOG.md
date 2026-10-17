@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.20.1
+
+### Patch Changes
+
+- 7e0d25f: Preserve vertical page scrolling over horizontally scrollable tables. Use sRGB surface tints and semantic text tokens for all Alert tones to prevent hue shifts in light, dark and brand themes.
+- Add a complete, synthetic record workflow for Storybook and documentation with filtering, cancellation, stale-response protection, details and confirmation retry. Share browser regression checks for sidebar motion, table scroll chaining, compact statistics and focus restoration with the website.
+- 7e0d25f: Share token-based expandable sidebar group transitions with reduced-motion support. Document persistent, inert collapsed content and cap staggered drawer entry delays so long navigation lists finish before the animation phase ends.
+
 ## 0.20.0
 
 ### Minor Changes
