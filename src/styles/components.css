@@ -4590,6 +4590,7 @@
 
 .ec-alert {
   --ec-alert-color: var(--ec-color-info);
+  --ec-alert-text: var(--ec-color-text-info);
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   column-gap: var(--ec-space-3);
@@ -4597,9 +4598,9 @@
   align-items: start;
   min-width: 0;
   padding: var(--ec-space-3) var(--ec-space-4);
-  color: var(--ec-color-text);
-  background: color-mix(in oklch, var(--ec-alert-color) 9%, var(--ec-color-panel));
-  border: 1px solid color-mix(in oklch, var(--ec-alert-color) 28%, var(--ec-color-border));
+  color: var(--ec-color-on-panel);
+  background: color-mix(in srgb, var(--ec-alert-color) 7%, var(--ec-color-panel));
+  border: 1px solid color-mix(in srgb, var(--ec-alert-color) 24%, var(--ec-color-border));
   border-radius: var(--ec-radius-lg);
 }
 
@@ -4617,23 +4618,28 @@
 
 .ec-alert[data-tone='neutral'] {
   --ec-alert-color: var(--ec-color-text-muted);
+  --ec-alert-text: var(--ec-color-text-muted);
 }
 
 .ec-alert[data-tone='info'] {
   --ec-alert-color: var(--ec-color-info);
+  --ec-alert-text: var(--ec-color-text-info);
 }
 
 .ec-alert[data-tone='warning'] {
   --ec-alert-color: var(--ec-color-warning);
+  --ec-alert-text: var(--ec-color-text-warning);
 }
 
 .ec-alert[data-tone='error'],
 .ec-alert[data-tone='danger'] {
   --ec-alert-color: var(--ec-color-danger);
+  --ec-alert-text: var(--ec-color-text-danger);
 }
 
 .ec-alert[data-tone='success'] {
   --ec-alert-color: var(--ec-color-success);
+  --ec-alert-text: var(--ec-color-text-success);
 }
 
 .ec-alert-mark,
@@ -4642,7 +4648,7 @@
   flex: none;
   align-items: center;
   justify-content: center;
-  color: color-mix(in oklch, var(--ec-alert-color) 66%, var(--ec-color-text));
+  color: var(--ec-alert-text);
 }
 
 .ec-alert-mark {
@@ -4651,7 +4657,7 @@
   margin-top: 0.45rem;
   background: currentColor;
   border-radius: 50%;
-  box-shadow: 0 0 0 4px color-mix(in oklch, var(--ec-alert-color) 14%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ec-alert-color) 14%, transparent);
 }
 
 .ec-alert__icon {
@@ -4681,7 +4687,7 @@
 .ec-alert-description {
   margin: 0;
   overflow-wrap: anywhere;
-  color: color-mix(in oklch, var(--ec-color-text) 78%, var(--ec-alert-color));
+  color: var(--ec-color-on-panel);
 }
 
 .ec-alert-action {
@@ -6003,7 +6009,8 @@
 .ec-data-table-scroll {
   max-width: 100%;
   overflow: auto;
-  overscroll-behavior: contain;
+  /* Keep sideways gestures inside the table while vertical gestures scroll the page. */
+  overscroll-behavior-x: contain;
 }
 .ec-data-table-scroll > .ec-table-wrap {
   overflow: visible;

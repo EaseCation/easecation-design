@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Boxes, Home, Settings, Users } from 'lucide-react';
 import {
@@ -30,6 +30,7 @@ function Example({
   const [collapsed, setCollapsed] = useState(initiallyCollapsed);
   const [active, setActive] = useState('Overview');
   const [expanded, setExpanded] = useState(true);
+  const groupId = useId();
   return (
     <ThemeProvider>
       <div style={{ width: collapsed ? 68 : 252, height: 600, background: 'var(--sidebar)' }}>
@@ -74,15 +75,38 @@ function Example({
             <SidebarNavItem
               label="Resources"
               icon={<Boxes />}
-              expanded={expanded}
+              expanded={!collapsed && expanded}
+              aria-controls={groupId}
               collapsed={collapsed}
               onClick={() => setExpanded(!expanded)}
             />
-            {!collapsed && expanded ? (
-              <SidebarNavItem asChild label="Settings" icon={<Settings />} level="secondary" active>
-                <a href="#settings" />
-              </SidebarNavItem>
-            ) : null}
+            <div
+              id={groupId}
+              className="ec-sidebar-group-content"
+              data-expanded={!collapsed && expanded}
+              inert={collapsed || !expanded}
+              aria-hidden={collapsed || !expanded}
+            >
+              <div className="ec-sidebar-group-content__inner">
+                <div
+                  style={{
+                    display: 'grid',
+                    gap: 'var(--ec-space-1)',
+                    paddingTop: 'var(--ec-space-1)',
+                  }}
+                >
+                  <SidebarNavItem
+                    asChild
+                    label="Settings"
+                    icon={<Settings />}
+                    level="secondary"
+                    active
+                  >
+                    <a href="#settings" />
+                  </SidebarNavItem>
+                </div>
+              </div>
+            </div>
             {long
               ? Array.from({ length: 24 }, (_, i) => (
                   <SidebarNavItem

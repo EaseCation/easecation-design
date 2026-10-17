@@ -37,6 +37,8 @@ import { Alert } from '@easecation/design';
 - **Tokens**: `--ec-color-info`, `--ec-color-success`, `--ec-color-warning`,
   `--ec-color-danger`
 
+提示底色和边框使用 sRGB 混色保持语义色相；图标使用对应的语义文字色，正文沿用面板前景色。支持浅色、深色与品牌主题。
+
 ## TypeScript 公开声明
 
 以下内容由 `pnpm docs:generate` 从构建后的 `index.d.ts` 提取；CI 会检查声明与文档是否一致。
