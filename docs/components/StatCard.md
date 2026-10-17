@@ -28,6 +28,7 @@ label；value；可选 delta；hint；trend: up | down | steady；icon；action�
 
 ## 使用约束
 
+- 高度随实际内容自然增长；不为缺省的趋势或提示预留空白。同一网格行仍可由容器自然拉齐高度。
 - 业务状态、请求、权限和路由由应用层维护，通过 Props 和回调传入。
 - 同一个值不要同时使用受控属性与 default* 属性。
 - 不覆盖组件内部 DOM 选择器；品牌和密度通过 ThemeProvider、Token 或公开 className 调整。

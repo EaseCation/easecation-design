@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.19.1
+
+### Patch Changes
+
+- Let StatCard height follow its content instead of reserving empty space for optional details.
+
 ## 0.19.0
 
 ### Minor Changes
