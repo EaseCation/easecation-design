@@ -118,3 +118,5 @@ pnpm ai:validate
 代码采用 MIT License。EaseCation 名称、Logo、商标、专属插画及其他品牌资产不随 MIT License 授权，详见 `TRADEMARKS.md` 和 `NOTICE`。
 
 参与贡献前请阅读 `CONTRIBUTING.md`、`CODE_OF_CONDUCT.md` 和 `SECURITY.md`。
+
+Linux Web 构建与部署由官方 runner 先探测 `ec-bbdev` 的隔离 runner；离线、繁忙、空间不足或 PR 请求均使用官方机器。仓库需配置 `BBDEV_ROUTER_SSH_KEY` secret 和固定主机公钥变量 `BBDEV_ROUTER_KNOWN_HOSTS`。设置 `WEB_ACTIONS_RUNNER=github` 可强制官方执行。探测后的中途宕机仍需检查部署状态后重跑；不会盲目重放部署。移动端、跨系统打包、npm 发布和独立监控保持原流程。 Storybook 使用经审查的共享 action 快照，版本及校验值记录在 `.github/actions/design-storybook/upstream.json`；仅发布 Storybook 子目录，不需要读取私有仓库。

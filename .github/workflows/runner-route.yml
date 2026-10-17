@@ -1,0 +1,75 @@
+name: Select Web Runner
+
+on:
+  workflow_call:
+    inputs:
+      mode:
+        description: auto or github (emergency official-runner override)
+        type: string
+        default: auto
+    secrets:
+      BBDEV_ROUTER_SSH_KEY:
+        required: false
+    outputs:
+      runs_on:
+        value: ${{ jobs.route.outputs.runs_on }}
+      runner_mode:
+        value: ${{ jobs.route.outputs.runner_mode }}
+
+permissions:
+  contents: read
+
+jobs:
+  route:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      runs_on: ${{ steps.choose.outputs.runs_on }}
+      runner_mode: ${{ steps.choose.outputs.runner_mode }}
+    steps:
+      - name: Choose available runner with official fallback
+        id: choose
+        env:
+          ROUTER_KEY: ${{ secrets.BBDEV_ROUTER_SSH_KEY }}
+          ROUTER_HOST_KEYS: ${{ vars.BBDEV_ROUTER_KNOWN_HOSTS }}
+          ROUTER_MODE: ${{ inputs.mode }}
+        run: |
+          set -euo pipefail
+          echo 'runs_on="ubuntu-latest"' >> "$GITHUB_OUTPUT"
+          echo 'runner_mode=github' >> "$GITHUB_OUTPUT"
+          trusted="$(python3 - <<'PY'
+          import json, os
+          event = json.load(open(os.environ['GITHUB_EVENT_PATH']))
+          trusted = os.environ['GITHUB_REF'] in ('refs/heads/main', 'refs/heads/playground')
+          if os.environ['GITHUB_EVENT_NAME'] in ('pull_request', 'pull_request_target'):
+              trusted = False
+          if os.environ['GITHUB_EVENT_NAME'] == 'workflow_run':
+              run = event['workflow_run']
+              trusted = (run['event'] == 'push' and run['conclusion'] == 'success'
+                         and run['head_branch'] in ('main', 'playground')
+                         and run['head_repository']['full_name'] == os.environ['GITHUB_REPOSITORY'])
+          print('true' if trusted else 'false')
+          PY
+          )"
+          if [ "$trusted" != true ] || [ "$ROUTER_MODE" != auto ] || \
+             [ -z "$ROUTER_KEY" ] || [ -z "$ROUTER_HOST_KEYS" ]; then
+            echo 'Using official runner: trust, configuration or override policy.'
+            exit 0
+          fi
+          key="$RUNNER_TEMP/bbdev-router-key"
+          hosts="$RUNNER_TEMP/bbdev-router-hosts"
+          trap 'rm -f "$key" "$hosts"' EXIT
+          umask 077
+          printf '%s\n' "$ROUTER_KEY" > "$key"
+          printf '%s\n' "$ROUTER_HOST_KEYS" > "$hosts"
+          if response="$(timeout 15 ssh -i "$key" -p 2222 \
+            -o BatchMode=yes -o ConnectTimeout=5 -o ConnectionAttempts=1 \
+            -o StrictHostKeyChecking=yes -o "UserKnownHostsFile=$hosts" \
+            ec@bbdev.easecation.net "probe $GITHUB_REPOSITORY" 2>/dev/null)" && \
+            printf '%s' "$response" | python3 -c 'import json,sys; sys.exit(0 if json.load(sys.stdin).get("available") is True else 1)'; then
+            echo 'runs_on=["self-hosted","linux","x64","ec-web-linux"]' >> "$GITHUB_OUTPUT"
+            echo 'runner_mode=bbdev' >> "$GITHUB_OUTPUT"
+            echo 'Using bbdev: isolated runner has available capacity.'
+          else
+            echo 'Using official runner: bbdev is offline, busy or unhealthy.'
+          fi
