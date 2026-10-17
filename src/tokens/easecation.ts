@@ -154,6 +154,7 @@ export const publicTokenDefaults = {
   '--ec-color-text': 'var(--foreground)',
   '--ec-color-text-muted': 'var(--muted-foreground)',
   '--ec-color-primary': 'var(--primary)',
+  '--ec-color-text-primary': 'var(--ec-color-primary)',
   '--ec-color-primary-hover': 'color-mix(in oklch, var(--ec-color-primary) 92%, transparent)',
   '--ec-color-primary-active': 'color-mix(in oklch, var(--ec-color-primary) 84%, black)',
   '--ec-color-on-primary': 'var(--primary-foreground)',

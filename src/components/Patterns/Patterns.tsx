@@ -62,7 +62,7 @@ export function StatCard({
       data-tone={tone}
       {...props}
     >
-      <div className="ec-stat-card__top">
+      <div className="ec-stat-card__top" data-aside={Boolean(icon || action)}>
         <div>
           <p className="ec-stat-card__label">{label}</p>
           <div className="ec-stat-card__value-group">
@@ -75,16 +75,12 @@ export function StatCard({
             ) : null}
           </div>
         </div>
-        <div className="ec-stat-card__aside">
-          <div
-            className="ec-stat-card__icon"
-            data-empty={icon ? undefined : 'true'}
-            aria-hidden={icon ? undefined : true}
-          >
-            {icon}
+        {icon || action ? (
+          <div className="ec-stat-card__aside">
+            {icon ? <div className="ec-stat-card__icon">{icon}</div> : null}
+            {action ? <div className="ec-stat-card__action">{action}</div> : null}
           </div>
-          {action ? <div className="ec-stat-card__action">{action}</div> : null}
-        </div>
+        ) : null}
       </div>
       {hint ? <p className="ec-stat-card__hint">{hint}</p> : null}
     </article>

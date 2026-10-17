@@ -47,3 +47,9 @@ it('supports compact metrics without a delta and an optional action', () => {
   expect(screen.queryByText('%')).not.toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'View members' })).toBeInTheDocument();
 });
+
+it('does not reserve an empty icon column in text-only metrics', () => {
+  const { container } = render(<StatCard label="Available balance" value="1234.56" />);
+  expect(container.querySelector('.ec-stat-card__aside')).toBeNull();
+  expect(container.querySelector('.ec-stat-card__top')).toHaveAttribute('data-aside', 'false');
+});

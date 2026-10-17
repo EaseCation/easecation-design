@@ -21,6 +21,21 @@ import '@easecation/design/style.css';
 
 SSR 时 `system` 使用浅色服务端快照，并在 hydration 后同步 `prefers-color-scheme`，避免服务端与客户端标记不一致。服务端已知用户偏好时可显式传入 `light` 或 `dark`，使首屏颜色也保持确定。
 
+## 品牌配色
+
+将应用的浅色、深色配色集中到一份配置，通过根部 Provider 的 `tokens` 传入。
+组件样式必须读取公开的 `--ec-*` Token，不要直接读取底层 `--primary`、
+`--sidebar-primary` 等调色板变量，否则会绕过 Provider 的覆盖值。
+
+侧边栏允许独立配色。如果它与品牌色一致，可将 `--ec-sidebar-primary` 设为
+`var(--ec-color-primary)`，并对应关联前景、accent、边框和焦点 Token。
+品牌色变化不应替换错误、成功、警告或分类颜色。验证主题时应同时检查正文、
+导航选中态和 Portal 中的菜单、弹窗；亮色填充不能直接当作浅色页面的小字颜色。
+
+金色等明亮品牌色可用 `--ec-color-primary` 设置填充，并用
+`--ec-color-text-primary` 设置链接、轻量按钮和品牌图标的可读前景色。
+后者默认跟随主色，现有主题无需修改。
+
 ## API
 
 children；mode: light | dark | system；density；tokens；colorTheme；asChild；useTheme()。

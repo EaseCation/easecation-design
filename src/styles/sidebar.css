@@ -6,7 +6,7 @@
   max-height: 100dvh;
   overflow: hidden;
   padding: var(--ec-space-4) var(--ec-space-3);
-  color: var(--sidebar-foreground);
+  color: var(--ec-sidebar-foreground);
 }
 .ec-sidebar-panel[data-collapsed] {
   padding-inline: calc(var(--ec-space-3) / 2);
@@ -37,7 +37,7 @@
   gap: var(--ec-space-1);
   margin-top: var(--ec-space-2);
   padding-top: var(--ec-space-2);
-  border-top: 1px solid var(--sidebar-border);
+  border-top: 1px solid var(--ec-sidebar-border);
 }
 .ec-sidebar-row {
   display: flex;
@@ -66,7 +66,7 @@
 }
 .ec-sidebar-row:hover,
 .ec-sidebar-account[data-state='open'] {
-  background: color-mix(in oklch, var(--sidebar-accent) 50%, transparent);
+  background: color-mix(in oklch, var(--ec-sidebar-accent) 50%, transparent);
 }
 .ec-sidebar-icon {
   display: inline-flex;
@@ -79,11 +79,11 @@
   color: var(--ec-color-text-muted);
 }
 .ec-sidebar-nav-item[data-level='primary'] .ec-sidebar-icon {
-  background: var(--sidebar-accent);
+  background: var(--ec-sidebar-accent);
 }
 .ec-sidebar-nav-item[data-level='primary'][data-active] .ec-sidebar-icon {
-  background: color-mix(in oklch, var(--sidebar-primary) 15%, transparent);
-  color: var(--sidebar-primary);
+  background: color-mix(in oklch, var(--ec-sidebar-primary) 15%, transparent);
+  color: var(--ec-sidebar-primary);
 }
 .ec-sidebar-row svg {
   display: block;
@@ -115,8 +115,8 @@
   height: var(--ec-font-size-md);
 }
 .ec-sidebar-nav-item[data-level='secondary'][data-active] {
-  background: color-mix(in oklch, var(--sidebar-primary) 10%, transparent);
-  color: var(--sidebar-primary);
+  background: color-mix(in oklch, var(--ec-sidebar-primary) 10%, transparent);
+  color: var(--ec-sidebar-primary);
   font-weight: 500;
 }
 .ec-sidebar-nav-item[data-collapsed] {
@@ -145,9 +145,9 @@
   width: var(--ec-control-sm);
   height: var(--ec-control-sm);
   margin-inline: calc((var(--ec-control-md) - var(--ec-control-sm)) / 2);
-  border: 1px solid var(--sidebar-border);
+  border: 1px solid var(--ec-sidebar-border);
   border-radius: var(--ec-radius-lg);
-  background: var(--sidebar-accent);
+  background: var(--ec-sidebar-accent);
   color: var(--ec-color-text-muted);
 }
 .ec-sidebar-avatar img {

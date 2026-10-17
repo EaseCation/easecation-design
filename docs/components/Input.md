@@ -19,7 +19,7 @@ import '@easecation/design/style.css';
 
 ## API
 
-value/defaultValue；size；status；prefix；suffix；className；inputClassName；clearable；clearLabel；onClear。`className` 用于输入框外壳的尺寸与布局，`inputClassName` 用于原生 input 的排版。Textarea 从同一模块导出。
+value/defaultValue；size；status；prefix；suffix；className；inputClassName；clearable；clearLabel；onClear；showCount。`showCount` 显示当前字数及可选 maxLength，并保留已有 aria-describedby 关联。`className` 用于输入框外壳的尺寸与布局，`inputClassName` 用于原生 input 的排版。Textarea 从同一模块导出。`autoResize` 根据内容与可用宽度自动增高，`minRows` / `maxRows` 控制范围，达到最大高度后内部滚动；关闭后恢复手动调整大小。`showCount` 显示当前字数和可选的 `maxLength`，通过 aria-describedby 与已有帮助/错误提示共同关联。回填或重置使用受控 value；组件不负责业务校验。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
@@ -59,6 +59,7 @@ export declare interface InputProps extends Omit<
   clearable?: boolean;
   clearLabel?: string;
   onClear?: () => void;
+  showCount?: boolean;
 }
 
 export declare type ComponentSize = 'sm' | 'md' | 'lg';
@@ -71,7 +72,13 @@ export declare const Textarea: ForwardRefExoticComponent<
 
 export declare interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   status?: InputStatus;
+  /** Grow to fit the content, including controlled updates and width changes. */
   autoResize?: boolean;
+  /** Row bounds used when autoResize is enabled. */
+  minRows?: number;
+  maxRows?: number;
+  /** Show the current character count and maxLength, when supplied. */
+  showCount?: boolean;
 }
 ```
 

@@ -3,6 +3,7 @@ import {
   type AnchorHTMLAttributes,
   type ButtonHTMLAttributes,
   type HTMLAttributes,
+  type CSSProperties,
   type ReactNode,
 } from 'react';
 export const Layout = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function Layout(
@@ -94,10 +95,13 @@ export function PageHeader({
 }
 export interface GridProps extends HTMLAttributes<HTMLDivElement> {
   minColumnWidth?: string;
+  /** Fixed column count below 768px; omit to keep automatic fitting. */
+  mobileColumns?: number;
   gap?: string;
 }
 export function ResponsiveGrid({
   minColumnWidth = '16rem',
+  mobileColumns,
   gap = 'var(--ec-space-4)',
   style,
   className,
@@ -105,12 +109,17 @@ export function ResponsiveGrid({
 }: GridProps) {
   return (
     <div
+      data-mobile-columns={mobileColumns == null ? undefined : true}
       className={['ec-grid', className].filter(Boolean).join(' ')}
-      style={{
-        ...style,
-        gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${minColumnWidth}), 1fr))`,
-        gap,
-      }}
+      style={
+        {
+          ...style,
+          '--ec-grid-columns': `repeat(auto-fit, minmax(min(100%, ${minColumnWidth}), 1fr))`,
+          '--ec-grid-mobile-columns':
+            mobileColumns == null ? undefined : Math.max(1, Math.floor(mobileColumns)),
+          gap,
+        } as CSSProperties
+      }
       {...props}
     />
   );

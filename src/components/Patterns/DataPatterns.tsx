@@ -1,6 +1,13 @@
 import { useLocale } from '../../locale/LocaleProvider';
-import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from '@tanstack/react-table';
-import { XIcon } from 'lucide-react';
+import {
+  flexRender,
+  getCoreRowModel,
+  getExpandedRowModel,
+  useReactTable,
+  type ColumnDef,
+  type ExpandedState,
+} from '@tanstack/react-table';
+import { ChevronDownIcon, ChevronRightIcon, XIcon } from 'lucide-react';
 import {
   createContext,
   useContext,
@@ -49,11 +56,19 @@ export type QueryDataTableRowRenderProps<T> = {
   className?: string;
   children: ReactNode;
 };
+export type QueryDataTableColumn<T> = ColumnDef<T, any>;
+export type QueryDataTableExpandedState = ExpandedState;
 export interface QueryDataTableProps<T> {
   data: T[];
   // TanStack columns intentionally allow heterogeneous accessor value types.
   columns: ColumnDef<T, any>[];
   getRowId?: (row: T, index: number) => string;
+  /** Hierarchical records; expansion never changes host data. */
+  getSubRows?: (row: T) => T[] | undefined;
+  expanded?: ExpandedState;
+  onExpandedChange?: (expanded: ExpandedState) => void;
+  getRowLabel?: (row: T) => string;
+  minWidth?: number | string;
   isLoading?: boolean;
   isError?: boolean;
   /** Retain existing rows while a background request runs. */
@@ -78,6 +93,11 @@ export function QueryDataTable<T>({
   data,
   columns,
   getRowId,
+  getSubRows,
+  expanded,
+  onExpandedChange,
+  getRowLabel,
+  minWidth,
   isLoading = false,
   isError,
   isRefreshing = false,
@@ -105,8 +125,23 @@ export function QueryDataTable<T>({
   const mobile = useMediaQuery('(max-width: 767px)');
   const cardLayout = mobile && layout !== 'table' && Boolean(mobileCard);
   const queryLayout = cardLayout ? 'cards' : undefined;
+  const [internalExpanded, setInternalExpanded] = useState<ExpandedState>({});
+  const expansion = expanded ?? internalExpanded;
   // eslint-disable-next-line react-hooks/incompatible-library
-  const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel(), getRowId });
+  const table = useReactTable({
+    data,
+    columns,
+    getRowId,
+    getSubRows,
+    getCoreRowModel: getCoreRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+    state: { expanded: expansion },
+    onExpandedChange: (updater) => {
+      const next = typeof updater === 'function' ? updater(expansion) : updater;
+      if (expanded === undefined) setInternalExpanded(next);
+      onExpandedChange?.(next);
+    },
+  });
   const shell = cn(
     'ec-query-table',
     embedded && 'is-embedded',
@@ -162,18 +197,29 @@ export function QueryDataTable<T>({
   return (
     <div className={shell} aria-busy={isRefreshing || undefined}>
       <div className="ec-query-table__scroll">
-        <table className={tableClassName}>
+        <table className={tableClassName} style={{ minWidth }}>
           <thead>
             {table.getHeaderGroups().map((group) => (
               <tr key={group.id}>
                 {group.headers.map((header) => {
                   const meta = header.column.columnDef.meta as
-                    { sticky?: 'left' | 'right'; headerClassName?: string } | undefined;
+                    | {
+                        sticky?: 'left' | 'right';
+                        align?: 'left' | 'center' | 'right';
+                        headerClassName?: string;
+                      }
+                    | undefined;
                   return (
                     <th
                       key={header.id}
                       data-sticky={meta?.sticky}
                       className={meta?.headerClassName}
+                      scope="col"
+                      style={{
+                        width: header.column.columnDef.size,
+                        minWidth: header.column.columnDef.size,
+                        textAlign: meta?.align,
+                      }}
                     >
                       {header.isPlaceholder
                         ? null
@@ -186,12 +232,53 @@ export function QueryDataTable<T>({
           </thead>
           <tbody>
             {table.getRowModel().rows.map((row) => {
-              const cells = row.getVisibleCells().map((cell) => {
+              const cells = row.getVisibleCells().map((cell, index) => {
                 const meta = cell.column.columnDef.meta as
-                  { sticky?: 'left' | 'right'; cellClassName?: string } | undefined;
+                  | {
+                      sticky?: 'left' | 'right';
+                      align?: 'left' | 'center' | 'right';
+                      wrap?: boolean;
+                      cellClassName?: string;
+                    }
+                  | undefined;
                 return (
-                  <td key={cell.id} data-sticky={meta?.sticky} className={meta?.cellClassName}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  <td
+                    key={cell.id}
+                    data-sticky={meta?.sticky}
+                    className={meta?.cellClassName}
+                    style={{
+                      textAlign: meta?.align,
+                      whiteSpace: meta?.wrap ? 'normal' : undefined,
+                      overflowWrap: meta?.wrap ? 'anywhere' : undefined,
+                    }}
+                  >
+                    {getSubRows && index === 0 ? (
+                      <div
+                        className="ec-query-tree-cell"
+                        style={{ paddingInlineStart: `calc(${row.depth} * var(--ec-space-5))` }}
+                      >
+                        {row.getCanExpand() ? (
+                          <IconButton
+                            variant="ghost"
+                            size="sm"
+                            label={getRowLabel?.(row.original) ?? row.id}
+                            aria-expanded={row.getIsExpanded()}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              row.toggleExpanded();
+                            }}
+                            icon={row.getIsExpanded() ? <ChevronDownIcon /> : <ChevronRightIcon />}
+                          />
+                        ) : (
+                          <span className="ec-query-tree-cell__spacer" />
+                        )}
+                        <div className="ec-query-tree-cell__content">
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </div>
+                      </div>
+                    ) : (
+                      flexRender(cell.column.columnDef.cell, cell.getContext())
+                    )}
                   </td>
                 );
               });

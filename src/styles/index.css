@@ -1,6 +1,7 @@
 @import './tokens.css';
 @import './components.css';
 @import './sidebar.css';
+@import './workbench.css';
 
 *,
 *::before,
@@ -43,7 +44,7 @@ body,
 }
 .ec-surface-elevated {
   background: var(--ec-color-surface-raised);
-  color: var(--card-foreground);
+  color: var(--ec-color-on-surface-raised);
   box-shadow: var(--ec-shadow-sm);
 }
 .ec-surface-glass {

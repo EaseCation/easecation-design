@@ -140,3 +140,33 @@ export const EmbeddedError: Story = {
   ...EmbeddedCards,
   render: () => <Demo embedded state="error" />,
 };
+
+type TreeExample = { id: string; name: string; children?: TreeExample[] };
+export const Hierarchy: Story = {
+  args: { data: [], columns: [] },
+  render: () => (
+    <QueryDataTable<TreeExample>
+      data={[
+        {
+          id: 'group',
+          name: 'Design',
+          children: [
+            { id: 'project', name: 'Library', children: [{ id: 'member', name: 'Alex' }] },
+          ],
+        },
+      ]}
+      columns={[
+        {
+          accessorKey: 'name',
+          header: 'Workspace / Project / Member',
+          size: 360,
+          meta: { sticky: 'left' },
+        },
+      ]}
+      getRowId={(row) => row.id}
+      getRowLabel={(row) => row.name}
+      getSubRows={(row) => row.children}
+      minWidth={600}
+    />
+  ),
+};

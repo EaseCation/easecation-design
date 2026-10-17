@@ -58,6 +58,8 @@ export declare const localeMessages: {
     readonly actionFailed: 'Unable to complete this action. Please try again.';
     readonly apply: 'Apply';
     readonly clear: 'Clear';
+    readonly expandText: 'Read more';
+    readonly collapseText: 'Read less';
   };
   readonly 'zh-CN': {
     readonly pagination: '分页';
@@ -83,6 +85,8 @@ export declare const localeMessages: {
     readonly actionFailed: '操作未完成，请重试。';
     readonly apply: '应用';
     readonly clear: '清除';
+    readonly expandText: '展开全文';
+    readonly collapseText: '收起';
   };
 };
 

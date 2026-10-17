@@ -1,5 +1,5 @@
 {
-  "source": "Released 0.16.0 archive committed in Console vendor; before semantic text colors",
+  "source": "0.16.0 named entries; total updated for shared Table sorting, filters, selection and detail expansion (2026-10-17). See docs/guide/table-migration-size.md.",
   "policy": {
     "warningBytes": 256,
     "warningRatio": 0.02,
@@ -29,7 +29,7 @@
     }
   },
   "total": {
-    "gzip": 84553,
-    "brotli": 72587
+    "gzip": 94258,
+    "brotli": 80292
   }
 }

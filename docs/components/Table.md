@@ -69,6 +69,14 @@ export declare function Table<T>({
   compact,
   mobile,
   className,
+  style,
+  minWidth,
+  maxHeight,
+  pagination,
+  onPaginationChange,
+  selection,
+  renderExpandedRow,
+  getRowProps,
   onRowClick,
 }: TableProps<T>): JSX.Element;
 
@@ -83,17 +91,51 @@ export declare interface TableProps<T> {
   compact?: boolean;
   mobile?: 'scroll' | 'cards';
   className?: string;
+  style?: CSSProperties;
+  minWidth?: number | string;
+  maxHeight?: number | string;
+  pagination?: false | TablePaginationConfig;
+  onPaginationChange?: (pagination: { current: number; pageSize: number }) => void;
+  selection?: {
+    selectedKeys: Key[];
+    onChange: (keys: Key[]) => void;
+  };
+  renderExpandedRow?: (record: T) => ReactNode;
+  getRowProps?: (record: T, index: number) => ComponentProps<'tr'>;
   onRowClick?: (record: T, index: number) => void;
 }
 
 export declare interface TableColumn<T> {
-  key: string;
+  key?: Key;
   title: ReactNode;
-  dataIndex?: keyof T;
-  render?: (value: unknown, record: T, index: number) => ReactNode;
+  dataIndex?: keyof T | string | readonly (string | number)[];
+  render?: (value: any, record: T, index: number) => ReactNode;
   align?: 'left' | 'center' | 'right';
   width?: string | number;
   mobileLabel?: ReactNode;
+  compare?: (a: T, b: T) => number;
+  defaultSortDirection?: 'asc' | 'desc';
+  filterOptions?: {
+    label: ReactNode;
+    value: string | number | boolean;
+  }[];
+  filter?: (value: string | number | boolean, record: T) => boolean;
+  pinned?: 'left' | 'right';
+  truncate?: boolean;
+}
+
+export declare interface TablePaginationConfig {
+  current?: number;
+  defaultPageSize?: number;
+  pageSize?: number;
+  total?: number;
+  /** Server mode renders the supplied page without slicing it again. */
+  mode?: 'client' | 'server';
+  hideOnSinglePage?: boolean;
+  allowPageSizeChange?: boolean;
+  showPageJump?: boolean;
+  totalLabel?: (total: number, range: [number, number]) => ReactNode;
+  onChange?: (page: number, pageSize: number) => void;
 }
 
 export declare const TableBody: ForwardRefExoticComponent<
@@ -113,6 +155,8 @@ export declare const TableCell: ForwardRefExoticComponent<
   > &
     RefAttributes<HTMLTableCellElement>
 >;
+
+export declare type TableColumns<T> = TableColumn<T>[];
 
 export declare const TableFooter: ForwardRefExoticComponent<
   Omit<DetailedHTMLProps<HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>, 'ref'> &
