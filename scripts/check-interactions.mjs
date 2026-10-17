@@ -32,6 +32,11 @@ try {
         reducedMotion: 'no-preference',
         colorScheme: theme === 'black-gold' ? 'dark' : theme,
       });
+      // Windows can retain the host touchscreen's capacity even with hasTouch: false.
+      // Keep the synthetic device consistent with the desktop/touch expectations below.
+      await context.addInitScript((touch) => {
+        Object.defineProperty(navigator, 'maxTouchPoints', { get: () => (touch ? 1 : 0) });
+      }, touch);
       try {
         const page = await context.newPage();
         page.setDefaultTimeout(10000);
