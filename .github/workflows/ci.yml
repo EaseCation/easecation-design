@@ -34,6 +34,7 @@ jobs:
       - run: pnpm test:interactions
       - run: pnpm test:pagination
       - run: pnpm test:motion
+      - run: pnpm test:workflow
       - name: Write deploy metadata
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: bash
