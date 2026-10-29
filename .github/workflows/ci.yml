@@ -7,13 +7,17 @@ permissions:
   contents: read
 jobs:
   runner-route:
+    if: >-
+      github.event_name != 'pull_request_target' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && (github.event_name != 'workflow_run' || (github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event == 'push'))
     uses: ./.github/workflows/runner-route.yml
     with:
-      mode: ${{ vars.WEB_ACTIONS_RUNNER || 'auto' }}
+      mode: ${{ vars.WEB_ACTIONS_RUNNER || 'bbdev' }}
     secrets:
       BBDEV_ROUTER_SSH_KEY: ${{ secrets.BBDEV_ROUTER_SSH_KEY }}
 
   validate:
+    if: >-
+      github.event_name != 'pull_request_target' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && (github.event_name != 'workflow_run' || (github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event == 'push'))
     needs: [runner-route]
     runs-on: ${{ fromJSON(needs.runner-route.outputs.runs_on) }}
     steps:
@@ -67,8 +71,9 @@ jobs:
   notify:
     name: Notify MsgAPI
     needs: validate
-    runs-on: ubuntu-latest
-    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, linux, x64, ec-web-linux]
+    if: >-
+      (github.event_name != 'pull_request_target' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && (github.event_name != 'workflow_run' || (github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event == 'push'))) && (always() && github.event_name == 'push' && github.ref == 'refs/heads/main')
     steps:
       - name: Send MsgAPI quality-check notification
         continue-on-error: true

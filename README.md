@@ -119,4 +119,4 @@ pnpm ai:validate
 
 参与贡献前请阅读 `CONTRIBUTING.md`、`CODE_OF_CONDUCT.md` 和 `SECURITY.md`。
 
-Linux Web 构建与部署由官方 runner 先探测 `ec-bbdev` 的隔离 runner；离线、繁忙、空间不足或 PR 请求均使用官方机器。仓库需配置 `BBDEV_ROUTER_SSH_KEY` secret 和固定主机公钥变量 `BBDEV_ROUTER_KNOWN_HOSTS`。设置 `WEB_ACTIONS_RUNNER=github` 可强制官方执行。探测后的中途宕机仍需检查部署状态后重跑；不会盲目重放部署。移动端、跨系统打包、npm 发布和独立监控保持原流程。 Storybook 使用经审查的共享 action 快照，版本及校验值记录在 `.github/actions/design-storybook/upstream.json`；仅发布 Storybook 子目录，不需要读取私有仓库。
+Linux 构建、检查与部署默认在 `ec-bbdev` 的隔离 runner 执行，GitHub 仅负责触发与展示结果。`WEB_ACTIONS_RUNNER=bbdev`（默认）或旧值 `auto` 均不自动回退 GitHub 收费机器；本机不可用时任务排队。`github` 仅保留为人工明确选择的覆盖项。路由不再需要 SSH 探测密钥。仅同仓库分支与 PR 可使用长期 runner；外部 fork PR 与 `pull_request_target` 会跳过，不能据此认定验证通过。公开仓库同时在 GitHub 设置层要求所有外部贡献者的工作流先经审批；源码中的条件判断不能单独作为隔离边界，审批时不得允许 fork 通过修改 runner 选择进入长期虚拟机。部分完成的部署必须核对状态后再重试。npm provenance 发布保持原流程；artifact/cache 存储仍可能收费。 Storybook 使用经审查的共享 action 快照，版本及校验值记录在 `.github/actions/design-storybook/upstream.json`；仅发布 Storybook 子目录，不需要读取私有仓库。
