@@ -26,19 +26,18 @@ env:
 
 jobs:
   runner-route:
+    if: >-
+      github.event_name != 'pull_request_target' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && (github.event_name != 'workflow_run' || (github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event == 'push'))
     uses: ./.github/workflows/runner-route.yml
     with:
-      mode: ${{ vars.WEB_ACTIONS_RUNNER || 'auto' }}
+      mode: ${{ vars.WEB_ACTIONS_RUNNER || 'bbdev' }}
     secrets:
       BBDEV_ROUTER_SSH_KEY: ${{ secrets.BBDEV_ROUTER_SSH_KEY }}
 
   deploy-gate:
     if: >-
-      github.ref == 'refs/heads/main' &&
-      (github.event_name == 'workflow_dispatch' ||
-       (github.event.workflow_run.event == 'push' &&
-        github.event.workflow_run.head_repository.full_name == github.repository))
-    runs-on: ubuntu-slim
+      (github.event_name != 'pull_request_target' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && (github.event_name != 'workflow_run' || (github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event == 'push'))) && (github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || (github.event.workflow_run.event == 'push' && github.event.workflow_run.head_repository.full_name == github.repository)))
+    runs-on: [self-hosted, linux, x64, ec-web-linux]
     outputs:
       should_deploy: ${{ steps.decide.outputs.should_deploy }}
     steps:
@@ -71,7 +70,8 @@ jobs:
   build-and-deploy:
     needs: [runner-route, deploy-gate]
     runs-on: ${{ fromJSON(needs.runner-route.outputs.runs_on) }}
-    if: needs.deploy-gate.outputs.should_deploy == 'true'
+    if: >-
+      (github.event_name != 'pull_request_target' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && (github.event_name != 'workflow_run' || (github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event == 'push'))) && (needs.deploy-gate.outputs.should_deploy == 'true')
     steps:
       - name: Validate deployment variables
         shell: bash
