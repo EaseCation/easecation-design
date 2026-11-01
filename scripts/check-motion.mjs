@@ -39,6 +39,8 @@ try {
       });
       const page = await context.newPage();
       page.setDefaultTimeout(5000);
+      // Cold Vite compilation is setup work; keep motion/interaction waits strict.
+      page.setDefaultNavigationTimeout(30000);
       const errors = [];
       page.on('pageerror', (error) => errors.push(error.message));
       for (const side of width === 1280 ? ['top', 'bottom', 'left', 'right'] : ['top', 'bottom']) {
