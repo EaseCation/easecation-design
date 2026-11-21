@@ -10,6 +10,6 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./tests/setup.ts'],
     css: true,
-    maxWorkers: 2,
+    maxWorkers: 4,
   },
 });
