@@ -169,3 +169,20 @@ jobs:
         with:
           role_arn: ${{ vars.ALIYUN_STATIC_DEPLOY_ROLE_ARN }}
           oidc_provider_arn: ${{ vars.ALIYUN_OIDC_PROVIDER_ARN }}
+
+  notify:
+    name: Notify deploy
+    needs: [deploy-gate, build-and-deploy]
+    if: always() && (github.event_name == 'workflow_run' || github.event_name == 'workflow_dispatch')
+    permissions:
+      actions: read
+      contents: read
+    uses: EaseCation/deploy-workflows/.github/workflows/deployment-notify.yml@3da9b40e1ac035bffa7ec168a4d908e5adc12f16
+    with:
+      title: EaseCation Design - Storybook 部署
+      environment: MAIN
+      source_sha: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+      result: ${{ needs.build-and-deploy.result }}
+      target_url: https://design.easecation.net/storybook/
+    secrets:
+      MSG_API_KEY: ${{ secrets.MSG_API_KEY }}
