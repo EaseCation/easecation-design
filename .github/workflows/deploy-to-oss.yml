@@ -191,7 +191,7 @@ jobs:
         continue-on-error: true
         uses: ./.github/actions/notify
         with:
-          title: EaseCation Design - Storybook 部署
+          title: EaseDesign - Storybook 部署
           kind: deploy
           result: ${{ needs.build-and-deploy.result }}
           source_sha: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}

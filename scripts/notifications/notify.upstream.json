@@ -1,6 +1,6 @@
 {
   "repository": "EaseCation/deploy-workflows",
-  "commit": "3da9b40e1ac035bffa7ec168a4d908e5adc12f16",
+  "commit": "7511b56144ccd18f264188170e5236814d928bfe",
   "path": "scripts/notifications/notify.mjs",
-  "sha256": "824bab4839f00a2b53931ac14c2e2c313fe621e4ac0679c8fa26d09368a0e00f"
+  "sha256": "0f92b30483d836246c2028db389c74ed4e6c0703e8e6c787e1aa6308ed019589"
 }
