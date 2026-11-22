@@ -1,0 +1,60 @@
+name: Notify Web workflow result
+description: Send a compact notification with exact-attempt timing and bounded failure evidence
+inputs:
+  title:
+    required: true
+    description: Notification title
+  kind:
+    required: true
+    description: deploy, ci, code or merge
+  result:
+    required: true
+    description: success, failure or cancelled
+  source_sha:
+    required: false
+    default: ''
+    description: Actual application SHA; unknown failed source may be empty
+  environment:
+    required: false
+    default: ''
+    description: Display environment
+  target_url:
+    required: false
+    default: ''
+    description: Application URL
+  run_id:
+    required: false
+    default: ''
+    description: Source run ID, defaults to current run
+  run_attempt:
+    required: false
+    default: ''
+    description: Exact source attempt, defaults to current attempt
+  delivery_environment:
+    required: false
+    default: production
+    description: production or playground MsgAPI route
+  github_token:
+    required: true
+    description: Read-only contents and Actions token
+  msg_api_key:
+    required: false
+    description: Existing MsgAPI notification key
+runs:
+  using: composite
+  steps:
+    - name: Collect run evidence and notify
+      shell: bash
+      env:
+        NOTIFY_TITLE: ${{ inputs.title }}
+        NOTIFY_KIND: ${{ inputs.kind }}
+        NOTIFY_RESULT: ${{ inputs.result }}
+        NOTIFY_SOURCE_SHA: ${{ inputs.source_sha }}
+        NOTIFY_ENVIRONMENT: ${{ inputs.environment }}
+        NOTIFY_TARGET_URL: ${{ inputs.target_url }}
+        NOTIFY_RUN_ID: ${{ inputs.run_id }}
+        NOTIFY_RUN_ATTEMPT: ${{ inputs.run_attempt }}
+        NOTIFY_DELIVERY_ENVIRONMENT: ${{ inputs.delivery_environment }}
+        GH_TOKEN: ${{ inputs.github_token }}
+        MSG_API_KEY: ${{ inputs.msg_api_key }}
+      run: node "$GITHUB_ACTION_PATH/../../../scripts/notifications/notify.mjs"
