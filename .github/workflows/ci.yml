@@ -72,17 +72,27 @@ jobs:
     name: Notify MsgAPI
     needs: validate
     if: >-
-      always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+      always() && needs.validate.result != 'skipped' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, linux, x64, ec-web-linux]
+    timeout-minutes: 5
     permissions:
       actions: read
       contents: read
-    uses: EaseCation/deploy-workflows/.github/workflows/code-notify.yml@3da9b40e1ac035bffa7ec168a4d908e5adc12f16
-    with:
-      title: EaseCation Design - Code Push & Quality Check
-      result: ${{ needs.validate.result }}
-      source_sha: ${{ github.sha }}
-      environment: MAIN
-      target_url: https://design.easecation.net/
-      category: code
-    secrets:
-      MSG_API_KEY: ${{ secrets.MSG_API_KEY }}
+    steps:
+      - name: Checkout notification snapshot
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Send MsgAPI quality-check notification
+        continue-on-error: true
+        uses: ./.github/actions/notify
+        with:
+          title: EaseCation Design - Code Push & Quality Check
+          kind: code
+          result: ${{ needs.validate.result }}
+          source_sha: ${{ github.sha }}
+          environment: MAIN
+          target_url: https://design.easecation.net/
+          github_token: ${{ github.token }}
+          msg_api_key: ${{ secrets.MSG_API_KEY }}

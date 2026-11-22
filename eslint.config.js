@@ -9,6 +9,12 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   { files: ['scripts/**/*.mjs'], languageOptions: { globals: { ...globals.node } } },
+  {
+    // The vendored notification snapshot intentionally strips control characters
+    // from commit text, logs and terminal escapes.
+    files: ['scripts/notifications/**/*.mjs'],
+    rules: { 'no-control-regex': 'off' },
+  },
   { files: ['scripts/check-browser.mjs'], languageOptions: { globals: { ...globals.browser } } },
   {
     files: ['**/*.{ts,tsx}'],

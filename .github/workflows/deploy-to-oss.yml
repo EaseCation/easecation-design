@@ -173,16 +173,29 @@ jobs:
   notify:
     name: Notify deploy
     needs: [deploy-gate, build-and-deploy]
-    if: always() && (github.event_name == 'workflow_run' || github.event_name == 'workflow_dispatch')
+    if: >-
+      always() && (github.event_name == 'workflow_run' || github.event_name == 'workflow_dispatch') &&
+      needs.build-and-deploy.result != 'skipped'
+    runs-on: [self-hosted, linux, x64, ec-web-linux]
+    timeout-minutes: 5
     permissions:
       actions: read
       contents: read
-    uses: EaseCation/deploy-workflows/.github/workflows/deployment-notify.yml@3da9b40e1ac035bffa7ec168a4d908e5adc12f16
-    with:
-      title: EaseCation Design - Storybook 部署
-      environment: MAIN
-      source_sha: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
-      result: ${{ needs.build-and-deploy.result }}
-      target_url: https://design.easecation.net/storybook/
-    secrets:
-      MSG_API_KEY: ${{ secrets.MSG_API_KEY }}
+    steps:
+      - name: Checkout notification snapshot
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Send MsgAPI deployment notification
+        continue-on-error: true
+        uses: ./.github/actions/notify
+        with:
+          title: EaseCation Design - Storybook 部署
+          kind: deploy
+          result: ${{ needs.build-and-deploy.result }}
+          source_sha: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+          environment: MAIN
+          target_url: https://design.easecation.net/storybook/
+          github_token: ${{ github.token }}
+          msg_api_key: ${{ secrets.MSG_API_KEY }}
