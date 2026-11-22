@@ -4,3 +4,7 @@ dist
 storybook-static
 coverage
 EaseCation-Design-设计文档.md
+
+# Reviewed upstream snapshots must stay byte-identical to deploy-workflows.
+.github/actions/notify/
+scripts/notifications/
