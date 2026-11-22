@@ -43,7 +43,7 @@ jobs:
     steps:
       - name: Download deploy metadata
         if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           name: design-deploy-metadata
           path: tmp/ci
@@ -92,7 +92,7 @@ jobs:
 
       - name: Checkout
         if: github.event_name == 'workflow_dispatch'
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 1
           lfs: true
@@ -103,7 +103,7 @@ jobs:
 
       - name: Setup Node
         if: github.event_name == 'workflow_dispatch'
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
@@ -150,7 +150,7 @@ jobs:
 
       - name: Download verified Storybook artifact
         if: github.event_name == 'workflow_run'
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           name: design-storybook-static
           path: ${{ env.DEPLOY_DIR }}
