@@ -5,6 +5,7 @@ on:
     branches: [main]
 permissions:
   contents: read
+  actions: read
 jobs:
   runner-route:
     if: >-
@@ -73,9 +74,6 @@ jobs:
     needs: validate
     if: >-
       always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
-    permissions:
-      actions: read
-      contents: read
     uses: EaseCation/deploy-workflows/.github/workflows/code-notify.yml@3da9b40e1ac035bffa7ec168a4d908e5adc12f16
     with:
       title: EaseCation Design - Code Push & Quality Check

@@ -174,9 +174,6 @@ jobs:
     name: Notify deploy
     needs: [deploy-gate, build-and-deploy]
     if: always() && (github.event_name == 'workflow_run' || github.event_name == 'workflow_dispatch')
-    permissions:
-      actions: read
-      contents: read
     uses: EaseCation/deploy-workflows/.github/workflows/deployment-notify.yml@3da9b40e1ac035bffa7ec168a4d908e5adc12f16
     with:
       title: EaseCation Design - Storybook 部署
