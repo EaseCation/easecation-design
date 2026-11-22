@@ -36,18 +36,39 @@ export function runEvidence(run, jobs, result) {
   return { queueSeconds, durationSeconds, stage: stage || undefined, affected };
 }
 
-// Keep a short, bounded excerpt of the failed step so the card explains what
-// actually broke. GitHub already masks repository secrets in job logs.
+// Prefer a stable, human-readable category over raw log text. Unknown errors
+// keep one bounded, timestamp-free line; URLs and arbitrary log bodies never
+// leave the runner.
+const failureCategories = {
+  'expired-credentials': '临时凭据已过期。',
+  'authorization-denied': '服务拒绝授权。',
+  'network-timeout': '网络请求超时。',
+  'network-dns': '域名解析失败。',
+  'component-load': '部署组件加载失败。',
+  'spawn-failed': '部署命令未能启动。',
+  'diagnostic-capture-failed': '部署失败且诊断采集不可用。',
+};
+
 export function failureExcerpt(log) {
   const clean = String(log ?? '').replace(/\x1b\[[0-9;]*m/g, '').replace(/\r/g, '');
-  const lines = clean.split('\n').map(line => line.trim()).filter(Boolean);
-  const signals = lines.filter(line =>
-    /(?:^|\b)(?:error|Error|ERROR|fatal|Fatal|Exception|##\[error\])/.test(line) ||
-    /^(?:FAIL|FAILED|Failure)\b/.test(line) ||
-    /\bcategory=[a-z-]+/.test(line)
-  );
-  const chosen = signals.slice(-3).join('\n');
-  return [...chosen].slice(0, 600).join('') || undefined;
+  const category = /category=([a-z-]+)/.exec(clean)?.[1];
+  if (category && failureCategories[category]) return failureCategories[category];
+  for (const [pattern, reason] of [
+    [/\b(?:ECONNRESET|ETIMEDOUT|ESOCKETTIMEDOUT|EAI_AGAIN|ENOTFOUND|Connection timed out)\b/, '网络请求失败，依赖下载或外部服务超时。'],
+    [/\berror TS[0-9]{3,5}:/, 'TypeScript 类型检查失败。'],
+    [/\bERR_PNPM_OUTDATED_LOCKFILE\b/, '依赖锁文件与 package.json 不一致。'],
+    [/\bENOSPC\b|No space left on device/, '磁盘空间不足。'],
+    [/Deployment rollout timed out/, '等待部署就绪超时。'],
+  ]) if (pattern.test(clean)) return reason;
+  const lines = clean.split('\n')
+    .map(line => line.replace(/^\d{4}-\d\d-\d\dT[\d:.]+Z\s*/, '').trim())
+    .filter(line =>
+      /(?:^|\b)(?:error|Error|ERROR|fatal|Fatal|Exception|##\[error\])/.test(line) ||
+      /^(?:FAIL|FAILED|Failure)\b/.test(line) ||
+      /\bcategory=[a-z-]+/.test(line)
+    )
+    .map(line => [...line.replace(/https?:\/\/\S+/g, '[链接]')].slice(0, 200).join(''));
+  return lines.slice(-1).join('\n') || undefined;
 }
 
 async function readBounded(response, limit) {
@@ -128,9 +149,6 @@ export async function collectPayload(config, event, api) {
         extraFields: [
           ...(evidence.queueSeconds !== undefined
             ? [{ label: '排队耗时', value: `${evidence.queueSeconds} 秒` }]
-            : []),
-          ...(evidence.durationSeconds !== undefined
-            ? [{ label: '运行耗时', value: `${evidence.durationSeconds} 秒` }]
             : []),
         ],
         stage: evidence.stage,
