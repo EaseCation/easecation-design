@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { afterEach, expect, it, vi } from 'vitest';
 import { Button, Calendar, Card, FilterBar, Input, Toaster, toast, LocaleProvider } from '../src';
 
@@ -120,21 +121,24 @@ it('does not submit an IME composition and composes caller key handlers', () => 
   expect(key).toHaveBeenCalledTimes(3);
 });
 
-it('enforces local date bounds and disabled/readOnly on calendar inputs', () => {
+it('enforces local date bounds and disabled/readOnly on calendar days', async () => {
+  const user = userEvent.setup();
   const select = vi.fn();
+  const month = new Date(2026, 0, 1);
   const { rerender } = render(
-    <Calendar min={new Date(2026, 0, 10)} max="2026-01-20" onSelect={select} />,
+    <Calendar min={new Date(2026, 0, 10)} max="2026-01-20" defaultMonth={month} onSelect={select} />,
   );
-  const input = screen.getByLabelText('Date');
-  fireEvent.change(input, { target: { value: '2026-01-09' } });
+  expect(screen.getByRole('gridcell', { name: 'January 9, 2026' })).toBeDisabled();
+  await user.click(screen.getByRole('gridcell', { name: 'January 9, 2026' }));
   expect(select).not.toHaveBeenCalled();
-  fireEvent.change(input, { target: { value: '2026-01-15' } });
+  await user.click(screen.getByRole('gridcell', { name: 'January 15, 2026' }));
   expect(select).toHaveBeenLastCalledWith(new Date(2026, 0, 15));
-  rerender(<Calendar disabled onSelect={select} />);
-  expect(input).toBeDisabled();
-  fireEvent.change(input, { target: { value: '2026-01-16' } });
-  rerender(<Calendar readOnly onSelect={select} />);
-  fireEvent.change(input, { target: { value: '2026-01-17' } });
+  rerender(<Calendar disabled defaultMonth={month} onSelect={select} />);
+  expect(screen.getByRole('gridcell', { name: 'January 16, 2026' })).toBeDisabled();
+  await user.click(screen.getByRole('gridcell', { name: 'January 16, 2026' }));
+  rerender(<Calendar readOnly defaultMonth={month} onSelect={select} />);
+  expect(screen.getByRole('gridcell', { name: 'January 17, 2026' })).toBeDisabled();
+  await user.click(screen.getByRole('gridcell', { name: 'January 17, 2026' }));
   expect(select).toHaveBeenCalledTimes(1);
 });
 
@@ -156,12 +160,13 @@ it('localizes calendar labels while preserving explicit labels', () => {
       <Calendar mode="range" />
     </LocaleProvider>,
   );
-  expect(screen.getByLabelText('开始日期')).toBeInTheDocument();
-  expect(screen.getByLabelText('结束日期')).toBeInTheDocument();
+  expect(screen.getByRole('grid', { name: '开始日期' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: '上个月' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: '下个月' })).toBeInTheDocument();
   rerender(
     <LocaleProvider locale="zh-CN">
       <Calendar labels={{ single: 'Birthday' }} />
     </LocaleProvider>,
   );
-  expect(screen.getByLabelText('Birthday')).toBeInTheDocument();
+  expect(screen.getByRole('grid', { name: 'Birthday' })).toBeInTheDocument();
 });
