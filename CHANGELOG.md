@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.22.0
+
+### Minor Changes
+
+- Replace Calendar's native date inputs with a custom month panel, and add DatePicker with a non-native popover, clear/today actions, and keyboard grid selection.
+
+### Patch Changes
+
+- Keep achromatic card, panel, popover, border and shadow colors on a missing OKLCH hue so secondary and hover tints stay with their source color instead of shifting red.
+
 ## 0.21.0
 
 ### Minor Changes

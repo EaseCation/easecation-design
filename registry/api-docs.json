@@ -29,6 +29,7 @@
   "SectionCard": ["SectionCard"],
   "StatCard": ["StatCard"],
   "Calendar": ["Calendar"],
+  "DatePicker": ["DatePicker"],
   "DateTimePicker": ["DateTimePicker"],
   "DateRangePicker": ["DateRangePicker"],
   "FilterBar": ["FilterBar"],

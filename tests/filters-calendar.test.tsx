@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   Calendar,
+  DatePicker,
   DateRangePicker,
   DateTimePicker,
   FilterBar,
@@ -11,11 +12,24 @@ import {
   Input,
   MultiSelect,
 } from '../src';
-it('emits single and range calendar values', () => {
+
+beforeEach(() => {
+  vi.useFakeTimers({ shouldAdvanceTime: true });
+  vi.setSystemTime(new Date(2026, 6, 15, 12, 0, 0));
+});
+
+afterEach(() => {
+  vi.useRealTimers();
+});
+
+it('emits single and range calendar values from the month panel', async () => {
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   const select = vi.fn();
-  const { rerender } = render(<Calendar selected={new Date(2026, 6, 28)} onSelect={select} />);
-  fireEvent.change(screen.getByLabelText('Date'), { target: { value: '2026-07-29' } });
-  expect(select).toHaveBeenCalled();
+  const { rerender } = render(
+    <Calendar selected={new Date(2026, 6, 28)} onSelect={select} labels={{ single: 'Date' }} />,
+  );
+  await user.click(screen.getByRole('gridcell', { name: 'July 29, 2026' }));
+  expect(select).toHaveBeenCalledWith(new Date(2026, 6, 29));
   rerender(
     <Calendar
       mode="range"
@@ -24,11 +38,37 @@ it('emits single and range calendar values', () => {
       labels={{ rangeStart: '开始日期', rangeEnd: '结束日期' }}
     />,
   );
-  expect(screen.getByLabelText('开始日期')).toBeInTheDocument();
-  expect(screen.getByLabelText('结束日期')).toBeInTheDocument();
+  expect(screen.getByRole('grid', { name: '开始日期' })).toBeInTheDocument();
+  await user.click(screen.getByRole('gridcell', { name: 'July 1, 2026' }));
+  expect(select).toHaveBeenLastCalledWith({ from: new Date(2026, 6, 1), to: undefined });
 });
+
+it('opens a date picker popover without native date inputs', async () => {
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+  const change = vi.fn();
+  render(<DatePicker label="Date / 日期" value={undefined} onChange={change} />);
+  expect(screen.queryByDisplayValue('')).not.toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Date / 日期' }));
+  expect(screen.queryByLabelText('Date / 日期', { selector: 'input' })).not.toBeInTheDocument();
+  await user.click(screen.getByRole('gridcell', { name: 'July 26, 2026' }));
+  expect(change).toHaveBeenCalledWith(new Date(2026, 6, 26));
+  expect(screen.queryByRole('grid')).not.toBeInTheDocument();
+});
+
+it('clears and jumps to today from the date picker footer', async () => {
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+  const change = vi.fn();
+  render(<DatePicker label="Date" value={new Date(2026, 6, 10)} onChange={change} />);
+  await user.click(screen.getByRole('button', { name: 'Date' }));
+  await user.click(screen.getByRole('button', { name: 'Clear' }));
+  expect(change).toHaveBeenCalledWith(undefined);
+  await user.click(screen.getByRole('button', { name: 'Date' }));
+  await user.click(screen.getByRole('button', { name: 'Today' }));
+  expect(change).toHaveBeenCalledWith(new Date(2026, 6, 15));
+});
+
 it('submits filter search and handles multiple picker', async () => {
-  const user = userEvent.setup();
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   const search = vi.fn();
   const change = vi.fn();
   render(
@@ -52,6 +92,7 @@ it('submits filter search and handles multiple picker', async () => {
   await user.click(screen.getByRole('menuitemcheckbox', { name: 'Active' }));
   expect(change).toHaveBeenCalledWith(['active']);
 });
+
 it('supports top-aligned fields and range-width filters', () => {
   const { container } = render(
     <FilterBar align="start">
@@ -66,6 +107,7 @@ it('supports top-aligned fields and range-width filters', () => {
     'ec-filter-field--range',
   );
 });
+
 it('places multi-select controls on the filter bar sizing path', () => {
   const { container } = render(
     <FilterBar align="start">
@@ -81,6 +123,7 @@ it('places multi-select controls on the filter bar sizing path', () => {
   expect(container.querySelector('.ec-multi-select')).toBeInTheDocument();
   expect(container.querySelector('.ec-multi-select__control')).toBeInTheDocument();
 });
+
 it('uses large toolbar controls by default and accepts trigger classes', () => {
   render(
     <>
@@ -105,16 +148,18 @@ it('uses large toolbar controls by default and accepts trigger classes', () => {
   expect(screen.getByRole('combobox', { name: 'Status' })).toHaveClass('ec-select__trigger--lg');
   expect(screen.getByRole('button', { name: 'Teams' })).toHaveAttribute('data-size', 'lg');
 });
+
 it('combines date and time values', async () => {
-  const user = userEvent.setup();
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   const change = vi.fn();
   render(<DateTimePicker value="2026-07-28T09:30" onChange={change} />);
   await user.click(screen.getByRole('button', { name: /2026-07-28/ }));
   fireEvent.change(screen.getByLabelText('Time'), { target: { value: '10:15' } });
   expect(change).toHaveBeenCalledWith('2026-07-28T10:15');
 });
+
 it('focuses the date field without scrolling when opened', async () => {
-  const user = userEvent.setup();
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   const focus = vi.spyOn(HTMLInputElement.prototype, 'focus');
   render(<DateTimePicker value="" onChange={vi.fn()} />);
 
@@ -124,8 +169,9 @@ it('focuses the date field without scrolling when opened', async () => {
   expect(focus).toHaveBeenCalledWith({ preventScroll: true });
   focus.mockRestore();
 });
+
 it('focuses the popover without opening the keyboard on coarse pointers', async () => {
-  const user = userEvent.setup();
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   const matchMedia = vi.spyOn(window, 'matchMedia').mockReturnValue({
     matches: true,
   } as MediaQueryList);
@@ -138,8 +184,9 @@ it('focuses the popover without opening the keyboard on coarse pointers', async 
   expect(screen.getByLabelText('Date')).not.toHaveFocus();
   matchMedia.mockRestore();
 });
+
 it('keeps a disabled date time picker closed', async () => {
-  const user = userEvent.setup();
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   render(<DateTimePicker value="2026-07-28T09:30" onChange={vi.fn()} disabled />);
   const trigger = screen.getByRole('button', { name: /2026-07-28/ });
   expect(trigger).toBeDisabled();
@@ -148,7 +195,7 @@ it('keeps a disabled date time picker closed', async () => {
 });
 
 it('applies a complete date range without mutating the controlled value early', async () => {
-  const user = userEvent.setup();
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   const change = vi.fn();
   render(
     <DateRangePicker
@@ -161,16 +208,17 @@ it('applies a complete date range without mutating the controlled value early', 
 
   const trigger = screen.getByRole('button', { name: '2026/07/01 - 2026/07/07' });
   await user.click(trigger);
-  fireEvent.change(screen.getByLabelText('End'), { target: { value: '2026-07-09' } });
+  await user.click(screen.getByRole('gridcell', { name: 'July 1, 2026' }));
+  await user.click(screen.getByRole('gridcell', { name: 'July 9, 2026' }));
   expect(change).not.toHaveBeenCalled();
   await user.click(screen.getByRole('button', { name: 'Apply' }));
 
   expect(change).toHaveBeenCalledWith({ start: '2026-07-01', end: '2026-07-09' });
-  expect(screen.queryByLabelText('End')).not.toBeInTheDocument();
+  expect(screen.queryByRole('grid')).not.toBeInTheDocument();
 });
 
 it('preserves precise times in datetime mode', async () => {
-  const user = userEvent.setup();
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   const change = vi.fn();
   render(
     <DateRangePicker
@@ -193,11 +241,8 @@ it('preserves precise times in datetime mode', async () => {
   });
 });
 
-it.each([
-  ['start', 'Start', '2026-07-01', { start: '2026-07-01', end: '' }],
-  ['end', 'End', '2026-07-09', { start: '', end: '2026-07-09' }],
-] as const)('applies an open range with only the %s value', async (_, label, input, expected) => {
-  const user = userEvent.setup();
+it('applies an open range with only the start value', async () => {
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   const change = vi.fn();
   render(
     <DateRangePicker
@@ -210,14 +255,14 @@ it.each([
   );
 
   await user.click(screen.getByRole('button', { name: 'Select date range' }));
-  fireEvent.change(screen.getByLabelText(label), { target: { value: input } });
+  await user.click(screen.getByRole('gridcell', { name: 'July 1, 2026' }));
   await user.click(screen.getByRole('button', { name: 'Apply' }));
 
-  expect(change).toHaveBeenCalledWith(expected);
+  expect(change).toHaveBeenCalledWith({ start: '2026-07-01', end: '' });
 });
 
 it('still requires both values unless open ranges are enabled', async () => {
-  const user = userEvent.setup();
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   render(
     <DateRangePicker
       value={{ start: '', end: '' }}
@@ -228,13 +273,13 @@ it('still requires both values unless open ranges are enabled', async () => {
   );
 
   await user.click(screen.getByRole('button', { name: 'Select date range' }));
-  fireEvent.change(screen.getByLabelText('Start'), { target: { value: '2026-07-01' } });
+  await user.click(screen.getByRole('gridcell', { name: 'July 1, 2026' }));
 
   expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
 });
 
 it('commits presets immediately and rejects an inverted range', async () => {
-  const user = userEvent.setup();
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   const change = vi.fn();
   const { rerender } = render(
     <DateRangePicker
@@ -261,7 +306,7 @@ it('commits presets immediately and rejects an inverted range', async () => {
 });
 
 it('keeps a disabled date range picker closed', async () => {
-  const user = userEvent.setup();
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   render(
     <DateRangePicker
       value={{ start: '2026-07-01', end: '2026-07-07' }}
@@ -275,13 +320,13 @@ it('keeps a disabled date range picker closed', async () => {
   expect(screen.queryByText('Apply')).not.toBeInTheDocument();
 });
 
-it('focuses the range start on desktop and popover container on coarse pointers', async () => {
-  const user = userEvent.setup();
+it('focuses a calendar day on desktop and the popover on coarse pointers', async () => {
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   const { unmount } = render(
     <DateRangePicker value={{ start: '', end: '' }} onChange={vi.fn()} startLabel="Range start" />,
   );
   await user.click(screen.getByRole('button', { name: 'Select date range' }));
-  expect(screen.getByLabelText('Range start')).toHaveFocus();
+  expect(screen.getByRole('gridcell', { name: 'July 15, 2026' })).toHaveFocus();
   unmount();
 
   const matchMedia = vi.spyOn(window, 'matchMedia').mockReturnValue({
@@ -293,12 +338,12 @@ it('focuses the range start on desktop and popover container on coarse pointers'
   const trigger = screen.getByRole('button', { name: 'Select date range' });
   await user.click(trigger);
   expect(screen.getByRole('dialog')).toHaveFocus();
-  expect(screen.getByLabelText('Range start')).not.toHaveFocus();
+  expect(screen.getByRole('gridcell', { name: 'July 15, 2026' })).not.toHaveFocus();
   matchMedia.mockRestore();
 });
 
 it('preserves seconds when changing a date or time in a datetime picker', async () => {
-  const user = userEvent.setup();
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   const change = vi.fn();
   render(<DateTimePicker timePrecision="second" value="2026-07-28T09:30:37" onChange={change} />);
   await user.click(screen.getByRole('button', { name: /2026-07-28/ }));
@@ -311,7 +356,7 @@ it('preserves seconds when changing a date or time in a datetime picker', async 
 });
 
 it('validates ranges within the same minute and keeps seconds when a date changes', async () => {
-  const user = userEvent.setup();
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   const change = vi.fn();
   render(
     <DateRangePicker
@@ -326,14 +371,15 @@ it('validates ranges within the same minute and keeps seconds when a date change
   expect(screen.getByLabelText('End time')).toHaveAttribute('step', '1');
   fireEvent.change(screen.getByLabelText('End time'), { target: { value: '09:30:36' } });
   expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
-  fireEvent.change(screen.getByLabelText('End date'), { target: { value: '2026-07-02' } });
+  await user.click(screen.getByRole('gridcell', { name: 'July 1, 2026' }));
+  await user.click(screen.getByRole('gridcell', { name: 'July 2, 2026' }));
   expect(screen.getByLabelText('End time')).toHaveValue('09:30:36');
   await user.click(screen.getByRole('button', { name: 'Apply' }));
   expect(change).toHaveBeenCalledWith({ start: '2026-07-01T09:30:37', end: '2026-07-02T09:30:36' });
 });
 
 it('normalizes minute values and supplies full-day boundaries in seconds mode', async () => {
-  const user = userEvent.setup();
+  const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   const change = vi.fn();
   render(
     <DateRangePicker

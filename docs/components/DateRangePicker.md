@@ -37,11 +37,12 @@ value；onChange；mode: date | datetime；presets；placeholder；startLabel；
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
-- **可访问性**：label-association, keyboard-popover, responsive-reflow
+- **可访问性**：label-association, keyboard-popover, keyboard-grid, responsive-reflow
 - **主要 Token**：`--ec-color-border-strong`, `--ec-color-popover`, `--ec-color-danger`
 
 ## 行为约定
 
+- 弹出层使用自定义 `Calendar` 月份面板选择日期，不依赖浏览器原生日期输入。
 - `date` 模式使用本地 `YYYY-MM-DD` 字符串；`datetime` 模式使用本地 `YYYY-MM-DDTHH:mm` 字符串，不隐式转换时区。
 - 自定义范围先保存在组件草稿中，点击确定后统一提交；预设范围会立即提交。
 - 起止值必须完整且结束不早于开始。业务层仍负责接口约束和服务端错误。
