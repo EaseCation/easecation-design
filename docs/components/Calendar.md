@@ -19,12 +19,12 @@ import '@easecation/design/style.css';
 
 ## API
 
-mode: single | range；selected；onSelect；showLabel；labels；className。当前使用原生日期输入，不提供月份面板或多月展示属性。
+mode: single | range；selected；onSelect；month；defaultMonth；onMonthChange；showLabel；labels；min；max；step；disabled；readOnly；required；className。使用自定义月份面板，不依赖浏览器原生日期输入。
 
 - **成熟度**：`beta`
 - **支持平台**：web, pwa, android-webview, ios-wkwebview, windows-webview2, ssr
-- **可访问性**：native-date-input, label-association
-- **主要 Token**：`--ec-color-border-strong`, `--ec-color-bg`
+- **可访问性**：keyboard-grid, label-association
+- **主要 Token**：`--ec-color-border`, `--ec-color-panel`, `--ec-color-primary`
 
 ## 使用约束
 
@@ -37,6 +37,10 @@ mode: single | range；selected；onSelect；showLabel；labels；className。�
 ## 兼容性
 
 从其他 UI 实现替换到该组件时，不要只修改组件名称。应同时核对 Props 模型、受控状态、Compound API、移动端布局、空/错/加载状态和可访问性语义。
+
+`min` / `max` 使用本地日历日（`Date` 或 `YYYY-MM-DD`）。`step` 以天为单位，相对 `min` 过滤可选日期。时区解释与提交转换由应用负责。
+
+字段触发的弹出选择请使用 `DatePicker`。
 
 ## TypeScript 公开声明
 
@@ -53,6 +57,10 @@ export declare interface CalendarProps extends Omit<ComponentProps<'div'>, 'onSe
   mode?: 'single' | 'range';
   selected?: Date | DateRange;
   onSelect?: (value: CalendarSelectValue) => void;
+  /** Visible month under control. Defaults to the selected date or today. */
+  month?: Date;
+  defaultMonth?: Date;
+  onMonthChange?: (month: Date) => void;
   showLabel?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
@@ -60,12 +68,14 @@ export declare interface CalendarProps extends Omit<ComponentProps<'div'>, 'onSe
   /** Inclusive local-calendar date bounds. Strings use YYYY-MM-DD. */
   min?: Date | string;
   max?: Date | string;
-  /** Native date-input step in days. */
+  /** Disable days that are not an integer multiple of this day step from min. */
   step?: number;
   labels?: {
     single?: string;
     rangeStart?: string;
     rangeEnd?: string;
+    previousMonth?: string;
+    nextMonth?: string;
   };
 }
 

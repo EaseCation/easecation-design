@@ -440,6 +440,8 @@ export function DateRangePicker({
   const [open, setOpen] = useState(false);
   const defaultStartTime = timePrecision === 'second' ? '00:00:00' : '00:00';
   const defaultEndTime = timePrecision === 'second' ? '23:59:59' : '23:59';
+  const retainedStartTime = useRef(defaultStartTime);
+  const retainedEndTime = useRef(defaultEndTime);
   const normalizeRange = (range: DateRangePickerValue): DateRangePickerValue =>
     mode === 'datetime' && timePrecision === 'second'
       ? {
@@ -469,28 +471,44 @@ export function DateRangePicker({
   const hasValue = Boolean(draft.start || draft.end);
   const invalid = complete && draft.start > draft.end;
 
+  const rememberTimes = (range: DateRangePickerValue) => {
+    if (range.start) {
+      retainedStartTime.current = timePart(range.start, defaultStartTime, timePrecision);
+    }
+    if (range.end) {
+      retainedEndTime.current = timePart(range.end, defaultEndTime, timePrecision);
+    }
+  };
+
   const handleOpenChange = (nextOpen: boolean) => {
-    if (nextOpen) setDraft(normalizeRange(value));
+    if (nextOpen) {
+      const next = normalizeRange(value);
+      setDraft(next);
+      rememberTimes(next);
+    }
     setOpen(nextOpen);
   };
 
   const handleCalendarChange = (next: DateRange) => {
-    setDraft((current) => ({
-      start: combineDateAndTime(
-        dateToInputValue(next.from),
-        current.start,
-        defaultStartTime,
-        mode,
-        timePrecision,
-      ),
-      end: combineDateAndTime(
-        dateToInputValue(next.to),
-        current.end,
-        defaultEndTime,
-        mode,
-        timePrecision,
-      ),
-    }));
+    setDraft((current) => {
+      rememberTimes(current);
+      return {
+        start: combineDateAndTime(
+          dateToInputValue(next.from),
+          `1970-01-01T${retainedStartTime.current}`,
+          defaultStartTime,
+          mode,
+          timePrecision,
+        ),
+        end: combineDateAndTime(
+          dateToInputValue(next.to),
+          `1970-01-01T${retainedEndTime.current}`,
+          defaultEndTime,
+          mode,
+          timePrecision,
+        ),
+      };
+    });
   };
 
   const commit = (range: DateRangePickerValue) => {
@@ -527,6 +545,14 @@ export function DateRangePicker({
           if (window.matchMedia?.('(pointer: coarse)').matches) {
             event.preventDefault();
             (event.target as HTMLElement | null)?.focus({ preventScroll: true });
+            return;
+          }
+          const day = (event.currentTarget as HTMLElement).querySelector<HTMLElement>(
+            '.ec-calendar__day[tabindex="0"]',
+          );
+          if (day) {
+            event.preventDefault();
+            day.focus({ preventScroll: true });
           }
         }}
       >
@@ -567,12 +593,15 @@ export function DateRangePicker({
                 step={timePrecision === 'second' ? 1 : 60}
                 value={timePart(draft.start, '', timePrecision)}
                 disabled={!draft.start}
-                onChange={(event) =>
+                onChange={(event) => {
+                  const nextTime =
+                    normalizeTime(event.target.value, timePrecision) || defaultStartTime;
+                  retainedStartTime.current = nextTime;
                   setDraft((current) => ({
                     ...current,
-                    start: `${datePart(current.start)}T${normalizeTime(event.target.value, timePrecision) || defaultStartTime}`,
-                  }))
-                }
+                    start: `${datePart(current.start)}T${nextTime}`,
+                  }));
+                }}
               />
             </Label>
             <Label>
@@ -582,12 +611,15 @@ export function DateRangePicker({
                 step={timePrecision === 'second' ? 1 : 60}
                 value={timePart(draft.end, '', timePrecision)}
                 disabled={!draft.end}
-                onChange={(event) =>
+                onChange={(event) => {
+                  const nextTime =
+                    normalizeTime(event.target.value, timePrecision) || defaultEndTime;
+                  retainedEndTime.current = nextTime;
                   setDraft((current) => ({
                     ...current,
-                    end: `${datePart(current.end)}T${normalizeTime(event.target.value, timePrecision) || defaultEndTime}`,
-                  }))
-                }
+                    end: `${datePart(current.end)}T${nextTime}`,
+                  }));
+                }}
               />
             </Label>
           </div>
